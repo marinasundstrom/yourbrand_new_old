@@ -31,8 +31,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
-
 app.MapGet("/api/weatherforecast", async (DateOnly startDate, WeatherForecastService weatherForecastService, CancellationToken cancellationToken) =>
     {
         var forecasts = await weatherForecastService.GetWeatherForecasts(startDate, cancellationToken);
