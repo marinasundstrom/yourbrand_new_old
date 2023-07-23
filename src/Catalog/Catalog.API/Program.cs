@@ -1,11 +1,22 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using Azure.Identity;
+using Catalog.API.Data;
+
+var builder = WebApplication.CreateBuilder(args);
+
+if (builder.Environment.IsProduction())
+{
+    builder.Configuration.AddAzureKeyVault(
+        new Uri($"https://{builder.Configuration["KeyVaultName"]}.vault.azure.net/"),
+        new DefaultAzureCredential());
+}
 
 // Add services to the container.
 
-builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<WeatherForecastService>();
 
 var app = builder.Build();
 
@@ -20,7 +31,13 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.MapControllers();
+app.MapGet("/api/weatherforecast", async (DateOnly startDate, WeatherForecastService weatherForecastService, CancellationToken cancellationToken) =>
+    {
+        var forecasts = await weatherForecastService.GetWeatherForecasts(startDate, cancellationToken);
+        return Results.Ok(forecasts);
+    })
+    .WithName("GetWeatherForecast")
+    .WithOpenApi();;
 
 app.Run();
 
