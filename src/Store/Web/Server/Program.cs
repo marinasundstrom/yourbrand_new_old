@@ -76,6 +76,6 @@ app.MapGet("/api/weatherforecast", async (DateOnly startDate, IWeatherForecastSe
         return Results.Ok(forecasts);
     })
     .WithName("GetWeatherForecast")
-    .WithOpenApi();;
+    .WithOpenApi();
 
 app.Run();
