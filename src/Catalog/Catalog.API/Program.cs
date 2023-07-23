@@ -16,6 +16,8 @@ if (builder.Environment.IsProduction())
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddSqlServer<CatalogContext>(builder.Configuration.GetValue<string>("yourbrand-catalog-db-connectionstring"));
+
 builder.Services.AddScoped<WeatherForecastService>();
 
 var app = builder.Build();
