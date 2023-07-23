@@ -23,7 +23,6 @@ jobs:
     - name: Build and deploy Container App
       uses: azure/container-apps-deploy-action@v1
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
         appSourcePath: ${{ github.workspace }}
         dockerfilePath: src/Catalog/Catalog.API/Dockerfile
         registryUrl: ${{ secrets.REGISTRY_LOGIN_SERVER }}
