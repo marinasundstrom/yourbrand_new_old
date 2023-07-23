@@ -31,6 +31,7 @@ services:
       - 8082:8080
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__CatalogDb=Server=host.docker.internal,1433;User Id=sa;Password=P@ssw0rd;Encrypt=false;Database=yourbrand-catalog-db
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
 

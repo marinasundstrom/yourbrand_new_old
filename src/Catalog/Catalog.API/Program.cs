@@ -16,7 +16,10 @@ if (builder.Environment.IsProduction())
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSqlServer<CatalogContext>(builder.Configuration.GetValue<string>("yourbrand-catalog-db-connectionstring"));
+builder.Services.AddSqlServer<CatalogContext>(
+    builder.Configuration.GetValue<string>("yourbrand-catalog-db-connectionstring")
+    ?? builder.Configuration.GetConnectionString("CatalogDb"),
+    c => c.EnableRetryOnFailure());
 
 builder.Services.AddScoped<WeatherForecastService>();
 
@@ -37,7 +40,15 @@ app.MapGet("/api/weatherforecast", async (DateOnly startDate, WeatherForecastSer
         return Results.Ok(forecasts);
     })
     .WithName("GetWeatherForecast")
-    .WithOpenApi();;
+    .WithOpenApi();
 
-app.Run();
+using (var scope = app.Services.CreateScope())
+{
+    using var context = scope.ServiceProvider.GetRequiredService<CatalogContext>();
+
+    //await context.Database.EnsureDeletedAsync();
+    await context.Database.EnsureCreatedAsync();
+}
+
+await app.RunAsync();
 
