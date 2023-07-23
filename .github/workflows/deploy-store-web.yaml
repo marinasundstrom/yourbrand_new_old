@@ -1,0 +1,34 @@
+on:
+  push:
+    branches:
+    - main
+    paths:
+    - "src/Store/Web/**"
+        
+name: Deploy StoreWeb
+  
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    # checkout the repo
+    - name: 'Checkout GitHub Action'
+      uses: actions/checkout@main
+      
+    - name: 'Login via Azure CLI'
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Build and deploy Container App
+      uses: azure/container-apps-deploy-action@v1
+      with:
+        appSourcePath: ${{ github.workspace }}
+        dockerfilePath: src/Store/Web/Server/Dockerfile
+        registryUrl: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+        registryUsername: ${{ secrets.REGISTRY_USERNAME }}
+        registryPassword: ${{ secrets.REGISTRY_PASSWORD }}
+        containerAppName: yourbrand-store-web
+        resourceGroup: ${{ secrets.RESOURCE_GROUP }}
+        location: 'Sweden Central'
+        targetPort: 8080
