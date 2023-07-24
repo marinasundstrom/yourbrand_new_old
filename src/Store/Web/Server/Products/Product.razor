@@ -1,5 +1,4 @@
 @page "/products/{id}"
-@attribute [StreamRendering(true)]
 @inject CatalogAPI.IClient CatalogAPI
 
 @if(product is null) 
@@ -8,7 +7,7 @@
 }
 else 
 {
-    <AppPageTitle>Product name</AppPageTitle>
+    <PageTitle>@product.Name</PageTitle>
 
     <div class="row gx-5">
         <div class="col-md-4 mb-4">
