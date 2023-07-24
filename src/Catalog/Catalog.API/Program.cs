@@ -42,12 +42,19 @@ app.MapGet("/api/weatherforecast", async (DateOnly startDate, WeatherForecastSer
     .WithName("GetWeatherForecast")
     .WithOpenApi();
 
-using (var scope = app.Services.CreateScope())
+try 
 {
-    using var context = scope.ServiceProvider.GetRequiredService<CatalogContext>();
+    using (var scope = app.Services.CreateScope())
+    {
+        using var context = scope.ServiceProvider.GetRequiredService<CatalogContext>();
 
-    await context.Database.EnsureDeletedAsync();
-    await context.Database.EnsureCreatedAsync();
+        //await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
+    }
+}
+catch(Exception e) 
+{
+    Console.WriteLine(e);
 }
 
 await app.RunAsync();
