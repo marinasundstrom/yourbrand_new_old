@@ -1,5 +1,6 @@
 ﻿using Azure.Identity;
 using Catalog.API.Data;
+using Catalog.API.Model;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,13 +36,23 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/api/products", async (CatalogContext catalogContext, CancellationToken cancellationToken) =>
+app.MapGet("/api/products", async (int page = 1, int pageSize = 10, CatalogContext catalogContext = default!, CancellationToken cancellationToken = default) =>
     {
-        var products = await catalogContext.Products.ToListAsync(cancellationToken);
-        return Results.Ok(products);
+        var query = catalogContext.Products.AsQueryable();
+
+        var total = await query.CountAsync(cancellationToken);
+
+        var products = await query.OrderBy(x => x.Name)
+            .Skip(pageSize * (page - 1))
+            .Take(pageSize)
+            .ToListAsync(cancellationToken);
+
+        var pagedResult = new PagedResult<Product>(products, total);
+
+        return Results.Ok(pagedResult);
     })
     .WithName("GetProducts")
-    .Produces<IEnumerable<Catalog.API.Model.Product>>(StatusCodes.Status200OK)
+    .Produces<PagedResult<Catalog.API.Model.Product>>(StatusCodes.Status200OK)
     .WithOpenApi();
 
 app.MapGet("/api/products/{id}", async (string id, CatalogContext catalogContext, CancellationToken cancellationToken) =>

@@ -94,15 +94,7 @@
 
             </div>
 
-            <nav aria-label="Page navigation example" class="mt-5">
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
-        </nav>
+            <Pagination Page="Page.GetValueOrDefault()" PageCount="pageCount" Href="/products" class="mt-5" />
         }
     </div>
 </div>
@@ -110,9 +102,22 @@
 @code
 {
     ICollection<CatalogAPI.Product>? products;
+    int pageCount = 0;
+
+    [SupplyParameterFromQuery]
+    public int? Page { get; set; }
+
+    [SupplyParameterFromQuery]
+    public int? PageSize { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        products = await CatalogAPI.GetProductsAsync();
+        Page ??= 1;
+        PageSize ??= 6;
+
+        var pagedResult = await CatalogAPI.GetProductsAsync(Page, PageSize);
+
+        products = pagedResult.Items;
+        pageCount = (int)Math.Ceiling((float)pagedResult.Total / (float)PageSize.GetValueOrDefault());
     }
 }
