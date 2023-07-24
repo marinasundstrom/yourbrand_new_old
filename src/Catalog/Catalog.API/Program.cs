@@ -1,5 +1,6 @@
 ﻿using Azure.Identity;
 using Catalog.API.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +34,15 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.MapGet("/api/products", async (CatalogContext catalogContext, CancellationToken cancellationToken) =>
+    {
+        var products = await catalogContext.Products.ToListAsync(cancellationToken);
+        return Results.Ok(products);
+    })
+    .WithName("GetProducts")
+    .WithOpenApi();
+
 
 app.MapGet("/api/weatherforecast", async (DateOnly startDate, WeatherForecastService weatherForecastService, CancellationToken cancellationToken) =>
     {
