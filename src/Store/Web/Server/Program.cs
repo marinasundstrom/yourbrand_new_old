@@ -2,12 +2,19 @@ using System.Security.Claims;
 using Azure.Identity;
 using BlazorApp;
 using BlazorApp.Data;
-
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddHttpClient("CatalogAPI", (sp, http) =>
+{
+    http.BaseAddress = new Uri(builder.Configuration["yourbrand-catalog-api-url"]!);
+});
+
+builder.Services.AddHttpClient<CatalogAPI.IClient>("CatalogAPI")
+.AddTypedClient<CatalogAPI.IClient>((http, sp) => new CatalogAPI.Client(http));
 
 if (builder.Environment.IsProduction())
 {

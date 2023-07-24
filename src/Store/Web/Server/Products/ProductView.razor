@@ -1,12 +1,12 @@
 <div class="card">
-    <a href="/products/asdasd">
+    <a href="/products/@Product.Id">
         <img class="bd-placeholder-img card-img-top shadow" src="caffe-latte.jpg" />
     </a>
     <div class="card-body">
-        <a href="/products/asdasd" class="text-decoration-none text-reset">
-            <h6 class="card-title mt-2"><strong>Product name</strong></h6>
+        <a href="/products/@Product.Id" class="text-decoration-none text-reset">
+            <h6 class="card-title mt-2"><strong>@Product.Name</strong></h6>
         </a>
-        <p class="card-text mt-2 text-muted">Awesome product</p>
+        <p class="card-text mt-2 text-muted">@Product.Description</p>
     </div>
     <div class="card-footer">
         <div class="d-flex justify-content-between align-items-center">
@@ -14,8 +14,11 @@
 
             </div>
             <div>
-                <h5 style="display: inline-block; font-weight: 500; color: #ca0000; line-height: 0;">@(85.ToString("c"))</h5>
-                <h5 class="text-muted" style="display: inline-block; text-decoration: line-through; color: gray !important; margin-left: 10px; line-height: 0;">@(100.ToString("c"))</h5>
+                <h5 style="display: inline-block; font-weight: 500; color: #ca0000; line-height: 0;">@(Product.Price.ToString("c"))</h5>
+                @if(Product.RegularPrice is not null) 
+                {
+                    <h5 class="text-muted" style="display: inline-block; text-decoration: line-through; color: gray !important; margin-left: 10px; line-height: 0;">@(Product.RegularPrice?.ToString("c"))</h5>
+                }
             </div>
         </div>
     </div>
@@ -23,3 +26,10 @@
         @* <button class="btn btn-outline-primary">Purchase</button> *@
     </div>
 </div>
+
+@code 
+{
+    [Parameter]
+    [EditorRequired]
+    public CatalogAPI.Product Product { get; set; } = default!;
+}

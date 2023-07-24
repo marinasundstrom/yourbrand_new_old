@@ -41,9 +41,11 @@ app.MapGet("/api/products", async (CatalogContext catalogContext, CancellationTo
         return Results.Ok(products);
     })
     .WithName("GetProducts")
+    .Produces<IEnumerable<Catalog.API.Model.Product>>(StatusCodes.Status200OK)
     .WithOpenApi();
 
 
+/*
 app.MapGet("/api/weatherforecast", async (DateOnly startDate, WeatherForecastService weatherForecastService, CancellationToken cancellationToken) =>
     {
         var forecasts = await weatherForecastService.GetWeatherForecasts(startDate, cancellationToken);
@@ -51,6 +53,7 @@ app.MapGet("/api/weatherforecast", async (DateOnly startDate, WeatherForecastSer
     })
     .WithName("GetWeatherForecast")
     .WithOpenApi();
+*/
 
 try 
 {

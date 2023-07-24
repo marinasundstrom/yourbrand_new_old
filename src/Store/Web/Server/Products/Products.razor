@@ -1,5 +1,6 @@
 @page "/products"
 @attribute [StreamRendering(true)]
+@inject CatalogAPI.IClient CatalogAPI
 
 <AppPageTitle>Products</AppPageTitle>
 
@@ -86,7 +87,7 @@
                 {
                     <div class="col card-group">
 
-                        <ProductView />
+                        <ProductView Product="product" />
 
                     </div>
                 }
@@ -108,13 +109,13 @@
 
 @code
 {
-    IEnumerable<int>? products;
+    ICollection<CatalogAPI.Product>? products;
 
     protected override async Task OnInitializedAsync()
     {
         await Task.Delay(1);
 
-        products = Enumerable.Range(1, 10);
+        products = await CatalogAPI.GetProductsAsync();
 
         //return Task.CompletedTask;
     }

@@ -16,6 +16,7 @@ services:
       - 8080:8080
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - "yourbrand-catalog-api-url=http://host.docker.internal:8082"
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
 
