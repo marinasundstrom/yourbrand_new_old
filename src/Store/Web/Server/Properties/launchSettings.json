@@ -9,17 +9,17 @@
     }
   },
   "profiles": {
-    "http": {
+    "Development (Local Catalog API)": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:5153",
+      "applicationUrl": "https://localhost:7188;http://localhost:5153",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "yourbrand-catalog-api-url": "http://localhost:8082"
+        "yourbrand-catalog-api-url": "https://localhost:7134"
       },
       "dotnetRunMessages": true
     },
-    "https": {
+    "Development (Catalog API in Docker)": {
       "commandName": "Project",
       "launchBrowser": true,
       "applicationUrl": "https://localhost:7188;http://localhost:5153",
@@ -29,7 +29,17 @@
       },
       "dotnetRunMessages": true
     },
-    "IIS Express": {
+    "Development (Remote Catalog API)": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "applicationUrl": "https://localhost:7188;http://localhost:5153",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "yourbrand-catalog-api-url": "https://yourbrand-catalog-api.kindgrass-70ab37e8.swedencentral.azurecontainerapps.io"
+      },
+      "dotnetRunMessages": true
+    },
+    "Local (IIS Express)": {
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
