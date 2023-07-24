@@ -44,6 +44,14 @@ app.MapGet("/api/products", async (CatalogContext catalogContext, CancellationTo
     .Produces<IEnumerable<Catalog.API.Model.Product>>(StatusCodes.Status200OK)
     .WithOpenApi();
 
+app.MapGet("/api/products/{id}", async (string id, CatalogContext catalogContext, CancellationToken cancellationToken) =>
+    {
+        var product = await catalogContext.Products.FirstOrDefaultAsync(product => product.Id == id, cancellationToken);
+        return product is not null ? Results.Ok(product) : Results.NotFound();
+    })
+    .WithName("GetProductById")
+    .Produces<Catalog.API.Model.Product>(StatusCodes.Status200OK)
+    .WithOpenApi();
 
 /*
 app.MapGet("/api/weatherforecast", async (DateOnly startDate, WeatherForecastService weatherForecastService, CancellationToken cancellationToken) =>

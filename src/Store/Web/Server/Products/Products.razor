@@ -113,10 +113,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await Task.Delay(1);
-
         products = await CatalogAPI.GetProductsAsync();
-
-        //return Task.CompletedTask;
     }
 }
