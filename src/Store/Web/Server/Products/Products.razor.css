@@ -1,0 +1,4 @@
+.card-group {
+    display: flex;
+    flex-flow: row wrap;
+}
