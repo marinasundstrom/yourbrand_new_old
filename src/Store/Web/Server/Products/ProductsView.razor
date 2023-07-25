@@ -75,9 +75,14 @@
     </div>
 
     <div class="col-md-9">
-        @if (products is null)
+        @if ( /* loading || */  products is null)
         {
             <em>Loading...</em>
+        }
+        else if(error) 
+        {
+            <h2>Sorry. We could not load any products.</h2>
+            <p>Please try again later.</p>
         }
         else
         {
@@ -99,9 +104,9 @@
                     }
 
                 </div>
-            }
 
-            <Pagination Page="Page.GetValueOrDefault()" PageCount="pageCount" Href="/products" PageChanged="OnPageChanged" class="mt-5" />
+                <Pagination Page="Page.GetValueOrDefault()" PageCount="pageCount" Href="/products" PageChanged="OnPageChanged" class="mt-5" />
+            }
         }
     </div>
 </div>
@@ -110,6 +115,8 @@
 {
     ICollection<CatalogAPI.Product>? products;
     int pageCount = 0;
+    bool loading = false;
+    bool error = false;
 
     [Parameter]
     [EditorRequired]
@@ -152,10 +159,9 @@
             if(cts.IsCancellationRequested) {
                 return;
             }
+
             await FetchItems(Page.GetValueOrDefault(), cts.Token);
             NavigationManager.NavigateTo($"/products?page={Page}&searchTerm={SearchTerm}", replace: true);
-
-            await InvokeAsync(StateHasChanged);
 
             task = null;
         }, cts.Token);
@@ -163,9 +169,27 @@
 
     private async Task FetchItems(int page, CancellationToken cancellationToken = default) 
     {
-        var pagedResult = await CatalogAPI.GetProductsAsync(page, PageSize, SearchTerm, cancellationToken);
+        error = false;
+        loading = true;
 
-        products = pagedResult.Items;
-        pageCount = (int)Math.Ceiling((float)pagedResult.Total / (float)PageSize.GetValueOrDefault());
+        await InvokeAsync(StateHasChanged);
+
+        try 
+        {
+            var pagedResult = await CatalogAPI.GetProductsAsync(page, PageSize, SearchTerm, cancellationToken);
+
+            products = pagedResult.Items;
+            pageCount = (int)Math.Ceiling((float)pagedResult.Total / (float)PageSize.GetValueOrDefault());
+        }
+        catch 
+        {
+            error = true;
+        }
+        finally
+        {
+            loading = false;
+        }
+
+        await InvokeAsync(StateHasChanged);
     }
 }
