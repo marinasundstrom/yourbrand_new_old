@@ -1,0 +1,127 @@
+@attribute [RenderModeServer(true)]
+@inject CatalogAPI.IClient CatalogAPI
+@inject NavigationManager NavigationManager
+
+<div class="row gx-5 pt-4">
+    <div class="col-md-3 d-none d-lg-block">
+        <div class="card mb-4">
+            <div class="card-body">
+                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Search...">
+            </div>
+        </div>
+
+        <div>
+            <div class="accordion mb-4" id="accordionExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                            Filters
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">
+                        <div class="accordion-body">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckIndeterminateDisabled" disabled>
+                                <label class="form-check-label" for="flexCheckIndeterminateDisabled">
+                                    Disabled indeterminate checkbox
+                                </label>
+                                </div>
+                                <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDisabled" disabled>
+                                <label class="form-check-label" for="flexCheckDisabled">
+                                    Disabled checkbox
+                                </label>
+                                </div>
+                                <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedDisabled" checked disabled>
+                                <label class="form-check-label" for="flexCheckCheckedDisabled">
+                                    Disabled checked checkbox
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Misc
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">
+                        <div class="accordion-body">
+                            <strong>This is the second item's accordion body.</strong> It is hidden by default, until
+                            the collapse plugin adds the appropriate classes that we use to style each element. These
+                            classes control the overall appearance, as well as the showing and hiding via CSS
+                            transitions. You can modify any of this with custom CSS or overriding our default variables.
+                            It's also worth noting that just about any HTML can go within the
+                            <code>.accordion-body</code>, though the transition does limit overflow.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <button class="btn btn-secondary float-end">Apply</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-9">
+        @if (products is null)
+        {
+            <em>Loading...</em>
+        }
+        else
+        {
+            <div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-3 gx-4 gy-4 gx-md-5 gy-md-5 ">
+
+                @foreach (var product in products)
+                {
+                    <div class="col card-group">
+
+                        <ProductView Product="product" />
+
+                    </div>
+                }
+
+            </div>
+
+            <Pagination Page="Page.GetValueOrDefault()" PageCount="pageCount" Href="/products" PageChanged="OnPageChanged" class="mt-5" />
+        }
+    </div>
+</div>
+
+@code
+{
+    ICollection<CatalogAPI.Product>? products;
+    int pageCount = 0;
+
+    [Parameter]
+    [EditorRequired]
+    public int? Page { get; set; }
+
+    [Parameter]
+    public int? PageSize { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var pagedResult = await CatalogAPI.GetProductsAsync(Page, PageSize);
+
+        products = pagedResult.Items;
+        pageCount = (int)Math.Ceiling((float)pagedResult.Total / (float)PageSize.GetValueOrDefault());
+    }
+
+    private async Task OnPageChanged(int page) 
+    {
+        Page = page;
+
+        var pagedResult = await CatalogAPI.GetProductsAsync(page, PageSize);
+
+        products = pagedResult.Items;
+        pageCount = (int)Math.Ceiling((float)pagedResult.Total / (float)PageSize.GetValueOrDefault());
+
+        NavigationManager.NavigateTo($"/products?page={Page}", replace: true);
+    }
+}
