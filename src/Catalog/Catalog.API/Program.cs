@@ -6,6 +6,17 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+string GetProductsExpire20 = nameof(GetProductsExpire20);
+
+builder.Services.AddOutputCache(options =>
+{
+    options.AddPolicy(GetProductsExpire20, builder => 
+    {
+        builder.Expire(TimeSpan.FromSeconds(20));
+        builder.SetVaryByQuery("page", "pageSize", "searchTerm");
+    });
+});
+
 if (builder.Environment.IsProduction())
 {
     builder.Configuration.AddAzureKeyVault(
@@ -35,6 +46,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseOutputCache();
+
 app.UseHttpsRedirection();
 
 app.MapGet("/api/products", async (int page = 1, int pageSize = 10, string? searchTerm = null, CatalogContext catalogContext = default!, CancellationToken cancellationToken = default) =>
@@ -59,7 +72,8 @@ app.MapGet("/api/products", async (int page = 1, int pageSize = 10, string? sear
     })
     .WithName("GetProducts")
     .Produces<PagedResult<Catalog.API.Model.Product>>(StatusCodes.Status200OK)
-    .WithOpenApi();
+    .WithOpenApi()
+    .CacheOutput(GetProductsExpire20);
 
 app.MapGet("/api/products/{id}", async (string id, CatalogContext catalogContext, CancellationToken cancellationToken) =>
     {
