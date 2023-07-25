@@ -5,9 +5,9 @@
 
 <h1>Products</h1>
 
-<p>Demonstrates form processed by the server - with model-binding and server-side validation</p>
+<p class="d-none d-lg-block">Demonstrates form processed by the server - with model-binding and server-side validation</p>
 
-<ProductsView Page="Page" PageSize="PageSize" />
+<ProductsView Page="Page" PageSize="PageSize" SearchTerm="@SearchTerm" />
 
 @code {
     [SupplyParameterFromQuery]
@@ -15,6 +15,9 @@
 
     [SupplyParameterFromQuery]
     public int? PageSize { get; set; }
+
+    [SupplyParameterFromQuery]
+    public string? SearchTerm { get; set; }
 
     protected override void OnInitialized()
     {

@@ -31,6 +31,14 @@
               "format": "int32",
               "default": 10
             }
+          },
+          {
+            "name": "searchTerm",
+            "in": "query",
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {

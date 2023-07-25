@@ -1,4 +1,5 @@
-﻿using Azure.Identity;
+﻿using System.Xml.Linq;
+using Azure.Identity;
 using Catalog.API.Data;
 using Catalog.API.Model;
 using Microsoft.EntityFrameworkCore;
@@ -36,9 +37,14 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/api/products", async (int page = 1, int pageSize = 10, CatalogContext catalogContext = default!, CancellationToken cancellationToken = default) =>
+app.MapGet("/api/products", async (int page = 1, int pageSize = 10, string? searchTerm = null, CatalogContext catalogContext = default!, CancellationToken cancellationToken = default) =>
     {
         var query = catalogContext.Products.AsQueryable();
+
+        if(!string.IsNullOrEmpty(searchTerm)) 
+        {
+            query = query.Where(x => x.Name.ToLower().Contains(searchTerm.ToLower()!) || x.Description.ToLower().Contains(searchTerm.ToLower()!));
+        }
 
         var total = await query.CountAsync(cancellationToken);
 

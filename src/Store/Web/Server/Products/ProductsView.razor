@@ -1,16 +1,22 @@
-@attribute [RenderModeServer(true)]
+@attribute [RenderModeServer]
 @inject CatalogAPI.IClient CatalogAPI
 @inject NavigationManager NavigationManager
 
-<div class="row gx-5 pt-4">
-    <div class="col-md-3 d-none d-lg-block">
-        <div class="card mb-4">
+<div class="row gx-5 pt-md-4">
+    <div class="col-md-3">
+        <div class="card mb-4 d-none d-lg-block">
             <div class="card-body">
-                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Search...">
+                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Search..."
+                    @bind:event="oninput" @bind:get="SearchTerm" @bind:set="OnSearchTermChanged"></input>
             </div>
         </div>
 
-        <div>
+        <div class="mb-4 d-xs-block d-sm-block d-md-none">
+            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Search..."
+                @bind:event="oninput" @bind:get="SearchTerm" @bind:set="OnSearchTermChanged"></input>
+        </div>
+
+        <div class="d-none d-lg-block">
             <div class="accordion mb-4" id="accordionExample">
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingOne">
@@ -75,18 +81,25 @@
         }
         else
         {
-            <div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-3 gx-4 gy-4 gx-md-5 gy-md-5 ">
+            if(products.Count == 0) 
+            {
+                <p>No results</p>
+            }
+            else 
+            {
+                <div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-3 gx-4 gy-4 gx-md-5 gy-md-5 ">
 
-                @foreach (var product in products)
-                {
-                    <div class="col card-group">
+                    @foreach (var product in products)
+                    {
+                        <div class="col card-group">
 
-                        <ProductView Product="product" />
+                            <ProductView Product="product" />
 
-                    </div>
-                }
+                        </div>
+                    }
 
-            </div>
+                </div>
+            }
 
             <Pagination Page="Page.GetValueOrDefault()" PageCount="pageCount" Href="/products" PageChanged="OnPageChanged" class="mt-5" />
         }
@@ -105,23 +118,54 @@
     [Parameter]
     public int? PageSize { get; set; }
 
+    [Parameter]
+    public string? SearchTerm { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
-        var pagedResult = await CatalogAPI.GetProductsAsync(Page, PageSize);
-
-        products = pagedResult.Items;
-        pageCount = (int)Math.Ceiling((float)pagedResult.Total / (float)PageSize.GetValueOrDefault());
+        await FetchItems(Page.GetValueOrDefault());
     }
 
     private async Task OnPageChanged(int page) 
     {
         Page = page;
 
-        var pagedResult = await CatalogAPI.GetProductsAsync(page, PageSize);
+        await FetchItems(page);
+
+        NavigationManager.NavigateTo($"/products?page={Page}", replace: true);
+    }
+
+    CancellationTokenSource cts = new ();
+    Task? task;
+    
+    private void OnSearchTermChanged(string value) 
+    {
+        SearchTerm = value;
+        Page = 1;
+
+        if(task is not null) {
+            cts.Cancel();
+            cts = new ();
+        }
+
+        task = Task.Delay(400).ContinueWith(async t => {
+            if(cts.IsCancellationRequested) {
+                return;
+            }
+            await FetchItems(Page.GetValueOrDefault(), cts.Token);
+            NavigationManager.NavigateTo($"/products?page={Page}&searchTerm={SearchTerm}", replace: true);
+
+            await InvokeAsync(StateHasChanged);
+
+            task = null;
+        }, cts.Token);
+    }
+
+    private async Task FetchItems(int page, CancellationToken cancellationToken = default) 
+    {
+        var pagedResult = await CatalogAPI.GetProductsAsync(page, PageSize, SearchTerm, cancellationToken);
 
         products = pagedResult.Items;
         pageCount = (int)Math.Ceiling((float)pagedResult.Total / (float)PageSize.GetValueOrDefault());
-
-        NavigationManager.NavigateTo($"/products?page={Page}", replace: true);
     }
 }
