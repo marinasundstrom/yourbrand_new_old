@@ -7,8 +7,9 @@
 	  <RazorLangVersion>8.0</RazorLangVersion>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
-  <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Development (Local Catalog API)' " />
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Development (Catalog API in Docker)' " />
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Development (Remote Catalog API)' " />
   <ItemGroup>
     <ProjectReference Include="..\Client\Client.csproj" />
     <ProjectReference Include="..\Shared\Shared.csproj" />

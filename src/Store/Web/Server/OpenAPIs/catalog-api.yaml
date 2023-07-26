@@ -8,7 +8,7 @@
     "/api/products": {
       "get": {
         "tags": [
-          "Catalog.API"
+          "Products"
         ],
         "operationId": "GetProducts",
         "parameters": [
@@ -58,7 +58,7 @@
     "/api/products/{id}": {
       "get": {
         "tags": [
-          "Catalog.API"
+          "Products"
         ],
         "operationId": "GetProductById",
         "parameters": [
@@ -82,6 +82,9 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       }

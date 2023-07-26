@@ -1,7 +1,6 @@
-﻿using System.Xml.Linq;
-using Azure.Identity;
+﻿using Azure.Identity;
+using Catalog.API.Products;
 using Catalog.API.Data;
-using Catalog.API.Model;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -50,39 +49,7 @@ app.UseOutputCache();
 
 app.UseHttpsRedirection();
 
-app.MapGet("/api/products", async (int page = 1, int pageSize = 10, string? searchTerm = null, CatalogContext catalogContext = default!, CancellationToken cancellationToken = default) =>
-    {
-        var query = catalogContext.Products.AsQueryable();
-
-        if(!string.IsNullOrEmpty(searchTerm)) 
-        {
-            query = query.Where(x => x.Name.ToLower().Contains(searchTerm.ToLower()!) || x.Description.ToLower().Contains(searchTerm.ToLower()!));
-        }
-
-        var total = await query.CountAsync(cancellationToken);
-
-        var products = await query.OrderBy(x => x.Name)
-            .Skip(pageSize * (page - 1))
-            .Take(pageSize)
-            .ToListAsync(cancellationToken);
-
-        var pagedResult = new PagedResult<Product>(products, total);
-
-        return Results.Ok(pagedResult);
-    })
-    .WithName("GetProducts")
-    .Produces<PagedResult<Catalog.API.Model.Product>>(StatusCodes.Status200OK)
-    .WithOpenApi()
-    .CacheOutput(GetProductsExpire20);
-
-app.MapGet("/api/products/{id}", async (string id, CatalogContext catalogContext, CancellationToken cancellationToken) =>
-    {
-        var product = await catalogContext.Products.FirstOrDefaultAsync(product => product.Id == id, cancellationToken);
-        return product is not null ? Results.Ok(product) : Results.NotFound();
-    })
-    .WithName("GetProductById")
-    .Produces<Catalog.API.Model.Product>(StatusCodes.Status200OK)
-    .WithOpenApi();
+app.MapProductsEndpoints();
 
 /*
 app.MapGet("/api/weatherforecast", async (DateOnly startDate, WeatherForecastService weatherForecastService, CancellationToken cancellationToken) =>
