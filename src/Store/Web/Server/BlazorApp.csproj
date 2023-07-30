@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>preview</LangVersion>
 	  <RazorLangVersion>8.0</RazorLangVersion>
   </PropertyGroup>
 
@@ -13,13 +14,23 @@
   <ItemGroup>
     <ProjectReference Include="..\Client\Client.csproj" />
     <ProjectReference Include="..\Shared\Shared.csproj" />
+    <ProjectReference Include="..\..\..\Carts\Carts.Contracts\Carts.Contracts.csproj" />
+    <!-- <ProjectReference Include="..\..\..\Carts\Carts.Client\Carts.Client.csproj" /> -->
   </ItemGroup>
 
   <ItemGroup>
-		<OpenApiReference Include="OpenAPIs\catalog-api.yaml" Options="/UseBaseUrl:false /GenerateClientInterfaces:true /GenerateNullableReferenceTypes:true" Namespace="CatalogAPI">
+		<OpenApiReference Include="OpenAPIs\catalog-api.yaml" Options="/UseBaseUrl:false /GenerateClientInterfaces:true /GenerateNullableReferenceTypes:true /GenerateExceptionClasses:false" Namespace="CatalogAPI">
 			<SourceUri>https://localhost:5001/swagger/v1/swagger.yaml</SourceUri>
 			<ClassName>{controller}Client</ClassName>
 			<OutputPath>CatalogApiClient.cs</OutputPath>
+		</OpenApiReference>
+	</ItemGroup>
+
+  <ItemGroup>
+		<OpenApiReference Include="OpenAPIs\carts-api.yaml" Options="/UseBaseUrl:false /GenerateClientInterfaces:true /GenerateNullableReferenceTypes:true /GenerateExceptionClasses:false" Namespace="CartsAPI">
+			<SourceUri>https://localhost:5001/swagger/v1/swagger.yaml</SourceUri>
+			<ClassName>{controller}Client</ClassName>
+			<OutputPath>CartsApiClient.cs</OutputPath>
 		</OpenApiReference>
 	</ItemGroup>
 
@@ -30,9 +41,12 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0-preview.*" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0-preview.*" />
     <PackageReference Include="Microsoft.Extensions.Localization" Version="7.0.9" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="NSwag.AspNetCore" Version="13.18.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0-preview.*" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.0-preview.*" />
+	  <PackageReference Include="MassTransit" Version="8.0.16" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.16" />
+    <PackageReference Include="MassTransit.Azure.ServiceBus.Core" Version="8.0.16" />
   </ItemGroup>
 
   <ItemGroup>

@@ -36,6 +36,22 @@ services:
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
 
+  carts-api:
+    image: carts-api
+    container_name: carts-api
+    build:
+      context: .
+      dockerfile: src/Carts/Carts.API/Dockerfile
+      args:
+        - configuration=Debug
+    ports:
+      - 8083:8080
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__CartsDb=Server=host.docker.internal,1433;User Id=sa;Password=P@ssw0rd;Encrypt=false;Database=yourbrand-carts-db
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw
+
   mssql:
     container_name: mssql
     image: mcr.microsoft.com/azure-sql-edge:latest
@@ -49,3 +65,13 @@ services:
     hostname: mssql
     volumes:
       - "./data/sql-edge:/var/opt/mssql"
+
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq
+    hostname: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=SomeRandomStringHere

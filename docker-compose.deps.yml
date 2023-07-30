@@ -17,3 +17,13 @@ services:
     hostname: mssql
     volumes:
       - "./data/sql-edge:/var/opt/mssql"
+
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq
+    hostname: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=SomeRandomStringHere

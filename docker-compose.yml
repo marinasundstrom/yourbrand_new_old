@@ -21,3 +21,12 @@ services:
       dockerfile: src/Catalog/Catalog.API/Dockerfile
     ports:
       - 8082:8080
+
+  carts-api:
+    image: carts-api
+    container_name: carts-api
+    build:
+      context: .
+      dockerfile: src/Carts/Carts.API/Dockerfile
+    ports:
+      - 8083:8080

@@ -6,9 +6,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/src/Catalog/Catalog.API/bin/Debug/net8.0/Catalog.API.dll",
+            "program": "${workspaceFolder}/src/Store/Web/Server/bin/Debug/net8.0/BlazorApp.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/src/Catalog/Catalog.API",
+            "cwd": "${workspaceFolder}/src/Store/Web/Server",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",
@@ -27,12 +27,19 @@
             "request": "attach"
         },
         {
+            "name": "Client Attach (WASM)",
+            "type": "blazorwasm",
+            "request": "attach",
+            "url": "https://localhost:7188",
+            "cwd": "${workspaceFolder}/src/Store/Web/Server",
+        },
+        {
             "name": "Docker .NET Launch",
             "type": "docker",
             "request": "launch",
             "preLaunchTask": "docker-run: debug",
             "netCore": {
-                "appProject": "${workspaceFolder}/src/Web/Server/BlazorApp.csproj"
+                "appProject": "${workspaceFolder}/src/Store/Web/Server/BlazorApp.csproj"
             }
         }
     ]

@@ -1,0 +1,15 @@
+@inject IJSRuntime JSRuntime
+
+<li class="mb-2"><a class="btn btn-secondary" href="basket">Manage basket</a></li>
+<li><a class="btn btn-lg btn-primary" href="checkout">Check out & Pay</a></li>
+
+@code 
+{
+    IJSObjectReference? module;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./Cart/CartOffCanvas.razor.js");
+        await module.InvokeVoidAsync("init");
+    }
+}

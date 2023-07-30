@@ -1,0 +1,78 @@
+@attribute [RenderModeWebAssembly]
+@attribute [StreamRendering(true)]
+@using BlazorApp
+@using BlazorApp.Cart
+@implements IDisposable
+@inject ICartService CartService
+@inject RenderingContext RenderingContext
+
+<div class="offcanvas offcanvas-end" style="z-index: 99999;" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+  <div class="offcanvas-header">
+    <h5  class="offcanvas-title" id="offcanvasRightLabel">Basket</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <ul style="
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    ">
+        @if(cartItems is not null) 
+        {
+            @if(cartItems!.Any()) 
+            {
+                <li>
+                    <ul  class="list-group mb-3">
+                        @foreach (var cartItem in cartItems)
+                        {
+                            <li @key="cartItem.Id" class="list-group-item d-flex justify-content-between lh-sm">
+                                <div>
+                                    <h6 class="my-0">@cartItem.Name x @cartItem.Quantity</h6>
+                                    <small class="text-muted">Test</small>
+                                </div>
+                                <span class="text-muted">@((cartItem.Price * cartItem.Quantity).FormatCurrency(currency))</span>
+                            </li>   
+                        }
+                        <li class="list-group-item d-flex justify-content-between">
+                        <span>Total</span>
+                        <strong>@(cartItems.Sum(x => x.Total).FormatCurrency(currency))</strong>
+                        </li>
+                    </ul>
+                </li>
+                <CartButtons />
+            }
+            else 
+            {
+                <span class="mx-4 my-2">You have not added any items yet :( </span>
+            }
+        }
+        else 
+        {
+            <span>Loading...</span>
+        }
+    </ul>
+  </div>
+</div>
+
+@code
+{
+    string currency = "SEK";
+    IEnumerable<BlazorApp.Cart.CartItem>? cartItems;
+
+    protected override async Task OnInitializedAsync()
+    {
+        CartService.CartUpdated += OnCartUpdated;
+        await CartService.InitializeAsync();
+        cartItems = CartService.Items;
+    }
+
+    private async void OnCartUpdated(object? sender, EventArgs eventArgs) 
+    {
+        await InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose() 
+    {
+        CartService.CartUpdated -= OnCartUpdated;
+    }
+}

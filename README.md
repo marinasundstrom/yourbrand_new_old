@@ -32,12 +32,12 @@ docker compose -f docker-compose.debug.yml up --build
 
 The entire project can be run locally either fully in Docker, or with some services running separately during development.
 
-Everything has been pre-configured to work with a SQL database as well as other dependencies running in Docker.
+Everything has been pre-configured to work with a local SQL database as well as other dependencies running in Docker.
 
 To start the database and other dependencies, run this:
 
 ```
-docker compose -f docker-compose.deps.yml up
+docker compose -f docker-compose.deps.yml up -d
 ```
 
 ### Develop Store Web against services running locally
@@ -98,12 +98,14 @@ Create a container app environment with containers:
 
 * ``yourbrand-store-web``
 * ``yourbrand-catalog-webapi``
+* ``yourbrand-carts-webapi``
 
 ### SQL Databases
 
 Create a SQL Server and the following database:
 
 * ``yourbrand-catalog-db``
+* ``yourbrand-carts-db``
 
 ### Assigning managed identities
 
@@ -112,10 +114,13 @@ Setting up managed identities, and the permissions for resources accessing other
 This project uses System-assigned managed identities.
 
 * ``yourbrand-catalog-webapi`` should have read write access to ``yourbrand-catalog-db``
+* ``yourbrand-carts-webapi`` should have read write access to ``yourbrand-carts-db``
 
 ### Add secrets to KeyVault
 
 Add these secrets with values
 
 * ``yourbrand-catalog-api-url``
+* ``yourbrand-carts-api-url``
 * ``yourbrand-catalog-db-connectionstring``
+* ``yourbrand-carts-db-connectionstring``

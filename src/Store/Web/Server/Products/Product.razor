@@ -1,5 +1,8 @@
 @page "/products/{id}"
-@inject CatalogAPI.IClient CatalogAPI
+@attribute [StreamRendering(false)]
+@using CatalogAPI
+@using Client.Products
+@inject IProductsClient ProductsClient
 
 @if(product is null) 
 {
@@ -33,6 +36,8 @@ else
             </div>
 
             <p>@product.Description</p>
+
+            <Client.Products.CartButton Product="productInfo" />
 
             <div class="accordion mt-5" id="accordionExample">
                 <div class="accordion-item">
@@ -68,12 +73,14 @@ else
 {
     string currency = "SEK";
     CatalogAPI.Product? product;
+    ProductInfo? productInfo;
 
     [Parameter]
     public string Id { get; set; } = default!;
 
     protected override async Task OnInitializedAsync()
     {
-        product = await CatalogAPI.GetProductByIdAsync(Id);
+        product = await ProductsClient.GetProductByIdAsync(Id);
+        productInfo = new ProductInfo(product.Name, product.Id, product.Description, (decimal)product.Price, (decimal?)product.RegularPrice);
     }
 }

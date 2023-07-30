@@ -12,13 +12,13 @@ public static class Endpoints
         string GetProductsExpire20 = nameof(GetProductsExpire20);
 
         app.MapGet("/api/products", GetProducts)
-            .WithName(nameof(GetProducts))
+            .WithName($"Products_{nameof(GetProducts)}")
             .WithTags("Products")
             .WithOpenApi()
             .CacheOutput(GetProductsExpire20);
 
         app.MapGet("/api/products/{id}", GetProductById)
-            .WithName(nameof(GetProductById))
+            .WithName($"Products_{nameof(GetProductById)}")
             .WithTags("Products")
             .WithOpenApi();
 

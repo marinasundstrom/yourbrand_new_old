@@ -13,9 +13,11 @@
       "commandName": "Project",
       "launchBrowser": true,
       "applicationUrl": "https://localhost:7188;http://localhost:5153",
+      "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "yourbrand-catalog-api-url": "https://localhost:7134"
+        "yourbrand-catalog-api-url": "https://localhost:7134",
+        "yourbrand-carts-api-url": "https://localhost:7154"
       },
       "dotnetRunMessages": true
     },
@@ -23,28 +25,34 @@
       "commandName": "Project",
       "launchBrowser": true,
       "applicationUrl": "https://localhost:7188;http://localhost:5153",
+      "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "yourbrand-catalog-api-url": "http://localhost:8082"
+        "yourbrand-catalog-api-url": "http://localhost:8082",
+        "yourbrand-carts-api-url": "http://localhost:8003"
       },
       "dotnetRunMessages": true
     },
     "Development (Remote Catalog API)": {
       "commandName": "Project",
       "launchBrowser": true,
+      "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
       "applicationUrl": "https://localhost:7188;http://localhost:5153",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "yourbrand-catalog-api-url": "https://yourbrand-catalog-api.kindgrass-70ab37e8.swedencentral.azurecontainerapps.io"
+        "yourbrand-catalog-api-url": "https://yourbrand-catalog-api.kindgrass-70ab37e8.swedencentral.azurecontainerapps.io",
+        "yourbrand-carts-api-url": ""
       },
       "dotnetRunMessages": true
     },
     "Local (IIS Express)": {
       "commandName": "IISExpress",
       "launchBrowser": true,
+      "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "yourbrand-catalog-api-url": "http://localhost:8082"
+        "yourbrand-catalog-api-url": "http://localhost:8082",
+        "yourbrand-carts-api-url": "http://localhost:8003"
       }
     }
   }

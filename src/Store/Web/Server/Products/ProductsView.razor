@@ -1,5 +1,7 @@
 @attribute [RenderModeServer]
-@inject CatalogAPI.IClient CatalogAPI
+@attribute [StreamRendering(true)]
+@using CatalogAPI
+@inject IProductsClient ProductsClient
 @inject NavigationManager NavigationManager
 
 <div class="row gx-5 pt-md-4">
@@ -176,7 +178,7 @@
 
         try 
         {
-            var pagedResult = await CatalogAPI.GetProductsAsync(page, PageSize, SearchTerm, cancellationToken);
+            var pagedResult = await ProductsClient.GetProductsAsync(page, PageSize, SearchTerm, cancellationToken);
 
             products = pagedResult.Items;
             pageCount = (int)Math.Ceiling((float)pagedResult.Total / (float)PageSize.GetValueOrDefault());

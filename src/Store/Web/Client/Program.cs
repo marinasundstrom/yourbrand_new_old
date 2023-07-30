@@ -1,10 +1,7 @@
 using BlazorApp;
 using Client;
-
+using Client.Cart;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.Extensions.Http;
-
-// Test
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
@@ -21,5 +18,7 @@ builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
 builder.Services.AddScoped<RenderingContext, ClientRenderingContext>();
 
 builder.Services.AddHttpClient<IWeatherForecastService, ClientWeatherForecastService>("WebAPI");
+
+builder.Services.AddCartServices();
 
 await builder.Build().RunAsync();

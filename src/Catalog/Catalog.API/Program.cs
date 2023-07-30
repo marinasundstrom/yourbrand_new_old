@@ -2,6 +2,7 @@
 using Catalog.API.Products;
 using Catalog.API.Data;
 using Microsoft.EntityFrameworkCore;
+using MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,9 +26,8 @@ if (builder.Environment.IsProduction())
 
 // Add services to the container.
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddOpenApiDocument();
 
 builder.Services.AddSqlServer<CatalogContext>(
     builder.Configuration.GetValue<string>("yourbrand-catalog-db-connectionstring")
@@ -36,13 +36,43 @@ builder.Services.AddSqlServer<CatalogContext>(
 
 builder.Services.AddScoped<WeatherForecastService>();
 
+builder.Services.AddMassTransit(x =>
+{
+    x.SetKebabCaseEndpointNameFormatter();
+
+    x.AddConsumers(typeof(Program).Assembly);
+
+    if(builder.Environment.IsProduction()) 
+    {
+        x.UsingAzureServiceBus((context, cfg) => {
+            cfg.Host(builder.Configuration["yourbrand-servicebus-connectionstring"]);
+        });
+    }
+    else 
+    {
+        x.UsingRabbitMq((context, cfg) =>
+        {
+            var rabbitmqHost = builder.Configuration["RABBITMQ_HOST"] ?? "localhost";
+            
+            cfg.Host(rabbitmqHost, "/", h =>
+            {
+                h.Username("guest");
+                h.Password("guest");
+            });
+
+            cfg.ConfigureEndpoints(context);
+        });
+    }
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseOpenApi();
+    app.UseSwaggerUi3();
 }
 
 app.UseOutputCache();

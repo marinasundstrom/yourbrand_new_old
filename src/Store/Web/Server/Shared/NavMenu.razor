@@ -1,5 +1,6 @@
 ﻿@using BlazorApp.Authentication
 @using BlazorApp.Cart
+@using Client.Cart
 
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
       <symbol id="check2" viewBox="0 0 16 16">
@@ -95,9 +96,10 @@
           </li>
           *@
 
-          <li class="nav-item col-6 col-md-auto d-none d-lg-flex">
-            <CartDisplay NoOfItems="2" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-              aria-controls="offcanvasRight" />
+          <li id="fullNav" class="nav-item col-6 col-md-auto d-none d-lg-flex">
+            <div id="cartDisplay" >
+              <CartDisplay data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" />
+            </div>
           </li>
         </ul>
       </div>
@@ -113,8 +115,7 @@
       </a></li>
 
       <li class="list-inline-item">
-        <div class="menu-link me-3 text-decoration-none text-uppercase">
-          <CartDisplay NoOfItems="2" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"></CartDisplay>
+        <div id="mobileNav" class="menu-link me-3 text-decoration-none text-uppercase">
         </div>
       </li>
     </ul>

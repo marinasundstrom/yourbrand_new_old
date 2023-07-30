@@ -1,0 +1,17 @@
+@attribute [RenderModeWebAssembly]
+@attribute [StreamRendering(true)]
+@inject BlazorApp.Cart.ICartService CartService
+
+<button class="btn btn-primary" @onclick="AddItemToCart"><i class="bi bi-basket" /> Add to cart</button>
+
+@code 
+{
+    [Parameter]
+    [EditorRequired]
+    public ProductInfo Product { get; set; } = default!;
+
+    async Task AddItemToCart() 
+    {
+        await CartService.AddCartItem(Product.Name, Product.ProductId, Product.Description, Product.Price, Product.RegularPrice, 1);
+    }
+}

@@ -1,10 +1,15 @@
 using System.Security.Claims;
 using Azure.Identity;
 using BlazorApp;
+using BlazorApp.Cart;
 using BlazorApp.Data;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Carts;
+using CartsAPI;
+using CatalogAPI;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,8 +18,20 @@ builder.Services.AddHttpClient("CatalogAPI", (sp, http) =>
     http.BaseAddress = new Uri(builder.Configuration["yourbrand-catalog-api-url"]!);
 });
 
-builder.Services.AddHttpClient<CatalogAPI.IClient>("CatalogAPI")
-.AddTypedClient<CatalogAPI.IClient>((http, sp) => new CatalogAPI.Client(http));
+builder.Services.AddHttpClient<IProductsClient>("CatalogAPI")
+.AddTypedClient<IProductsClient>((http, sp) => new CatalogAPI.ProductsClient(http));
+
+builder.Services.AddHttpClient("CartsAPI", (sp, http) =>
+{
+    http.BaseAddress = new Uri(builder.Configuration["yourbrand-carts-api-url"]!);
+});
+
+builder.Services.AddHttpClient<ICartsClient>("CartsAPI")
+.AddTypedClient<ICartsClient>((http, sp) => new CartsClient(http));
+
+builder.Services.AddCartServices();
+
+//builder.Services.AddCartsClient(builder.Configuration["yourbrand-carts-api-url"]!);
 
 if (builder.Environment.IsProduction())
 {
@@ -24,7 +41,7 @@ if (builder.Environment.IsProduction())
 }
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddOpenApiDocument();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -52,6 +69,35 @@ builder.Services.AddScoped<ServerNavigationManager>();
 
 builder.Services.AddLocalization();
 
+builder.Services.AddMassTransit(x =>
+{
+    x.SetKebabCaseEndpointNameFormatter();
+
+    x.AddConsumers(typeof(Program).Assembly);
+
+    if(builder.Environment.IsProduction()) 
+    {
+        x.UsingAzureServiceBus((context, cfg) => {
+            cfg.Host(builder.Configuration["yourbrand-servicebus-connectionstring"]);
+        });
+    }
+    else 
+    {
+        x.UsingRabbitMq((context, cfg) =>
+        {
+            var rabbitmqHost = builder.Configuration["RABBITMQ_HOST"] ?? "localhost";
+            
+            cfg.Host(rabbitmqHost, "/", h =>
+            {
+                h.Username("guest");
+                h.Password("guest");
+            });
+
+            cfg.ConfigureEndpoints(context);
+        });
+    }
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -62,8 +108,8 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseSwagger();
-app.UseSwaggerUI();
+app.UseOpenApi();
+ app.UseSwaggerUi3();
 
 app.UseHttpsRedirection();
 
@@ -84,5 +130,7 @@ app.MapGet("/api/weatherforecast", async (DateOnly startDate, IWeatherForecastSe
     })
     .WithName("GetWeatherForecast")
     .WithOpenApi();
+
+app.MapCartsEndpoints();
 
 app.Run();
