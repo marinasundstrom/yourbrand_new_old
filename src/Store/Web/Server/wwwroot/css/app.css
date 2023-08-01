@@ -130,3 +130,13 @@ h1:focus {
     color: inherit;
     text-decoration: underline;
 }
+
+.price, .price2 {
+    font-size: 1.25rem;
+}
+
+@media (max-width: 991.98px) {
+    .price {
+        font-size: 0.9rem;
+    }
+}

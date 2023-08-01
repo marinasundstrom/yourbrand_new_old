@@ -28,10 +28,10 @@ else
             <h1>@product.Name</h1>
 
             <div class="mb-4">
-                <h5 style="display: inline-block; font-weight: 500; color: #ca0000; line-height: 0;">@(((decimal)product.Price).FormatCurrency(currency))</h5>
+                <h5 class="price2" style="display: inline-block; font-weight: 500; color: #ca0000; line-height: 0;">@(((decimal)product.Price).FormatCurrency(currency))</h5>
                 @if(product.RegularPrice is not null) 
                 {
-                    <h5 class="text-muted" style="display: inline-block; text-decoration: line-through; color: gray !important; margin-left: 10px; line-height: 0;">@(((decimal?)product.RegularPrice)?.FormatCurrency(currency))</h5>
+                    <h5 class="price2 text-muted" style="display: inline-block; text-decoration: line-through; color: gray !important; margin-left: 10px; line-height: 0;">@(((decimal?)product.RegularPrice)?.FormatCurrency(currency))</h5>
                 }
             </div>
 
