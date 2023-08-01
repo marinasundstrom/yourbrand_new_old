@@ -40,7 +40,7 @@ public sealed class CartService(StoreWeb.ICartClient client) : ICartService
         }
         else 
         {
-            cartItem = new BlazorApp.Cart.CartItem(ci.Id, name, productId, description, price, regularPrice, quantity);
+            cartItem = new BlazorApp.Cart.CartItem(cartItem.Id, name, productId, description, price, regularPrice, quantity);
 
             _items.Add(cartItem);
         }

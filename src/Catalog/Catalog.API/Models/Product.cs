@@ -11,4 +11,6 @@ public sealed class Product
     public decimal Price { get; set; }
 
     public decimal? RegularPrice { get; set; }
+
+    public string? Image { get; set; }
 }

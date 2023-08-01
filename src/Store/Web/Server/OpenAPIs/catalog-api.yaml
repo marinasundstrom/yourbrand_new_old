@@ -135,6 +135,10 @@
                         "type": "number",
                         "format": "decimal",
                         "nullable": true
+                    },
+                    "image": {
+                        "type": "string",
+                        "nullable": true
                     }
                 }
             }

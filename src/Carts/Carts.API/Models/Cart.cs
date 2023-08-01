@@ -72,6 +72,8 @@ public sealed class CartItem
 
     public string Name { get; set; } = default!;
 
+    public string? Image { get; set; }
+
     public string? ProductId { get; set; }
 
     public string Description { get; set; } = default!;

@@ -18,7 +18,7 @@
                     <ul class="list-group mb-3 my-3 bg-body">
                         @foreach (var cartItem in cartItems)
                         {
-                            <li class="list-group-item lh-sm"> @* d-flex flex-row justify-content-between flex-md-wrap *@
+                            <li @key="cartItem.Id" class="list-group-item lh-sm"> @* d-flex flex-row justify-content-between flex-md-wrap *@
                                 <div class="row">
                                     <div class="col-8 d-flex">
                                         <a href="/products/@cartItem.ProductId">

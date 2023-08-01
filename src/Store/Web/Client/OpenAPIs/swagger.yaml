@@ -148,9 +148,6 @@
                             }
                         }
                     },
-                    "204": {
-                        "description": ""
-                    },
                     "404": {
                         "description": ""
                     }
@@ -553,6 +550,10 @@
                     "name": {
                         "type": "string"
                     },
+                    "image": {
+                        "type": "string",
+                        "nullable": true
+                    },
                     "productId": {
                         "type": "string",
                         "nullable": true
@@ -576,6 +577,10 @@
                     "total": {
                         "type": "number",
                         "format": "decimal"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
                     }
                 }
             },
