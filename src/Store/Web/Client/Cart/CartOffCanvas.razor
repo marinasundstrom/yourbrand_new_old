@@ -28,7 +28,7 @@
                             <li @key="cartItem.Id" class="list-group-item d-flex justify-content-between lh-sm">
                                 <div>
                                     <h6 class="my-0">@cartItem.Name x @cartItem.Quantity</h6>
-                                    <small class="text-muted">Test</small>
+                                    <small class="text-muted">@cartItem.Description</small>
                                 </div>
                                 <span class="text-muted">@((cartItem.Price * cartItem.Quantity).FormatCurrency(currency))</span>
                             </li>   
