@@ -12,8 +12,8 @@
     "Development (Local Catalog API)": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:7188;http://localhost:5153",
       "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
+      "applicationUrl": "https://localhost:7188;http://localhost:5153",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "yourbrand-catalog-api-url": "https://localhost:7134",
@@ -24,8 +24,8 @@
     "Development (Catalog API in Docker)": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:7188;http://localhost:5153",
       "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
+      "applicationUrl": "https://localhost:7188;http://localhost:5153",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "yourbrand-catalog-api-url": "http://localhost:8082",

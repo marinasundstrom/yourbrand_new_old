@@ -124,3 +124,12 @@ Add these secrets with values
 * ``yourbrand-carts-api-url``
 * ``yourbrand-catalog-db-connectionstring``
 * ``yourbrand-carts-db-connectionstring``
+
+
+###
+
+```
+dotnet run src/Store/Web/Server
+dotnet run src/Catalog/Catalog.API
+dotnet run src/Carts/Carts.API
+```

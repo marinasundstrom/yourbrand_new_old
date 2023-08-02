@@ -51,6 +51,8 @@ builder.Services.AddMassTransit(x =>
     {
         x.UsingAzureServiceBus((context, cfg) => {
             cfg.Host(builder.Configuration["yourbrand-servicebus-connectionstring"]);
+
+            cfg.ConfigureEndpoints(context);
         });
     }
     else 

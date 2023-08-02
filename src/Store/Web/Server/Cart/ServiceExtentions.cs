@@ -4,7 +4,7 @@ public static class ServiceExtensions
 {
     public static IServiceCollection AddCartServices(this IServiceCollection services) 
     {
-        services.AddSingleton<ICartService, CartService>();
+        services.AddScoped<ICartService, CartService>();
         return services;
     }
 }
