@@ -5,17 +5,17 @@
 @inject NavigationManager NavigationManager
 
 <div class="row gx-5 pt-md-4">
-    <div class="col-md-3">
-        <div class="card mb-4 d-none d-lg-block">
+    <div class="mb-4 d-xs-block d-sm-block d-md-none">
+        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Search..."
+        @bind:event="oninput" @bind:get="SearchTerm" @bind:set="OnSearchTermChanged"></input>
+    </div>
+
+    <div class="col-md-3 d-none d-lg-block">
+        <div class="card mb-4">
             <div class="card-body">
                 <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Search..."
                     @bind:event="oninput" @bind:get="SearchTerm" @bind:set="OnSearchTermChanged"></input>
             </div>
-        </div>
-
-        <div class="mb-4 d-xs-block d-sm-block d-md-none">
-            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Search..."
-                @bind:event="oninput" @bind:get="SearchTerm" @bind:set="OnSearchTermChanged"></input>
         </div>
 
         <div class="d-none d-lg-block">
@@ -76,7 +76,7 @@
         </div>
     </div>
 
-    <div class="col-md-9">
+    <div class="col-md-9 col-sm-md-12">
         @if ( /* loading || */  products is null)
         {
             <em>Loading...</em>

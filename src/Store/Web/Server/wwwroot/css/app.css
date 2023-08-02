@@ -140,3 +140,12 @@ h1:focus {
         font-size: 0.9rem;
     }
 }
+
+@media (min-width: 768px) and (max-width: 991px) 
+{
+    .col-sm-md-12
+    {
+        flex: 0 0 auto;
+        width: 100%;
+    }
+}
