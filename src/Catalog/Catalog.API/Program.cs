@@ -27,7 +27,12 @@ if (builder.Environment.IsProduction())
 // Add services to the container.
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddOpenApiDocument();
+builder.Services.AddOpenApiDocument(config => {
+     config.PostProcess = document =>
+    {
+        document.Info.Title = "Catalog API";
+    };
+});
 
 builder.Services.AddSqlServer<CatalogContext>(
     builder.Configuration.GetValue<string>("yourbrand-catalog-db-connectionstring")

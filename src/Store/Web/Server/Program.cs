@@ -41,7 +41,12 @@ if (builder.Environment.IsProduction())
 }
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddOpenApiDocument();
+builder.Services.AddOpenApiDocument(config => {
+     config.PostProcess = document =>
+    {
+        document.Info.Title = "Store API";
+    };
+});
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -109,7 +114,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseOpenApi();
- app.UseSwaggerUi3();
+app.UseSwaggerUi3();
 
 app.UseHttpsRedirection();
 

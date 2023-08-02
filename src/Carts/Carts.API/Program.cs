@@ -27,7 +27,12 @@ if (builder.Environment.IsProduction())
 // Add services to the container.
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddOpenApiDocument();
+builder.Services.AddOpenApiDocument(config => {
+     config.PostProcess = document =>
+    {
+        document.Info.Title = "Carts API";
+    };
+});
 
 builder.Services.AddSqlServer<CartsContext>(
     builder.Configuration.GetValue<string>("yourbrand-carts-db-connectionstring")
