@@ -18,13 +18,14 @@ public sealed class CartService(StoreWeb.ICartClient client) : ICartService
     public async Task<IEnumerable<BlazorApp.Cart.CartItem>> GetCartItemsAsync(CancellationToken cancellationToken = default)
     {
         var cart = await client.GetCartAsync(cancellationToken);
-        return cart.Items!.Select(x => new BlazorApp.Cart.CartItem(x.Id!, x.Name!, x.ProductId, x.Description!, (decimal)x.Price, (decimal?)x.RegularPrice, (int)x.Quantity));
+        return cart.Items!.Select(x => new BlazorApp.Cart.CartItem(x.Id!, x.Name!, x.Image!, x.ProductId, x.Description!, (decimal)x.Price, (decimal?)x.RegularPrice, (int)x.Quantity));
     }
 
-    public async Task AddCartItem(string name, string? productId, string description, decimal price, decimal? regularPrice, int quantity)
+    public async Task AddCartItem(string name, string? image, string? productId, string description, decimal price, decimal? regularPrice, int quantity)
     {
         var ci = await client.AddCartItemAsync(new AddCartItemRequest {
             Name = name,
+            Image = image,
             ProductId = productId,
             Description = description,
             Price = price,
@@ -40,7 +41,7 @@ public sealed class CartService(StoreWeb.ICartClient client) : ICartService
         }
         else 
         {
-            cartItem = new BlazorApp.Cart.CartItem(ci.Id, name, productId, description, price, regularPrice, quantity);
+            cartItem = new BlazorApp.Cart.CartItem(ci.Id, name, image, productId, description, price, regularPrice, quantity);
 
             _items.Add(cartItem);
         }

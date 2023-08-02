@@ -6,7 +6,7 @@ public interface ICartService
     
     Task<IEnumerable<CartItem>> GetCartItemsAsync(CancellationToken cancellationToken = default);
 
-    Task AddCartItem(string name, string? productId, string description, decimal price, decimal? regularPrice, int quantity);
+    Task AddCartItem(string name, string? image, string? productId, string description, decimal price, decimal? regularPrice, int quantity);
 
     Task UpdateCartItemQuantity(string cartItemId, int quantity);
 
@@ -17,10 +17,12 @@ public interface ICartService
     event EventHandler? CartUpdated;
 }
 
-public sealed class CartItem(string id, string name, string? productId, string description, decimal price, decimal? regularPrice, int quantity) {
+public sealed class CartItem(string id, string name, string? image, string? productId, string description, decimal price, decimal? regularPrice, int quantity) {
     public string Id { get; set; } = id;
 
     public string Name { get; set; } = name;
+
+    public string? Image { get; set; } = image;
 
     public string? ProductId { get; set; } = productId;
     

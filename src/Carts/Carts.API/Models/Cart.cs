@@ -17,13 +17,13 @@ public sealed class Cart
 
     public IReadOnlyCollection<CartItem> Items => _cartItems;
 
-    public CartItem AddItem(string name, string? productId, string description, decimal price, decimal? regularPrice, int quantity)
+    public CartItem AddItem(string name, string? image, string? productId, string description, decimal price, decimal? regularPrice, int quantity)
     {
         var cartItem = _cartItems.FirstOrDefault(item => item.ProductId == productId);
 
         if(cartItem is null)
         {
-            cartItem = new CartItem(name, productId, description, price, regularPrice, quantity);
+            cartItem = new CartItem(name, image, productId, description, price, regularPrice, quantity);
             _cartItems.Add(cartItem);
         }
         else 
@@ -56,9 +56,10 @@ public sealed class CartItem
 
     }
 
-    public CartItem(string name, string? productId, string description, decimal price, decimal? regularPrice, int quantity)
+    public CartItem(string name, string? image, string? productId, string description, decimal price, decimal? regularPrice, int quantity)
     {
         Name = name;
+        Image = image;
         ProductId = productId;
         Description = description;
         Price = price;

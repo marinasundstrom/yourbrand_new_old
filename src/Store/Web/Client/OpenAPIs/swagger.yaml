@@ -591,6 +591,10 @@
                     "name": {
                         "type": "string"
                     },
+                    "image": {
+                        "type": "string",
+                        "nullable": true
+                    },
                     "productId": {
                         "type": "string",
                         "nullable": true

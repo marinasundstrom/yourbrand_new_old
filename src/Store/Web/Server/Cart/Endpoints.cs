@@ -44,6 +44,7 @@ public static class Endpoints
     {
         var request2 = new CartsAPI.AddCartItemRequest() {
             Name = request.Name,
+            Image = request.Image,
             ProductId = request.ProductId,
             Description = request.Description,
             Price = request.Price,
@@ -70,4 +71,4 @@ public static class Endpoints
     }
 }
 
-public sealed record AddCartItemRequest(string Name, string? ProductId, string Description, decimal Price, decimal? RegularPrice, int Quantity);
+public sealed record AddCartItemRequest(string Name, string? Image, string? ProductId, string Description, decimal Price, decimal? RegularPrice, int Quantity);

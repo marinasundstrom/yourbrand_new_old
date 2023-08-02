@@ -67,7 +67,7 @@ public sealed record CreateCart(string Name) : IRequest<Result<Cart>>
 }
 
 
-public sealed record AddCartItem(string CartId, string Name, string? ProductId, string Description, decimal Price, decimal? RegularPrice, int Quantity) : IRequest<Result<CartItem>>
+public sealed record AddCartItem(string CartId, string Name, string? Image, string? ProductId, string Description, decimal Price, decimal? RegularPrice, int Quantity) : IRequest<Result<CartItem>>
 {
     public sealed class Handler(CartsContext cartsContext) : IRequestHandler<AddCartItem, Result<CartItem>>
     {
@@ -82,7 +82,7 @@ public sealed record AddCartItem(string CartId, string Name, string? ProductId, 
                 return Result.Failure<CartItem>(Errors.CartNotFound);
             }
 
-            var cartItem = cart.AddItem(request.Name, request.ProductId, request.Description, request.Price, request.RegularPrice, request.Quantity);
+            var cartItem = cart.AddItem(request.Name, request.Image, request.ProductId, request.Description, request.Price, request.RegularPrice, request.Quantity);
             
             await cartsContext.SaveChangesAsync(cancellationToken);
 
