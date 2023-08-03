@@ -1,11 +1,12 @@
 on:
+  workflow_dispatch:
   push:
     branches:
     - main
     paths:
-    - "src/Carts/Carts.API/**"
+    - "src/Store/Web/**"
         
-name: Deploy Carts.API
+name: Build and deploy Store Web
   
 jobs:
   build-and-deploy:
@@ -19,16 +20,16 @@ jobs:
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
-    
+
     - name: Build and deploy Container App
       uses: azure/container-apps-deploy-action@v1
       with:
         appSourcePath: ${{ github.workspace }}
-        dockerfilePath: src/Carts/Carts.API/Dockerfile
+        dockerfilePath: src/Store/Web/Server/Dockerfile
         registryUrl: ${{ secrets.REGISTRY_LOGIN_SERVER }}
         registryUsername: ${{ secrets.REGISTRY_USERNAME }}
         registryPassword: ${{ secrets.REGISTRY_PASSWORD }}
-        containerAppName: yourbrand-carts-api
+        containerAppName: yourbrand-store-web
         resourceGroup: ${{ secrets.RESOURCE_GROUP }}
         location: 'Sweden Central'
         targetPort: 8080
