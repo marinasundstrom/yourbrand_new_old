@@ -97,15 +97,39 @@ A KeyVault named: ``yourbrand-keyvault``
 Create a container app environment with containers:
 
 * ``yourbrand-store-web``
-* ``yourbrand-catalog-webapi``
-* ``yourbrand-carts-webapi``
+* ``yourbrand-catalog-api``
+* ``yourbrand-carts-api``
 
 ### SQL Databases
 
 Create a SQL Server and the following database:
 
-* ``yourbrand-catalog-db``
+* ``c-catalog-db``
 * ``yourbrand-carts-db``
+
+Add users for each container app to each DB:
+
+In ``yourbrand-catalog-db`` run this:
+
+```
+CREATE USER [yourbrand-catalog-api] FROM EXTERNAL PROVIDER
+ALTER ROLE db_datareader ADD MEMBER [yourbrand-catalog-api]
+ALTER ROLE db_datawriter ADD MEMBER [yourbrand-catalog-api]
+```
+
+And, in ``yourbrand-carts-db`` run this:
+
+```
+CREATE USER [yourbrand-carts-api] FROM EXTERNAL PROVIDER
+ALTER ROLE db_datareader ADD MEMBER [yourbrand-carts-api]
+ALTER ROLE db_datawriter ADD MEMBER [yourbrand-carts-api]
+```
+
+### Create Service Bus
+
+Name it ``yourbrand-servicebus``. 
+
+Choose Pricing Tier "Standard" or above.
 
 ### Assigning managed identities
 
@@ -113,8 +137,23 @@ Setting up managed identities, and the permissions for resources accessing other
 
 This project uses System-assigned managed identities.
 
-* ``yourbrand-catalog-webapi`` should have read write access to ``yourbrand-catalog-db``
-* ``yourbrand-carts-webapi`` should have read write access to ``yourbrand-carts-db``
+Key Vault access:
+
+*  Both ``yourbrand-catalog-api`` and ``yourbrand-carts-api`` should be 
+"Key Vault Secrets User" to ``yourbrand-keyvault``
+
+Database access:
+
+* ``yourbrand-catalog-api`` should have read write access to ``yourbrand-catalog-db``
+* ``yourbrand-carts-api`` should have read write access to ``yourbrand-carts-db``
+
+Service bus access:
+
+Both ``yourbrand-catalog-api`` and ``yourbrand-carts-api`` should have these roles to ``yourbrand-servicebus``:
+
+* Azure Service Bus Data Owner
+* Azure Service Bus Data Receiver
+* Azure Service Bus Data Sender
 
 ### Add secrets to KeyVault
 
@@ -124,15 +163,22 @@ Add these secrets with values
 * ``yourbrand-carts-api-url``
 * ``yourbrand-catalog-db-connectionstring``
 * ``yourbrand-carts-db-connectionstring``
+* ``yourbrand-servicebus-connectionstring``
 
-### Create Service Bus
+### Scale rule for ``yourbrand-carts-api``
 
-Name it ``yourbrand-servicebus``. 
+Input these in the portal:
 
-Choose Pricing Tier "Standard" or above.
+```
+Name: get-cart-by-id-rule
+Type: Custom
+Metadata:
+   - messageCount: 1
+   - namespace: yourbrand-servicebus
+   - queue: get-cart-by-id
+```
 
-
-###
+## Run projects from CLI
 
 ```
 dotnet run src/Store/Web/Server
