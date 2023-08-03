@@ -7,11 +7,11 @@ ENV ASPNETCORE_URLS=http://+:8080
 USER app
 FROM mcr.microsoft.com/dotnet/nightly/sdk:8.0-preview AS build
 ARG configuration=Release
-WORKDIR /src
+WORKDIR /
 COPY ["src/Carts/Carts.API/Carts.API.csproj", "src/Carts/Carts.API/"]
 RUN dotnet restore "src/Carts/Carts.API/Carts.API.csproj"
 COPY . .
-WORKDIR "/src/src/Carts/Carts.API"
+WORKDIR "/src/Carts/Carts.API"
 RUN dotnet build "Carts.API.csproj" -c $configuration -o /app/build
 
 FROM build AS publish

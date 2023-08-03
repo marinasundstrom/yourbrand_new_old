@@ -7,11 +7,11 @@ ENV ASPNETCORE_URLS=http://+:8080
 USER app
 FROM mcr.microsoft.com/dotnet/nightly/sdk:8.0-preview AS build
 ARG configuration=Release
-WORKDIR /src
+WORKDIR /
 COPY ["src/Store/Web/Server/BlazorApp.csproj", "src/Store/Web/Server/"]
 RUN dotnet restore "src/Store/Web/Server/BlazorApp.csproj"
 COPY . .
-WORKDIR "/src/src/Store/Web/Server"
+WORKDIR "/src/Store/Web/Server"
 RUN dotnet build "BlazorApp.csproj" -c $configuration -o /app/build
 
 FROM build AS publish

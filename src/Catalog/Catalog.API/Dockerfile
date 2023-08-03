@@ -7,11 +7,11 @@ ENV ASPNETCORE_URLS=http://+:8080
 USER app
 FROM mcr.microsoft.com/dotnet/nightly/sdk:8.0-preview AS build
 ARG configuration=Release
-WORKDIR /src
+WORKDIR /
 COPY ["src/Catalog/Catalog.API/Catalog.API.csproj", "src/Catalog/Catalog.API/"]
 RUN dotnet restore "src/Catalog/Catalog.API/Catalog.API.csproj"
 COPY . .
-WORKDIR "/src/src/Catalog/Catalog.API"
+WORKDIR "/src/Catalog/Catalog.API"
 RUN dotnet build "Catalog.API.csproj" -c $configuration -o /app/build
 
 FROM build AS publish
