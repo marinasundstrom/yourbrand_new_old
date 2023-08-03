@@ -17,6 +17,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "yourbrand-catalog-api-url=http://host.docker.internal:8082"
+      - RABBITMQ_HOST=host.docker.internal
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
 
@@ -33,6 +34,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__CatalogDb=Server=host.docker.internal,1433;User Id=sa;Password=P@ssw0rd;Encrypt=false;Database=yourbrand-catalog-db
+      - RABBITMQ_HOST=host.docker.internal
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
 
@@ -49,6 +51,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__CartsDb=Server=host.docker.internal,1433;User Id=sa;Password=P@ssw0rd;Encrypt=false;Database=yourbrand-carts-db
+      - RABBITMQ_HOST=host.docker.internal
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
 
