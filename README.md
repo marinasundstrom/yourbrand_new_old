@@ -125,6 +125,12 @@ Add these secrets with values
 * ``yourbrand-catalog-db-connectionstring``
 * ``yourbrand-carts-db-connectionstring``
 
+### Create Service Bus
+
+Name it ``yourbrand-servicebus``. 
+
+Choose Pricing Tier "Standard" or above.
+
 
 ###
 
