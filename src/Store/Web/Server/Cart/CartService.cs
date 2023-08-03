@@ -1,9 +1,8 @@
 using CartsAPI;
-using MassTransit;
 
 namespace BlazorApp.Cart;
 
-public sealed class CartService(ICartsClient client, IRequestClient<Carts.Contracts.GetCartById> requestClient) : ICartService
+public sealed class CartService(MassTransitCartsClient cartsClient) : ICartService
 {
     private List<CartItem> _items = new();
 
@@ -16,10 +15,8 @@ public sealed class CartService(ICartsClient client, IRequestClient<Carts.Contra
 
     public async Task<IEnumerable<CartItem>> GetCartItemsAsync(CancellationToken cancellationToken = default)
     {
-        var response = await requestClient.GetResponse<Carts.Contracts.GetCartByIdResponse>(
-            new Carts.Contracts.GetCartById { Id = "test" }, cancellationToken);
-
-        return response.Message.Cart.Items!.Select(x => new CartItem(x.Id!, x.Name!, x.Image!, x.ProductId, x.Description!, x.Price, x.RegularPrice, (int)x.Quantity));
+        var cart = await cartsClient.GetCartById("test", cancellationToken);
+        return cart.Items;
     }
 
     public async Task AddCartItem(string name, string? image, string? productId, string description, decimal price, decimal? regularPrice, int quantity)

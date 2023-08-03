@@ -34,62 +34,35 @@ public static class Endpoints
         return app;
     }
 
-    private static async Task<Results<Ok<Carts.Contracts.Cart>, NotFound>> GetCart(IRequestClient<Carts.Contracts.GetCartById> requestClient, CancellationToken cancellationToken)
+    private static async Task<Results<Ok<BlazorApp.Cart.Cart>, NotFound>> GetCart(MassTransitCartsClient cartsClient, CancellationToken cancellationToken)
     {
-        var response = await requestClient.GetResponse<Carts.Contracts.GetCartByIdResponse>(
-            new Carts.Contracts.GetCartById { Id = "test" }, cancellationToken);
-
-        var cart = response.Message.Cart;
+        var cart = await cartsClient.GetCartById("test", cancellationToken);
 
         //var cart = await client.GetCartByIdAsync("test", cancellationToken);
         return cart is not null ? TypedResults.Ok(cart) : TypedResults.NotFound();
     }
 
-    private static async Task<Results<Ok<Carts.Contracts.CartItem>, NotFound>> AddCartItem(AddCartItemRequest request, IRequestClient<Carts.Contracts.AddCartItem> requestClient, CancellationToken cancellationToken)
+    private static async Task<Results<Ok<CartItem>, NotFound>> AddCartItem(AddCartItemRequest request, MassTransitCartsClient cartsClient, CancellationToken cancellationToken)
     {
-        var request2 = new Carts.Contracts.AddCartItem {
-            CartId = "test",
-            Name = request.Name,
-            Image = request.Image,
-            ProductId = request.ProductId,
-            Description = request.Description,
-            Price = request.Price,
-            RegularPrice = request.RegularPrice,
-            Quantity = request.Quantity
-        };
-
-        var response = await requestClient.GetResponse<Carts.Contracts.AddCartItemResponse>(request2, cancellationToken);
-        var cartItem = response.Message.CartItem;
+        var cartItem = await cartsClient.AddCartItem(
+            "test", request.Name, request.Image, request.ProductId, request.Description, request.Price, request.RegularPrice, request.Quantity, cancellationToken);
 
         return cartItem is not null ? TypedResults.Ok(cartItem) : TypedResults.NotFound();
     }
 
-    private static async Task<Results<Ok<Carts.Contracts.CartItem>, NotFound>> UpdateCartItemQuantity(string cartItemId, int quantity, IRequestClient<Carts.Contracts.UpdateCartItemQuantity> requestClient, CancellationToken cancellationToken)
+    private static async Task<Results<Ok<CartItem>, NotFound>> UpdateCartItemQuantity(string cartItemId, int quantity, MassTransitCartsClient cartsClient, CancellationToken cancellationToken)
     {
         if(quantity <= 0) throw new ArgumentException("Invalid quantity", nameof(quantity));
 
-        var request2 = new Carts.Contracts.UpdateCartItemQuantity {
-            CartId = "test",
-            CartItemId = cartItemId,
-            Quantity = quantity
-        };
-
-        var response = await requestClient.GetResponse<Carts.Contracts.UpdateCartItemQuantityResponse>(request2, cancellationToken);
-        var cartItem = response.Message.CartItem;
+        var cartItem = await cartsClient.UpdateCartItemQuantity("test", cartItemId, quantity, cancellationToken);
 
         //var cartItem = await client.UpdateCartItemQuantityAsync("test", cartItemId, quantity, cancellationToken);
         return cartItem is not null ? TypedResults.Ok(cartItem) : TypedResults.NotFound();
     }
 
-    private static async Task<Results<Ok, NotFound>> RemoveCartItem(string cartItemId, IRequestClient<Carts.Contracts.RemoveCartItem> requestClient, CancellationToken cancellationToken)
+    private static async Task<Results<Ok, NotFound>> RemoveCartItem(string cartItemId, MassTransitCartsClient cartsClient, CancellationToken cancellationToken)
     {
-
-        var request2 = new Carts.Contracts.RemoveCartItem {
-            CartId = "test",
-            CartItemId = cartItemId
-        };
-
-        var response = await requestClient.GetResponse<Carts.Contracts.RemoveCartItemResponse>(request2, cancellationToken);
+        await cartsClient.RemoveCartItem("test", cartItemId, cancellationToken);
 
         //await client.RemoveCartItemAsync("test", cartItemId, cancellationToken);
         return TypedResults.Ok();

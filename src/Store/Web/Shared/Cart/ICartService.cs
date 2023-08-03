@@ -17,6 +17,15 @@ public interface ICartService
     event EventHandler? CartUpdated;
 }
 
+public sealed class Cart(string id, string name, IEnumerable<CartItem> items) 
+{
+    public string Id { get; set; } = id;
+
+    public string Name { get; set; } = name;
+
+    public IEnumerable<CartItem> Items{ get; set; } = items;
+}
+
 public sealed class CartItem(string id, string name, string? image, string? productId, string description, decimal price, decimal? regularPrice, int quantity) {
     public string Id { get; set; } = id;
 
