@@ -135,7 +135,7 @@ Choose Pricing Tier "Standard" or above.
 
 ### Assigning managed identities
 
-Make sure to enable Manages Identity on for resource. 
+Make sure to enable Managed Identity  for each resource. 
 
 This project uses System-assigned managed identities.
 
@@ -143,7 +143,7 @@ Setting up managed identities, and the permissions for resources accessing other
 
 Key Vault access:
 
-*  Both ``yourbrand-catalog-api`` and ``yourbrand-carts-api`` should be 
+*  Both ``yourbrand-catalog-api``, ``yourbrand-carts-api``,and ``yourbrand-store-web`` should be 
 "Key Vault Secrets User" to ``yourbrand-keyvault``
 
 Database access:
@@ -153,7 +153,7 @@ Database access:
 
 Service bus access:
 
-Both ``yourbrand-catalog-api`` and ``yourbrand-carts-api`` should have these roles to ``yourbrand-servicebus``:
+Both ``yourbrand-catalog-api``, ``yourbrand-carts-api``, and ``yourbrand-store-web`` should have these roles to ``yourbrand-servicebus``:
 
 * Azure Service Bus Data Owner
 * Azure Service Bus Data Receiver
@@ -171,7 +171,7 @@ Add these secrets with values
 
 Container registry:
 
-And, the container apps need permissions to pull images from the contsiner registry.
+And, the container apps need permissions to pull images from the container registry.
 
 ### Scale rule for ``yourbrand-carts-api``
 
