@@ -86,6 +86,8 @@ You also need to make sure that the container apps that you are deploying to exi
 
 ## Azure environment
 
+### Container Registry
+
 A container registry.
 
 ### KeyVault
@@ -104,7 +106,7 @@ Create a container app environment with containers:
 
 Create a SQL Server and the following database:
 
-* ``c-catalog-db``
+* ``yourbrand-catalog-db``
 * ``yourbrand-carts-db``
 
 Add users for each container app to each DB:
@@ -133,9 +135,11 @@ Choose Pricing Tier "Standard" or above.
 
 ### Assigning managed identities
 
-Setting up managed identities, and the permissions for resources accessing other resources. 
+Make sure to enable Manages Identity on for resource. 
 
 This project uses System-assigned managed identities.
+
+Setting up managed identities, and the permissions for resources accessing other resources.
 
 Key Vault access:
 
@@ -164,6 +168,10 @@ Add these secrets with values
 * ``yourbrand-catalog-db-connectionstring``
 * ``yourbrand-carts-db-connectionstring``
 * ``yourbrand-servicebus-connectionstring``
+
+Container registry:
+
+And, the container apps need permissions to pull images from the contsiner registry.
 
 ### Scale rule for ``yourbrand-carts-api``
 
