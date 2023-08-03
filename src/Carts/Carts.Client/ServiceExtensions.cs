@@ -1,6 +1,7 @@
 ﻿namespace Carts;
 
 using Microsoft.Extensions.DependencyInjection;
+using CartsAPI;
 
 public static class ServiceExtensions 
 {
@@ -12,7 +13,7 @@ public static class ServiceExtensions
         });
 
         services.AddHttpClient<ICartsClient>("CartsAPI")
-            .AddTypedClient<ICartsClient>((http, sp) => new CartsAPI.Client(http));
+            .AddTypedClient<ICartsClient>((http, sp) => new CartsAPI.CartsClient(http));
         
         return services;
     }

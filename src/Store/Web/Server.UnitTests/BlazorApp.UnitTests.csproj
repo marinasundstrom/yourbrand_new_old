@@ -23,13 +23,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Properties\launchSettings.json">
-      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
-    </Content>
+    <ProjectReference Include="..\Server\BlazorApp.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Carts.API\Carts.API.csproj">
-      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
-    </ProjectReference>
+    <Content Update="Properties\launchSettings.json">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 </Project>

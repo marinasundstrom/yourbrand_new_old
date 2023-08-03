@@ -11,6 +11,7 @@ WORKDIR /
 COPY ["src/Catalog/Catalog.API/Catalog.API.csproj", "src/Catalog/Catalog.API/"]
 RUN dotnet restore "src/Catalog/Catalog.API/Catalog.API.csproj"
 COPY . .
+RUN dotnet test "/src/Catalog/Catalog.UnitTests"
 WORKDIR "/src/Catalog/Catalog.API"
 RUN dotnet build "Catalog.API.csproj" -c $configuration -o /app/build
 

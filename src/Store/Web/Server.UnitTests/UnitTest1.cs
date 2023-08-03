@@ -1,4 +1,4 @@
-﻿namespace Catalog.UnitTests;
+﻿namespace BlazorApp.UnitTests;
 
 public class UnitTest1
 {

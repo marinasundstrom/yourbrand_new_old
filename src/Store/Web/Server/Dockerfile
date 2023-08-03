@@ -11,6 +11,7 @@ WORKDIR /
 COPY ["src/Store/Web/Server/BlazorApp.csproj", "src/Store/Web/Server/"]
 RUN dotnet restore "src/Store/Web/Server/BlazorApp.csproj"
 COPY . .
+RUN dotnet test "/src/Store/Web/Server.UnitTests"
 WORKDIR "/src/Store/Web/Server"
 RUN dotnet build "BlazorApp.csproj" -c $configuration -o /app/build
 
