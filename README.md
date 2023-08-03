@@ -185,3 +185,11 @@ dotnet run src/Store/Web/Server
 dotnet run src/Catalog/Catalog.API
 dotnet run src/Carts/Carts.API
 ```
+
+## Verify GitHub Actions with Act
+
+To verify GitHub Actions, install [Act](https://github.com/nektos/act).
+
+```
+act -j <job-name>  -W .github/workflows/<workflow-file>.yaml
+``````
