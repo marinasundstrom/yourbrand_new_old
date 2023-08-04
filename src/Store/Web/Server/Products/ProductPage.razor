@@ -2,6 +2,7 @@
 @attribute [StreamRendering(false)]
 @using BlazorApp.Products
 @using Client.Products
+@using System.Globalization
 @inject IProductsService ProductsService
 
 @if(product is null) 
@@ -12,6 +13,20 @@ else
 {
     <AppPageTitle>@product.Name</AppPageTitle>
 
+    <HeadContent>
+        <meta name="description" content="@product.Description" data-dynamic="1" />
+        <meta property="og:url" content="https://www.kjell.com/se/produkter/dator/enkortsdator/raspberry-pi-4-model-b-enkortsdator-4-gb-ram-p88181" data-dynamic="1" />
+        <meta property="og:type" content="website" data-dynamic="1" />
+        <meta property="og:title" content="@product.Name" data-dynamic="1" />
+        <meta property="og:description" content="@product.Description" data-dynamic="1" />
+        <meta property="og:image" content="@product.Image" data-dynamic="1" />
+        <meta property="product:condition" content="new" data-dynamic="1" />
+        <meta property="product:availability" content="in stock" data-dynamic="1" />
+        <meta property="product:price:amount" content="@product.Price.ToString(CultureInfo.InvariantCulture)" data-dynamic="1" />
+        <meta property="product:price:currency" content="@currency" data-dynamic="1" />
+        <meta property="product:retailer_item_id" content="@product.Id" data-dynamic="1" />
+    </HeadContent>
+    
     <article itemscope itemtype="http://schema.org/Product" style="display: flex;">
 
         <div class="row gx-5">

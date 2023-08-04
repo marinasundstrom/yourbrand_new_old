@@ -26,11 +26,11 @@
                         @foreach (var cartItem in cartItems)
                         {
                             <li @key="cartItem.Id" class="list-group-item d-flex justify-content-between lh-sm">
-                                <div>
-                                    <h6 class="my-0">@cartItem.Name x @cartItem.Quantity</h6>
+                                <div class="my-2">
+                                    <h6 class="mb-2">@cartItem.Name x @cartItem.Quantity</h6>
                                     <small class="text-muted">@cartItem.Description</small>
                                 </div>
-                                <span class="text-muted">@((cartItem.Price * cartItem.Quantity).FormatCurrency(currency))</span>
+                                <span class="small text-muted my-2">@((cartItem.Price * cartItem.Quantity).FormatCurrency(currency))</span>
                             </li>   
                         }
                         <li class="list-group-item d-flex justify-content-between">

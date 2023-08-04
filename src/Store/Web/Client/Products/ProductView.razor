@@ -1,20 +1,19 @@
-<article itemscope itemtype="http://schema.org/Product" style="display: flex;">
-    <a itemprop="url" href="/products/@Product.Id" class="text-decoration-none" style="display: contents">
+<article style="display: flex;">
+    <a href="/products/@Product.Id" class="text-decoration-none" style="display: contents">
         <div class="col card-group">
             <div class="card" >
-                <img class="bd-placeholder-img card-img-top shadow" alt="Product image" itemprop="image" style="max-width: 100%; height: auto; object-fit: cover; aspect-ratio: 1 / 1;" src="@Product.Image" />
+                <img class="bd-placeholder-img card-img-top shadow" alt="Product image" style="max-width: 100%; height: auto; object-fit: cover; aspect-ratio: 1 / 1;" src="@Product.Image" />
                 <div class="card-body">
-                    <h6 class="card-title mt-2" itemprop="name"><strong>@Product.Name</strong></h6>
-                    <p class="card-text mt-2 text-muted" itemprop="description">@Product.Description</p>
+                    <h6 class="card-title mt-2">@Product.Name</h6>
+                    <p class="card-text mt-2 text-muted">@Product.Description</p>
                 </div>
                 <div class="card-footer">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
 
                         </div>
-                        <div itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-                            <meta property="priceCurrency" content="@currency">
-                            <span class="price" itemprop="price" content="@Product.Price" style="display: inline-block; font-weight: 500; color: #ca0000; line-height: 0;">@(((decimal)Product.Price).FormatCurrency(currency))</span>
+                        <div>
+                            <span class="price" content="@Product.Price" style="display: inline-block; font-weight: 500; color: #ca0000; line-height: 0;">@(((decimal)Product.Price).FormatCurrency(currency))</span>
                             @if(Product.RegularPrice is not null) 
                             {
                                 <span class="price text-muted" style="display: inline-block; text-decoration: line-through; color: gray !important; margin-left: 10px; line-height: 0;">@(((decimal?)Product.RegularPrice)?.FormatCurrency(currency))</span>
