@@ -51,7 +51,7 @@ public sealed class CartService(StoreWeb.ICartClient client) : ICartService
 
     public async Task UpdateCartItemQuantity(string cartItemId, int quantity)
     {
-        await client.UpdateCartItemQuantityAsync(cartItemId, quantity);
+        await client.UpdateCartItemQuantityAsync(cartItemId, new UpdateCartItemQuantityRequest { Quantity = quantity });
 
         var cartItem = _items.FirstOrDefault(x => x.Id == cartItemId);
 

@@ -125,18 +125,21 @@
                             "nullable": true
                         },
                         "x-position": 1
-                    },
-                    {
-                        "name": "quantity",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int32"
-                        },
-                        "x-position": 2
                     }
                 ],
+                "requestBody": {
+                    "x-name": "request",
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateCartItemQuantityRequest"
+                            }
+                        }
+                    },
+                    "required": true,
+                    "x-position": 2
+                },
                 "responses": {
                     "200": {
                         "description": "",
@@ -603,6 +606,16 @@
                         "format": "decimal",
                         "nullable": true
                     },
+                    "quantity": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "UpdateCartItemQuantityRequest": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
                     "quantity": {
                         "type": "integer",
                         "format": "int32"

@@ -50,11 +50,11 @@ public static class Endpoints
         return cartItem is not null ? TypedResults.Ok(cartItem) : TypedResults.NotFound();
     }
 
-    private static async Task<Results<Ok<CartItem>, NotFound>> UpdateCartItemQuantity(string cartItemId, int quantity, MassTransitCartsClient cartsClient, CancellationToken cancellationToken)
+    private static async Task<Results<Ok<CartItem>, NotFound>> UpdateCartItemQuantity(string cartItemId, UpdateCartItemQuantityRequest request, MassTransitCartsClient cartsClient, CancellationToken cancellationToken)
     {
-        if(quantity <= 0) throw new ArgumentException("Invalid quantity", nameof(quantity));
+        if(request.Quantity <= 0) throw new ArgumentException("Invalid quantity", nameof(request));
 
-        var cartItem = await cartsClient.UpdateCartItemQuantity("test", cartItemId, quantity, cancellationToken);
+        var cartItem = await cartsClient.UpdateCartItemQuantity("test", cartItemId, request.Quantity, cancellationToken);
 
         //var cartItem = await client.UpdateCartItemQuantityAsync("test", cartItemId, quantity, cancellationToken);
         return cartItem is not null ? TypedResults.Ok(cartItem) : TypedResults.NotFound();
@@ -70,3 +70,5 @@ public static class Endpoints
 }
 
 public sealed record AddCartItemRequest(string Name, string? Image, string? ProductId, string Description, decimal Price, decimal? RegularPrice, int Quantity);
+
+public sealed record UpdateCartItemQuantityRequest(int Quantity);
