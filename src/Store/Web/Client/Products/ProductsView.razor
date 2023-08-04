@@ -96,11 +96,7 @@
 
                     @foreach (var product in products)
                     {
-                        <div class="col card-group">
-
-                            <ProductView @key="product.Id" Product="product" />
-
-                        </div>
+                        <ProductView @key="product.Id" Product="product" />
                     }
 
                 </div>
