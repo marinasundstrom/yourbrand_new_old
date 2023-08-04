@@ -1,6 +1,6 @@
 # Cart requests
 
-@hostname=localhost
+@host=localhost
 @port=7188
 
 ### Get cart

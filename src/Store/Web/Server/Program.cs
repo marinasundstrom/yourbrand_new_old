@@ -11,7 +11,23 @@ using Carts;
 using CartsAPI;
 using CatalogAPI;
 
+string MyAllowSpecificOrigins = nameof(MyAllowSpecificOrigins);
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+        policy =>
+        {
+            policy.WithOrigins(
+                    "https://yourbrand-store-web.kindgrass-70ab37e8.swedencentral.azurecontainerapps.io",
+                    "https://localhost:7188",
+                    "https://localhost:8080")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
 
 builder.Services.AddHttpClient("CatalogAPI", (sp, http) =>
 {
@@ -126,9 +142,13 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 
+app.UseCors(MyAllowSpecificOrigins);
+
 app.MapRazorComponents<App>()
     .AddWebAssemblyRenderMode()
     .AddServerRenderMode();
+
+app.MapCartsEndpoints();
 
 app.MapGroup("/identity").MapIdentityApi<IdentityUser>();
 
@@ -141,7 +161,5 @@ app.MapGet("/api/weatherforecast", async (DateOnly startDate, IWeatherForecastSe
     })
     .WithName("GetWeatherForecast")
     .WithOpenApi();
-
-app.MapCartsEndpoints();
 
 app.Run();

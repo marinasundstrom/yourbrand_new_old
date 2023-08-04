@@ -14,21 +14,25 @@ public static class Endpoints
         app.MapGet("/api/cart", GetCart)
             .WithName($"Cart_{nameof(GetCart)}")
             .WithTags("Cart")
+            .RequireCors()
             .WithOpenApi();
 
         app.MapPost("/api/cart/items", AddCartItem)
             .WithName($"Cart_{nameof(AddCartItem)}")
             .WithTags("Cart")
+            .RequireCors()
             .WithOpenApi();
 
         app.MapPut("/api/cart/items/{cartItemId}/quantity", UpdateCartItemQuantity)
             .WithName($"Cart_{nameof(UpdateCartItemQuantity)}")
             .WithTags("Cart")
+            .RequireCors()
             .WithOpenApi();
 
         app.MapDelete("/api/cart/items/{cartItemId}", RemoveCartItem)
             .WithName($"Cart_{nameof(RemoveCartItem)}")
             .WithTags("Cart")
+            .RequireCors()
             .WithOpenApi();
 
         return app;
