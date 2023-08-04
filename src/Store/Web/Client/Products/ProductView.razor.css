@@ -33,3 +33,9 @@
     padding-left: 2px;
     padding-right: 2px;
 }
+
+@media (max-width: 991.98px) {
+    h5 {
+        font-size: 1rem;
+    }
+}
