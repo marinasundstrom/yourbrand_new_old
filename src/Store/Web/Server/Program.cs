@@ -2,6 +2,7 @@ using System.Security.Claims;
 using Azure.Identity;
 using BlazorApp;
 using BlazorApp.Cart;
+using BlazorApp.Products;
 using BlazorApp.Data;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -14,6 +15,17 @@ using CatalogAPI;
 string MyAllowSpecificOrigins = nameof(MyAllowSpecificOrigins);
 
 var builder = WebApplication.CreateBuilder(args);
+
+string GetProductsExpire20 = nameof(GetProductsExpire20);
+
+builder.Services.AddOutputCache(options =>
+{
+    options.AddPolicy(GetProductsExpire20, builder => 
+    {
+        builder.Expire(TimeSpan.FromSeconds(20));
+        builder.SetVaryByQuery("page", "pageSize", "searchTerm");
+    });
+});
 
 builder.Services.AddCors(options =>
 {
@@ -45,7 +57,9 @@ builder.Services.AddHttpClient("CartsAPI", (sp, http) =>
 builder.Services.AddHttpClient<ICartsClient>("CartsAPI")
 .AddTypedClient<ICartsClient>((http, sp) => new CartsClient(http));
 
-builder.Services.AddCartServices();
+builder.Services
+    .AddProductsServices()
+    .AddCartServices();
 
 //builder.Services.AddCartsClient(builder.Configuration["yourbrand-carts-api-url"]!);
 
@@ -148,7 +162,9 @@ app.MapRazorComponents<App>()
     .AddWebAssemblyRenderMode()
     .AddServerRenderMode();
 
-app.MapCartsEndpoints();
+app
+    .MapProductsEndpoints()
+    .MapCartEndpoints();
 
 app.MapGroup("/identity").MapIdentityApi<IdentityUser>();
 

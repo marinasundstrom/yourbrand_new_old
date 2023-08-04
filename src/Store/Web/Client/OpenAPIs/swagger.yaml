@@ -11,40 +11,90 @@
         }
     ],
     "paths": {
-        "/requires-auth": {
+        "/api/products": {
             "get": {
-                "operationId": "GetRequiresAuth",
+                "tags": [
+                    "Products"
+                ],
+                "operationId": "Products_GetProducts",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "nullable": true
+                        },
+                        "x-position": 1
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "nullable": true
+                        },
+                        "x-position": 2
+                    },
+                    {
+                        "name": "searchTerm",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "x-position": 3
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "string"
+                                    "$ref": "#/components/schemas/PagedResultOfProduct"
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": ""
                     }
                 }
             }
         },
-        "/api/weatherforecast": {
+        "/api/products/{id}": {
             "get": {
-                "operationId": "GetWeatherForecast",
+                "tags": [
+                    "Products"
+                ],
+                "operationId": "Products_GetProductById",
                 "parameters": [
                     {
-                        "name": "startDate",
-                        "in": "query",
+                        "name": "id",
+                        "in": "path",
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "format": "date"
+                            "nullable": true
                         },
                         "x-position": 1
                     }
                 ],
                 "responses": {
                     "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Product"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
                         "description": ""
                     }
                 }
@@ -180,6 +230,45 @@
                         "description": ""
                     },
                     "404": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/requires-auth": {
+            "get": {
+                "operationId": "GetRequiresAuth",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/weatherforecast": {
+            "get": {
+                "operationId": "GetWeatherForecast",
+                "parameters": [
+                    {
+                        "name": "startDate",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        },
+                        "x-position": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
                         "description": ""
                     }
                 }
@@ -521,6 +610,50 @@
     },
     "components": {
         "schemas": {
+            "PagedResultOfProduct": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Product"
+                        }
+                    },
+                    "total": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "Product": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "image": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "price": {
+                        "type": "number",
+                        "format": "decimal"
+                    },
+                    "regularPrice": {
+                        "type": "number",
+                        "format": "decimal",
+                        "nullable": true
+                    }
+                }
+            },
             "Cart": {
                 "type": "object",
                 "additionalProperties": false,

@@ -1,7 +1,5 @@
-@attribute [RenderModeServer]
-@attribute [StreamRendering(true)]
-@using CatalogAPI
-@inject IProductsClient ProductsClient
+@using BlazorApp.Products
+@inject IProductsService ProductsService
 @inject NavigationManager NavigationManager
 
 <div class="row gx-5 pt-md-4">
@@ -115,7 +113,7 @@
 
 @code
 {
-    ICollection<CatalogAPI.Product>? products;
+    ICollection<BlazorApp.Products.Product>? products;
     int pageCount = 0;
     bool loading = false;
     bool error = false;
@@ -178,9 +176,9 @@
 
         try 
         {
-            var pagedResult = await ProductsClient.GetProductsAsync(page, PageSize, SearchTerm, cancellationToken);
+            var pagedResult = await ProductsService.GetProducts(page, PageSize, SearchTerm, cancellationToken);
 
-            products = pagedResult.Items;
+            products = pagedResult.Items.ToList();
             pageCount = (int)Math.Ceiling((float)pagedResult.Total / (float)PageSize.GetValueOrDefault());
         }
         catch 

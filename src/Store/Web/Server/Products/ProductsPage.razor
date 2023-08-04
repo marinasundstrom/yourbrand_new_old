@@ -7,7 +7,7 @@
 
 <p class="d-none d-lg-block">Demonstrates form processed by the server - with model-binding and server-side validation</p>
 
-<ProductsView Page="Page" PageSize="PageSize" SearchTerm="@SearchTerm" />
+<Client.Products.ProductsView Page="Page" PageSize="PageSize" SearchTerm="@SearchTerm" @rendermode="@RenderMode.Auto" />
 
 @code {
     [SupplyParameterFromQuery]

@@ -1,6 +1,7 @@
 using BlazorApp;
 using Client;
 using Client.Cart;
+using Client.Products;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -19,6 +20,8 @@ builder.Services.AddScoped<RenderingContext, ClientRenderingContext>();
 
 builder.Services.AddHttpClient<IWeatherForecastService, ClientWeatherForecastService>("WebAPI");
 
-builder.Services.AddCartServices();
+builder.Services
+    .AddProductsServices()
+    .AddCartServices();
 
 await builder.Build().RunAsync();

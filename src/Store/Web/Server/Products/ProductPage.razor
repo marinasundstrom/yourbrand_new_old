@@ -1,8 +1,8 @@
 @page "/products/{id}"
 @attribute [StreamRendering(false)]
-@using CatalogAPI
+@using BlazorApp.Products
 @using Client.Products
-@inject IProductsClient ProductsClient
+@inject IProductsService ProductsService
 
 @if(product is null) 
 {
@@ -72,7 +72,7 @@ else
 @code 
 {
     string currency = "SEK";
-    CatalogAPI.Product? product;
+    BlazorApp.Products.Product? product;
     ProductInfo? productInfo;
 
     [Parameter]
@@ -80,7 +80,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        product = await ProductsClient.GetProductByIdAsync(Id);
+        product = await ProductsService.GetProductById(Id);
         productInfo = new ProductInfo(product.Name, product.Image, product.Id, product.Description, (decimal)product.Price, (decimal?)product.RegularPrice);
     }
 }

@@ -7,7 +7,7 @@ namespace BlazorApp.Cart;
 
 public static class Endpoints 
 {
-    public static IEndpointRouteBuilder MapCartsEndpoints(this IEndpointRouteBuilder app) 
+    public static IEndpointRouteBuilder MapCartEndpoints(this IEndpointRouteBuilder app) 
     {  
         string GetCartsExpire20 = nameof(GetCartsExpire20);
 
