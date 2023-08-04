@@ -206,5 +206,5 @@ act -j <job-name>  -W .github/workflows/<workflow-file>.yaml
 
 We are using the schemas for [Product](https://schema.org/Product) and [Offer](https://schema.org/Offer).
 
-Validate the usage with the (
-[Validator](https://validator.schema.org/)
+Validate the usage with the 
+[Validator](https://validator.schema.org/).
