@@ -28,7 +28,6 @@ paths:
         in: query
         schema:
           type: string
-          nullable: true
         x-position: 3
       responses:
         200:
@@ -48,7 +47,6 @@ paths:
         required: true
         schema:
           type: string
-          nullable: true
         x-position: 1
       responses:
         200:

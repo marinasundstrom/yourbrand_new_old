@@ -64,7 +64,6 @@ paths:
         required: true
         schema:
           type: string
-          nullable: true
         x-position: 1
       responses:
         200:
@@ -86,7 +85,6 @@ paths:
         required: true
         schema:
           type: string
-          nullable: true
         x-position: 1
       requestBody:
         x-name: cartItemRequest
@@ -117,14 +115,12 @@ paths:
         required: true
         schema:
           type: string
-          nullable: true
         x-position: 1
       - name: id
         in: path
         required: true
         schema:
           type: string
-          nullable: true
         x-position: 2
       responses:
         200:
@@ -145,14 +141,12 @@ paths:
         required: true
         schema:
           type: string
-          nullable: true
         x-position: 1
       - name: id
         in: path
         required: true
         schema:
           type: string
-          nullable: true
         x-position: 2
       responses:
         200:
@@ -170,14 +164,12 @@ paths:
         required: true
         schema:
           type: string
-          nullable: true
         x-position: 1
       - name: id
         in: path
         required: true
         schema:
           type: string
-          nullable: true
         x-position: 2
       - name: quantity
         in: query

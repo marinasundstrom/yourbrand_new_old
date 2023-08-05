@@ -30,7 +30,6 @@ paths:
         in: query
         schema:
           type: string
-          nullable: true
         x-position: 3
       responses:
         200:
@@ -52,7 +51,6 @@ paths:
         required: true
         schema:
           type: string
-          nullable: true
         x-position: 1
       responses:
         200:
@@ -111,7 +109,6 @@ paths:
         required: true
         schema:
           type: string
-          nullable: true
         x-position: 1
       requestBody:
         x-name: request
@@ -142,7 +139,6 @@ paths:
         required: true
         schema:
           type: string
-          nullable: true
         x-position: 1
       responses:
         200:
@@ -250,19 +246,16 @@ paths:
         in: query
         schema:
           type: string
-          nullable: true
         x-position: 1
       - name: code
         in: query
         schema:
           type: string
-          nullable: true
         x-position: 2
       - name: changedEmail
         in: query
         schema:
           type: string
-          nullable: true
         x-position: 3
       responses:
         200:

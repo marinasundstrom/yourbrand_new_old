@@ -28,10 +28,12 @@ if (builder.Environment.IsProduction())
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApiDocument(config => {
-     config.PostProcess = document =>
+    config.PostProcess = document =>
     {
         document.Info.Title = "Catalog API";
     };
+
+    config.DefaultReferenceTypeNullHandling = NJsonSchema.Generation.ReferenceTypeNullHandling.NotNull;
 });
 
 builder.Services.AddSqlServer<CatalogContext>(
