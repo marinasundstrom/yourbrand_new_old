@@ -78,8 +78,8 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseOpenApi();
-    app.UseSwaggerUi3();
+    app.UseOpenApi(p => p.Path = "/swagger/{documentName}/swagger.yaml");
+    app.UseSwaggerUi3(p => p.DocumentPath = "/swagger/{documentName}/swagger.yaml");
 }
 
 app.UseOutputCache();
