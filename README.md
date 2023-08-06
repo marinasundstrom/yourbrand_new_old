@@ -190,6 +190,7 @@ Metadata:
 
 ```
 dotnet run src/Store/Web/Server
+dotnet run src/Admin/Web/Server
 dotnet run src/Catalog/Catalog.API
 dotnet run src/Carts/Carts.API
 ```
