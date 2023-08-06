@@ -1,0 +1,98 @@
+@page "/products/{id}"
+@using AdminAPI
+@using System.ComponentModel.DataAnnotations
+@inject IProductsClient ProductsClient
+
+@if(loaded) 
+{
+    <PageTitle>@detailsUpdateViewModel.Name</PageTitle>
+
+    <MudText Typo="Typo.h3" GutterBottom="true">@detailsUpdateViewModel.Name</MudText>
+
+    <MudGrid>
+        <MudItem xs="12" sm="12" md="6">
+            <MudPaper Elevation="2" Class="pa-4">
+                <EditForm Model="@detailsUpdateViewModel" OnValidSubmit="UpdateDetails">
+                    <DataAnnotationsValidator />
+
+                    <MudTextField Label="Name" @bind-Value="detailsUpdateViewModel.ShadowName" Variant="Variant.Outlined" For="() => detailsUpdateViewModel.ShadowName"></MudTextField>
+                    <MudTextField Label="Description" Lines="5" @bind-Value="detailsUpdateViewModel.Description" Variant="Variant.Outlined" For="() => detailsUpdateViewModel.Description" Class="mt-4"></MudTextField>
+
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Class="mt-4">Update details</MudButton>
+                </EditForm>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" sm="12" md="6">
+            <MudPaper Elevation="2" Class="pa-4">
+                <EditForm Model="@priceUpdateViewModel" OnValidSubmit="UpdatePrice">
+                    <DataAnnotationsValidator />
+
+                    <MudNumericField Label="Price" @bind-Value="priceUpdateViewModel.Price" Variant="Variant.Outlined" For="() => priceUpdateViewModel.Price"></MudNumericField>
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Class="mt-4">Update price</MudButton>
+                </EditForm>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+}
+
+@code 
+{
+    bool loaded = false;
+    DetailsUpdateViewModel detailsUpdateViewModel;
+    PriceUpdateViewModel priceUpdateViewModel;
+
+    [Parameter] public string Id { get; set; }
+ 
+    protected override async Task OnInitializedAsync() 
+    {
+        var product = await ProductsClient.GetProductByIdAsync(Id);
+
+        detailsUpdateViewModel = new ()
+        {
+            Name = product.Name,
+            ShadowName = product.Name,
+            Description = product.Description
+        };
+
+        priceUpdateViewModel = new () {
+            Price = product.Price
+        };
+
+        loaded = true;
+    }
+
+    private async Task UpdateDetails() 
+    {
+        await ProductsClient.UpdateProductDetailsAsync(Id, new UpdateProductDetailsRequest() {
+            Name = detailsUpdateViewModel.ShadowName,
+            Description = detailsUpdateViewModel.Description,
+        });
+
+        detailsUpdateViewModel.Name = detailsUpdateViewModel.ShadowName;
+    }
+
+    private async Task UpdatePrice() 
+    {
+        await ProductsClient.UpdateProductPriceAsync(Id, new UpdateProductPriceRequest() {
+            Price = priceUpdateViewModel.Price
+        });
+    }
+
+    class DetailsUpdateViewModel 
+    {
+        public string Name { get; set; }
+
+        [Required]
+        public string ShadowName { get; set; }
+
+        [Required]
+        public string Description { get; set; }
+    }
+
+    class PriceUpdateViewModel 
+    {
+        [Range(0, 100000)]
+        public decimal Price { get; set; }
+    }
+}

@@ -30,3 +30,12 @@ services:
       dockerfile: src/Carts/Carts.API/Dockerfile
     ports:
       - 8083:8080
+
+  admin-web:
+    image: admin-web
+    container_name: admin-web
+    build:
+      context: .
+      dockerfile: src/Admin/Web/Server/Dockerfile
+    ports:
+      - 8084:8080

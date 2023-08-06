@@ -55,6 +55,23 @@ services:
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
 
+  admin-web:
+    image: admin-web
+    container_name: admin-web
+    build:
+      context: .
+      dockerfile: src/Admin/Web/Server/Dockerfile
+      args:
+        - configuration=Debug
+    ports:
+      - 8084:8080
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - RABBITMQ_HOST=host.docker.internal
+      - "yourbrand-catalog-api-url=http://host.docker.internal:8082"
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw
+
   mssql:
     container_name: mssql
     image: mcr.microsoft.com/azure-sql-edge:latest

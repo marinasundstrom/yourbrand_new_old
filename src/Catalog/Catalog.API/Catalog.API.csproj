@@ -20,4 +20,8 @@
     <PackageReference Include="MassTransit.Azure.ServiceBus.Core" Version="8.0.16" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Catalog.Contracts\Catalog.Contracts.csproj" />
+  </ItemGroup>
+
 </Project>

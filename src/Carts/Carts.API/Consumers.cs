@@ -110,3 +110,16 @@ public static class Mappings
         Created = cartItem.Created
     };
 }
+
+public sealed class UProductPriceUpdatedConsumer(Carts.API.Data.CartsContext cartsContext) : IConsumer<Catalog.Contracts.ProductPriceUpdated>
+{
+    public async Task Consume(ConsumeContext<Catalog.Contracts.ProductPriceUpdated> context)
+    {
+        var message = context.Message;
+
+        await cartsContext.CartItems
+            .Where(cartItem => cartItem.ProductId == message.ProductId)
+            .ExecuteUpdateAsync(s => s.SetProperty(e => e.Price, e => message.NewPrice), context.CancellationToken);
+
+    }
+}
