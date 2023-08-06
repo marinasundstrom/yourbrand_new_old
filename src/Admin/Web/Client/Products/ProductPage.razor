@@ -23,12 +23,12 @@
             </MudPaper>
         </MudItem>
 
-        <MudItem xs="12" sm="12" md="6">
+        <MudItem xs="12" sm="12" md="3">
             <MudPaper Elevation="2" Class="pa-4">
                 <EditForm Model="@priceUpdateViewModel" OnValidSubmit="UpdatePrice">
                     <DataAnnotationsValidator />
 
-                    <MudNumericField Label="Price" @bind-Value="priceUpdateViewModel.Price" Variant="Variant.Outlined" For="() => priceUpdateViewModel.Price"></MudNumericField>
+                    <MudNumericField Label="Price" @bind-Value="priceUpdateViewModel.Price" Variant="Variant.Outlined" For="() => priceUpdateViewModel.Price" Adornment="Adornment.End" AdornmentText="sek"></MudNumericField>
                     <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Class="mt-4">Update price</MudButton>
                 </EditForm>
             </MudPaper>

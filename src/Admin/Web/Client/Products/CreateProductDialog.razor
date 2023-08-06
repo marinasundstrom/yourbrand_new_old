@@ -1,0 +1,47 @@
+@using AdminAPI
+@using System.ComponentModel.DataAnnotations
+@inject IProductsClient ProductsClient
+
+<EditForm Model="@this" OnValidSubmit="OnSubmit">
+    <DataAnnotationsValidator />
+
+    <MudDialog>
+        <DialogContent>
+            <div class="d-flex flex-column py-1">
+                <MudTextField Label="Name" @bind-Value="Name" Variant="Variant.Outlined" For="() => Name" Class="mb-4"></MudTextField>
+                <MudTextField Label="Description" Lines="5" @bind-Value="Description" Variant="Variant.Outlined" For="() => Description" Class="mb-4"></MudTextField>
+                <MudNumericField Label="Price" @bind-Value="Price" Variant="Variant.Outlined" For="() => Price" Class="mb-4" Adornment="Adornment.End" AdornmentText="sek"></MudNumericField>
+            </div>
+        </DialogContent>
+        <DialogActions>
+            <MudButton ButtonType="ButtonType.Submit" Color="Color.Primary">Add</MudButton>
+            <MudButton Color="Color.Primary" OnClick="Cancel">Cancel</MudButton>
+        </DialogActions>
+    </MudDialog>
+</EditForm>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    [Required]
+    public string Name { get; set; }
+
+    [Required]
+    public string Description { get; set; }
+
+    [Required]
+    public decimal Price { get; set; }
+    
+    async Task OnSubmit() 
+    {
+        var product = await ProductsClient.CreateProductAsync(new CreateProductRequest() {
+            Name = Name,
+            Description = Description,
+            Price = Price
+        });
+
+        MudDialog.Close(DialogResult.Ok(product));
+    }
+
+    void Cancel() => MudDialog.Close(DialogResult.Cancel());
+}

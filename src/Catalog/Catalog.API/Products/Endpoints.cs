@@ -80,6 +80,7 @@ public static class Endpoints
             Description = request.Description,
             Price = request.Price
         };
+        catalogContext.Products.Add(product);
         await catalogContext.SaveChangesAsync(cancellationToken);
         return TypedResults.Ok(product);
     }

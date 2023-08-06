@@ -2,10 +2,15 @@
 @using AdminAPI
 @inject IProductsClient ProductsClient
 @inject NavigationManager NavigationManager
+@inject IDialogService DialogService
 
 <PageTitle>Products</PageTitle>
 
 <MudText Typo="Typo.h3" GutterBottom="true">Products</MudText>
+
+<MudButton OnClick="OpenCreateProductDialog" Variant="Variant.Filled" Color="Color.Primary">
+    New product
+</MudButton>
 
 <MudTable T="Product" ServerData="@(new Func<TableState, Task<TableData<Product>>>(ServerReload))"
           Dense="true" Hover="true" @ref="table" OnRowClick="@OnItemClicked">
@@ -24,7 +29,7 @@
         <MudTd DataLabel="Id">@context.Id</MudTd>
         <MudTd DataLabel="Name">@context.Name</MudTd>
         <MudTd DataLabel="Description">@context.Description</MudTd>
-        <MudTd DataLabel="Price">@context.Price</MudTd>
+        <MudTd DataLabel="Price">@context.Price sek</MudTd>
     </RowTemplate>
     <NoRecordsContent>
         <MudText>No matching records found</MudText>
@@ -61,5 +66,17 @@
     private void OnItemClicked(TableRowClickEventArgs<Product> args) 
     {
         NavigationManager.NavigateTo($"/products/{args.Item.Id}");
+    }
+
+    private async Task OpenCreateProductDialog()
+    {
+        var dialog = await DialogService.ShowAsync<CreateProductDialog>("New product");
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            var product = (AdminAPI.Product)result.Data;
+            NavigationManager.NavigateTo($"/products/{product.Id}");
+        }
     }
 }
