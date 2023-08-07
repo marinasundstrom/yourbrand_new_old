@@ -1,3 +1,5 @@
+name: Build and deploy Store Web
+
 on:
   workflow_dispatch:
   push:
@@ -5,8 +7,6 @@ on:
     - main
     paths:
     - "src/Store/Web/**"
-        
-name: Build and deploy Store Web
   
 jobs:
   build-and-deploy:

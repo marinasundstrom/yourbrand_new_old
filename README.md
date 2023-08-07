@@ -195,6 +195,21 @@ dotnet run src/Catalog/Catalog.API
 dotnet run src/Carts/Carts.API
 ```
 
+## GitHub Secrets
+
+Azure deployment:
+
+* AZURE_CREDENTIALS
+* REGISTRY_LOGIN_SERVER
+* REGISTRY_PASSWORD
+* REGISTRY_USERNAME
+* RESOURCE_GROUP
+
+Database migrations:
+
+* CARTSDBCONNECTION
+* CATALOGDBCONNECTION
+
 ## Verify GitHub Actions with Act
 
 To verify GitHub Actions, install [Act](https://github.com/nektos/act).

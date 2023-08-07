@@ -1,3 +1,5 @@
+name: Build and deploy Admin Web
+
 on:
   workflow_dispatch:
   push:
@@ -5,8 +7,6 @@ on:
     - main
     paths:
     - "src/Admin/Web/**"
-        
-name: Build and deploy Admin Web
   
 jobs:
   build-and-deploy:
