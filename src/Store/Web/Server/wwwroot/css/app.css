@@ -148,4 +148,8 @@ h1:focus {
         flex: 0 0 auto;
         width: 100%;
     }
+
+    .d-sm-md-block {
+        display: block!important;
+    }
 }
