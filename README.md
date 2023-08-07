@@ -186,6 +186,24 @@ Metadata:
    - queue: get-cart-by-id
 ```
 
+### Generate Azure Credentials
+
+Used by GitHub Actions
+
+```
+az ad sp create-for-rbac \
+  --name my-app-credentials \
+  --role contributor \
+  --scopes /subscriptions/<subscription-id>/resourceGroups/<resource-group>\
+  --sdk-auth \
+  --output json
+```
+
+This will output JSON with parameters to be copied and added as GitHub secrets.
+
+Look below for mapping.
+
+
 ## Run projects from CLI
 
 ```
@@ -195,22 +213,32 @@ dotnet run src/Catalog/Catalog.API
 dotnet run src/Carts/Carts.API
 ```
 
-## GitHub Secrets
+## GitHub Actions
+
+### Workflows
+
+There might be .NET versions hardcoded in the workflow files.
+
+Look for the environment variable ``DOTNET_VERSION``
+
+And if there are migrations for the ``dotnet tools install`` command.
+
+### Secrets
 
 Azure deployment:
 
-* AZURE_CREDENTIALS
-* REGISTRY_LOGIN_SERVER
-* REGISTRY_PASSWORD
-* REGISTRY_USERNAME
-* RESOURCE_GROUP
+* ``AZURE_CREDENTIALS`` - The JSON output in step "Generate Azure Credentials"
+* ``REGISTRY_USERNAME`` - Azure Client Id
+* ``REGISTRY_PASSWORD`` - Azure Client Secret
+* ``RESOURCE_GROUP`` - the name of your Azure Resource Group
+* ``REGISTRY_LOGIN_SERVER`` - the host name of your Azure Container Registry
 
 Database migrations:
 
-* CARTSDBCONNECTION
-* CATALOGDBCONNECTION
+* ``CARTSDBCONNECTION`` - Connection string with password
+* ``CATALOGDBCONNECTION`` - Connection string with password
 
-## Verify GitHub Actions with Act
+### Verify GitHub Actions with Act
 
 To verify GitHub Actions, install [Act](https://github.com/nektos/act).
 
@@ -224,3 +252,10 @@ We are using the schemas for [Product](https://schema.org/Product) and [Offer](h
 
 Validate the usage with the 
 [Validator](https://validator.schema.org/).
+
+## Database Migrations 
+
+```
+dotnet ef database update -p src/Catalog/Catalog.API --connection <connection-string>
+dotnet ef database update -p src/Carts/Carts.API --connection <connection-string>
+```
