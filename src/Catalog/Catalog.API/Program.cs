@@ -1,7 +1,11 @@
-﻿using Azure.Identity;
+﻿using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Azure.Identity;
 using Catalog.API.Products;
 using Catalog.API.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Azure;
+using Microsoft.Extensions.Logging;
 using MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,12 +21,32 @@ builder.Services.AddOutputCache(options =>
     });
 });
 
-if (builder.Environment.IsProduction())
+if(builder.Environment.IsProduction()) 
 {
     builder.Configuration.AddAzureKeyVault(
         new Uri($"https://{builder.Configuration["KeyVaultName"]}.vault.azure.net/"),
         new DefaultAzureCredential());
 }
+
+builder.Services.AddAzureClients(azureBuilder =>
+{
+    // Add a KeyVault client
+    azureBuilder.AddSecretClient(new Uri($"https://{builder.Configuration["KeyVaultName"]}.vault.azure.net/"));
+
+    // Add a Storage account client
+    if(builder.Environment.IsDevelopment()) 
+    {
+        azureBuilder.AddBlobServiceClient(builder.Configuration["yourbrand-storage-connectionstring"])
+                        .WithVersion(BlobClientOptions.ServiceVersion.V2019_07_07);
+    }
+    else 
+    {
+        azureBuilder.AddBlobServiceClient($"https://https://{builder.Configuration["StorageName"]}.blob.core.windows.net");
+    }
+
+    // Use DefaultAzureCredential by default
+    azureBuilder.UseCredential(new DefaultAzureCredential());
+});
 
 // Add services to the container.
 
@@ -115,5 +139,52 @@ catch(Exception e)
     Console.WriteLine(e);
 }
 
-await app.RunAsync();
+using (var scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
+{
+    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+    var context = scope.ServiceProvider.GetRequiredService<CatalogContext>();
+
+    //await context.Database.EnsureDeletedAsync();
+    await context.Database.EnsureCreatedAsync(); 
+
+    //await ApplyMigrations(context);
+
+    if (args.Contains("--seed"))
+    {
+        await SeedData(context, logger);
+        return;
+    }
+}
+
+app.Run();
+
+static async Task ApplyMigrations(CatalogContext context, ILogger<Program> logger)
+{
+    try 
+    {
+        var pendingMigrations = await context.Database.GetPendingMigrationsAsync();
+        if (pendingMigrations.Count() > 0)
+        {
+            await context.Database.MigrateAsync();
+        }
+    }
+    catch (Exception ex)
+    {
+        logger.LogError(ex, "An error occurred when applying migrations to the " +
+            "database. Error: {Message}", ex.Message);
+    }
+}
+
+static async Task SeedData(CatalogContext context, ILogger<Program> logger)
+{
+    try
+    {
+        await Seed.SeedData(context);
+    }
+    catch (Exception ex)
+    {
+        logger.LogError(ex, "An error occurred seeding the " +
+            "database. Error: {Message}", ex.Message);
+    }
+}
 

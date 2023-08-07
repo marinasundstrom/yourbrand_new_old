@@ -10,6 +10,19 @@
     <MudText Typo="Typo.h3" GutterBottom="true">@detailsUpdateViewModel.Name</MudText>
 
     <MudGrid>
+        <MudItem xs="12" sm="6" md="4">
+            <MudImage Src="@image" ObjectFit="ObjectFit.Cover" Height="200" Width="200" Alt="@detailsUpdateViewModel.Name"
+            Elevation="25" Class="rounded-lg" />
+
+            <div>
+                <InputFile id="fileInput" OnChange="UploadProductImage" hidden accept="*.jpg, *.jpeg, *.png" />
+
+                <MudButton HtmlTag="label" Color="Color.Secondary" StartIcon="@Icons.Filled.CloudUpload" for="fileInput">
+                    Upload image
+                </MudButton>
+            </div>
+        </MudItem>
+
         <MudItem xs="12" sm="12" md="6">
             <MudPaper Elevation="2" Class="pa-4">
                 <EditForm Model="@detailsUpdateViewModel" OnValidSubmit="UpdateDetails">
@@ -41,6 +54,7 @@
     bool loaded = false;
     DetailsUpdateViewModel detailsUpdateViewModel;
     PriceUpdateViewModel priceUpdateViewModel;
+    string image;
 
     [Parameter] public string Id { get; set; }
  
@@ -58,6 +72,8 @@
         priceUpdateViewModel = new () {
             Price = product.Price
         };
+
+        image = product.Image;
 
         loaded = true;
     }
@@ -94,5 +110,11 @@
     {
         [Range(0, 100000)]
         public decimal Price { get; set; }
+    }
+
+    private async Task UploadProductImage(InputFileChangeEventArgs e)
+    {
+        var file = e.GetMultipleFiles().First();
+        await ProductsClient.UploadProductImageAsync(Id, new FileParameter(file.OpenReadStream(3 * 1000000), file.Name));
     }
 }

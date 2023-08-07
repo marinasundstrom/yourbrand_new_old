@@ -34,3 +34,7 @@ Create a SQL Server and the following database:
 Name it ``yourbrand-servicebus``. 
 
 Choose Pricing Tier "Standard" or above.
+
+## Storage Account
+
+``yourbrandstorage`` (dashes are not allowed in name)

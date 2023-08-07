@@ -51,3 +51,7 @@ CREATE USER [yourbrand-carts-api] FROM EXTERNAL PROVIDER
 ALTER ROLE db_datareader ADD MEMBER [yourbrand-carts-api]
 ALTER ROLE db_datawriter ADD MEMBER [yourbrand-carts-api]
 ```
+
+## Storage Account access
+
+``yourbrand-catalog-api`` should have access to ``yourbrandstorage``

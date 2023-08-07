@@ -56,8 +56,6 @@ app.UseHttpsRedirection();
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 
-app.UseRouting();
-
 app.MapProductsEndpoints();
 
 app.MapRazorPages();

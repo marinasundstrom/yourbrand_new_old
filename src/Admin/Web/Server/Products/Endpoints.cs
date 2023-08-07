@@ -1,4 +1,6 @@
 using CatalogAPI;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace YourBrand.Server.Products;
@@ -42,6 +44,12 @@ public static class Endpoints
             .WithTags("Products")
             .WithOpenApi();
 
+        app.MapPost("/api/products/{id}/image", UploadProductImage)
+            .WithName($"Products_{nameof(UploadProductImage)}")
+            .WithTags("Products")
+            .WithOpenApi()
+            .DisableAntiforgery();
+
         return app;
     }
 
@@ -76,6 +84,15 @@ public static class Endpoints
     private static async Task<Results<Ok, NotFound>> DeleteProduct(string id, CatalogAPI.IProductsClient productsClient, CancellationToken cancellationToken)
     {
         await productsClient.DeleteProductAsync(id, cancellationToken);
+        return TypedResults.Ok();
+    }
+
+    private static async Task<Results<Ok, NotFound>> UploadProductImage(string id, IFormFile file, 
+        CatalogAPI.IProductsClient productsClient, CancellationToken cancellationToken)
+    {
+        await productsClient.UploadProductImageAsync(id, 
+            new CatalogAPI.FileParameter(file.OpenReadStream()), cancellationToken);
+
         return TypedResults.Ok();
     }
 }

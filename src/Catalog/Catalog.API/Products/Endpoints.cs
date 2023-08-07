@@ -1,5 +1,9 @@
 using Catalog.API.Data;
 using Catalog.API.Model;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using MassTransit;
@@ -43,6 +47,11 @@ public static class Endpoints
             .WithTags("Products")
             .WithOpenApi();
 
+        app.MapPost("/api/products/{id}/image", UploadProductImage)
+            .WithName($"Products_{nameof(UploadProductImage)}")
+            .WithTags("Products")
+            .WithOpenApi()
+            .DisableAntiforgery();
         return app;
     }
 
@@ -140,6 +149,32 @@ public static class Endpoints
 
         catalogContext.Products.Remove(product);
         
+        await catalogContext.SaveChangesAsync(cancellationToken);
+
+        return TypedResults.Ok();
+    }
+
+    private static async Task<Results<Ok, NotFound>> UploadProductImage(string id, IFormFile file, 
+        BlobServiceClient blobServiceClient, IConfiguration configuration, CatalogContext catalogContext, CancellationToken cancellationToken)
+    {
+        var product = await catalogContext.Products.FirstOrDefaultAsync(product => product.Id == id, cancellationToken);
+        
+        if(product is null) 
+        {
+            return TypedResults.NotFound();
+        }
+
+        var blobContainerClient = blobServiceClient.GetBlobContainerClient("images");
+        await blobContainerClient.CreateIfNotExistsAsync();
+
+        BlobClient blobClient = blobContainerClient.GetBlobClient($"products/{file.FileName}");
+
+        await blobClient.UploadAsync(file.OpenReadStream(), true);
+
+        string cdnBaseUrl = configuration["CdnBaseUrl"];
+
+        product.Image = $"{cdnBaseUrl}/images/products/{file.FileName}";
+
         await catalogContext.SaveChangesAsync(cancellationToken);
 
         return TypedResults.Ok();

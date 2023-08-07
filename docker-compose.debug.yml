@@ -35,6 +35,9 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__CatalogDb=Server=host.docker.internal,1433;User Id=sa;Password=P@ssw0rd;Encrypt=false;Database=yourbrand-catalog-db
       - RABBITMQ_HOST=host.docker.internal
+      - "yourbrand-storage-connectionstring=DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://host.docker.internal:10000/devstoreaccount1;QueueEndpoint=http://host.docker.internal:10001/devstoreaccount1;TableEndpoint=http://host.docker.internal:10002/devstoreaccount1;"
+      - "CdnBaseUrl=http://host.docker.internal:10000/devstoreaccount1"
+
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
 
@@ -95,3 +98,15 @@ services:
       - 15672:15672
     environment:
       - RABBITMQ_ERLANG_COOKIE=SomeRandomStringHere
+
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite
+    container_name: azurite
+    hostname: azurite
+    restart: always
+    command: "azurite --loose --blobHost 0.0.0.0 --blobPort 10000 --queueHost 0.0.0.0 --queuePort 10001 -l /data --debug /data/debug.log"
+    ports:
+      - "10000:10000"
+      - "10001:10001"
+    volumes:
+      - "./data/azurite:/data"

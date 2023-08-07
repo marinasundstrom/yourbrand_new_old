@@ -146,6 +146,32 @@ paths:
           description: ''
         404:
           description: ''
+  /api/products/{id}/image:
+    post:
+      tags:
+      - Products
+      operationId: Products_UploadProductImage
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        200:
+          description: ''
+        404:
+          description: ''
 components:
   schemas:
     PagedResultOfProduct:
