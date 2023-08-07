@@ -1,5 +1,9 @@
 # YourBrand
 
+Store Web: https://yourbrand-store-web.kindgrass-70ab37e8.swedencentral.azurecontainerapps.io/
+
+Admin Web: https://yourbrand-admin-web.kindgrass-70ab37e8.swedencentral.azurecontainerapps.io/
+
 ## Run
 
 Run the entire system.
@@ -85,6 +89,10 @@ You also need to make sure that the container apps that you are deploying to exi
 
 
 ## Azure environment
+
+### Install Azure CLI
+
+Make sure that Azure CLI has been installed.
 
 ### Container Registry
 
@@ -188,7 +196,15 @@ Metadata:
 
 ### Generate Azure Credentials
 
-Used by GitHub Actions
+Used by GitHub Actions. Requires Azure CLI.
+
+```
+az login
+```
+
+Run this: 
+
+(Substitute with your Subscription Id and Resource Group)
 
 ```
 az ad sp create-for-rbac \
@@ -199,7 +215,7 @@ az ad sp create-for-rbac \
   --output json
 ```
 
-This will output JSON with parameters to be copied and added as GitHub secrets.
+This will output JSON with parameters to be copied to GitHub secrets.
 
 Look below for mapping.
 
@@ -254,6 +270,10 @@ Validate the usage with the
 [Validator](https://validator.schema.org/).
 
 ## Database Migrations 
+
+Migration will automatically run with deployment.
+
+But if you need to run them locally, these commands might be useful:
 
 ```
 dotnet ef database update -p src/Catalog/Catalog.API --connection <connection-string>
