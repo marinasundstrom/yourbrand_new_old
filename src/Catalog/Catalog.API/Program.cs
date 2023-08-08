@@ -28,24 +28,24 @@ if(builder.Environment.IsProduction())
         new DefaultAzureCredential());
 }
 
-builder.Services.AddAzureClients(azureBuilder =>
+builder.Services.AddAzureClients(clientBuilder =>
 {
     // Add a KeyVault client
-    azureBuilder.AddSecretClient(new Uri($"https://{builder.Configuration["KeyVaultName"]}.vault.azure.net/"));
+    clientBuilder.AddSecretClient(new Uri($"https://{builder.Configuration["KeyVaultName"]}.vault.azure.net/"));
 
     // Add a Storage account client
     if(builder.Environment.IsDevelopment()) 
     {
-        azureBuilder.AddBlobServiceClient(builder.Configuration["yourbrand-storage-connectionstring"])
+        clientBuilder.AddBlobServiceClient(builder.Configuration["yourbrand-storage-connectionstring"])
                         .WithVersion(BlobClientOptions.ServiceVersion.V2019_07_07);
     }
     else 
     {
-        azureBuilder.AddBlobServiceClient($"https://https://{builder.Configuration["StorageName"]}.blob.core.windows.net");
+        clientBuilder.AddBlobServiceClient(new Uri($"https://{builder.Configuration["StorageName"]}.blob.core.windows.net"));
     }
 
     // Use DefaultAzureCredential by default
-    azureBuilder.UseCredential(new DefaultAzureCredential());
+    clientBuilder.UseCredential(new DefaultAzureCredential());
 });
 
 // Add services to the container.
