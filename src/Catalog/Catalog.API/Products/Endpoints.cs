@@ -169,9 +169,9 @@ public static class Endpoints
 
         BlobClient blobClient = blobContainerClient.GetBlobClient($"products/{file.FileName}");
 
-        await blobClient.UploadAsync(file.OpenReadStream(), true);
+        await blobClient.UploadAsync(file.OpenReadStream(), new BlobHttpHeaders { ContentType = file.ContentType });
 
-        string cdnBaseUrl = configuration["CdnBaseUrl"];
+        string cdnBaseUrl = configuration["CdnBaseUrl"] ?? "https://yourbrandstorage.blob.core.windows.net";
 
         product.Image = $"{cdnBaseUrl}/images/products/{file.FileName}";
 

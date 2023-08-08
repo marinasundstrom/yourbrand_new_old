@@ -91,7 +91,7 @@ public static class Endpoints
         CatalogAPI.IProductsClient productsClient, CancellationToken cancellationToken)
     {
         await productsClient.UploadProductImageAsync(id, 
-            new CatalogAPI.FileParameter(file.OpenReadStream()), cancellationToken);
+            new CatalogAPI.FileParameter(file.OpenReadStream(), file.FileName, file.ContentType), cancellationToken);
 
         return TypedResults.Ok();
     }
