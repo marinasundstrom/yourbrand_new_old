@@ -13,4 +13,6 @@ public sealed class Product
     public decimal? RegularPrice { get; set; }
 
     public string? Image { get; set; }
+
+    public string Handle { get; set; } = default!;
 }

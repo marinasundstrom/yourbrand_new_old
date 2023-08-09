@@ -9,7 +9,7 @@ public static class Seed
 {
     public static async Task SeedData(CatalogContext context)
     {
-        await context.Database.EnsureDeletedAsync();
+        //await context.Database.EnsureDeletedAsync();
         await context.Database.EnsureCreatedAsync();
 
         context.Products.AddRange(
@@ -19,7 +19,8 @@ public static class Seed
                 Description = "Small biscuit",
                 Price = 10,
                 RegularPrice = null,
-                Image = "http://127.0.0.1:10000/devstoreaccount1/images/products/biscotti.jpeg"
+                Image = "http://127.0.0.1:10000/devstoreaccount1/images/products/biscotti.jpeg",
+                Handle = "biscotti"
             },
             new Product() {
                 Id = "brewed-coffee",
@@ -27,7 +28,8 @@ public static class Seed
                 Description = "Freshly brewed coffee",
                 Price = 32,
                 RegularPrice = null,
-                Image = "http://127.0.0.1:10000/devstoreaccount1/images/products/coffee.jpeg"
+                Image = "http://127.0.0.1:10000/devstoreaccount1/images/products/coffee.jpeg",
+                Handle = "brewed-coffe"
             },
             new Product() {
                 Id = "caffe-latte",
@@ -35,7 +37,8 @@ public static class Seed
                 Description = "Freshly ground espresso coffee with steamed milk",
                 Price = 32,
                 RegularPrice = 42,
-                Image = "http://127.0.0.1:10000/devstoreaccount1/images/products/caffe-latte.jpeg"
+                Image = "http://127.0.0.1:10000/devstoreaccount1/images/products/caffe-latte.jpeg",
+                Handle = "caffe-latte"
             },
             new Product() {
                 Id = "cinnamon-roll",
@@ -43,7 +46,8 @@ public static class Seed
                 Description = "Newly baked cinnamon rolls",
                 Price = 22,
                 RegularPrice = null,
-                Image = "http://127.0.0.1:10000/devstoreaccount1/images/products/cinnamon-roll.jpeg"
+                Image = "http://127.0.0.1:10000/devstoreaccount1/images/products/cinnamon-roll.jpeg",
+                Handle = "cinnamon-roll"
             },
             new Product() {
                 Id = "espresso",
@@ -51,7 +55,8 @@ public static class Seed
                 Description = "Single shot espresso",
                 Price = 32,
                 RegularPrice = null,
-                Image = "http://127.0.0.1:10000/devstoreaccount1/images/products/espresso.jpeg"
+                Image = "http://127.0.0.1:10000/devstoreaccount1/images/products/espresso.jpeg",
+                Handle = "espresso"
             },
             new Product() {
                 Id = "milkshake",
@@ -59,7 +64,8 @@ public static class Seed
                 Description = "Our fabulous milkshake",
                 Price = 52,
                 RegularPrice = null,
-                Image = "http://127.0.0.1:10000/devstoreaccount1/images/products/milkshake.jpeg"
+                Image = "http://127.0.0.1:10000/devstoreaccount1/images/products/milkshake.jpeg",
+                Handle = "milkshake"
             },
             new Product() {
                 Id = "mocca-latte",
@@ -67,7 +73,8 @@ public static class Seed
                 Description = "Caffe Latte with chocolate syrup",
                 Price = 32,
                 RegularPrice = null,
-                Image = "http://127.0.0.1:10000/devstoreaccount1/images/products/mocca-latte.jpeg"
+                Image = "http://127.0.0.1:10000/devstoreaccount1/images/products/mocca-latte.jpeg",
+                Handle = "mocca-latte"
             }
         );
 

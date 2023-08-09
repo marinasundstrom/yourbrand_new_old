@@ -124,22 +124,7 @@ app.MapGet("/api/weatherforecast", async (DateOnly startDate, WeatherForecastSer
     .WithOpenApi();
 */
 
-try 
-{
-    using (var scope = app.Services.CreateScope())
-    {
-        using var context = scope.ServiceProvider.GetRequiredService<CatalogContext>();
-
-        //await context.Database.EnsureDeletedAsync();
-        await context.Database.EnsureCreatedAsync();
-    }
-}
-catch(Exception e) 
-{
-    Console.WriteLine(e);
-}
-
-using (var scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
+using (var scope = app.Services.CreateScope())
 {
     var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
     var context = scope.ServiceProvider.GetRequiredService<CatalogContext>();
