@@ -3,6 +3,7 @@
 @using BlazorApp
 @using BlazorApp.Cart
 @implements IDisposable
+@inject NavigationManager NavigationManager
 @inject ICartService CartService
 @inject RenderingContext RenderingContext
 
@@ -62,12 +63,21 @@
     protected override async Task OnInitializedAsync()
     {
         CartService.CartUpdated += OnCartUpdated;
-        await CartService.InitializeAsync();
-        cartItems = CartService.Items;
+
+        // If this component is initialized on the Basket page
+        // then that page will initiate the reload.
+        // This only applies to fresh navigations or reloads
+        // due to DOM preservation.
+
+        if(!NavigationManager.Uri.ToString().EndsWith("/basket")) 
+        {
+            await CartService.InitializeAsync();
+        }
     }
 
     private async void OnCartUpdated(object? sender, EventArgs eventArgs) 
     {
+        cartItems = CartService.Items.ToList();
         await InvokeAsync(StateHasChanged);
     }
 

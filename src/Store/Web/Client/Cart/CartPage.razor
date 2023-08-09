@@ -1,4 +1,4 @@
-@attribute [RenderModeWebAssembly(false)]
+@attribute [RenderModeWebAssembly(prerender: false)]
 @using BlazorApp
 @using BlazorApp.Cart
 @using BlazorApp.Shared
@@ -79,11 +79,12 @@ else
     protected override async Task OnInitializedAsync()
     {
         CartService.CartUpdated += OnCartUpdated;
-        cartItems = CartService.Items;
+        await CartService.InitializeAsync();    
     }
 
     private async void OnCartUpdated(object? sender, EventArgs eventArgs) 
     {
+        cartItems = CartService.Items.ToList();
         await InvokeAsync(StateHasChanged);
     }
 
