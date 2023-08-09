@@ -37,4 +37,4 @@ Choose Pricing Tier "Standard" or above.
 
 ## Storage Account
 
-``yourbrandstorage`` (dashes are not allowed in name)
+``yourbrandstorage`` _(dashes are not allowed in name)_

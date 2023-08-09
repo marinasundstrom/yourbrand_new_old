@@ -1,5 +1,7 @@
 # GitHub Secrets
 
+In order for workflow to run and deploy the services, you need to add these secrets to your GitHub repository.
+
 Azure deployment:
 
 * ``AZURE_CREDENTIALS`` - The JSON output in step "Generate Azure Credentials"

@@ -4,11 +4,13 @@
 
 Each service has its own workflow that is triggered when files in their specific directories have changed.
 
+### Secrets
+
+You need to add the [secrets](secrets.md) to your GitHub repo.
+
 ### Hard-coded .NET versions
 
-There might be .NET versions hardcoded in the workflow files. 
-
-This is mainly due to running a preview-release of .NET 8.
+There might be .NET versions hardcoded in the workflow files. This is mainly due to running a preview-release of .NET 8. 
 
 So when the release has changed you need to update the values.
 

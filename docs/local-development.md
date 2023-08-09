@@ -4,11 +4,26 @@ The entire project can be run locally either fully in Docker, or with some servi
 
 Everything has been pre-configured to work with a local SQL database as well as other dependencies running in Docker.
 
-To start the database and other dependencies, run this:
+## Prerequisites
+
+The following software has to be present on your development machine in order to build and run this project:
+
+* .NET SDK 8
+* Docker desktop
+
+## Run dependencies in Docker
+
+To start the database and other [dependencies](dependencies.md), run this:
 
 ```
 docker compose -f docker-compose.deps.yml up -d
 ```
+
+## Set up Azurite
+
+To upload and serve blobs (product images) you need to configure Azurite.
+
+More on that [here](set-up-azurite.md).
 
 ## Run individual services from CLI
 
@@ -21,7 +36,7 @@ dotnet run --project src/Catalog/Catalog.API
 dotnet run --project src/Carts/Carts.API
 ```
 
-## Common development scenarios
+## Developing the Store Web
 
 ### Developing Store Web against services running locally
 
