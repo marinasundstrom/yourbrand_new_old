@@ -87,12 +87,12 @@ public static class Endpoints
         return TypedResults.Ok();
     }
 
-    private static async Task<Results<Ok, NotFound>> UploadProductImage(string id, IFormFile file, 
+    private static async Task<Results<Ok<string>, NotFound>> UploadProductImage(string id, IFormFile file, 
         CatalogAPI.IProductsClient productsClient, CancellationToken cancellationToken)
     {
-        await productsClient.UploadProductImageAsync(id, 
+        var path = await productsClient.UploadProductImageAsync(id, 
             new CatalogAPI.FileParameter(file.OpenReadStream(), file.FileName, file.ContentType), cancellationToken);
 
-        return TypedResults.Ok();
+        return TypedResults.Ok(path);
     }
 }

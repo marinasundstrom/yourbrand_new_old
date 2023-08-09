@@ -2,6 +2,7 @@
 @using AdminAPI
 @using System.ComponentModel.DataAnnotations
 @inject IProductsClient ProductsClient
+@inject ISnackbar Snackbar
 
 @if(loaded) 
 {
@@ -80,19 +81,37 @@
 
     private async Task UpdateDetails() 
     {
-        await ProductsClient.UpdateProductDetailsAsync(Id, new UpdateProductDetailsRequest() {
-            Name = detailsUpdateViewModel.ShadowName,
-            Description = detailsUpdateViewModel.Description,
-        });
+        try 
+        {
+            await ProductsClient.UpdateProductDetailsAsync(Id, new UpdateProductDetailsRequest() {
+                Name = detailsUpdateViewModel.ShadowName,
+                Description = detailsUpdateViewModel.Description,
+            });
 
-        detailsUpdateViewModel.Name = detailsUpdateViewModel.ShadowName;
+            detailsUpdateViewModel.Name = detailsUpdateViewModel.ShadowName;
+
+            Snackbar.Add("Product details were updated", Severity.Info);
+        }
+        catch 
+        {
+            Snackbar.Add("Failed to update product details", Severity.Error);
+        }
     }
 
     private async Task UpdatePrice() 
     {
-        await ProductsClient.UpdateProductPriceAsync(Id, new UpdateProductPriceRequest() {
-            Price = priceUpdateViewModel.Price
-        });
+        try 
+        {
+            await ProductsClient.UpdateProductPriceAsync(Id, new UpdateProductPriceRequest() {
+                Price = priceUpdateViewModel.Price
+            });
+
+            Snackbar.Add("Price was updated", Severity.Info);
+        }
+        catch 
+        {
+            Snackbar.Add("Failed to update product price", Severity.Error);
+        }
     }
 
     class DetailsUpdateViewModel 
@@ -114,7 +133,16 @@
 
     private async Task UploadProductImage(InputFileChangeEventArgs e)
     {
-        var file = e.GetMultipleFiles().First();
-        await ProductsClient.UploadProductImageAsync(Id, new FileParameter(file.OpenReadStream(3 * 1000000), file.Name));
+        try 
+        {
+            var file = e.GetMultipleFiles().First();
+            image = await ProductsClient.UploadProductImageAsync(Id, new FileParameter(file.OpenReadStream(3 * 1000000), file.Name));
+
+            Snackbar.Add("Image was updated", Severity.Info);
+        }
+        catch 
+        {
+            Snackbar.Add("Failed to update product image", Severity.Error);
+        }
     }
 }

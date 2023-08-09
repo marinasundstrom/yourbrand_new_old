@@ -154,7 +154,7 @@ public static class Endpoints
         return TypedResults.Ok();
     }
 
-    private static async Task<Results<Ok, NotFound>> UploadProductImage(string id, IFormFile file, 
+    private static async Task<Results<Ok<string>, NotFound>> UploadProductImage(string id, IFormFile file, 
         BlobServiceClient blobServiceClient, IConfiguration configuration, CatalogContext catalogContext, CancellationToken cancellationToken)
     {
         var product = await catalogContext.Products.FirstOrDefaultAsync(product => product.Id == id, cancellationToken);
@@ -177,7 +177,7 @@ public static class Endpoints
 
         await catalogContext.SaveChangesAsync(cancellationToken);
 
-        return TypedResults.Ok();
+        return TypedResults.Ok(product.Image);
     }
 }
 
