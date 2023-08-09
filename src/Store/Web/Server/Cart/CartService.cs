@@ -19,7 +19,7 @@ public sealed class CartService(MassTransitCartsClient cartsClient) : ICartServi
         return cart.Items;
     }
 
-    public async Task AddCartItem(string name, string? image, string? productId, string description, decimal price, decimal? regularPrice, int quantity)
+    public async Task AddCartItem(string name, string? image, long? productId, string? productHandle, string description, decimal price, decimal? regularPrice, int quantity)
     {
 
     }

@@ -392,7 +392,8 @@ components:
       additionalProperties: false
       properties:
         id:
-          type: string
+          type: integer
+          format: int64
         name:
           type: string
         image:
@@ -407,6 +408,8 @@ components:
           type: number
           format: decimal
           nullable: true
+        handle:
+          type: string
     Cart:
       type: object
       additionalProperties: false
@@ -431,6 +434,10 @@ components:
           type: string
           nullable: true
         productId:
+          type: integer
+          format: int64
+          nullable: true
+        productHandle:
           type: string
           nullable: true
         description:
@@ -458,6 +465,10 @@ components:
           type: string
           nullable: true
         productId:
+          type: integer
+          format: int64
+          nullable: true
+        productHandle:
           type: string
           nullable: true
         description:

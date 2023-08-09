@@ -2,28 +2,27 @@
 
 #nullable disable
 
-namespace Catalog.API.Migrations
+namespace Carts.API.Migrations
 {
     /// <inheritdoc />
-    public partial class AddHandleToProduct : Migration
+    public partial class AddHandleToCartItem : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "Handle",
-                table: "Products",
+                name: "ProductHandle",
+                table: "CartItems",
                 type: "nvarchar(max)",
-                nullable: false,
-                defaultValue: "");
+                nullable: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Handle",
-                table: "Products");
+                name: "ProductHandle",
+                table: "CartItems");
         }
     }
 }

@@ -4,6 +4,7 @@ using Carts.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Carts.API.Migrations
 {
     [DbContext(typeof(CartsContext))]
-    partial class CartsContextModelSnapshot : ModelSnapshot
+    [Migration("20230809153933_ChangeProductIdToLong")]
+    partial class ChangeProductIdToLong
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,9 +67,6 @@ namespace Carts.API.Migrations
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("ProductHandle")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long?>("ProductId")
                         .HasColumnType("bigint");

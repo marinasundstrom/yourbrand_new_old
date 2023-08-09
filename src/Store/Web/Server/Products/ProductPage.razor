@@ -100,6 +100,6 @@ else
     protected override async Task OnInitializedAsync()
     {
         product = await ProductsService.GetProductById(Id);
-        productInfo = new ProductInfo(product.Name, product.Image, product.Id, product.Description, (decimal)product.Price, (decimal?)product.RegularPrice);
+        productInfo = new ProductInfo(product.Name, product.Image, product.Id, product.Handle, product.Description, (decimal)product.Price, (decimal?)product.RegularPrice);
     }
 }

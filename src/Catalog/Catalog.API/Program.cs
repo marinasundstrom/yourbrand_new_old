@@ -128,43 +128,25 @@ using (var scope = app.Services.CreateScope())
 {
     var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
     var context = scope.ServiceProvider.GetRequiredService<CatalogContext>();
+    var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
 
     //await context.Database.EnsureDeletedAsync();
     await context.Database.EnsureCreatedAsync(); 
 
-    //await ApplyMigrations(context);
-
     if (args.Contains("--seed"))
     {
-        await SeedData(context, logger);
+        await SeedData(context, configuration, logger);
         return;
     }
 }
 
 app.Run();
 
-static async Task ApplyMigrations(CatalogContext context, ILogger<Program> logger)
-{
-    try 
-    {
-        var pendingMigrations = await context.Database.GetPendingMigrationsAsync();
-        if (pendingMigrations.Count() > 0)
-        {
-            await context.Database.MigrateAsync();
-        }
-    }
-    catch (Exception ex)
-    {
-        logger.LogError(ex, "An error occurred when applying migrations to the " +
-            "database. Error: {Message}", ex.Message);
-    }
-}
-
-static async Task SeedData(CatalogContext context, ILogger<Program> logger)
+static async Task SeedData(CatalogContext context, IConfiguration configuration, ILogger<Program> logger)
 {
     try
     {
-        await Seed.SeedData(context);
+        await Seed.SeedData(context, configuration);
     }
     catch (Exception ex)
     {

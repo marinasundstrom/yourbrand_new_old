@@ -1,13 +1,15 @@
 <div class="col card-group">
     <div class="card" >
-        <a href="/products/@Product.Id">
+        <a href="/products/@Product.Handle">
             <img class="bd-placeholder-img card-img-top shadow" alt="Product image" style="max-width: 100%; height: auto; object-fit: cover; aspect-ratio: 1 / 1;" src="@Product.Image" />
         </a>
         <div class="card-body">
-            <a href="/products/@Product.Id" class="text-decoration-none text-reset">
+            <a href="/products/@Product.Handle" class="text-decoration-none text-reset">
                 <h5 class="card-title mt-2">@Product.Name</h5>
             </a>
-            <p class="card-text mt-2 text-muted">@Product.Description</p>
+            <a href="/products/@Product.Handle" class="text-decoration-none text-reset">
+                <p class="card-text mt-2 text-muted">@Product.Description</p>
+            </a>
         </div>
         <div class="card-footer">
             <div class="d-flex justify-content-between align-items-center">

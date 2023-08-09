@@ -49,7 +49,7 @@ public static class Endpoints
     private static async Task<Results<Ok<CartItem>, NotFound>> AddCartItem(AddCartItemRequest request, MassTransitCartsClient cartsClient, CancellationToken cancellationToken)
     {
         var cartItem = await cartsClient.AddCartItem(
-            "test", request.Name, request.Image, request.ProductId, request.Description, request.Price, request.RegularPrice, request.Quantity, cancellationToken);
+            "test", request.Name, request.Image, request.ProductId, request.ProductHandle, request.Description, request.Price, request.RegularPrice, request.Quantity, cancellationToken);
 
         return cartItem is not null ? TypedResults.Ok(cartItem) : TypedResults.NotFound();
     }
@@ -73,6 +73,6 @@ public static class Endpoints
     }
 }
 
-public sealed record AddCartItemRequest(string Name, string? Image, string? ProductId, string Description, decimal Price, decimal? RegularPrice, int Quantity);
+public sealed record AddCartItemRequest(string Name, string? Image, long? ProductId, string? ProductHandle, string Description, decimal Price, decimal? RegularPrice, int Quantity);
 
 public sealed record UpdateCartItemQuantityRequest(int Quantity);

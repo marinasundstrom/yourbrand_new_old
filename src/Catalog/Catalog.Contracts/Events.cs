@@ -2,7 +2,7 @@ namespace Catalog.Contracts;
 
 public sealed record ProductDetailsUpdated
 {
-    public required string ProductId { get; init; }
+    public required long ProductId { get; init; }
 
     public required string Name { get; init; }
 
@@ -11,7 +11,14 @@ public sealed record ProductDetailsUpdated
 
 public sealed record ProductPriceUpdated
 {
-    public required string ProductId { get; init; }
+    public required long ProductId { get; init; }
 
     public required decimal NewPrice { get; init; }
+}
+
+public sealed record ProductHandleUpdated
+{
+    public required long ProductId { get; init; }
+
+    public required string Handle { get; init; }
 }

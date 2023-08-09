@@ -13,7 +13,8 @@ public sealed record CartItem
     public string Id { get; init; }
     public string Name { get; init; }
     public string? Image { get; init; }
-    public string? ProductId { get; init; }
+    public long? ProductId { get; init; }
+    public string? ProductHandle { get; init; }
     public string Description { get; init; }
     public decimal Price { get; init; } 
     public decimal? RegularPrice { get; init; }

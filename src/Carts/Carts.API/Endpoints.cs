@@ -88,7 +88,7 @@ public static class Endpoints
 
     private static async Task<Results<Created<CartItem>, NotFound>> AddCartItem(string id, AddCartItemRequest cartItemRequest, IMediator mediator = default!, LinkGenerator linkGenerator = default!, CancellationToken cancellationToken = default!)
     {
-        var result = await mediator.Send(new AddCartItem(id, cartItemRequest.Name, cartItemRequest.Image, cartItemRequest.ProductId, cartItemRequest.Description, cartItemRequest.Price, cartItemRequest.RegularPrice, cartItemRequest.Quantity), cancellationToken);
+        var result = await mediator.Send(new AddCartItem(id, cartItemRequest.Name, cartItemRequest.Image, cartItemRequest.ProductId, cartItemRequest.ProductHandle, cartItemRequest.Description, cartItemRequest.Price, cartItemRequest.RegularPrice, cartItemRequest.Quantity), cancellationToken);
 
         if(result.HasError(Errors.CartNotFound))
         {
@@ -156,4 +156,4 @@ public static class Endpoints
 
 public sealed record CreateCartRequest(string Name);
 
-public sealed record AddCartItemRequest(string Name, string? Image, string? ProductId, string Description, decimal Price, decimal? RegularPrice, int Quantity);
+public sealed record AddCartItemRequest(string Name, string? Image, long? ProductId, string? ProductHandle, string Description, decimal Price, decimal? RegularPrice, int Quantity);

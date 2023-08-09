@@ -20,5 +20,5 @@ public sealed class ProductsService(IProductsClient productsClient) : IProductsS
 public static class Mapper 
 {
     public static Product Map(this CatalogAPI.Product product) 
-        => new (product.Id!, product.Name!, product.Image!, product.Description!, product.Price, product.RegularPrice);
+        => new (product.Id!, product.Name!, product.Image!, product.Description!, product.Price, product.RegularPrice, product.Handle);
 }

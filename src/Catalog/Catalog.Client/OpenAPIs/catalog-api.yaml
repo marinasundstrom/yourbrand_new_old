@@ -58,13 +58,13 @@ paths:
                 $ref: '#/components/schemas/Product'
         400:
           description: ''
-  /api/products/{id}:
+  /api/products/{idOrHandle}:
     get:
       tags:
       - Products
       operationId: Products_GetProductById
       parameters:
-      - name: id
+      - name: idOrHandle
         in: path
         required: true
         schema:
@@ -84,7 +84,7 @@ paths:
       - Products
       operationId: Products_UpdateProductDetails
       parameters:
-      - name: id
+      - name: idOrHandle
         in: path
         required: true
         schema:
@@ -109,7 +109,7 @@ paths:
       - Products
       operationId: Products_DeleteProduct
       parameters:
-      - name: id
+      - name: idOrHandle
         in: path
         required: true
         schema:
@@ -120,13 +120,13 @@ paths:
           description: ''
         404:
           description: ''
-  /api/products/{id}/price:
+  /api/products/{idOrHandle}/price:
     put:
       tags:
       - Products
       operationId: Products_UpdateProductPrice
       parameters:
-      - name: id
+      - name: idOrHandle
         in: path
         required: true
         schema:
@@ -146,13 +146,13 @@ paths:
           description: ''
         404:
           description: ''
-  /api/products/{id}/image:
+  /api/products/{idOrHandle}/image:
     post:
       tags:
       - Products
       operationId: Products_UploadProductImage
       parameters:
-      - name: id
+      - name: idOrHandle
         in: path
         required: true
         schema:
@@ -194,7 +194,8 @@ components:
       additionalProperties: false
       properties:
         id:
-          type: string
+          type: integer
+          format: int64
         name:
           type: string
         description:
@@ -209,6 +210,8 @@ components:
         image:
           type: string
           nullable: true
+        handle:
+          type: string
     CreateProductRequest:
       type: object
       additionalProperties: false

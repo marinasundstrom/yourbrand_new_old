@@ -16,13 +16,14 @@ public sealed class MassTransitCartsClient(
         return response.Message.Cart.Map();
     }
 
-    public async Task<CartItem> AddCartItem(string cartId, string name, string? image, string? productId, string description, decimal price, decimal? regularPrice, int quantity, CancellationToken cancellationToken = default)
+    public async Task<CartItem> AddCartItem(string cartId, string name, string? image, long? productId, string productHandle, string description, decimal price, decimal? regularPrice, int quantity, CancellationToken cancellationToken = default)
     {
         var request2 = new Carts.Contracts.AddCartItem {
             CartId = cartId,
             Name = name,
             Image = image,
             ProductId = productId,
+            ProductHandle = productHandle,
             Description = description,
             Price = price,
             RegularPrice = regularPrice,
@@ -62,5 +63,5 @@ public static class Mapper
         => new (cart.Id!, cart.Name!, cart.Items.Select(cartItem => cartItem.Map()));
 
     public static CartItem Map(this Carts.Contracts.CartItem cartItem) 
-        => new (cartItem.Id!, cartItem.Name!, cartItem.Image!, cartItem.ProductId, cartItem.Description!, cartItem.Price, cartItem.RegularPrice, (int)cartItem.Quantity);
+        => new (cartItem.Id!, cartItem.Name!, cartItem.Image!, cartItem.ProductId, cartItem.ProductHandle, cartItem.Description!, cartItem.Price, cartItem.RegularPrice, (int)cartItem.Quantity);
 }

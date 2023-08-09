@@ -208,7 +208,8 @@ components:
       additionalProperties: false
       properties:
         id:
-          type: string
+          type: integer
+          format: int64
         name:
           type: string
         description:
@@ -223,6 +224,8 @@ components:
         image:
           type: string
           nullable: true
+        handle:
+          type: string
     CreateProductRequest:
       type: object
       additionalProperties: false

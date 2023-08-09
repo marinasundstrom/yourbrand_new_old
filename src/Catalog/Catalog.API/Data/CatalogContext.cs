@@ -9,5 +9,11 @@ public sealed class CatalogContext : DbContext
     {
     }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Product>()
+            .HasIndex(p => p.Handle);
+    }
+
     public DbSet<Product> Products { get; set; } = default!;
 }

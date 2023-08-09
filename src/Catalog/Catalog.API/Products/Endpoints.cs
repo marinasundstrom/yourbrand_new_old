@@ -22,7 +22,7 @@ public static class Endpoints
             .WithOpenApi()
             .CacheOutput(GetProductsExpire20);
 
-        app.MapGet("/api/products/{id}", GetProductById)
+        app.MapGet("/api/products/{idOrHandle}", GetProductById)
             .WithName($"Products_{nameof(GetProductById)}")
             .WithTags("Products")
             .WithOpenApi();
@@ -32,26 +32,27 @@ public static class Endpoints
             .WithTags("Products")
             .WithOpenApi();
 
-        app.MapPut("/api/products/{id}", UpdateProductDetails)
+        app.MapPut("/api/products/{idOrHandle}", UpdateProductDetails)
             .WithName($"Products_{nameof(UpdateProductDetails)}")
             .WithTags("Products")
             .WithOpenApi();
 
-        app.MapPut("/api/products/{id}/price", UpdateProductPrice)
+        app.MapPut("/api/products/{idOrHandle}/price", UpdateProductPrice)
             .WithName($"Products_{nameof(UpdateProductPrice)}")
             .WithTags("Products")
             .WithOpenApi();
 
-        app.MapDelete("/api/products/{id}", DeleteProduct)
+        app.MapDelete("/api/products/{idOrHandle}", DeleteProduct)
             .WithName($"Products_{nameof(DeleteProduct)}")
             .WithTags("Products")
             .WithOpenApi();
 
-        app.MapPost("/api/products/{id}/image", UploadProductImage)
+        app.MapPost("/api/products/{idOrHandle}/image", UploadProductImage)
             .WithName($"Products_{nameof(UploadProductImage)}")
             .WithTags("Products")
             .WithOpenApi()
             .DisableAntiforgery();
+
         return app;
     }
 
@@ -76,9 +77,14 @@ public static class Endpoints
         return TypedResults.Ok(pagedResult);
     }
 
-    private static async Task<Results<Ok<Product>, NotFound>> GetProductById(string id, CatalogContext catalogContext, CancellationToken cancellationToken)
+    private static async Task<Results<Ok<Product>, NotFound>> GetProductById(string idOrHandle, CatalogContext catalogContext, CancellationToken cancellationToken)
     {
-        var product = await catalogContext.Products.AsNoTracking().FirstOrDefaultAsync(product => product.Id == id, cancellationToken);
+        var isId = int.TryParse(idOrHandle, out var id);
+
+        var product = isId ? 
+            await catalogContext.Products.FirstOrDefaultAsync(product => product.Id == id, cancellationToken)
+            : await catalogContext.Products.FirstOrDefaultAsync(product => product.Handle == idOrHandle, cancellationToken);
+
         return product is not null ? TypedResults.Ok(product) : TypedResults.NotFound();
     }
 
@@ -94,10 +100,14 @@ public static class Endpoints
         return TypedResults.Ok(product);
     }
 
-    private static async Task<Results<Ok, NotFound>> UpdateProductDetails(string id, UpdateProductDetailsRequest request, IPublishEndpoint publishEndpoint, CatalogContext catalogContext, CancellationToken cancellationToken)
+    private static async Task<Results<Ok, NotFound>> UpdateProductDetails(string idOrHandle, UpdateProductDetailsRequest request, IPublishEndpoint publishEndpoint, CatalogContext catalogContext, CancellationToken cancellationToken)
     {
-        var product = await catalogContext.Products.FirstOrDefaultAsync(product => product.Id == id, cancellationToken);
-        
+        var isId = int.TryParse(idOrHandle, out var id);
+
+        var product = isId ? 
+            await catalogContext.Products.FirstOrDefaultAsync(product => product.Id == id, cancellationToken)
+            : await catalogContext.Products.FirstOrDefaultAsync(product => product.Handle == idOrHandle, cancellationToken);
+
         if(product is null) 
         {
             return TypedResults.NotFound();
@@ -117,10 +127,14 @@ public static class Endpoints
         return TypedResults.Ok();
     }
 
-    private static async Task<Results<Ok, NotFound>> UpdateProductPrice(string id, UpdateProductPriceRequest request, IPublishEndpoint publishEndpoint, CatalogContext catalogContext, CancellationToken cancellationToken)
+    private static async Task<Results<Ok, NotFound>> UpdateProductPrice(string idOrHandle, UpdateProductPriceRequest request, IPublishEndpoint publishEndpoint, CatalogContext catalogContext, CancellationToken cancellationToken)
     {
-        var product = await catalogContext.Products.FirstOrDefaultAsync(product => product.Id == id, cancellationToken);
-        
+        var isId = int.TryParse(idOrHandle, out var id);
+
+        var product = isId ? 
+            await catalogContext.Products.FirstOrDefaultAsync(product => product.Id == id, cancellationToken)
+            : await catalogContext.Products.FirstOrDefaultAsync(product => product.Handle == idOrHandle, cancellationToken);
+
         if(product is null) 
         {
             return TypedResults.NotFound();
@@ -138,10 +152,14 @@ public static class Endpoints
         return TypedResults.Ok();
     }
 
-    private static async Task<Results<Ok, NotFound>> DeleteProduct(string id, CatalogContext catalogContext, CancellationToken cancellationToken)
+    private static async Task<Results<Ok, NotFound>> DeleteProduct(string idOrHandle, CatalogContext catalogContext, CancellationToken cancellationToken)
     {
-        var product = await catalogContext.Products.FirstOrDefaultAsync(product => product.Id == id, cancellationToken);
-        
+        var isId = int.TryParse(idOrHandle, out var id);
+
+        var product = isId ? 
+            await catalogContext.Products.FirstOrDefaultAsync(product => product.Id == id, cancellationToken)
+            : await catalogContext.Products.FirstOrDefaultAsync(product => product.Handle == idOrHandle, cancellationToken);
+
         if(product is null) 
         {
             return TypedResults.NotFound();
@@ -154,11 +172,15 @@ public static class Endpoints
         return TypedResults.Ok();
     }
 
-    private static async Task<Results<Ok<string>, NotFound>> UploadProductImage(string id, IFormFile file, 
+    private static async Task<Results<Ok<string>, NotFound>> UploadProductImage(string idOrHandle, IFormFile file, 
         BlobServiceClient blobServiceClient, IConfiguration configuration, CatalogContext catalogContext, CancellationToken cancellationToken)
     {
-        var product = await catalogContext.Products.FirstOrDefaultAsync(product => product.Id == id, cancellationToken);
-        
+        var isId = int.TryParse(idOrHandle, out var id);
+
+        var product = isId ? 
+            await catalogContext.Products.FirstOrDefaultAsync(product => product.Id == id, cancellationToken)
+            : await catalogContext.Products.FirstOrDefaultAsync(product => product.Handle == idOrHandle, cancellationToken);
+
         if(product is null) 
         {
             return TypedResults.NotFound();

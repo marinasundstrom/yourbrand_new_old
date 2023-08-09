@@ -9,4 +9,4 @@ public interface IProductsService
 
 public sealed record PagedResult<T>(IEnumerable<T> Items, int Total);
 
-public sealed record Product(string Id, string Name, string? Image, string Description, decimal Price, decimal? RegularPrice);
+public sealed record Product(long Id, string Name, string? Image, string Description, decimal Price, decimal? RegularPrice, string Handle);
