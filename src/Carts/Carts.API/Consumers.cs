@@ -111,7 +111,7 @@ public static class Mappings
     };
 }
 
-public sealed class UProductPriceUpdatedConsumer(Carts.API.Data.CartsContext cartsContext) : IConsumer<Catalog.Contracts.ProductPriceUpdated>
+public sealed class ProductPriceUpdatedConsumer(Carts.API.Data.CartsContext cartsContext) : IConsumer<Catalog.Contracts.ProductPriceUpdated>
 {
     public async Task Consume(ConsumeContext<Catalog.Contracts.ProductPriceUpdated> context)
     {
@@ -120,6 +120,21 @@ public sealed class UProductPriceUpdatedConsumer(Carts.API.Data.CartsContext car
         await cartsContext.CartItems
             .Where(cartItem => cartItem.ProductId == message.ProductId)
             .ExecuteUpdateAsync(s => s.SetProperty(e => e.Price, e => message.NewPrice), context.CancellationToken);
+
+    }
+}
+
+public sealed class ProductDetailsUpdatedConsumer(Carts.API.Data.CartsContext cartsContext) : IConsumer<Catalog.Contracts.ProductDetailsUpdated>
+{
+    public async Task Consume(ConsumeContext<Catalog.Contracts.ProductDetailsUpdated> context)
+    {
+        var message = context.Message;
+
+        await cartsContext.CartItems
+            .Where(cartItem => cartItem.ProductId == message.ProductId)
+            .ExecuteUpdateAsync(s => 
+                s.SetProperty(e => e.Name, e => message.Name)
+                 .SetProperty(e => e.Description, e => message.Description), context.CancellationToken);
 
     }
 }
