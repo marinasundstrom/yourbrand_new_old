@@ -50,6 +50,11 @@ public static class Endpoints
             .WithOpenApi()
             .DisableAntiforgery();
 
+        productsGroup.MapPut("/handle", UpdateProductHandle)
+            .WithName($"Products_{nameof(UpdateProductHandle)}")
+            .WithTags("Products")
+            .WithOpenApi();
+
         return app;
     }
 
@@ -94,5 +99,11 @@ public static class Endpoints
             new CatalogAPI.FileParameter(file.OpenReadStream(), file.FileName, file.ContentType), cancellationToken);
 
         return TypedResults.Ok(path);
+    }
+
+    private static async Task<Results<Ok, NotFound>> UpdateProductHandle(string id, UpdateProductHandleRequest request,  CatalogAPI.IProductsClient productsClient, CancellationToken cancellationToken)
+    {
+        await productsClient.UpdateProductHandleAsync(id, request, cancellationToken);
+        return TypedResults.Ok();
     }
 }

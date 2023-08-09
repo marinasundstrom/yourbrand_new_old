@@ -140,3 +140,16 @@ public sealed class ProductDetailsUpdatedConsumer(Carts.API.Data.CartsContext ca
 
     }
 }
+
+public sealed class ProductHandleUpdatedConsumer(Carts.API.Data.CartsContext cartsContext) : IConsumer<Catalog.Contracts.ProductHandleUpdated>
+{
+    public async Task Consume(ConsumeContext<Catalog.Contracts.ProductHandleUpdated> context)
+    {
+        var message = context.Message;
+
+        await cartsContext.CartItems
+            .Where(cartItem => cartItem.ProductId == message.ProductId)
+            .ExecuteUpdateAsync(s => s.SetProperty(e => e.ProductHandle, e => message.Handle), context.CancellationToken);
+
+    }
+}

@@ -53,6 +53,11 @@ public static class Endpoints
             .WithOpenApi()
             .DisableAntiforgery();
 
+        app.MapPut("/api/products/{idOrHandle}/handle", UpdateProductHandle)
+            .WithName($"Products_{nameof(UpdateProductHandle)}")
+            .WithTags("Products")
+            .WithOpenApi();
+
         return app;
     }
 
@@ -88,12 +93,23 @@ public static class Endpoints
         return product is not null ? TypedResults.Ok(product) : TypedResults.NotFound();
     }
 
-    private static async Task<Results<Ok<Product>, BadRequest>> CreateProduct(CreateProductRequest request, CatalogContext catalogContext, CancellationToken cancellationToken)
+    private static async Task<Results<Ok<Product>, BadRequest, ProblemHttpResult>> CreateProduct(CreateProductRequest request, CatalogContext catalogContext, CancellationToken cancellationToken)
     {
+        var handleInUse = await catalogContext.Products.AnyAsync(product => product.Handle == request.Handle, cancellationToken);
+
+        if(handleInUse) 
+        {
+            return TypedResults.Problem(
+                statusCode: 400,
+                detail: "The specified handle is already assigned to another product.", 
+                title: "Handle already in use");
+        }
+
         var product = new Product() {
             Name = request.Name,
             Description = request.Description,
-            Price = request.Price
+            Price = request.Price,
+            Handle = request.Handle
         };
         catalogContext.Products.Add(product);
         await catalogContext.SaveChangesAsync(cancellationToken);
@@ -201,10 +217,57 @@ public static class Endpoints
 
         return TypedResults.Ok(product.Image);
     }
+
+    private static async Task<Results<Ok, NotFound, ProblemHttpResult>> UpdateProductHandle(string idOrHandle, UpdateProductHandleRequest request, IPublishEndpoint publishEndpoint, CatalogContext catalogContext, CancellationToken cancellationToken)
+    {
+        if(string.IsNullOrEmpty(request.Handle)) 
+        {
+            return TypedResults.Problem(
+                statusCode: 400,
+                detail: "The handle is empty or null.", 
+                title: "Handle is null or empty");       
+        }
+
+        var isId = int.TryParse(idOrHandle, out var id);
+
+        var product = isId ? 
+            await catalogContext.Products.FirstOrDefaultAsync(product => product.Id == id, cancellationToken)
+            : await catalogContext.Products.FirstOrDefaultAsync(product => product.Handle == idOrHandle, cancellationToken);
+
+        if(product is null) 
+        {
+            return TypedResults.NotFound();
+        }
+
+        var p = product;
+
+        var handleInUse = await catalogContext.Products.AnyAsync(product => product.Id != p.Id && product.Handle == request.Handle, cancellationToken);
+
+        if(handleInUse) 
+        {
+            return TypedResults.Problem(
+                statusCode: 400,
+                detail: "The specified handle is already assigned to another product.", 
+                title: "Handle already in use");
+        }
+
+        product.Handle = request.Handle;
+        
+        await catalogContext.SaveChangesAsync(cancellationToken);
+
+        await publishEndpoint.Publish(new Catalog.Contracts.ProductHandleUpdated {
+            ProductId = product.Id,
+            Handle = product.Handle
+        });
+
+        return TypedResults.Ok();
+    }
 }
 
-public sealed record CreateProductRequest(string Name, string Description, decimal Price);
+public sealed record CreateProductRequest(string Name, string Description, decimal Price, string Handle);
 
 public sealed record UpdateProductDetailsRequest(string Name, string Description);
 
 public sealed record UpdateProductPriceRequest(decimal Price);
+
+public sealed record UpdateProductHandleRequest(string Handle);

@@ -47,6 +47,18 @@
                 </EditForm>
             </MudPaper>
         </MudItem>
+
+        <MudItem xs="12" sm="12" md="3">
+            <MudPaper Elevation="2" Class="pa-4">
+                <EditForm Model="@handleUpdateViewModel" OnValidSubmit="UpdateHandle">
+                    <DataAnnotationsValidator />
+
+                    <MudTextField Label="Handle" @bind-Value="handleUpdateViewModel.Handle" Variant="Variant.Outlined" For="() => handleUpdateViewModel.Handle"></MudTextField>
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Class="mt-4">Update handle</MudButton>
+                </EditForm>
+            </MudPaper>
+        </MudItem>
+        
     </MudGrid>
 }
 
@@ -55,6 +67,7 @@
     bool loaded = false;
     DetailsUpdateViewModel detailsUpdateViewModel;
     PriceUpdateViewModel priceUpdateViewModel;
+    HandleUpdateViewModel handleUpdateViewModel;
     string image;
 
     [Parameter] public string Id { get; set; }
@@ -72,6 +85,10 @@
 
         priceUpdateViewModel = new () {
             Price = product.Price
+        };
+
+        handleUpdateViewModel = new () {
+            Handle = product.Handle
         };
 
         image = product.Image;
@@ -143,6 +160,28 @@
         catch 
         {
             Snackbar.Add("Failed to update product image", Severity.Error);
+        }
+    }
+
+    class HandleUpdateViewModel 
+    {
+        [Required]
+        public string Handle { get; set; }
+    }
+
+    private async Task UpdateHandle() 
+    {
+        try 
+        {
+            await ProductsClient.UpdateProductHandleAsync(Id, new UpdateProductHandleRequest() {
+                Handle = handleUpdateViewModel.Handle
+            });
+
+            Snackbar.Add("Handle was updated", Severity.Info);
+        }
+        catch 
+        {
+            Snackbar.Add("Failed to update product handle", Severity.Error);
         }
     }
 }

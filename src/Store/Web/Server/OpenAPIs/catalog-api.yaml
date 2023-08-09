@@ -176,6 +176,32 @@ paths:
                 type: string
         404:
           description: ''
+  /api/products/{idOrHandle}/handle:
+    put:
+      tags:
+      - Products
+      operationId: Products_UpdateProductHandle
+      parameters:
+      - name: idOrHandle
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      requestBody:
+        x-name: request
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProductHandleRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+        404:
+          description: ''
 components:
   schemas:
     PagedResultOfProduct:
@@ -223,6 +249,8 @@ components:
         price:
           type: number
           format: decimal
+        handle:
+          type: string
     UpdateProductDetailsRequest:
       type: object
       additionalProperties: false
@@ -238,3 +266,9 @@ components:
         price:
           type: number
           format: decimal
+    UpdateProductHandleRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        handle:
+          type: string
