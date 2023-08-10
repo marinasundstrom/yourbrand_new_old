@@ -43,7 +43,7 @@ else
             <h1 itemprop="name">@product.Name</h1>
 
             <div class="mb-4" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-                <meta property="priceCurrency" content="@currency">
+                <meta itemprop="priceCurrency" content="@currency">
                 <h5 class="price2" itemprop="price" content="@product.Price" style="display: inline-block; font-weight: 500; color: #ca0000; line-height: 0;">@(((decimal)product.Price).FormatCurrency(currency))</h5>
                 @if(product.RegularPrice is not null) 
                 {
