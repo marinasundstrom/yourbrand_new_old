@@ -137,9 +137,21 @@ public sealed class ProductDetailsUpdatedConsumer(Carts.API.Data.CartsContext ca
             .ExecuteUpdateAsync(s => 
                 s.SetProperty(e => e.Name, e => message.Name)
                  .SetProperty(e => e.Description, e => message.Description), context.CancellationToken);
-
     }
 }
+
+public sealed class ProductImageUpdatedConsumer(Carts.API.Data.CartsContext cartsContext) : IConsumer<Catalog.Contracts.ProductImageUpdated>
+{
+    public async Task Consume(ConsumeContext<Catalog.Contracts.ProductImageUpdated> context)
+    {
+        var message = context.Message;
+
+        await cartsContext.CartItems
+            .Where(cartItem => cartItem.ProductId == message.ProductId)
+            .ExecuteUpdateAsync(s => s.SetProperty(e => e.Image, e => message.ImageUrl), context.CancellationToken);
+    }
+}
+
 
 public sealed class ProductHandleUpdatedConsumer(Carts.API.Data.CartsContext cartsContext) : IConsumer<Catalog.Contracts.ProductHandleUpdated>
 {
@@ -150,6 +162,5 @@ public sealed class ProductHandleUpdatedConsumer(Carts.API.Data.CartsContext car
         await cartsContext.CartItems
             .Where(cartItem => cartItem.ProductId == message.ProductId)
             .ExecuteUpdateAsync(s => s.SetProperty(e => e.ProductHandle, e => message.Handle), context.CancellationToken);
-
     }
 }

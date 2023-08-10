@@ -189,7 +189,7 @@ public static class Endpoints
     }
 
     private static async Task<Results<Ok<string>, NotFound>> UploadProductImage(string idOrHandle, IFormFile file, 
-        BlobServiceClient blobServiceClient, IConfiguration configuration, CatalogContext catalogContext, CancellationToken cancellationToken)
+        BlobServiceClient blobServiceClient, IConfiguration configuration, IPublishEndpoint publishEndpoint, CatalogContext catalogContext, CancellationToken cancellationToken)
     {
         var isId = int.TryParse(idOrHandle, out var id);
 
@@ -214,6 +214,11 @@ public static class Endpoints
         product.Image = $"{cdnBaseUrl}/images/products/{file.FileName}";
 
         await catalogContext.SaveChangesAsync(cancellationToken);
+
+        await publishEndpoint.Publish(new Catalog.Contracts.ProductImageUpdated {
+            ProductId = product.Id,
+            ImageUrl = product.Image
+        });
 
         return TypedResults.Ok(product.Image);
     }
