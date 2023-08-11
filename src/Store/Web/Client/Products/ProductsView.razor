@@ -1,6 +1,13 @@
 @using BlazorApp.Products
+@using BlazorApp.ProductCategories
 @inject IProductsService ProductsService
+@inject IProductCategoryService ProductCategoryService
 @inject NavigationManager NavigationManager
+@inject RenderingContext RenderingContext
+
+<h1>@(categoryName is null ? "Products" : categoryName)</h1>
+
+<p class="d-none d-lg-block">@(categoryDescription is null ? "Here are our products." : categoryDescription)</p>
 
 <div class="row gx-5 pt-md-4">
     <div class="mb-4 d-xs-block d-sm-block d-sm-md-block d-md-none">
@@ -18,6 +25,19 @@
 
         <div class="d-none d-lg-block">
             <div class="accordion mb-4" id="accordionExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                            Categories
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo">
+                        <div class="accordion-body">
+                            <Client.ProductCategories.CategoriesView OnClick="OnItemClicked" />
+                        </div>
+                    </div>
+                </div>
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingOne">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -45,24 +65,6 @@
                                     Disabled checked checkbox
                                 </label>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingTwo">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            Misc
-                        </button>
-                    </h2>
-                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">
-                        <div class="accordion-body">
-                            <strong>This is the second item's accordion body.</strong> It is hidden by default, until
-                            the collapse plugin adds the appropriate classes that we use to style each element. These
-                            classes control the overall appearance, as well as the showing and hiding via CSS
-                            transitions. You can modify any of this with custom CSS or overriding our default variables.
-                            It's also worth noting that just about any HTML can go within the
-                            <code>.accordion-body</code>, though the transition does limit overflow.
                         </div>
                     </div>
                 </div>
@@ -101,7 +103,7 @@
 
                 </div>
 
-                <Pagination Page="Page.GetValueOrDefault()" PageCount="pageCount" Href="/products" PageChanged="OnPageChanged" class="mt-5" />
+                <Pagination Page="Page.GetValueOrDefault()" PageCount="pageCount" Href="/categories" PageChanged="OnPageChanged" class="mt-5" />
             }
         }
     </div>
@@ -113,6 +115,8 @@
     int pageCount = 0;
     bool loading = false;
     bool error = false;
+    string? categoryName = null;
+    string? categoryDescription = null;
 
     [Parameter]
     [EditorRequired]
@@ -124,8 +128,22 @@
     [Parameter]
     public string? SearchTerm { get; set; }
 
+    [Parameter]
+    public string? Path { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
+        if(RenderingContext.IsPrerendering) 
+        {
+            if(!string.IsNullOrEmpty(Path)) 
+            {
+                var category = await ProductCategoryService.GetProductCategoryById(Path);
+
+                categoryName = category.Name;
+                categoryDescription = category.Description;
+            }
+        }
+
         await FetchItems(Page.GetValueOrDefault());
     }
 
@@ -157,7 +175,7 @@
             }
 
             await FetchItems(Page.GetValueOrDefault(), cts.Token);
-            NavigationManager.NavigateTo($"/products?page={Page}&searchTerm={SearchTerm}", replace: true);
+            NavigationManager.NavigateTo($"/categories?page={Page}&searchTerm={SearchTerm}", replace: true);
 
             task = null;
         }, cts.Token);
@@ -172,7 +190,7 @@
 
         try 
         {
-            var pagedResult = await ProductsService.GetProducts(page, PageSize, SearchTerm, cancellationToken);
+            var pagedResult = await ProductsService.GetProducts(page, PageSize, SearchTerm, Path, cancellationToken);
 
             products = pagedResult.Items.ToList();
             pageCount = (int)Math.Ceiling((float)pagedResult.Total / (float)PageSize.GetValueOrDefault());
@@ -187,5 +205,15 @@
         }
 
         await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task OnItemClicked(ProductCategoryTreeNodeDto node) 
+    {
+        categoryName = node.Name;
+        categoryDescription = node.Description;
+
+        Path = node.Path;
+        await FetchItems(1);
+        NavigationManager.NavigateTo($"/categories/{node.Path}", replace: true);
     }
 }

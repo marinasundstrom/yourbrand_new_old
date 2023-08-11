@@ -1,0 +1,28 @@
+@using BlazorApp.ProductCategories
+
+<li>
+    @if(Node.SubCategories.Count() > 0) 
+    { 
+        <span class="caret @(Expanded ? "caret-up" : "caret-down")" @onclick="() => Expanded = !Expanded"></span>
+    }
+    <a href="@("/categories/" + Node.Path)" class="text-decoration-none text-reset" @onclick:preventDefault @onclick="async () => await OnClick.InvokeAsync(Node)">@Node.Name</a>
+
+    @if(Node.SubCategories.Count() > 0 && Expanded) 
+    {
+        <ul class="nested">
+            @foreach(var node in Node.SubCategories) 
+            {
+                <CategoryTreeNodeView @key="node.Id" Node="node" OnClick="OnClick" />
+            }
+        </ul>
+    }
+</li>
+
+@code 
+{
+    [Parameter] public ProductCategoryTreeNodeDto Node { get; set; }
+
+    [Parameter] public bool Expanded { get; set; }
+
+    [Parameter] public EventCallback<ProductCategoryTreeNodeDto> OnClick { get; set; } = default!;
+}

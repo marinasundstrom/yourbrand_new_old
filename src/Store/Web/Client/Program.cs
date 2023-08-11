@@ -2,6 +2,7 @@ using BlazorApp;
 using Client;
 using Client.Cart;
 using Client.Products;
+using Client.ProductCategories;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
@@ -26,6 +27,7 @@ builder.Services.AddHttpClient<IWeatherForecastService, ClientWeatherForecastSer
 
 builder.Services
     .AddProductsServices()
+    .AddProductCategoriesServices()
     .AddCartServices();
 
 await builder.Build().RunAsync();

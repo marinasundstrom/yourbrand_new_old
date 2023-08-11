@@ -3,6 +3,7 @@ using Azure.Identity;
 using BlazorApp;
 using BlazorApp.Cart;
 using BlazorApp.Products;
+using BlazorApp.ProductCategories;
 using BlazorApp.Data;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -49,6 +50,14 @@ builder.Services.AddHttpClient("CatalogAPI", (sp, http) =>
 builder.Services.AddHttpClient<IProductsClient>("CatalogAPI")
 .AddTypedClient<IProductsClient>((http, sp) => new CatalogAPI.ProductsClient(http));
 
+builder.Services.AddHttpClient("CatalogAPI", (sp, http) =>
+{
+    http.BaseAddress = new Uri(builder.Configuration["yourbrand-catalog-api-url"]!);
+});
+
+builder.Services.AddHttpClient<IProductCategoriesClient>("CatalogAPI")
+.AddTypedClient<IProductCategoriesClient>((http, sp) => new CatalogAPI.ProductCategoriesClient(http));
+
 builder.Services.AddHttpClient("CartsAPI", (sp, http) =>
 {
     http.BaseAddress = new Uri(builder.Configuration["yourbrand-carts-api-url"]!);
@@ -59,6 +68,7 @@ builder.Services.AddHttpClient<ICartsClient>("CartsAPI")
 
 builder.Services
     .AddProductsServices()
+    .AddProductCategoriesServices()
     .AddCartServices();
 
 //builder.Services.AddCartsClient(builder.Configuration["yourbrand-carts-api-url"]!);
@@ -166,6 +176,7 @@ app.MapRazorComponents<App>()
 
 app
     .MapProductsEndpoints()
+    .MapProductCategoriesEndpoints()
     .MapCartEndpoints();
 
 app.MapGroup("/identity").MapIdentityApi<IdentityUser>();

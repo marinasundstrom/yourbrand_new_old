@@ -58,12 +58,22 @@ public static class Endpoints
             .WithTags("Products")
             .WithOpenApi();
 
+        app.MapPut("/api/products/{idOrHandle}/category", UpdateProductCategory)
+            .WithName($"Products_{nameof(UpdateProductCategory)}")
+            .WithTags("Products")
+            .WithOpenApi();
+
         return app;
     }
 
-    private static async Task<Ok<PagedResult<Product>>> GetProducts(int page = 1, int pageSize = 10, string? searchTerm = null, CatalogContext catalogContext = default!, CancellationToken cancellationToken = default!)
+    private static async Task<Ok<PagedResult<Product>>> GetProducts(int page = 1, int pageSize = 10, string? searchTerm = null, string? categoryPath = null, CatalogContext catalogContext = default!, CancellationToken cancellationToken = default!)
     {
         var query = catalogContext.Products.AsNoTracking().AsQueryable();
+
+        if(!string.IsNullOrEmpty(categoryPath)) 
+        {
+            query = query.Where(x => x.Category.Path.StartsWith(categoryPath));
+        }
 
         if (!string.IsNullOrEmpty(searchTerm))
         {
@@ -111,8 +121,11 @@ public static class Endpoints
             Price = request.Price,
             Handle = request.Handle
         };
+
         catalogContext.Products.Add(product);
+
         await catalogContext.SaveChangesAsync(cancellationToken);
+
         return TypedResults.Ok(product);
     }
 
@@ -267,6 +280,42 @@ public static class Endpoints
 
         return TypedResults.Ok();
     }
+
+    private static async Task<Results<Ok, NotFound, ProblemHttpResult>> UpdateProductCategory(string idOrHandle, UpdateProductCategoryRequest request, IPublishEndpoint publishEndpoint, CatalogContext catalogContext, CancellationToken cancellationToken)
+    {
+        var isId = int.TryParse(idOrHandle, out var id);
+
+        var query = catalogContext.Products
+            .Include(product => product.Category)
+            .ThenInclude(productCategory => productCategory.Parent)
+            .AsQueryable();
+
+        var product = isId ? 
+            await query.FirstOrDefaultAsync(product => product.Id == id, cancellationToken)
+            : await query.FirstOrDefaultAsync(product => product.Handle == idOrHandle, cancellationToken);
+
+        if(product is null) 
+        {
+            return TypedResults.NotFound();
+        }
+
+        var productCategory = await catalogContext.ProductCategories
+            .Include(productCategory => productCategory.Parent)
+            .FirstOrDefaultAsync(productCategory => productCategory.Id == request.ProductCategoryId, cancellationToken);
+
+        if(productCategory is null) 
+        {
+            return TypedResults.NotFound();    
+        }
+
+        product.Category.RemoveProduct(product);
+        
+        productCategory.AddProduct(product);
+
+        await catalogContext.SaveChangesAsync(cancellationToken);
+
+        return TypedResults.Ok();
+    }
 }
 
 public sealed record CreateProductRequest(string Name, string Description, decimal Price, string Handle);
@@ -276,3 +325,5 @@ public sealed record UpdateProductDetailsRequest(string Name, string Description
 public sealed record UpdateProductPriceRequest(decimal Price);
 
 public sealed record UpdateProductHandleRequest(string Handle);
+
+public sealed record UpdateProductCategoryRequest(long ProductCategoryId);

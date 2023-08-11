@@ -26,9 +26,9 @@ public static class Endpoints
         return app;
     }
 
-    private static async Task<Results<Ok<PagedResult<Product>>, NotFound>> GetProducts(int? page = 1, int? pageSize = 10, string? searchTerm = null, IProductsService productsService = default!, CancellationToken cancellationToken = default)
+    private static async Task<Results<Ok<PagedResult<Product>>, NotFound>> GetProducts(int? page = 1, int? pageSize = 10, string? searchTerm = null, string? categoryPath = null, IProductsService productsService = default!, CancellationToken cancellationToken = default)
     {
-        var results = await productsService.GetProducts(page, pageSize, searchTerm, cancellationToken);
+        var results = await productsService.GetProducts(page, pageSize, searchTerm, categoryPath, cancellationToken);
         return results is not null ? TypedResults.Ok(results) : TypedResults.NotFound();
     }
 

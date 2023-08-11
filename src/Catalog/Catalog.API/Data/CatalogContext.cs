@@ -13,7 +13,15 @@ public sealed class CatalogContext : DbContext
     {
         modelBuilder.Entity<Product>()
             .HasIndex(p => p.Handle);
+
+        modelBuilder.Entity<ProductCategory>()
+            .HasIndex(p => p.Handle);
+
+        modelBuilder.Entity<ProductCategory>()
+            .HasIndex(p => p.Path);
     }
 
     public DbSet<Product> Products { get; set; } = default!;
+
+    public DbSet<ProductCategory> ProductCategories { get; set; } = default!;
 }

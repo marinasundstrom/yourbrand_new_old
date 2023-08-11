@@ -1,0 +1,49 @@
+@using BlazorApp.ProductCategories
+@using Client.ProductCategories
+@inject IProductCategoryService ProductCategoryService
+@inject NavigationManager NavigationManager
+
+@if(categoryTree is not null) 
+{
+    <ul id="myUL">
+
+        @foreach(var node in categoryTree.Categories) 
+        {
+            <CategoryTreeNodeView @key="node.Id" Node="node" OnClick="OnClick" />
+        }
+
+        @*
+        <ul class="list-group">
+            <li class="list-group-item node-treeview1 node-selected" data-nodeid="0"
+                style="color:#FFFFFF;background-color:#428bca;"><span class="icon expand-icon fas fa-minus"></span><span
+                    class="icon node-icon"></span>Parent 1</li>
+            <li class="list-group-item node-treeview1" data-nodeid="1" style="color:undefined;background-color:undefined;">
+                <span class="indent"></span><span class="icon expand-icon fas fa-plus"></span><span
+                    class="icon node-icon"></span>Child 1</li>
+            <li class="list-group-item node-treeview1" data-nodeid="4" style="color:undefined;background-color:undefined;">
+                <span class="indent"></span><span class="icon glyphicon"></span><span class="icon node-icon"></span>Child 2
+            </li>
+            <li class="list-group-item node-treeview1" data-nodeid="5" style="color:undefined;background-color:undefined;">
+                <span class="icon glyphicon"></span><span class="icon node-icon"></span>Parent 2</li>
+            <li class="list-group-item node-treeview1" data-nodeid="6" style="color:undefined;background-color:undefined;">
+                <span class="icon glyphicon"></span><span class="icon node-icon"></span>Parent 3</li>
+            <li class="list-group-item node-treeview1" data-nodeid="7" style="color:undefined;background-color:undefined;">
+                <span class="icon glyphicon"></span><span class="icon node-icon"></span>Parent 4</li>
+            <li class="list-group-item node-treeview1" data-nodeid="8" style="color:undefined;background-color:undefined;">
+                <span class="icon glyphicon"></span><span class="icon node-icon"></span>Parent 5</li>
+        </ul>
+        *@
+    </ul>
+}
+
+@code 
+{
+    ProductCategoryTreeRootDto? categoryTree;
+
+    protected override async Task OnInitializedAsync()
+    {
+        categoryTree = await ProductCategoryService.GetProductCategories();
+    }
+
+    [Parameter] public EventCallback<ProductCategoryTreeNodeDto> OnClick { get; set; } = default!;
+}

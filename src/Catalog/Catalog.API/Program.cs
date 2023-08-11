@@ -2,6 +2,7 @@
 using Azure.Storage.Blobs.Models;
 using Azure.Identity;
 using Catalog.API.Products;
+using Catalog.API.ProductCategories;
 using Catalog.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Azure;
@@ -17,7 +18,7 @@ builder.Services.AddOutputCache(options =>
     options.AddPolicy(GetProductsExpire20, builder => 
     {
         builder.Expire(TimeSpan.FromSeconds(20));
-        builder.SetVaryByQuery("page", "pageSize", "searchTerm");
+        builder.SetVaryByQuery("page", "pageSize", "searchTerm", "categoryPath");
     });
 });
 
@@ -51,6 +52,8 @@ builder.Services.AddAzureClients(clientBuilder =>
 // Add services to the container.
 
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddControllers();
+
 builder.Services.AddOpenApiDocument(config => {
     config.PostProcess = document =>
     {
@@ -112,7 +115,11 @@ app.UseOutputCache();
 
 app.UseHttpsRedirection();
 
-app.MapProductsEndpoints();
+app.MapControllers();
+
+app
+    .MapProductsEndpoints()
+    .MapProductCategoriesEndpoints();
 
 /*
 app.MapGet("/api/weatherforecast", async (DateOnly startDate, WeatherForecastService weatherForecastService, CancellationToken cancellationToken) =>
@@ -131,7 +138,7 @@ using (var scope = app.Services.CreateScope())
     var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
 
     //await context.Database.EnsureDeletedAsync();
-    await context.Database.EnsureCreatedAsync(); 
+    //await context.Database.EnsureCreatedAsync(); 
 
     if (args.Contains("--seed"))
     {
@@ -154,4 +161,3 @@ static async Task SeedData(CatalogContext context, IConfiguration configuration,
             "database. Error: {Message}", ex.Message);
     }
 }
-

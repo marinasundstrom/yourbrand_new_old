@@ -2,9 +2,11 @@ namespace Catalog.API.Model;
 
 public sealed class Product 
 {
-    public long Id { get; set; }
+    public long Id { get; private set; }
 
     public string Name { get; set; } = default!;
+
+    public ProductCategory? Category { get; set; }
 
     public string Description { get; set; } = default!;
 

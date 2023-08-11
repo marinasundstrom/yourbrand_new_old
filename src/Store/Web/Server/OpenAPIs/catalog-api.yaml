@@ -29,6 +29,11 @@ paths:
         schema:
           type: string
         x-position: 3
+      - name: categoryPath
+        in: query
+        schema:
+          type: string
+        x-position: 4
       responses:
         200:
           description: ''
@@ -202,6 +207,165 @@ paths:
           description: ''
         404:
           description: ''
+  /api/products/{idOrHandle}/category:
+    put:
+      tags:
+      - Products
+      operationId: Products_UpdateProductCategory
+      parameters:
+      - name: idOrHandle
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      requestBody:
+        x-name: request
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProductCategoryRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+        404:
+          description: ''
+  /api/productCategories:
+    get:
+      tags:
+      - ProductCategories
+      operationId: ProductCategories_GetProductCategories
+      parameters:
+      - name: page
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: searchTerm
+        in: query
+        schema:
+          type: string
+        x-position: 3
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfProductCategory'
+    post:
+      tags:
+      - ProductCategories
+      operationId: ProductCategories_CreateProductCategory
+      requestBody:
+        x-name: request
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProductCategoryRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductCategory'
+        400:
+          description: ''
+  /api/productCategories/tree:
+    get:
+      tags:
+      - ProductCategories
+      operationId: ProductCategories_GetProductCategoryTree
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductCategoryTreeRootDto'
+        400:
+          description: ''
+  /api/productCategories/{idOrPath}:
+    put:
+      tags:
+      - ProductCategories
+      operationId: ProductCategories_UpdateProductCategoryDetails
+      parameters:
+      - name: idOrPath
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      requestBody:
+        x-name: request
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProductCategoryDetailsRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+        404:
+          description: ''
+    delete:
+      tags:
+      - ProductCategories
+      operationId: ProductCategories_DeleteProductCategory
+      parameters:
+      - name: idOrPath
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      responses:
+        200:
+          description: ''
+        404:
+          description: ''
+  /api/ProductCategories/{idOrPath}:
+    get:
+      tags:
+      - ProductCategories
+      operationId: ProductCategories_GetProductCategoryById
+      parameters:
+      - name: idOrPath
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      responses:
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductCategory'
 components:
   schemas:
     PagedResultOfProduct:
@@ -224,6 +388,10 @@ components:
           format: int64
         name:
           type: string
+        category:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/ProductCategory'
         description:
           type: string
         price:
@@ -237,6 +405,39 @@ components:
           type: string
           nullable: true
         handle:
+          type: string
+    ProductCategory:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+          nullable: true
+        parent:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/ProductCategory'
+        canAddProducts:
+          type: boolean
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+        productsCount:
+          type: integer
+          format: int64
+        subCategories:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductCategory'
+        handle:
+          type: string
+        path:
           type: string
     CreateProductRequest:
       type: object
@@ -272,3 +473,123 @@ components:
       properties:
         handle:
           type: string
+    UpdateProductCategoryRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        productCategoryId:
+          type: integer
+          format: int64
+    PagedResultOfProductCategory:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductCategory'
+        total:
+          type: integer
+          format: int32
+    ProductCategoryTreeRootDto:
+      type: object
+      additionalProperties: false
+      properties:
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductCategoryTreeNodeDto'
+        productsCount:
+          type: integer
+          format: int64
+    ProductCategoryTreeNodeDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        handle:
+          type: string
+        path:
+          type: string
+        description:
+          type: string
+          nullable: true
+        parent:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/ParentProductCategoryDto'
+        subCategories:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductCategoryTreeNodeDto'
+        productsCount:
+          type: integer
+          format: int64
+        canAddProducts:
+          type: boolean
+    ParentProductCategoryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        handle:
+          type: string
+        path:
+          type: string
+        parent:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/ParentProductCategoryDto'
+        productsCount:
+          type: integer
+          format: int64
+    CreateProductCategoryRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+          format: decimal
+        path:
+          type: string
+    UpdateProductCategoryDetailsRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+    ProblemDetails:
+      type: object
+      additionalProperties:
+        nullable: true
+      properties:
+        type:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        status:
+          type: integer
+          format: int32
+          nullable: true
+        detail:
+          type: string
+          nullable: true
+        instance:
+          type: string
+          nullable: true

@@ -4,9 +4,9 @@ using CatalogAPI;
 
 public sealed class ProductsService(IProductsClient productsClient) : IProductsService
 {
-    public async Task<PagedResult<Product>> GetProducts(int? page = 1, int? pageSize = 10, string? searchTerm = null, CancellationToken cancellationToken = default) 
+    public async Task<PagedResult<Product>> GetProducts(int? page = 1, int? pageSize = 10, string? searchTerm = null, string? categoryPath = null, CancellationToken cancellationToken = default) 
     {
-        var results = await productsClient.GetProductsAsync(page, pageSize, searchTerm, cancellationToken);
+        var results = await productsClient.GetProductsAsync(page, pageSize, searchTerm, categoryPath, cancellationToken);
         return new PagedResult<Product>(results.Items.Select(product => product.Map()), results.Total);
     }
 

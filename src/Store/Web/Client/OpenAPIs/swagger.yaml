@@ -31,6 +31,11 @@ paths:
         schema:
           type: string
         x-position: 3
+      - name: categoryPath
+        in: query
+        schema:
+          type: string
+        x-position: 4
       responses:
         200:
           description: ''
@@ -59,6 +64,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Product'
+        404:
+          description: ''
+  /api/ProductCategories:
+    get:
+      tags:
+      - ProductCategories
+      operationId: ProductCategories_GetProductCategories
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductCategoryTreeRootDto'
+        404:
+          description: ''
+  /api/ProductCategories/{id}:
+    get:
+      tags:
+      - ProductCategories
+      operationId: ProductCategories_GetProductCategoryById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductCategoryDto'
         404:
           description: ''
   /api/cart:
@@ -410,6 +450,88 @@ components:
           nullable: true
         handle:
           type: string
+    ProductCategoryTreeRootDto:
+      type: object
+      additionalProperties: false
+      properties:
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductCategoryTreeNodeDto'
+        productsCount:
+          type: integer
+          format: int64
+    ProductCategoryTreeNodeDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        handle:
+          type: string
+        path:
+          type: string
+        description:
+          type: string
+          nullable: true
+        parent:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/ParentProductCategoryDto'
+        subCategories:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductCategoryTreeNodeDto'
+        productsCount:
+          type: integer
+          format: int64
+        canAddProducts:
+          type: boolean
+    ParentProductCategoryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        handle:
+          type: string
+        path:
+          type: string
+        parent:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/ParentProductCategoryDto'
+        productsCount:
+          type: integer
+          format: int64
+    ProductCategoryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        handle:
+          type: string
+        path:
+          type: string
+        parent:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/ParentProductCategoryDto'
+        productsCount:
+          type: integer
+          format: int64
     Cart:
       type: object
       additionalProperties: false

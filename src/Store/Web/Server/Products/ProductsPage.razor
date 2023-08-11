@@ -1,13 +1,7 @@
-@page "/products"
+@page "/categories/{*path}"
 @attribute [StreamRendering(true)]
 
-<AppPageTitle>Products</AppPageTitle>
-
-<h1>Products</h1>
-
-<p class="d-none d-lg-block">Demonstrates form processed by the server - with model-binding and server-side validation</p>
-
-<Client.Products.ProductsView Page="Page" PageSize="PageSize" SearchTerm="@SearchTerm" @rendermode="@RenderMode.Auto" />
+<Client.Products.ProductsView Page="Page" PageSize="PageSize" SearchTerm="@SearchTerm" Path="@Path" @rendermode="@RenderMode.Auto" />
 
 @code {
     [SupplyParameterFromQuery]
@@ -18,6 +12,9 @@
 
     [SupplyParameterFromQuery]
     public string? SearchTerm { get; set; }
+
+    [Parameter]
+    public string? Path { get; set; }
 
     protected override void OnInitialized()
     {
