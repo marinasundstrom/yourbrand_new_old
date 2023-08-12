@@ -1,6 +1,8 @@
 @page "/categories/{*path}"
 @attribute [StreamRendering(true)]
 
+<AppPageTitle>Products</AppPageTitle>
+
 <Client.Products.ProductsView Page="Page" PageSize="PageSize" SearchTerm="@SearchTerm" Path="@Path" @rendermode="@RenderMode.Auto" />
 
 @code {

@@ -3,7 +3,8 @@
 @inject IProductsService ProductsService
 @inject IProductCategoryService ProductCategoryService
 @inject NavigationManager NavigationManager
-@inject RenderingContext RenderingContext
+
+<AppPageTitle>@(categoryName is null ? "Products" : categoryName)</AppPageTitle>
 
 <h1>@(categoryName is null ? "Products" : categoryName)</h1>
 
@@ -133,15 +134,14 @@
 
     protected override async Task OnInitializedAsync()
     {
-        if(RenderingContext.IsPrerendering) 
-        {
-            if(!string.IsNullOrEmpty(Path)) 
-            {
-                var category = await ProductCategoryService.GetProductCategoryById(Path);
+        Console.WriteLine(Path);
 
-                categoryName = category.Name;
-                categoryDescription = category.Description;
-            }
+        if(!string.IsNullOrEmpty(Path)) 
+        {
+            var category = await ProductCategoryService.GetProductCategoryById(Path);
+
+            categoryName = category.Name;
+            categoryDescription = category.Description;
         }
 
         await FetchItems(Page.GetValueOrDefault());
