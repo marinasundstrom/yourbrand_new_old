@@ -27,7 +27,7 @@ else
         <meta property="product:retailer_item_id" content="@product.Id" data-dynamic="1" />
     </HeadContent>
     
-    <article itemscope itemtype="http://schema.org/Product" class="row gx-5">
+    <article itemscope itemtype="http://schema.org/Product" class="row gx-5 pt-md-4">
         <div class="col-md-4 mb-4">
             <img class="bd-placeholder-img card-img-top shadow" itemprop="image" style="object-fit: cover; aspect-ratio: 1 / 1;" src="@product.Image" />
         </div>
@@ -35,8 +35,10 @@ else
         <div class="col-md-8 mb-4">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a class="text-decoration-none text-reset muted" href="/products">Products</a></li>
-                    <li class="breadcrumb-item"><a class="text-decoration-none text-reset muted" href="/products/coffee">Coffee</a></li>
+                    @foreach(var category in IterateCategories(product.Category))
+                    { 
+                        <li class="breadcrumb-item"><a class="text-decoration-none text-reset muted" href="/categories/@category.Path">@category.Name</a></li>
+                    }
                 </ol>
             </nav>
 
@@ -98,5 +100,15 @@ else
     {
         product = await ProductsService.GetProductById(Id);
         productInfo = new ProductInfo(product.Name, product.Image, product.Id, product.Handle, product.Description, (decimal)product.Price, (decimal?)product.RegularPrice);
+    }
+
+    static IEnumerable<ProductCategories.ProductCategoryParent> IterateCategories(ProductCategories.ProductCategoryParent category)
+    {
+        if(category.Parent is not null)
+        {
+            yield return IterateCategories(category.Parent).First();
+        }
+
+        yield return category;
     }
 }

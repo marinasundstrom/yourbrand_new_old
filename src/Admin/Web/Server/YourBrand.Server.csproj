@@ -21,4 +21,10 @@
 		<ProjectReference Include="..\..\..\Catalog\Catalog.Client\Catalog.Client.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Remove="ProductCategories\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="ProductCategories\" />
+	</ItemGroup>
 </Project>

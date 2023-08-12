@@ -27,8 +27,13 @@ public static class Mapping
         return new (productCategory.Id, productCategory.Name, productCategory.Handle, productCategory.Path, productCategory.Description, productCategory.Parent?.ToParentDto(), productCategory.SubCategories.Select(x => x.ToProductCategoryTreeNodeDto()), productCategory.ProductsCount, productCategory.CanAddProducts);
     }
 
-    public static ParentProductCategoryDto ToParentDto(this CatalogAPI.ParentProductCategoryDto productCategory)
+    public static ProductCategoryParent ToParentDto(this CatalogAPI.ParentProductCategoryDto productCategory)
     {
         return new(productCategory.Id, productCategory.Name, productCategory.Handle, productCategory.Path, productCategory.Parent?.ToParentDto(), productCategory.ProductsCount);
+    }
+
+    public static ProductCategoryParent ToParentDto2(this CatalogAPI.ProductCategoryParent productCategory)
+    {
+        return new(productCategory.Id, productCategory.Name, productCategory.Handle, productCategory.Path, productCategory.Parent?.ToParentDto2(), 0);
     }
 }

@@ -2,9 +2,10 @@
 @using AdminAPI
 @using System.ComponentModel.DataAnnotations
 @inject IProductsClient ProductsClient
+@inject IProductCategoriesClient ProductCategoriesClient
 @inject ISnackbar Snackbar
 
-@if(loaded) 
+@if (loaded)
 {
     <PageTitle>@detailsUpdateViewModel.Name</PageTitle>
 
@@ -13,7 +14,7 @@
     <MudGrid>
         <MudItem xs="12" sm="6" md="4">
             <MudImage Src="@image" ObjectFit="ObjectFit.Cover" Height="200" Width="200" Alt="@detailsUpdateViewModel.Name"
-            Elevation="25" Class="rounded-lg" />
+                      Elevation="25" Class="rounded-lg" />
 
             <div>
                 <InputFile id="fileInput" OnChange="UploadProductImage" hidden accept="*.jpg, *.jpeg, *.png" />
@@ -39,6 +40,19 @@
 
         <MudItem xs="12" sm="12" md="3">
             <MudPaper Elevation="2" Class="pa-4">
+                <EditForm Model="@categoryUpdateViewModel" OnValidSubmit="UpdateCategory">
+                    <DataAnnotationsValidator />
+
+                    <MudAutocomplete Label="Category" SearchFunc="Search" @bind-Value="categoryUpdateViewModel.Category" ToStringFunc="x => x.Name" Variant="Variant.Outlined" For="() => categoryUpdateViewModel.Category" />
+
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Class="mt-4">Update category</MudButton>
+                </EditForm>
+            </MudPaper>
+        </MudItem>
+
+
+        <MudItem xs="12" sm="12" md="3">
+            <MudPaper Elevation="2" Class="pa-4">
                 <EditForm Model="@priceUpdateViewModel" OnValidSubmit="UpdatePrice">
                     <DataAnnotationsValidator />
 
@@ -58,37 +72,49 @@
                 </EditForm>
             </MudPaper>
         </MudItem>
-        
+
     </MudGrid>
 }
 
-@code 
+@code
 {
     bool loaded = false;
     DetailsUpdateViewModel detailsUpdateViewModel;
+    CategoryUpdateViewModel categoryUpdateViewModel;
     PriceUpdateViewModel priceUpdateViewModel;
     HandleUpdateViewModel handleUpdateViewModel;
     string image;
 
     [Parameter] public string Id { get; set; }
- 
-    protected override async Task OnInitializedAsync() 
+
+    protected override async Task OnInitializedAsync()
     {
         var product = await ProductsClient.GetProductByIdAsync(Id);
 
-        detailsUpdateViewModel = new ()
+        detailsUpdateViewModel = new()
         {
             Name = product.Name,
             ShadowName = product.Name,
             Description = product.Description
         };
 
-        priceUpdateViewModel = new () {
+        priceUpdateViewModel = new()
+        {
             Price = product.Price
         };
 
-        handleUpdateViewModel = new () {
+        handleUpdateViewModel = new()
+        {
             Handle = product.Handle
+        };
+
+        categoryUpdateViewModel = new CategoryUpdateViewModel()
+        {
+            Category = new ProductCategoryParent
+            {
+                Id = product.Category.Id,
+                Name = product.Category.Name
+            }
         };
 
         image = product.Image;
@@ -96,11 +122,12 @@
         loaded = true;
     }
 
-    private async Task UpdateDetails() 
+    private async Task UpdateDetails()
     {
-        try 
+        try
         {
-            await ProductsClient.UpdateProductDetailsAsync(Id, new UpdateProductDetailsRequest() {
+            await ProductsClient.UpdateProductDetailsAsync(Id, new UpdateProductDetailsRequest()
+            {
                 Name = detailsUpdateViewModel.ShadowName,
                 Description = detailsUpdateViewModel.Description,
             });
@@ -109,29 +136,30 @@
 
             Snackbar.Add("Product details were updated", Severity.Info);
         }
-        catch 
+        catch
         {
             Snackbar.Add("Failed to update product details", Severity.Error);
         }
     }
 
-    private async Task UpdatePrice() 
+    private async Task UpdatePrice()
     {
-        try 
+        try
         {
-            await ProductsClient.UpdateProductPriceAsync(Id, new UpdateProductPriceRequest() {
+            await ProductsClient.UpdateProductPriceAsync(Id, new UpdateProductPriceRequest()
+            {
                 Price = priceUpdateViewModel.Price
             });
 
             Snackbar.Add("Price was updated", Severity.Info);
         }
-        catch 
+        catch
         {
             Snackbar.Add("Failed to update product price", Severity.Error);
         }
     }
 
-    class DetailsUpdateViewModel 
+    class DetailsUpdateViewModel
     {
         public string Name { get; set; }
 
@@ -142,7 +170,7 @@
         public string Description { get; set; }
     }
 
-    class PriceUpdateViewModel 
+    class PriceUpdateViewModel
     {
         [Range(0, 100000)]
         public decimal Price { get; set; }
@@ -150,38 +178,74 @@
 
     private async Task UploadProductImage(InputFileChangeEventArgs e)
     {
-        try 
+        try
         {
             var file = e.GetMultipleFiles().First();
             image = await ProductsClient.UploadProductImageAsync(Id, new FileParameter(file.OpenReadStream(3 * 1000000), file.Name));
 
             Snackbar.Add("Image was updated", Severity.Info);
         }
-        catch 
+        catch
         {
             Snackbar.Add("Failed to update product image", Severity.Error);
         }
     }
 
-    class HandleUpdateViewModel 
+    class HandleUpdateViewModel
     {
         [Required]
         public string Handle { get; set; }
     }
 
-    private async Task UpdateHandle() 
+    private async Task UpdateHandle()
     {
-        try 
+        try
         {
-            await ProductsClient.UpdateProductHandleAsync(Id, new UpdateProductHandleRequest() {
+            await ProductsClient.UpdateProductHandleAsync(Id, new UpdateProductHandleRequest()
+            {
                 Handle = handleUpdateViewModel.Handle
             });
 
             Snackbar.Add("Handle was updated", Severity.Info);
         }
-        catch 
+        catch
         {
             Snackbar.Add("Failed to update product handle", Severity.Error);
         }
+    }
+
+    class CategoryUpdateViewModel
+    {
+        [Required]
+        public AdminAPI.ProductCategoryParent Category { get; set; }
+    }
+
+    private async Task UpdateCategory()
+    {
+        try
+        {
+            await ProductsClient.UpdateProductCategoryAsync(Id, new UpdateProductCategoryRequest()
+            {
+                ProductCategoryId = categoryUpdateViewModel.Category.Id
+            }); ;
+
+            Snackbar.Add("Category was updated", Severity.Info);
+        }
+        catch
+        {
+            Snackbar.Add("Category to update product handle", Severity.Error);
+        }
+    }
+
+    private async Task<IEnumerable<ProductCategoryParent>> Search(string value)
+    {
+        var result = await ProductCategoriesClient.GetProductsCategoriesAsync(1, 20, value);
+        return result.Items
+            .Where(x => x.CanAddProducts)
+            .Select(x => new ProductCategoryParent
+            {
+                Id = x.Id,
+                Name = x.Name
+            });
     }
 }

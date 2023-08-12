@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using MassTransit;
+using Catalog.API.ProductCategories;
 
 namespace Catalog.API.Products;
 
@@ -68,7 +69,10 @@ public static class Endpoints
 
     private static async Task<Ok<PagedResult<Product>>> GetProducts(int page = 1, int pageSize = 10, string? searchTerm = null, string? categoryPath = null, CatalogContext catalogContext = default!, CancellationToken cancellationToken = default!)
     {
-        var query = catalogContext.Products.AsNoTracking().AsQueryable();
+        var query = catalogContext.Products
+            .Include(x => x.Category)
+            .ThenInclude(x => x.Parent)
+            .AsNoTracking().AsQueryable();
 
         if(!string.IsNullOrEmpty(categoryPath)) 
         {
@@ -87,7 +91,7 @@ public static class Endpoints
             .Take(pageSize)
             .ToListAsync(cancellationToken);
 
-        var pagedResult = new PagedResult<Product>(products, total);
+        var pagedResult = new PagedResult<Product>(products.Select(x => x.ToDto()), total);
 
         return TypedResults.Ok(pagedResult);
     }
@@ -96,11 +100,16 @@ public static class Endpoints
     {
         var isId = int.TryParse(idOrHandle, out var id);
 
-        var product = isId ? 
-            await catalogContext.Products.FirstOrDefaultAsync(product => product.Id == id, cancellationToken)
-            : await catalogContext.Products.FirstOrDefaultAsync(product => product.Handle == idOrHandle, cancellationToken);
+        var query = catalogContext.Products
+            .Include(x => x.Category)
+            .ThenInclude(x => x.Parent)
+            .AsQueryable();
 
-        return product is not null ? TypedResults.Ok(product) : TypedResults.NotFound();
+        var product = isId ? 
+            await query.FirstOrDefaultAsync(product => product.Id == id, cancellationToken)
+            : await query.FirstOrDefaultAsync(product => product.Handle == idOrHandle, cancellationToken);
+
+        return product is not null ? TypedResults.Ok(product.ToDto()) : TypedResults.NotFound();
     }
 
     private static async Task<Results<Ok<Product>, BadRequest, ProblemHttpResult>> CreateProduct(CreateProductRequest request, CatalogContext catalogContext, CancellationToken cancellationToken)
@@ -115,7 +124,7 @@ public static class Endpoints
                 title: "Handle already in use");
         }
 
-        var product = new Product() {
+        var product = new Model.Product() {
             Name = request.Name,
             Description = request.Description,
             Price = request.Price,
@@ -126,7 +135,7 @@ public static class Endpoints
 
         await catalogContext.SaveChangesAsync(cancellationToken);
 
-        return TypedResults.Ok(product);
+        return TypedResults.Ok(product.ToDto());
     }
 
     private static async Task<Results<Ok, NotFound>> UpdateProductDetails(string idOrHandle, UpdateProductDetailsRequest request, IPublishEndpoint publishEndpoint, CatalogContext catalogContext, CancellationToken cancellationToken)
@@ -299,18 +308,19 @@ public static class Endpoints
             return TypedResults.NotFound();
         }
 
-        var productCategory = await catalogContext.ProductCategories
+        var newCategory = await catalogContext.ProductCategories
             .Include(productCategory => productCategory.Parent)
+             .Include(productCategory => productCategory.Products)
             .FirstOrDefaultAsync(productCategory => productCategory.Id == request.ProductCategoryId, cancellationToken);
 
-        if(productCategory is null) 
+        if(newCategory is null) 
         {
             return TypedResults.NotFound();    
         }
 
         product.Category.RemoveProduct(product);
         
-        productCategory.AddProduct(product);
+        newCategory.AddProduct(product);
 
         await catalogContext.SaveChangesAsync(cancellationToken);
 
@@ -327,3 +337,23 @@ public sealed record UpdateProductPriceRequest(decimal Price);
 public sealed record UpdateProductHandleRequest(string Handle);
 
 public sealed record UpdateProductCategoryRequest(long ProductCategoryId);
+
+
+public sealed record Product(
+    long Id, 
+    string Name,
+    ProductCategoryParent? Category, 
+    string Description,
+    decimal Price,
+    decimal? RegularPrice,
+    string? Image,
+    string Handle
+);
+
+public static class Mapping
+{
+    public static Product ToDto(this Model.Product product)
+    {
+        return new(product.Id, product.Name, product.Category.ToShortDto(), product.Description, product.Price, product.RegularPrice, product.Image, product.Handle);
+    }
+}

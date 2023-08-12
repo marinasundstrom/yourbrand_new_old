@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using MassTransit;
+using Catalog.API.Products;
 
 namespace Catalog.API.ProductCategories;
 
@@ -61,7 +62,7 @@ public static class Endpoints
             .Take(pageSize)
             .ToListAsync(cancellationToken);
 
-        var pagedResult = new PagedResult<ProductCategory>(productCategories, total);
+        var pagedResult = new PagedResult<ProductCategory>(productCategories.Select(x => x.ToDto()), total);
 
         return TypedResults.Ok(pagedResult);
     }
@@ -97,13 +98,13 @@ public static class Endpoints
                 title: "Path already in use");
         }
 
-        var productCategory = new ProductCategory() {
+        var productCategory = new Model.ProductCategory() {
             Name = request.Name,
             Path = request.Path
         };
         catalogContext.ProductCategories.Add(productCategory);
         await catalogContext.SaveChangesAsync(cancellationToken);
-        return TypedResults.Ok(productCategory);
+        return TypedResults.Ok(productCategory.ToDto());
     }
 
     private static async Task<Results<Ok, NotFound>> UpdateProductCategoryDetails(string idOrPath, UpdateProductCategoryDetailsRequest request, IPublishEndpoint publishEndpoint, CatalogContext catalogContext, CancellationToken cancellationToken)
@@ -154,6 +155,16 @@ public sealed record UpdateProductCategoryDetailsRequest(string Name, string Des
 
 public static class Mapping
 {
+    public static ProductCategory ToDto(this Model.ProductCategory productCategory)
+    {
+        return new(productCategory.Id, productCategory.Name, productCategory.Description, productCategory.Parent?.ToShortDto(), productCategory.CanAddProducts, productCategory.ProductsCount, productCategory.Handle, productCategory.Path);
+    }
+
+    public static ProductCategoryParent ToShortDto(this Model.ProductCategory productCategory)
+    {
+        return new(productCategory.Id, productCategory.Name, productCategory.Description, productCategory.Handle, productCategory.Path, productCategory.Parent?.ToShortDto());
+    }
+
     public static ProductCategoryTreeNodeDto ToProductCategoryTreeNodeDto(this Model.ProductCategory productCategory)
     {
         return new (productCategory.Id, productCategory.Name, productCategory.Handle, productCategory.Path, productCategory.Description, productCategory.Parent?.ToParentDto(), productCategory.SubCategories.Select(x => x.ToProductCategoryTreeNodeDto()), productCategory.ProductsCount, productCategory.CanAddProducts);
@@ -170,3 +181,24 @@ public record class ProductCategoryTreeRootDto(IEnumerable<ProductCategoryTreeNo
 public record class ProductCategoryTreeNodeDto(long Id, string Name, string Handle, string Path, string? Description, ParentProductCategoryDto? Parent, IEnumerable<ProductCategoryTreeNodeDto> SubCategories, long ProductsCount, bool CanAddProducts);
 
 public record class ParentProductCategoryDto(long Id, string Name, string Handle, string Path, ParentProductCategoryDto? Parent, long ProductsCount);
+
+public sealed record ProductCategory(
+    long Id,
+     string Name,
+     string? Description,
+     ProductCategoryParent? Parent,
+     bool CanAddProducts,
+     long ProductsCount,
+     string Handle,
+    string Path
+);
+
+
+public sealed record ProductCategoryParent(
+    long Id,
+    string Name,
+    string? Description,
+    string Handle,
+    string Path,
+    ProductCategoryParent? Parent
+);

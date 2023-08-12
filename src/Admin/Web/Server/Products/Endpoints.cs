@@ -55,6 +55,11 @@ public static class Endpoints
             .WithTags("Products")
             .WithOpenApi();
 
+        productsGroup.MapPut("/category", UpdateProductCategory)
+            .WithName($"Products_{nameof(UpdateProductCategory)}")
+            .WithTags("Products")
+            .WithOpenApi();
+
         return app;
     }
 
@@ -104,6 +109,12 @@ public static class Endpoints
     private static async Task<Results<Ok, NotFound>> UpdateProductHandle(string id, UpdateProductHandleRequest request,  CatalogAPI.IProductsClient productsClient, CancellationToken cancellationToken)
     {
         await productsClient.UpdateProductHandleAsync(id, request, cancellationToken);
+        return TypedResults.Ok();
+    }
+
+    private static async Task<Results<Ok, NotFound>> UpdateProductCategory(string id, UpdateProductCategoryRequest request, CatalogAPI.IProductsClient productsClient, CancellationToken cancellationToken)
+    {
+        await productsClient.UpdateProductCategoryAsync(id, request, cancellationToken);
         return TypedResults.Ok();
     }
 }

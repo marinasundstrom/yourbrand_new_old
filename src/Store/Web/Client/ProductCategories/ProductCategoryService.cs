@@ -22,13 +22,13 @@ public static class Mapping
         return new(productCategory.Id, productCategory.Name, productCategory.Description, productCategory.Handle, productCategory.Path, null, productCategory.ProductsCount);
     }
 
-    public static ProductCategoryTreeNodeDto ToProductCategoryTreeNodeDto(this StoreWeb.ProductCategoryTreeNodeDto productCategory)
-    {
-        return new (productCategory.Id, productCategory.Name, productCategory.Handle, productCategory.Path, productCategory.Description, productCategory.Parent?.ToParentDto(), productCategory.SubCategories.Select(x => x.ToProductCategoryTreeNodeDto()), productCategory.ProductsCount, productCategory.CanAddProducts);
-    }
-
-    public static ParentProductCategoryDto ToParentDto(this StoreWeb.ParentProductCategoryDto productCategory)
+    public static ProductCategoryParent ToParentDto(this StoreWeb.ProductCategoryParent productCategory)
     {
         return new(productCategory.Id, productCategory.Name, productCategory.Handle, productCategory.Path, productCategory.Parent?.ToParentDto(), productCategory.ProductsCount);
+    }
+
+    public static ProductCategoryTreeNodeDto ToProductCategoryTreeNodeDto(this StoreWeb.ProductCategoryTreeNodeDto productCategory)
+    {
+        return new(productCategory.Id, productCategory.Name, productCategory.Handle, productCategory.Path, productCategory.Description, productCategory.Parent?.ToParentDto(), productCategory.SubCategories.Select(x => x.ToProductCategoryTreeNodeDto()), productCategory.ProductsCount, productCategory.CanAddProducts);
     }
 }

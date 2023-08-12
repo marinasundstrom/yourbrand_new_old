@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.ResponseCompression;
 using Catalog;
 using YourBrand.Server.Products;
+using YourBrand.Server.ProductCategories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,7 +57,9 @@ app.UseHttpsRedirection();
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 
-app.MapProductsEndpoints();
+app
+    .MapProductsEndpoints()
+    .MapProductCategoriesEndpoints();
 
 app.MapRazorPages();
 app.MapControllers();

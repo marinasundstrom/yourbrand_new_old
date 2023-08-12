@@ -1,6 +1,7 @@
 namespace BlazorApp.Products;
 
 using CatalogAPI;
+using BlazorApp.ProductCategories;
 
 public sealed class ProductsService(IProductsClient productsClient) : IProductsService
 {
@@ -20,5 +21,5 @@ public sealed class ProductsService(IProductsClient productsClient) : IProductsS
 public static class Mapper 
 {
     public static Product Map(this CatalogAPI.Product product) 
-        => new (product.Id!, product.Name!, product.Image!, product.Description!, product.Price, product.RegularPrice, product.Handle);
+        => new (product.Id!, product.Name!, product?.Category.ToParentDto2(), product.Image!, product.Description!, product.Price, product.RegularPrice, product.Handle);
 }

@@ -23,19 +23,23 @@ public sealed class ProductCategoriesController : Controller
     {
         var isId = int.TryParse(idOrPath, out var id);
 
-        ProductCategory? productCategory;
+        Model.ProductCategory? productCategory;
 
         if (isId)
         {
-            productCategory = await catalogContext.ProductCategories.FirstOrDefaultAsync(productCategory => productCategory.Id == id, cancellationToken);
+            productCategory = await catalogContext.ProductCategories
+                .Include(x => x!.Parent)
+                .FirstOrDefaultAsync(productCategory => productCategory.Id == id, cancellationToken);
         }
         else
         {
             idOrPath = WebUtility.UrlDecode(idOrPath);
 
-            productCategory = await catalogContext.ProductCategories.FirstOrDefaultAsync(productCategory => productCategory.Path == idOrPath, cancellationToken);
+            productCategory = await catalogContext.ProductCategories
+                 .Include(x => x!.Parent)
+                 .FirstOrDefaultAsync(productCategory => productCategory.Path == idOrPath, cancellationToken);
         }
 
-        return productCategory is not null ? Ok(productCategory) : NotFound();
+        return productCategory is not null ? Ok(productCategory.ToDto()) : NotFound();
     }
 }

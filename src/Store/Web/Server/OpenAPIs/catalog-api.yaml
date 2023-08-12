@@ -391,7 +391,7 @@ components:
         category:
           nullable: true
           oneOf:
-          - $ref: '#/components/schemas/ProductCategory'
+          - $ref: '#/components/schemas/ProductCategoryParent'
         description:
           type: string
         price:
@@ -406,7 +406,7 @@ components:
           nullable: true
         handle:
           type: string
-    ProductCategory:
+    ProductCategoryParent:
       type: object
       additionalProperties: false
       properties:
@@ -418,27 +418,14 @@ components:
         description:
           type: string
           nullable: true
-        parent:
-          nullable: true
-          oneOf:
-          - $ref: '#/components/schemas/ProductCategory'
-        canAddProducts:
-          type: boolean
-        products:
-          type: array
-          items:
-            $ref: '#/components/schemas/Product'
-        productsCount:
-          type: integer
-          format: int64
-        subCategories:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductCategory'
         handle:
           type: string
         path:
           type: string
+        parent:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/ProductCategoryParent'
     CreateProductRequest:
       type: object
       additionalProperties: false
@@ -491,6 +478,31 @@ components:
         total:
           type: integer
           format: int32
+    ProductCategory:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+          nullable: true
+        parent:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/ProductCategoryParent'
+        canAddProducts:
+          type: boolean
+        productsCount:
+          type: integer
+          format: int64
+        handle:
+          type: string
+        path:
+          type: string
     ProductCategoryTreeRootDto:
       type: object
       additionalProperties: false

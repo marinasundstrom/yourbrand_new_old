@@ -30,4 +30,7 @@ builder.Services.AddMudServices(config =>
 builder.Services.AddHttpClient<AdminAPI.IProductsClient>("WebAPI")
         .AddTypedClient<AdminAPI.IProductsClient>((http, sp) => new AdminAPI.ProductsClient(http));
 
+builder.Services.AddHttpClient<AdminAPI.IProductCategoriesClient>("WebAPI")
+        .AddTypedClient<AdminAPI.IProductCategoriesClient>((http, sp) => new AdminAPI.ProductCategoriesClient(http));
+
 await builder.Build().RunAsync();
