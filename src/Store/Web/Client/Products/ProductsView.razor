@@ -6,11 +6,18 @@
 
 <AppPageTitle>@(categoryName is null ? "Products" : categoryName)</AppPageTitle>
 
-<h1>@(categoryName is null ? "Products" : categoryName)</h1>
-
-<p class="d-none d-lg-block">@(categoryDescription is null ? "Here are our products." : categoryDescription)</p>
-
 <div class="row gx-5 pt-md-4">
+
+     <div class="col-md-3 d-none d-lg-block">
+
+     </div>
+
+     <div class="col-md-9 col-sm-md-12">
+         <h1>@(categoryName is null ? "Products" : categoryName)</h1>
+
+         <p class="d-none d-lg-block mb-5">@(categoryDescription is null ? "Here are our products." : categoryDescription)</p>
+     </div>
+
     <div class="mb-4 d-xs-block d-sm-block d-sm-md-block d-md-none">
         <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Search..."
         @bind:event="oninput" @bind:get="SearchTerm" @bind:set="OnSearchTermChanged"></input>
@@ -82,18 +89,18 @@
         {
             <em>Loading...</em>
         }
-        else if(error) 
+        else if (error)
         {
             <h2>Sorry. We could not load any products.</h2>
             <p>Please try again later.</p>
         }
         else
         {
-            if(products.Count == 0) 
+            if (products.Count == 0)
             {
                 <p>No results</p>
             }
-            else 
+            else
             {
                 <div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-3 gx-4 gy-4 gx-md-5 gy-md-5 ">
 
