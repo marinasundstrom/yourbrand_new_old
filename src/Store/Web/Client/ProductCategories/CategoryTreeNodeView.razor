@@ -3,7 +3,7 @@
 <li>
     @if(Node.SubCategories.Count() > 0) 
     { 
-        <span class="caret @(Expanded ? "caret-up" : "caret-down")" @onclick="() => Expanded = !Expanded"></span>
+        <span class="caret @(Expanded ? "caret-down" : "caret-up")" @onclick="() => Expanded = !Expanded"></span>
     }
     <a href="@("/categories/" + Node.Path)" class="text-decoration-none text-reset" @onclick:preventDefault @onclick="async () => await OnClick.InvokeAsync(Node)">@Node.Name</a>
 

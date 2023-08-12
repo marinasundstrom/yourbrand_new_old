@@ -6,7 +6,6 @@ ul {
   .caret {
     cursor: pointer;
     user-select: none; /* Prevent text selection */
-    margin-right: 5px;
   }
   
   /* Create the caret/arrow with a unicode, and style it */
