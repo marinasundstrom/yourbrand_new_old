@@ -8,13 +8,3 @@ ul, #myUL {
     margin: 0;
     padding: 0;
   }
-  
-  /* Hide the nested list */
-  .nested {
-    display: none;
-  }
-  
-  /* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
-  .active {
-    display: block;
-  }

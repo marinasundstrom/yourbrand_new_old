@@ -184,6 +184,11 @@
             await FetchItems(Page.GetValueOrDefault(), cts.Token);
             NavigationManager.NavigateTo($"/categories?page={Page}&searchTerm={SearchTerm}", replace: true);
 
+            categoryName = null;
+            categoryDescription = null;
+
+            StateHasChanged();
+
             task = null;
         }, cts.Token);
     }

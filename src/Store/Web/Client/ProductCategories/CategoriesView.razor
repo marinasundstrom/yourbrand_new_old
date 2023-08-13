@@ -2,48 +2,57 @@
 @using Client.ProductCategories
 @inject IProductCategoryService ProductCategoryService
 @inject NavigationManager NavigationManager
+@implements IDisposable
 
-@if(categoryTree is not null) 
+@if(categoryTree is not null)
 {
-    <ul id="myUL">
+    <CascadingValue Name="Path" Value="path">
+        <ul id="myUL">
+            @*<li>
+                <div class="row">
+                    <div class="col">
+                        <a href="/categories" class="text-decoration-none text-reset @(path == string.Empty ? "active" : null)">
+                            All products
+                        </a>
+                    </div>
+                </div>
+            </li>*@
 
-        @foreach(var node in categoryTree.Categories) 
-        {
-            <CategoryTreeNodeView @key="node.Id" Node="node" OnClick="OnClick" />
-        }
-
-        @*
-        <ul class="list-group">
-            <li class="list-group-item node-treeview1 node-selected" data-nodeid="0"
-                style="color:#FFFFFF;background-color:#428bca;"><span class="icon expand-icon fas fa-minus"></span><span
-                    class="icon node-icon"></span>Parent 1</li>
-            <li class="list-group-item node-treeview1" data-nodeid="1" style="color:undefined;background-color:undefined;">
-                <span class="indent"></span><span class="icon expand-icon fas fa-plus"></span><span
-                    class="icon node-icon"></span>Child 1</li>
-            <li class="list-group-item node-treeview1" data-nodeid="4" style="color:undefined;background-color:undefined;">
-                <span class="indent"></span><span class="icon glyphicon"></span><span class="icon node-icon"></span>Child 2
-            </li>
-            <li class="list-group-item node-treeview1" data-nodeid="5" style="color:undefined;background-color:undefined;">
-                <span class="icon glyphicon"></span><span class="icon node-icon"></span>Parent 2</li>
-            <li class="list-group-item node-treeview1" data-nodeid="6" style="color:undefined;background-color:undefined;">
-                <span class="icon glyphicon"></span><span class="icon node-icon"></span>Parent 3</li>
-            <li class="list-group-item node-treeview1" data-nodeid="7" style="color:undefined;background-color:undefined;">
-                <span class="icon glyphicon"></span><span class="icon node-icon"></span>Parent 4</li>
-            <li class="list-group-item node-treeview1" data-nodeid="8" style="color:undefined;background-color:undefined;">
-                <span class="icon glyphicon"></span><span class="icon node-icon"></span>Parent 5</li>
+            @foreach (var node in categoryTree.Categories)
+            {
+                <CategoryTreeNodeView @key="node.Id" Node="node" OnClick="OnClick" />
+            }
         </ul>
-        *@
-    </ul>
+    </CascadingValue>
 }
 
 @code 
 {
+    string? path;
+
     ProductCategoryTreeRootDto? categoryTree;
 
     protected override async Task OnInitializedAsync()
     {
+        NavigationManager.LocationChanged += LocationChanged;
+        path = new Uri(NavigationManager.Uri).LocalPath[1..];
+        path = path.Substring(path.IndexOf("/") + 1);
+
         categoryTree = await ProductCategoryService.GetProductCategories();
     }
 
     [Parameter] public EventCallback<ProductCategoryTreeNodeDto> OnClick { get; set; } = default!;
+
+    private void LocationChanged(object? sender, LocationChangedEventArgs eventArgs)
+    {
+        path = new Uri(NavigationManager.Uri).LocalPath[1..];
+        path = path.Substring(path.IndexOf("/") + 1);
+
+        //Console.WriteLine(path);
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= LocationChanged;
+    }
 }
