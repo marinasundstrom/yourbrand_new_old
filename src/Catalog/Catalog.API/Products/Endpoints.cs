@@ -128,7 +128,8 @@ public static class Endpoints
             Name = request.Name,
             Description = request.Description,
             Price = request.Price,
-            Handle = request.Handle
+            Handle = request.Handle,
+            Category = await catalogContext.ProductCategories.FirstAsync(x => x.Id == request.CategoryId, cancellationToken)
         };
 
         catalogContext.Products.Add(product);
@@ -328,7 +329,7 @@ public static class Endpoints
     }
 }
 
-public sealed record CreateProductRequest(string Name, string Description, decimal Price, string Handle);
+public sealed record CreateProductRequest(string Name, string Description, long CategoryId, decimal Price, string Handle);
 
 public sealed record UpdateProductDetailsRequest(string Name, string Description);
 

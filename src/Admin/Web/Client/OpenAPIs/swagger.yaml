@@ -228,7 +228,90 @@ paths:
                 type: string
         404:
           description: ''
-  /api/ProductCategories:
+  /api/productCategories/{idOrPath}:
+    get:
+      tags:
+      - ProductCategories
+      operationId: ProductCategories_GetProductCategoryById
+      parameters:
+      - name: idOrPath
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductCategory'
+    put:
+      tags:
+      - ProductCategories
+      operationId: ProductCategories_UpdateProductCategoryDetails
+      parameters:
+      - name: idOrPath
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      requestBody:
+        x-name: request
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProductCategoryDetailsRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+        404:
+          description: ''
+    delete:
+      tags:
+      - ProductCategories
+      operationId: ProductCategories_DeleteProductCategory
+      parameters:
+      - name: idOrPath
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      responses:
+        200:
+          description: ''
+        404:
+          description: ''
+  /api/productCategories:
+    post:
+      tags:
+      - ProductCategories
+      operationId: ProductCategories_CreateProductCategory
+      requestBody:
+        x-name: request
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProductCategoryRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductCategory'
+        400:
+          description: ''
+  /api/ProductCategories/api/productCategories:
     get:
       tags:
       - ProductCategories
@@ -340,6 +423,9 @@ components:
           type: string
         description:
           type: string
+        categoryId:
+          type: integer
+          format: int64
         price:
           type: number
           format: decimal
@@ -373,17 +459,6 @@ components:
         productCategoryId:
           type: integer
           format: int64
-    PagedResultOfProductCategory:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductCategory'
-        total:
-          type: integer
-          format: int32
     ProductCategory:
       type: object
       additionalProperties: false
@@ -409,6 +484,38 @@ components:
           type: string
         path:
           type: string
+    CreateProductCategoryRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+          format: decimal
+        path:
+          type: string
+    UpdateProductCategoryDetailsRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+    PagedResultOfProductCategory:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductCategory'
+        total:
+          type: integer
+          format: int32
     WeatherForecast:
       type: object
       additionalProperties: false

@@ -1,6 +1,8 @@
 @using AdminAPI
 @using System.ComponentModel.DataAnnotations
 @inject IProductsClient ProductsClient
+@inject IProductCategoriesClient ProductCategoriesClient
+@inject ISnackbar Snackbar
 
 <EditForm Model="@this" OnValidSubmit="OnSubmit">
     <DataAnnotationsValidator />
@@ -10,6 +12,7 @@
             <div class="d-flex flex-column py-1">
                 <MudTextField Label="Name" @bind-Value="Name" Variant="Variant.Outlined" For="() => Name" Class="mb-4"></MudTextField>
                 <MudTextField Label="Description" Lines="5" @bind-Value="Description" Variant="Variant.Outlined" For="() => Description" Class="mb-4"></MudTextField>
+                <MudAutocomplete Label="Category" SearchFunc="Search" @bind-Value="Category" ToStringFunc="x => x.Name" Variant="Variant.Outlined" For="() => Category" Class="mb-4" />
                 <MudNumericField Label="Price" @bind-Value="Price" Variant="Variant.Outlined" For="() => Price" Class="mb-4" Adornment="Adornment.End" AdornmentText="sek"></MudNumericField>
                 <MudTextField Label="Handle" @bind-Value="Handle" HelperText="Unique identifier used in URLs etc" HelperTextOnFocus="true" Variant="Variant.Outlined" For="() => Handle" Class="mb-4"></MudTextField>
             </div>
@@ -31,16 +34,21 @@
     public string Description { get; set; }
 
     [Required]
+    public AdminAPI.ProductCategoryParent Category { get; set; }
+
+    [Required]
     public decimal Price { get; set; }
 
     [Required]
     public string Handle { get; set; }
-    
-    async Task OnSubmit() 
+
+    async Task OnSubmit()
     {
-        var product = await ProductsClient.CreateProductAsync(new CreateProductRequest() {
+        var product = await ProductsClient.CreateProductAsync(new CreateProductRequest()
+        {
             Name = Name,
             Description = Description,
+            CategoryId = Category.Id,
             Price = Price,
             Handle = Handle
         });
@@ -49,4 +57,16 @@
     }
 
     void Cancel() => MudDialog.Close(DialogResult.Cancel());
+
+    private async Task<IEnumerable<ProductCategoryParent>> Search(string value)
+    {
+        var result = await ProductCategoriesClient.GetProductsCategoriesAsync(1, 20, value);
+        return result.Items
+            .Where(x => x.CanAddProducts)
+            .Select(x => new ProductCategoryParent
+            {
+                Id = x.Id,
+                Name = x.Name
+            });
+    }
 }

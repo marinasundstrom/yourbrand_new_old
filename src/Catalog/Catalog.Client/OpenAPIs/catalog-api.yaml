@@ -434,6 +434,9 @@ components:
           type: string
         description:
           type: string
+        categoryId:
+          type: integer
+          format: int64
         price:
           type: number
           format: decimal

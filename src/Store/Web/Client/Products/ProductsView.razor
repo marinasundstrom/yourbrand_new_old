@@ -141,9 +141,10 @@
 
     protected override async Task OnInitializedAsync()
     {
+        NavigationManager.LocationChanged += OnLocationChanged;
         Console.WriteLine(Path);
 
-        if(!string.IsNullOrEmpty(Path)) 
+        if(!string.IsNullOrEmpty(Path))
         {
             var category = await ProductCategoryService.GetProductCategoryById(Path);
 
@@ -154,7 +155,16 @@
         await FetchItems(Page.GetValueOrDefault());
     }
 
-    private async Task OnPageChanged(int page) 
+    private async void OnLocationChanged(object? sender, LocationChangedEventArgs eventArgs)
+    {
+        Console.WriteLine("Foo: " + Path);
+
+        //Page = 1;
+
+        //await FetchItems(Page.GetValueOrDefault());
+    }
+
+    private async Task OnPageChanged(int page)
     {
         Page = page;
 
@@ -165,8 +175,8 @@
 
     CancellationTokenSource cts = new ();
     Task? task;
-    
-    private void OnSearchTermChanged(string value) 
+
+    private void OnSearchTermChanged(string value)
     {
         SearchTerm = value;
         Page = 1;
@@ -193,21 +203,21 @@
         }, cts.Token);
     }
 
-    private async Task FetchItems(int page, CancellationToken cancellationToken = default) 
+    private async Task FetchItems(int page, CancellationToken cancellationToken = default)
     {
         error = false;
         loading = true;
 
         await InvokeAsync(StateHasChanged);
 
-        try 
+        try
         {
             var pagedResult = await ProductsService.GetProducts(page, PageSize, SearchTerm, Path, cancellationToken);
 
             products = pagedResult.Items.ToList();
             pageCount = (int)Math.Ceiling((float)pagedResult.Total / (float)PageSize.GetValueOrDefault());
         }
-        catch 
+        catch
         {
             error = true;
         }
@@ -219,7 +229,7 @@
         await InvokeAsync(StateHasChanged);
     }
 
-    private async Task OnItemClicked(ProductCategoryTreeNodeDto node) 
+    private async Task OnItemClicked(ProductCategoryTreeNodeDto node)
     {
         categoryName = node.Name;
         categoryDescription = node.Description;
@@ -227,5 +237,10 @@
         Path = node.Path;
         await FetchItems(1);
         NavigationManager.NavigateTo($"/categories/{node.Path}", replace: true);
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
     }
 }

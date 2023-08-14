@@ -34,7 +34,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        NavigationManager.LocationChanged += LocationChanged;
+        NavigationManager.LocationChanged += OnLocationChanged;
         path = new Uri(NavigationManager.Uri).LocalPath[1..];
         path = path.Substring(path.IndexOf("/") + 1);
 
@@ -43,7 +43,7 @@
 
     [Parameter] public EventCallback<ProductCategoryTreeNodeDto> OnClick { get; set; } = default!;
 
-    private void LocationChanged(object? sender, LocationChangedEventArgs eventArgs)
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs eventArgs)
     {
         path = new Uri(NavigationManager.Uri).LocalPath[1..];
         path = path.Substring(path.IndexOf("/") + 1);
@@ -53,6 +53,6 @@
 
     public void Dispose()
     {
-        NavigationManager.LocationChanged -= LocationChanged;
+        NavigationManager.LocationChanged -= OnLocationChanged;
     }
 }
