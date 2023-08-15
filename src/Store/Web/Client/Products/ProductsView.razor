@@ -178,6 +178,8 @@
 
     private void OnSearchTermChanged(string value)
     {
+        Path = null; // Temp;
+
         SearchTerm = value;
         Page = 1;
 

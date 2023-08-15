@@ -14,7 +14,7 @@
                 <MudTextField Label="Description" Lines="5" @bind-Value="Description" Variant="Variant.Outlined" For="() => Description" Class="mb-4"></MudTextField>
                 <MudAutocomplete Label="Category" SearchFunc="Search" @bind-Value="Category" ToStringFunc="x => x.Name" Variant="Variant.Outlined" For="() => Category" Class="mb-4" />
                 <MudNumericField Label="Price" @bind-Value="Price" Variant="Variant.Outlined" For="() => Price" Class="mb-4" Adornment="Adornment.End" AdornmentText="sek"></MudNumericField>
-                <MudTextField Label="Handle" @bind-Value="Handle" HelperText="Unique identifier used in URLs etc" HelperTextOnFocus="true" Variant="Variant.Outlined" For="() => Handle" Class="mb-4"></MudTextField>
+                <MudTextField Label="Handle" @bind-Value="Handle" Placeholder="red-tshirt-medium" HelperText="Unique identifier used in URLs etc" HelperTextOnFocus="true" Variant="Variant.Outlined" For="() => Handle" Class="mb-4"></MudTextField>
             </div>
         </DialogContent>
         <DialogActions>
