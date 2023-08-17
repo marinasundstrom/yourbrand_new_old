@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using MassTransit;
 using Catalog.API.ProductCategories;
+using System.ComponentModel.DataAnnotations;
+using FluentValidation;
 
 namespace Catalog.API.Products;
 
@@ -29,11 +31,13 @@ public static class Endpoints
             .WithOpenApi();
 
         app.MapPost("/api/products", CreateProduct)
+            .AddEndpointFilter<ValidationFilter<CreateProductRequest>>()
             .WithName($"Products_{nameof(CreateProduct)}")
             .WithTags("Products")
             .WithOpenApi();
 
         app.MapPut("/api/products/{idOrHandle}", UpdateProductDetails)
+            .AddEndpointFilter<ValidationFilter<UpdateProductDetailsRequest>>()
             .WithName($"Products_{nameof(UpdateProductDetails)}")
             .WithTags("Products")
             .WithOpenApi();
@@ -55,11 +59,13 @@ public static class Endpoints
             .DisableAntiforgery();
 
         app.MapPut("/api/products/{idOrHandle}/handle", UpdateProductHandle)
+            .AddEndpointFilter<ValidationFilter<UpdateProductHandleRequest>>()
             .WithName($"Products_{nameof(UpdateProductHandle)}")
             .WithTags("Products")
             .WithOpenApi();
 
         app.MapPut("/api/products/{idOrHandle}/category", UpdateProductCategory)
+            .AddEndpointFilter<ValidationFilter<CreateProductCategoryRequest>>()
             .WithName($"Products_{nameof(UpdateProductCategory)}")
             .WithTags("Products")
             .WithOpenApi();
@@ -332,15 +338,55 @@ public static class Endpoints
     }
 }
 
-public sealed record CreateProductRequest(string Name, string Description, long CategoryId, decimal Price, string Handle);
+public sealed record CreateProductRequest(string Name, string Description, long CategoryId, decimal Price, string Handle)
+{
+    public class CreateProductRequestValidator : AbstractValidator<CreateProductRequest>
+    {
+        public CreateProductRequestValidator()
+        {
+            RuleFor(p => p.Name).MaximumLength(60).NotEmpty();
+            RuleFor(p => p.Description).MaximumLength(255).NotEmpty();
+            RuleFor(p => p.CategoryId).GreaterThan(0);
+            RuleFor(p => p.Handle).MaximumLength(60).NotEmpty();
+        }
+    }
+}
 
-public sealed record UpdateProductDetailsRequest(string Name, string Description);
+public sealed record UpdateProductDetailsRequest(string Name, string Description)
+{
+    public class UpdateProductDetailsRequestValidator : AbstractValidator<UpdateProductDetailsRequest>
+    {
+        public UpdateProductDetailsRequestValidator()
+        {
+            RuleFor(p => p.Name).MaximumLength(60).NotEmpty();
+            RuleFor(p => p.Description).MaximumLength(255).NotEmpty();
+        }
+    }
+}
 
 public sealed record UpdateProductPriceRequest(decimal Price);
 
-public sealed record UpdateProductHandleRequest(string Handle);
+public sealed record UpdateProductHandleRequest(string Handle)
+{
+    public class CreateHandleRequestValidator : AbstractValidator<UpdateProductHandleRequest>
+    {
+        public CreateHandleRequestValidator()
+        {
+            RuleFor(p => p.Handle).MaximumLength(60).NotEmpty();
+        }
+    }
+}
 
-public sealed record UpdateProductCategoryRequest(long ProductCategoryId);
+public sealed record UpdateProductCategoryRequest(long ProductCategoryId)
+{
+    public class UpdateProductCategoryRequestValidator : AbstractValidator<UpdateProductCategoryRequest>
+    {
+        public UpdateProductCategoryRequestValidator()
+        {
+            RuleFor(p => p.ProductCategoryId).GreaterThan(0);
+        }
+    }
+}
 
 
 public sealed record Product(

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Logging;
 using MassTransit;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +29,8 @@ if(builder.Environment.IsProduction())
         new Uri($"https://{builder.Configuration["KeyVaultName"]}.vault.azure.net/"),
         new DefaultAzureCredential());
 }
+
+builder.Services.AddValidatorsFromAssemblyContaining(typeof(Program));
 
 builder.Services.AddAzureClients(clientBuilder =>
 {

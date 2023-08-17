@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>preview</LangVersion>
+    <UserSecretsId>9aa40c94-e1be-447e-9130-49bf3a5d6740</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -32,6 +33,7 @@
     <PackageReference Include="MassTransit" Version="8.0.16" />
     <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.16" />
     <PackageReference Include="MassTransit.Azure.ServiceBus.Core" Version="8.0.16" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
   </ItemGroup>
 
   <ItemGroup>
