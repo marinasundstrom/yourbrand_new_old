@@ -153,3 +153,7 @@ h1:focus {
         display: block!important;
     }
 }
+
+.img-border-rounded {
+    border-radius: var(--bs-border-radius);
+}
