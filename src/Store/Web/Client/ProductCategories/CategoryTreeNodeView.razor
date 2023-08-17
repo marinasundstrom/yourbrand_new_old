@@ -12,13 +12,21 @@
         </div>
 
         <div class="col">
-            <a href="@("/categories/" + Node.Path)" class="text-decoration-none text-reset @(Path == $"{Node.Path}" ? "active" : null)" @onclick:preventDefault @onclick="async () => await OnClick.InvokeAsync(Node)">
-                @Node.Name
-            </a>
+            <div class="row">
+                <div class="col">
+                    <a href="@("/categories/" + Node.Path)" class="text-decoration-none text-reset @(Path == $"{Node.Path}" ? "active" : null)" @onclick:preventDefault @onclick="async () => await OnClick.InvokeAsync(Node)">
+                        @Node.Name
+                    </a>
+
+                    <small class="float-end text-muted mt-1">@Node.ProductsCount</small>
+
+
+                </div>
+            </div>
 
             @if (Node.SubCategories.Count() > 0 && Expanded)
             {
-                <ul class="nested">
+                <ul class="nested col-12">
                     @foreach (var node in Node.SubCategories)
                     {
                         <CategoryTreeNodeView @key="node.Id" Node="node" OnClick="OnClick" />

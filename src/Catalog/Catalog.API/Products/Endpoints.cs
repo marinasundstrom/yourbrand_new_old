@@ -112,7 +112,7 @@ public static class Endpoints
         return product is not null ? TypedResults.Ok(product.ToDto()) : TypedResults.NotFound();
     }
 
-    private static async Task<Results<Ok<Product>, BadRequest, ProblemHttpResult>> CreateProduct(CreateProductRequest request, CatalogContext catalogContext, CancellationToken cancellationToken)
+    private static async Task<Results<Ok<Product>, BadRequest, ProblemHttpResult>> CreateProduct(CreateProductRequest request, IConfiguration configuration, CatalogContext catalogContext, CancellationToken cancellationToken)
     {
         var handleInUse = await catalogContext.Products.AnyAsync(product => product.Handle == request.Handle, cancellationToken);
 
@@ -124,9 +124,12 @@ public static class Endpoints
                 title: "Handle already in use");
         }
 
+        string cdnBaseUrl = configuration["CdnBaseUrl"] ?? "https://yourbrandstorage.blob.core.windows.net";
+
         var product = new Model.Product() {
             Name = request.Name,
             Description = request.Description,
+            Image = $"{cdnBaseUrl}/images/products/preview.jpeg",
             Price = request.Price,
             Handle = request.Handle,
             Category = await catalogContext.ProductCategories.FirstAsync(x => x.Id == request.CategoryId, cancellationToken)
