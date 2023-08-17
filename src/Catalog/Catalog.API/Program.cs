@@ -73,6 +73,8 @@ builder.Services.AddSqlServer<CatalogContext>(
 
 builder.Services.AddScoped<WeatherForecastService>();
 
+builder.Services.AddMediatR(c => c.RegisterServicesFromAssemblyContaining<Program>());
+
 builder.Services.AddMassTransit(x =>
 {
     x.SetKebabCaseEndpointNameFormatter();

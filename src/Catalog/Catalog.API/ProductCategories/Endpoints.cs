@@ -1,13 +1,6 @@
-using Catalog.API.Data;
 using Catalog.API.Model;
-using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.EntityFrameworkCore;
-using MassTransit;
-using Catalog.API.Products;
+using MediatR;
 
 namespace Catalog.API.ProductCategories;
 
@@ -22,6 +15,15 @@ public static class Endpoints
             .WithTags("ProductCategories")
             .WithOpenApi()
             .CacheOutput(GetProductCategoriesExpire20);
+
+        /*
+
+        app.MapGet("/api/productCategories/{idOrPath}", GetProductCategoryById)
+            .WithName($"ProductCategories_{nameof(GetProductCategoryById)}")
+            .WithTags("ProductCategories")
+            .WithOpenApi();
+
+        */
 
         app.MapGet("/api/productCategories/tree", GetProductCategoryTree)
             .WithName($"ProductCategories_{nameof(GetProductCategoryTree)}")
@@ -46,110 +48,55 @@ public static class Endpoints
         return app;
     }
 
-    private static async Task<Ok<PagedResult<ProductCategory>>> GetProductCategories(int page = 1, int pageSize = 10, string? searchTerm = null, CatalogContext catalogContext = default!, CancellationToken cancellationToken = default!)
+    private static async Task<Ok<PagedResult<ProductCategory>>> GetProductCategories(int page = 1, int pageSize = 10, string? searchTerm = null,
+            IMediator mediator = default!, CancellationToken cancellationToken = default!)
     {
-        var query = catalogContext.ProductCategories.AsNoTracking().AsQueryable();
-
-        if (!string.IsNullOrEmpty(searchTerm))
-        {
-            query = query.Where(x => x.Name.ToLower().Contains(searchTerm.ToLower()!) || x.Description.ToLower().Contains(searchTerm.ToLower()!));
-        }
-
-        var total = await query.CountAsync(cancellationToken);
-
-        var productCategories = await query.OrderBy(x => x.Name)
-            .Skip(pageSize * (page - 1))
-            .Take(pageSize)
-            .ToListAsync(cancellationToken);
-
-        var pagedResult = new PagedResult<ProductCategory>(productCategories.Select(x => x.ToDto()), total);
-
+        var pagedResult = await mediator.Send(new GetProductCategories(page, pageSize, searchTerm), cancellationToken);
         return TypedResults.Ok(pagedResult);
     }
 
-    private static async Task<Results<Ok<ProductCategoryTreeRootDto>, BadRequest>> GetProductCategoryTree(CatalogContext catalogContext, CancellationToken cancellationToken)
+    private static async Task<Results<Ok<ProductCategory>, NotFound>> GetProductCategoryById(string idOrPath,
+        IMediator mediator, CancellationToken cancellationToken)
     {
-        var query = catalogContext.ProductCategories
-            .Include(x => x.Parent)
-            .ThenInclude(x => x!.Parent)
-            .Include(x => x.SubCategories.OrderBy(x => x.Name))
-            .Where(x => x.Parent == null)
-            .OrderBy(x => x.Name)
-            .AsSingleQuery()
-            .AsNoTracking();
+        var result = await mediator.Send(new GetProductCategoryById(idOrPath), cancellationToken);
 
-        var itemGroups = await query
-            .ToArrayAsync(cancellationToken);
-            
-        var root = new ProductCategoryTreeRootDto(itemGroups.Select(x => x.ToProductCategoryTreeNodeDto()), itemGroups.Sum(x => x.ProductsCount));
-
-        return TypedResults.Ok(root);
+        return result.IsSuccess ? TypedResults.Ok(result.GetValue()) : TypedResults.NotFound();
     }
 
-    private static async Task<Results<Ok<ProductCategory>, BadRequest, ProblemHttpResult>> CreateProductCategory(CreateProductCategoryRequest request, CatalogContext catalogContext, CancellationToken cancellationToken)
+    private static async Task<Results<Ok<ProductCategoryTreeRootDto>, BadRequest>> GetProductCategoryTree(
+        IMediator mediator, CancellationToken cancellationToken)
     {
-        var pathInUse = await catalogContext.ProductCategories.AnyAsync(productCategory => productCategory.Path == request.Path, cancellationToken);
+        var result = await mediator.Send(new GetProductCategoryTree(), cancellationToken);
 
-        if(pathInUse) 
-        {
-            return TypedResults.Problem(
-                statusCode: 400,
-                detail: "The specified path is already assigned to another productCategory.", 
-                title: "Path already in use");
-        }
-
-        var productCategory = new Model.ProductCategory() {
-            Name = request.Name,
-            Path = request.Path
-        };
-        catalogContext.ProductCategories.Add(productCategory);
-        await catalogContext.SaveChangesAsync(cancellationToken);
-        return TypedResults.Ok(productCategory.ToDto());
+        return result.IsSuccess ? TypedResults.Ok(result.GetValue()) : TypedResults.BadRequest();
     }
 
-    private static async Task<Results<Ok, NotFound>> UpdateProductCategoryDetails(string idOrPath, UpdateProductCategoryDetailsRequest request, IPublishEndpoint publishEndpoint, CatalogContext catalogContext, CancellationToken cancellationToken)
+    private static async Task<Results<Ok<ProductCategory>, BadRequest, ProblemHttpResult>> CreateProductCategory(CreateProductCategoryRequest request,
+        IMediator mediator, CancellationToken cancellationToken)
     {
-        var isId = int.TryParse(idOrPath, out var id);
+        var result = await mediator.Send(new CreateProductCategory(request.Name, request.Description, request.ParentCategoryId, request.Handle), cancellationToken);
 
-        var productCategory = isId ? 
-            await catalogContext.ProductCategories.FirstOrDefaultAsync(productCategory => productCategory.Id == id, cancellationToken)
-            : await catalogContext.ProductCategories.FirstOrDefaultAsync(productCategory => productCategory.Path == idOrPath, cancellationToken);
-
-        if(productCategory is null) 
-        {
-            return TypedResults.NotFound();
-        }
-
-        productCategory.Name = request.Name;
-        productCategory.Description = request.Description;
-        
-        await catalogContext.SaveChangesAsync(cancellationToken);
-
-        return TypedResults.Ok();
+        return result.IsSuccess ? TypedResults.Ok(result.GetValue()) : TypedResults.BadRequest();
     }
 
-    private static async Task<Results<Ok, NotFound>> DeleteProductCategory(string idOrPath, CatalogContext catalogContext, CancellationToken cancellationToken)
+    private static async Task<Results<Ok, NotFound>> UpdateProductCategoryDetails(string idOrPath, UpdateProductCategoryDetailsRequest request,
+        IMediator mediator, CancellationToken cancellationToken)
     {
-        var isId = int.TryParse(idOrPath, out var id);
+        var result = await mediator.Send(new UpdateProductCategoryDetails(idOrPath, request.Name, request.Description), cancellationToken);
 
-        var productCategory = isId ? 
-            await catalogContext.ProductCategories.FirstOrDefaultAsync(productCategory => productCategory.Id == id, cancellationToken)
-            : await catalogContext.ProductCategories.FirstOrDefaultAsync(productCategory => productCategory.Path == idOrPath, cancellationToken);
+        return result.IsSuccess ? TypedResults.Ok() : TypedResults.NotFound();
+    }
 
-        if(productCategory is null) 
-        {
-            return TypedResults.NotFound();
-        }
+    private static async Task<Results<Ok, NotFound>> DeleteProductCategory(string idOrPath,
+        IMediator mediator, CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(new DeleteProductCategory(idOrPath), cancellationToken);
 
-        catalogContext.ProductCategories.Remove(productCategory);
-        
-        await catalogContext.SaveChangesAsync(cancellationToken);
-
-        return TypedResults.Ok();
+        return result.IsSuccess ? TypedResults.Ok() : TypedResults.NotFound();
     }
 }
 
-public sealed record CreateProductCategoryRequest(string Name, string Description, decimal Price, string Path);
+public sealed record CreateProductCategoryRequest(string Name, string Description, long ParentCategoryId, string Handle);
 
 public sealed record UpdateProductCategoryDetailsRequest(string Name, string Description);
 
