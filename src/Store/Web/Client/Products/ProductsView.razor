@@ -170,7 +170,7 @@
 
         await FetchItems(page);
 
-        NavigationManager.NavigateTo($"/products?page={Page}", replace: true);
+        NavigationManager.NavigateTo($"/categories?page={Page}", replace: true);
     }
 
     CancellationTokenSource cts = new ();
