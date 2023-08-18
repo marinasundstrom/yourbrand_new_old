@@ -55,6 +55,8 @@ public static class Endpoints
         return TypedResults.Ok(pagedResult);
     }
 
+    /*
+
     private static async Task<Results<Ok<ProductCategory>, NotFound>> GetProductCategoryById(string idOrPath,
         IMediator mediator, CancellationToken cancellationToken)
     {
@@ -62,6 +64,8 @@ public static class Endpoints
 
         return result.IsSuccess ? TypedResults.Ok(result.GetValue()) : TypedResults.NotFound();
     }
+
+    */
 
     private static async Task<Results<Ok<ProductCategoryTreeRootDto>, BadRequest>> GetProductCategoryTree(
         IMediator mediator, CancellationToken cancellationToken)

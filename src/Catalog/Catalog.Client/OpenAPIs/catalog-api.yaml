@@ -574,10 +574,10 @@ components:
           type: string
         description:
           type: string
-        price:
-          type: number
-          format: decimal
-        path:
+        parentCategoryId:
+          type: integer
+          format: int64
+        handle:
           type: string
     UpdateProductCategoryDetailsRequest:
       type: object

@@ -7,6 +7,7 @@ on:
     - main
     paths:
     - "src/Admin/Web/**"
+    - "src/Catalog/Catalog.Client/**"
   
 jobs:
   build-and-deploy:
