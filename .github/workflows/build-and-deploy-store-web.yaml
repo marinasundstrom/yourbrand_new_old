@@ -6,7 +6,9 @@ on:
     branches:
     - main
     paths:
-    - "src/Store/Web/**"
+    - "src/Store/Web/**"   
+    - "src/Catalog/Catalog.Client/**"
+    - "src/Carts/Carts.Client/**"
   
 jobs:
   build-and-deploy:
