@@ -93,7 +93,7 @@ public sealed record CreateProduct(string Name, string Description, long Categor
             {
                 Name = request.Name,
                 Description = request.Description,
-                Image = $"{cdnBaseUrl}/images/products/preview.jpeg",
+                Image = $"{cdnBaseUrl}/images/products/placeholder.jpeg",
                 Price = request.Price,
                 Handle = request.Handle,
                 Category = await catalogContext.ProductCategories.FirstAsync(x => x.Id == request.CategoryId, cancellationToken)
