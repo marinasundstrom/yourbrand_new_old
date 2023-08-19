@@ -9,6 +9,7 @@ using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Logging;
 using MassTransit;
 using FluentValidation;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +20,7 @@ builder.Services.AddOutputCache(options =>
     options.AddPolicy(GetProductsExpire20, builder => 
     {
         builder.Expire(TimeSpan.FromSeconds(20));
-        builder.SetVaryByQuery("page", "pageSize", "searchTerm", "categoryPath");
+        builder.SetVaryByQuery("page", "pageSize", "searchTerm", "categoryPath", "sortProperty", "sortDirection");
     });
 });
 

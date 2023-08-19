@@ -7,7 +7,7 @@ public sealed class ProductsService(IProductsClient productsClient) : IProductsS
 {
     public async Task<PagedResult<Product>> GetProducts(int? page = 1, int? pageSize = 10, string? searchTerm = null, string? categoryPath = null, CancellationToken cancellationToken = default) 
     {
-        var results = await productsClient.GetProductsAsync(page, pageSize, searchTerm, categoryPath, cancellationToken);
+        var results = await productsClient.GetProductsAsync(page, pageSize, searchTerm, categoryPath, null, null, cancellationToken);
         return new PagedResult<Product>(results.Items.Select(product => product.Map()), results.Total);
     }
 

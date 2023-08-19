@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Catalog.API.Data;
@@ -17,7 +18,7 @@ public static class Errors
     public readonly static Error HandleAlreadyTaken = new("handle-already-taken", "Handle already taken", "");
 }
 
-public sealed record GetProducts(int Page = 1, int PageSize = 10, string? SearchTerm = null, string? CategoryPath = null) : IRequest<PagedResult<Product>>
+public sealed record GetProducts(int Page = 1, int PageSize = 10, string? CategoryPath = null, string? SearchTerm = null, string? SortBy = null, SortDirection? SortDirection = null) : IRequest<PagedResult<Product>>
 {
     public sealed class Handler(CatalogContext catalogContext = default!) : IRequestHandler<GetProducts, PagedResult<Product>>
     {
@@ -40,7 +41,16 @@ public sealed record GetProducts(int Page = 1, int PageSize = 10, string? Search
 
             var total = await query.CountAsync(cancellationToken);
 
-            var products = await query.OrderBy(x => x.Name)
+            if (request.SortBy is null)
+            {
+                query = query.OrderBy(x => x.Name);
+            }
+            else
+            {
+                query = query.OrderBy(request.SortBy, request.SortDirection);
+            }
+
+            var products = await query
                 .Skip(request.PageSize * (request.Page - 1))
                 .Take(request.PageSize)
                 .ToListAsync(cancellationToken);

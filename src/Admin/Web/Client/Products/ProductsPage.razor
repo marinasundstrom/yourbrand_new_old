@@ -53,7 +53,7 @@
     /// </summary>
     private async Task<TableData<Product>> ServerReload(TableState state)
     {
-        var result = await ProductsClient.GetProductsAsync(state.Page + 1, state.PageSize, searchString);
+        var result = await ProductsClient.GetProductsAsync(state.Page + 1, state.PageSize, searchString, state.SortLabel, state.SortDirection == MudBlazor.SortDirection.None ? null : (state.SortDirection == MudBlazor.SortDirection.Descending ? AdminAPI.SortDirection.Desc : AdminAPI.SortDirection.Asc));
         return new TableData<Product>() {TotalItems = result.Total, Items = result.Items};
     }
 
