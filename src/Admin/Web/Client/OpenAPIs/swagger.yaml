@@ -29,7 +29,7 @@ paths:
         schema:
           type: string
         x-position: 3
-      - name: sortProperty
+      - name: sortBy
         in: query
         schema:
           type: string

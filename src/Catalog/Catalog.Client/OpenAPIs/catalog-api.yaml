@@ -34,7 +34,7 @@ paths:
         schema:
           type: string
         x-position: 4
-      - name: sortProperty
+      - name: sortBy
         in: query
         schema:
           type: string

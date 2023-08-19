@@ -76,9 +76,9 @@ public static class Endpoints
     }
 
     private static async Task<Ok<PagedResult<Product>>> GetProducts(int page = 1, int pageSize = 10, string? searchTerm = null, string? categoryPath = null,
-        string? sortProperty = null, SortDirection? sortDirection = null, IMediator mediator = default!, CancellationToken cancellationToken = default!)
+        string? sortBy = null, SortDirection? sortDirection = null, IMediator mediator = default!, CancellationToken cancellationToken = default!)
     {
-        var pagedResult = await mediator.Send(new GetProducts(page, pageSize, searchTerm, categoryPath, sortProperty, sortDirection), cancellationToken);
+        var pagedResult = await mediator.Send(new GetProducts(page, pageSize, searchTerm, categoryPath, sortBy, sortDirection), cancellationToken);
         return TypedResults.Ok(pagedResult);
     }
 
