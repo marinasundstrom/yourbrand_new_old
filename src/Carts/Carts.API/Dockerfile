@@ -9,6 +9,7 @@ FROM mcr.microsoft.com/dotnet/nightly/sdk:8.0-preview AS build
 ARG configuration=Release
 WORKDIR /
 COPY ["src/Carts/Carts.API/Carts.API.csproj", "src/Carts/Carts.API/"]
+COPY ["NuGet.config", "/"]
 RUN dotnet restore "src/Carts/Carts.API/Carts.API.csproj"
 COPY . .
 RUN dotnet test "/src/Carts/Carts.UnitTests"

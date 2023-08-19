@@ -9,6 +9,7 @@ FROM mcr.microsoft.com/dotnet/nightly/sdk:8.0-preview AS build
 ARG configuration=Release
 WORKDIR /
 COPY ["src/Catalog/Catalog.API/Catalog.API.csproj", "src/Catalog/Catalog.API/"]
+COPY ["NuGet.config", "/"]
 RUN dotnet restore "src/Catalog/Catalog.API/Catalog.API.csproj"
 COPY . .
 RUN dotnet test "/src/Catalog/Catalog.UnitTests"

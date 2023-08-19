@@ -9,6 +9,7 @@ FROM mcr.microsoft.com/dotnet/nightly/sdk:8.0-preview AS build
 ARG configuration=Release
 WORKDIR /
 COPY ["src/Store/Web/Server/BlazorApp.csproj", "src/Store/Web/Server/"]
+COPY ["NuGet.config", "/"]
 RUN dotnet restore "src/Store/Web/Server/BlazorApp.csproj"
 COPY . .
 RUN dotnet test "/src/Store/Web/Server.UnitTests"
