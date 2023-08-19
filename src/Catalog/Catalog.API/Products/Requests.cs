@@ -18,7 +18,7 @@ public static class Errors
     public readonly static Error HandleAlreadyTaken = new("handle-already-taken", "Handle already taken", "");
 }
 
-public sealed record GetProducts(int Page = 1, int PageSize = 10, string? CategoryPath = null, string? SearchTerm = null, string? SortBy = null, SortDirection? SortDirection = null) : IRequest<PagedResult<Product>>
+public sealed record GetProducts(int Page = 1, int PageSize = 10, string? SearchTerm = null, string? CategoryPath = null, string? SortBy = null, SortDirection? SortDirection = null) : IRequest<PagedResult<Product>>
 {
     public sealed class Handler(CatalogContext catalogContext = default!) : IRequestHandler<GetProducts, PagedResult<Product>>
     {
