@@ -30,6 +30,12 @@ To rebuild the image of a specific service:
 docker compose -f docker-compose.debug.yml up --build <service name>
 ```
 
+Just build:
+
+```
+docker compose -f docker-compose.yml build store-web 
+```
+
 ### Run just the dependencies
 
 This starts the local dependencies mentioned [here](dependencies.md).
