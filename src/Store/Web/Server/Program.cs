@@ -12,12 +12,28 @@ using Microsoft.EntityFrameworkCore;
 using Carts;
 using CartsAPI;
 using CatalogAPI;
+using Microsoft.AspNetCore.Builder;
+using System.Threading.RateLimiting;
 
 string MyAllowSpecificOrigins = nameof(MyAllowSpecificOrigins);
 
 var builder = WebApplication.CreateBuilder(args);
 
 string GetProductsExpire20 = nameof(GetProductsExpire20);
+
+builder.Services.AddRateLimiter(options => 
+{
+    options. RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+    
+    options.AddPolicy("fixed", httpContext =>
+        RateLimitPartition.GetFixedWindowLimiter(
+        partitionKey: httpContext.Connection.RemoteIpAddress?.ToString(), 
+        factory: _ => new FixedWindowRateLimiterOptions 
+        {
+            PermitLimit = 10,
+            Window = TimeSpan.FromSeconds(10)
+        }));
+});
 
 builder.Services.AddOutputCache(options =>
 {

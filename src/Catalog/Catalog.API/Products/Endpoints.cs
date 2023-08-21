@@ -25,33 +25,39 @@ public static class Endpoints
             .WithName($"Products_{nameof(GetProducts)}")
             .WithTags("Products")
             .WithOpenApi()
+            .RequireRateLimiting("fixed")
             .CacheOutput(GetProductsExpire20);
 
         app.MapGet("/api/products/{idOrHandle}", GetProductById)
             .WithName($"Products_{nameof(GetProductById)}")
             .WithTags("Products")
+            .RequireRateLimiting("fixed")
             .WithOpenApi();
 
         app.MapPost("/api/products", CreateProduct)
             .AddEndpointFilter<ValidationFilter<CreateProductRequest>>()
             .WithName($"Products_{nameof(CreateProduct)}")
             .WithTags("Products")
+            .RequireRateLimiting("fixed")
             .WithOpenApi();
 
         app.MapPut("/api/products/{idOrHandle}", UpdateProductDetails)
             .AddEndpointFilter<ValidationFilter<UpdateProductDetailsRequest>>()
             .WithName($"Products_{nameof(UpdateProductDetails)}")
             .WithTags("Products")
+            .RequireRateLimiting("fixed")
             .WithOpenApi();
 
         app.MapPut("/api/products/{idOrHandle}/price", UpdateProductPrice)
             .WithName($"Products_{nameof(UpdateProductPrice)}")
             .WithTags("Products")
+            .RequireRateLimiting("fixed")
             .WithOpenApi();
 
         app.MapPost("/api/products/{idOrHandle}/image", UploadProductImage)
             .WithName($"Products_{nameof(UploadProductImage)}")
             .WithTags("Products")
+            .RequireRateLimiting("fixed")
             .WithOpenApi()
             .DisableAntiforgery();
 
@@ -59,17 +65,20 @@ public static class Endpoints
             .AddEndpointFilter<ValidationFilter<UpdateProductHandleRequest>>()
             .WithName($"Products_{nameof(UpdateProductHandle)}")
             .WithTags("Products")
+            .RequireRateLimiting("fixed")
             .WithOpenApi();
 
         app.MapPut("/api/products/{idOrHandle}/category", UpdateProductCategory)
             .AddEndpointFilter<ValidationFilter<CreateProductCategoryRequest>>()
             .WithName($"Products_{nameof(UpdateProductCategory)}")
             .WithTags("Products")
+            .RequireRateLimiting("fixed")
             .WithOpenApi();
 
         app.MapDelete("/api/products/{idOrHandle}", DeleteProduct)
             .WithName($"Products_{nameof(DeleteProduct)}")
             .WithTags("Products")
+            .RequireRateLimiting("fixed")
             .WithOpenApi();
 
         return app;
