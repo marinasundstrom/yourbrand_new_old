@@ -275,9 +275,13 @@ public sealed record UpdateProductCategory(string IdOrHandle, long ProductCatego
         {
             var isId = int.TryParse(request.IdOrHandle, out var id);
 
+            var query = catalogContext.Products
+                .Include(product => product.Category)
+                .ThenInclude(category => category!.Parent);
+
             var product = isId ?
-                await catalogContext.Products.FirstOrDefaultAsync(product => product.Id == id, cancellationToken)
-                : await catalogContext.Products.FirstOrDefaultAsync(product => product.Handle == request.IdOrHandle, cancellationToken);
+                await query.FirstOrDefaultAsync(product => product.Id == id, cancellationToken)
+                : await query.FirstOrDefaultAsync(product => product.Handle == request.IdOrHandle, cancellationToken);
 
             if (product is null)
             {
