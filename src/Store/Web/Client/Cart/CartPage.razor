@@ -48,11 +48,11 @@ else
                         <div>
                             <li class="d-flex justify-content-between">
                                 <span class="me-5">Total</span>
-                                <strong>@cartItems.Sum(x => x.Total).ToString("c")</strong>
+                                <strong>@cartItems.Sum(x => x.Total).FormatCurrency(Currency)</strong>
                             </li>
                             <li class="d-flex justify-content-between mt-2">
                                 <small class="me-5">VAT incl.</small>
-                                <small>@((cartItems.Sum(x => x.Total).GetVatFromTotal(0.25)).ToString("c"))</small>
+                                <small>@((cartItems.Sum(x => x.Total).GetVatFromTotal(0.25)).FormatCurrency(Currency))</small>
                             </li>
                         </div>
                     </li>
