@@ -4,6 +4,7 @@
 @using Client.Products
 @using System.Globalization
 @inject IProductsService ProductsService
+@inject NavigationManager NavigationManager
 
 @if(product is null) 
 {
@@ -98,8 +99,18 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        product = await ProductsService.GetProductById(Id);
-        productInfo = new ProductInfo(product.Name, product.Image, product.Id, product.Handle, product.Description, (decimal)product.Price, (decimal?)product.RegularPrice);
+        try 
+        {
+            product = await ProductsService.GetProductById(Id);
+            productInfo = new ProductInfo(product.Name, product.Image, product.Id, product.Handle, product.Description, (decimal)product.Price, (decimal?)product.RegularPrice);
+        }
+        catch(CatalogAPI.ApiException exception) 
+        {
+            if(exception.StatusCode == 404) 
+            {
+                NavigationManager.NavigateTo("/error/404");
+            }
+        }
     }
 
     static IEnumerable<ProductCategories.ProductCategoryParent> IterateCategories(ProductCategories.ProductCategoryParent category)
