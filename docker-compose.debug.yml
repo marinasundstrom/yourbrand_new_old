@@ -3,6 +3,9 @@
 version: '3.4'
 name: yourbrand
 
+include:
+  - docker-compose.deps.yml
+
 services:
   store-web:
     image: store-web
@@ -20,6 +23,9 @@ services:
       - RABBITMQ_HOST=host.docker.internal
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
+    depends_on:
+      - catalog-api
+      - rabbitmq
 
   catalog-api:
     image: catalog-api
@@ -37,9 +43,12 @@ services:
       - RABBITMQ_HOST=host.docker.internal
       - "yourbrand-storage-connectionstring=DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://host.docker.internal:10000/devstoreaccount1;QueueEndpoint=http://host.docker.internal:10001/devstoreaccount1;TableEndpoint=http://host.docker.internal:10002/devstoreaccount1;"
       - "CdnBaseUrl=http://host.docker.internal:10000/devstoreaccount1"
-
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
+    depends_on:
+    - mssql
+    - rabbitmq
+    - azurite
 
   carts-api:
     image: carts-api
@@ -57,6 +66,9 @@ services:
       - RABBITMQ_HOST=host.docker.internal
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
+    depends_on:
+      - mssql
+      - rabbitmq
 
   admin-web:
     image: admin-web
@@ -74,39 +86,6 @@ services:
       - "yourbrand-catalog-api-url=http://host.docker.internal:8082"
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
-
-  mssql:
-    container_name: mssql
-    image: mcr.microsoft.com/azure-sql-edge:latest
-    cap_add: [ 'SYS_PTRACE' ]
-    environment:
-      - "MSSQL_SA_PASSWORD=P@ssw0rd"
-      - "MSSQL_PID=Developer"
-      - "ACCEPT_EULA=1"
-    ports:
-      - "1433:1433"
-    hostname: mssql
-    volumes:
-      - "./data/sql-edge:/var/opt/mssql"
-
-  rabbitmq:
-    image: rabbitmq:management
-    container_name: rabbitmq
-    hostname: rabbitmq
-    ports:
-      - 5672:5672
-      - 15672:15672
-    environment:
-      - RABBITMQ_ERLANG_COOKIE=SomeRandomStringHere
-
-  azurite:
-    image: mcr.microsoft.com/azure-storage/azurite
-    container_name: azurite
-    hostname: azurite
-    restart: always
-    command: "azurite --loose --blobHost 0.0.0.0 --blobPort 10000 --queueHost 0.0.0.0 --queuePort 10001 -l /data --debug /data/debug.log"
-    ports:
-      - "10000:10000"
-      - "10001:10001"
-    volumes:
-      - "./data/azurite:/data"
+    depends_on:
+      - catalog-api
+      - rabbitmq
