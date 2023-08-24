@@ -9,11 +9,10 @@ using MassTransit;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Carts;
 using CartsAPI;
 using CatalogAPI;
-using Microsoft.AspNetCore.Builder;
 using System.Threading.RateLimiting;
+using BlazorApp.Extensions;
 
 string MyAllowSpecificOrigins = nameof(MyAllowSpecificOrigins);
 
@@ -96,15 +95,7 @@ if (builder.Environment.IsProduction())
         new DefaultAzureCredential());
 }
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddOpenApiDocument(config => {
-    config.PostProcess = document =>
-    {
-        document.Info.Title = "Store API";
-    };
-
-    config.DefaultReferenceTypeNullHandling = NJsonSchema.Generation.ReferenceTypeNullHandling.NotNull;
-});
+builder.Services.AddOpenApi();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -179,8 +170,7 @@ else
     app.UseHsts();
 }
 
-app.UseOpenApi(p => p.Path = "/swagger/{documentName}/swagger.yaml");
-app.UseSwaggerUi3(p => p.DocumentPath = "/swagger/{documentName}/swagger.yaml");
+app.UseOpenApi();
 
 app.UseHttpsRedirection();
 

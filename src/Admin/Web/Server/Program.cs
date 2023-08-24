@@ -1,10 +1,9 @@
 ﻿using Azure.Identity;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.ResponseCompression;
 using Catalog;
 using YourBrand.Server.Products;
 using YourBrand.Server.ProductCategories;
+using YourBrand.Server.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,14 +24,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddCatalogClients(builder.Configuration["yourbrand-catalog-api-url"]);
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddOpenApiDocument(config => {
-    config.PostProcess = document =>
-    {
-        document.Info.Title = "Admin API";
-    };
-
-    config.DefaultReferenceTypeNullHandling = NJsonSchema.Generation.ReferenceTypeNullHandling.NotNull;
-});
+builder.Services.AddOpenApi();
 
 
 var app = builder.Build();
@@ -40,8 +32,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseOpenApi(p => p.Path = "/swagger/{documentName}/swagger.yaml");
-    app.UseSwaggerUi3(p => p.DocumentPath = "/swagger/{documentName}/swagger.yaml");
+    app.UseOpenApi();
 
     app.UseWebAssemblyDebugging();;
 }

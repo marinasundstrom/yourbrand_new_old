@@ -1,6 +1,7 @@
 ﻿using Azure.Identity;
 using Carts.API;
 using Carts.API.Data;
+using Carts.API.Extensions;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,15 +27,7 @@ if (builder.Environment.IsProduction())
 
 // Add services to the container.
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddOpenApiDocument(config => {
-    config.PostProcess = document =>
-    {
-        document.Info.Title = "Carts API";
-    };
-
-    config.DefaultReferenceTypeNullHandling = NJsonSchema.Generation.ReferenceTypeNullHandling.NotNull;
-});
+builder.Services.AddOpenApi();
 
 builder.Services.AddSqlServer<CartsContext>(
     builder.Configuration.GetValue<string>("yourbrand-carts-db-connectionstring")
@@ -81,8 +74,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseOpenApi(p => p.Path = "/swagger/{documentName}/swagger.yaml");
-    app.UseSwaggerUi3(p => p.DocumentPath = "/swagger/{documentName}/swagger.yaml");
+    app.UseOpenApi();
 }
 
 app.UseOutputCache();

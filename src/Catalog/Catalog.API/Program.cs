@@ -1,15 +1,13 @@
 ﻿using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
 using Azure.Identity;
 using Catalog.API.Products;
 using Catalog.API.ProductCategories;
 using Catalog.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Azure;
-using Microsoft.Extensions.Logging;
 using MassTransit;
 using FluentValidation;
-using System.Text.Json.Serialization;
+using Catalog.API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,14 +56,7 @@ builder.Services.AddAzureClients(clientBuilder =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers();
 
-builder.Services.AddOpenApiDocument(config => {
-    config.PostProcess = document =>
-    {
-        document.Info.Title = "Catalog API";
-    };
-
-    config.DefaultReferenceTypeNullHandling = NJsonSchema.Generation.ReferenceTypeNullHandling.NotNull;
-});
+builder.Services.AddOpenApi();
 
 builder.Services.AddSqlServer<CatalogContext>(
     builder.Configuration.GetValue<string>("yourbrand-catalog-db-connectionstring")
@@ -113,8 +104,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseOpenApi(p => p.Path = "/swagger/{documentName}/swagger.yaml");
-    app.UseSwaggerUi3(p => p.DocumentPath = "/swagger/{documentName}/swagger.yaml");
+    app.UseOpenApi();
 }
 
 app.UseOutputCache();
