@@ -105,9 +105,14 @@ public sealed record CreateProduct(string Name, string Description, long Categor
                 Description = request.Description,
                 Image = $"{cdnBaseUrl}/images/products/placeholder.jpeg",
                 Price = request.Price,
-                Handle = request.Handle,
-                Category = await catalogContext.ProductCategories.FirstAsync(x => x.Id == request.CategoryId, cancellationToken)
+                Handle = request.Handle
             };
+
+            var category = await catalogContext.ProductCategories
+                .Include(x => x.Parent)
+                .FirstAsync(x => x.Id == request.CategoryId, cancellationToken);
+
+            category.AddProduct(product);
 
             catalogContext.Products.Add(product);
 
@@ -289,9 +294,9 @@ public sealed record UpdateProductCategory(string IdOrHandle, long ProductCatego
             }
 
             var newCategory = await catalogContext.ProductCategories
-            .Include(productCategory => productCategory.Parent)
-             .Include(productCategory => productCategory.Products)
-            .FirstOrDefaultAsync(productCategory => productCategory.Id == request.ProductCategoryId, cancellationToken);
+                .Include(productCategory => productCategory.Parent)
+                .Include(productCategory => productCategory.Products)
+                .FirstOrDefaultAsync(productCategory => productCategory.Id == request.ProductCategoryId, cancellationToken);
 
             if (newCategory is null)
             {
