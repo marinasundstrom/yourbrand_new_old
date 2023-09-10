@@ -150,6 +150,8 @@
 
             categoryName = category.Name;
             categoryDescription = category.Description;
+
+             // TODO: Set title to node.Name using JS
         }
 
         await FetchItems(Page.GetValueOrDefault());
@@ -157,6 +159,8 @@
 
     private async void OnLocationChanged(object? sender, LocationChangedEventArgs eventArgs)
     {
+        // TODO: Wait for fix
+
         Console.WriteLine("Foo: " + Path);
 
         //Page = 1;
@@ -239,6 +243,8 @@
         Path = node.Path;
         await FetchItems(1);
         NavigationManager.NavigateTo($"/categories/{node.Path}", replace: true);
+
+        // TODO: Set title to node.Name using JS
     }
 
     public void Dispose()

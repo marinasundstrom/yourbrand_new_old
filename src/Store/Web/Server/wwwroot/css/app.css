@@ -121,6 +121,10 @@ h1:focus {
     background-color: var(--bs-purple);
 }
 
+.bg-dark {
+    background-color: #594ae2 !important;
+}
+
 .footer a {
     color: var(--bs-body-color);
     text-decoration: none;
