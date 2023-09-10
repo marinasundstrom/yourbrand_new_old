@@ -28,6 +28,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Carts.Contracts\Carts.Contracts.csproj" />
     <ProjectReference Include="..\..\Catalog\Catalog.Contracts\Catalog.Contracts.csproj" />
+    <ProjectReference Include="..\..\Diagnostics\Diagnostics.csproj" />
   </ItemGroup>
 
 </Project>

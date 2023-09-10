@@ -1,4 +1,5 @@
 ﻿using Azure.Identity;
+using YourBrand;
 using Carts.API;
 using Carts.API.Data;
 using Carts.API.Extensions;
@@ -28,6 +29,8 @@ if (builder.Environment.IsProduction())
 // Add services to the container.
 
 builder.Services.AddOpenApi();
+
+builder.Services.AddObservability("Carts.API", "1.0", builder.Configuration);
 
 builder.Services.AddSqlServer<CartsContext>(
     builder.Configuration.GetValue<string>("yourbrand-carts-db-connectionstring")
@@ -70,6 +73,8 @@ builder.Services.AddMassTransit(x =>
 });
 
 var app = builder.Build();
+
+app.MapObservability();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

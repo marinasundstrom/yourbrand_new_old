@@ -39,6 +39,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Catalog.Contracts\Catalog.Contracts.csproj" />
+    <ProjectReference Include="..\..\Diagnostics\Diagnostics.csproj" />
+
   </ItemGroup>
 
 </Project>

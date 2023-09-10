@@ -1,11 +1,20 @@
 ﻿using Azure.Identity;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
+using YourBrand;
 using Catalog;
 using YourBrand.Server.Products;
 using YourBrand.Server.ProductCategories;
 using YourBrand.Server.Extensions;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+string serviceName = "Admin.Web";
+string serviceVersion = "1.0";
+
+builder.Host.UseSerilog((ctx, cfg) =>  cfg.ReadFrom.Configuration(builder.Configuration)
+                        .Enrich.WithProperty("Application", serviceName)
+                        .Enrich.WithProperty("Environment", ctx.HostingEnvironment.EnvironmentName));
 
 StaticWebAssetsLoader.UseStaticWebAssets(builder.Environment, builder.Configuration);
 
@@ -26,8 +35,13 @@ builder.Services.AddCatalogClients(builder.Configuration["yourbrand-catalog-api-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
 
+builder.Services.AddObservability(serviceName, serviceVersion, builder.Configuration);
 
 var app = builder.Build();
+
+app.UseSerilogRequestLogging();
+
+app.MapObservability();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -43,7 +57,7 @@ else
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
@@ -55,5 +69,7 @@ app
 app.MapRazorPages();
 app.MapControllers();
 app.MapFallbackToFile("index.html");
+
+app.UseOpenTelemetryPrometheusScrapingEndpoint();
 
 app.Run();

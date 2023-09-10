@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using Azure.Identity;
+using YourBrand;
 using BlazorApp;
 using BlazorApp.Cart;
 using BlazorApp.Products;
@@ -13,10 +14,18 @@ using CartsAPI;
 using CatalogAPI;
 using System.Threading.RateLimiting;
 using BlazorApp.Extensions;
+using Serilog;
 
 string MyAllowSpecificOrigins = nameof(MyAllowSpecificOrigins);
 
+string serviceName = "Store.Web";
+string serviceVersion = "1.0";
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((ctx, cfg) =>  cfg.ReadFrom.Configuration(builder.Configuration)
+                        .Enrich.WithProperty("Application", serviceName)
+                        .Enrich.WithProperty("Environment", ctx.HostingEnvironment.EnvironmentName));
 
 string GetProductsExpire20 = nameof(GetProductsExpire20);
 
@@ -97,6 +106,8 @@ if (builder.Environment.IsProduction())
 
 builder.Services.AddOpenApi();
 
+builder.Services.AddObservability(serviceName, serviceVersion, builder.Configuration);
+
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddWebAssemblyComponents()
@@ -156,6 +167,10 @@ builder.Services.AddMassTransit(x =>
 
 var app = builder.Build();
 
+app.UseSerilogRequestLogging();
+
+app.MapObservability();
+
 app.UseStatusCodePagesWithRedirects("/error/{0}");
 
 // Configure the HTTP request pipeline.
@@ -172,7 +187,7 @@ else
 
 app.UseOpenApi();
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 
@@ -198,5 +213,7 @@ app.MapGet("/api/weatherforecast", async (DateOnly startDate, IWeatherForecastSe
     })
     .WithName("GetWeatherForecast")
     .WithOpenApi();
+
+app.UseOpenTelemetryPrometheusScrapingEndpoint();
 
 app.Run();

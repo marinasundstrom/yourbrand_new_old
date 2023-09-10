@@ -1,5 +1,6 @@
 ﻿using Azure.Storage.Blobs;
 using Azure.Identity;
+using YourBrand;
 using Catalog.API.Products;
 using Catalog.API.ProductCategories;
 using Catalog.API.Data;
@@ -58,6 +59,8 @@ builder.Services.AddControllers();
 
 builder.Services.AddOpenApi();
 
+builder.Services.AddObservability("Catalog.API", "1.0", builder.Configuration);
+
 builder.Services.AddSqlServer<CatalogContext>(
     builder.Configuration.GetValue<string>("yourbrand-catalog-db-connectionstring")
     ?? builder.Configuration.GetConnectionString("CatalogDb"),
@@ -100,6 +103,8 @@ builder.Services.AddMassTransit(x =>
 
 
 var app = builder.Build();
+
+app.MapObservability();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
