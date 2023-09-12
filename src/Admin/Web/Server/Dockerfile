@@ -1,11 +1,11 @@
-FROM mcr.microsoft.com/dotnet/nightly/aspnet:8.0-preview AS base
+FROM mcr.microsoft.com/dotnet/nightly/aspnet:8.0 AS base
 WORKDIR /app
 EXPOSE 8080
 
 ENV ASPNETCORE_URLS=http://+:8080
 
 USER app
-FROM mcr.microsoft.com/dotnet/nightly/sdk:8.0-preview AS build
+FROM mcr.microsoft.com/dotnet/nightly/sdk:8.0 AS build
 ARG configuration=Release
 WORKDIR /
 COPY ["src/Admin/Web/Server/YourBrand.Server.csproj", "src/Admin/Web/Server/"]
