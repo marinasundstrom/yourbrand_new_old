@@ -1,11 +1,15 @@
 @page "/categories/{*path}"
-@attribute [StreamRendering(true)]
+@using BlazorApp.ProductCategories
+@inject IProductCategoryService ProductCategoryService
 
-<AppPageTitle>Products</AppPageTitle>
+<AppPageTitle>@(categoryName is null ? "Products" : categoryName)</AppPageTitle>
 
 <Client.Products.ProductsView Page="Page" PageSize="PageSize" SearchTerm="@SearchTerm" Path="@Path" @rendermode="@RenderMode.Auto" />
 
 @code {
+    string? categoryName = null;
+    string? categoryDescription = null;
+
     [SupplyParameterFromQuery]
     public int? Page { get; set; }
 
@@ -18,9 +22,21 @@
     [Parameter]
     public string? Path { get; set; }
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         Page ??= 1;
         PageSize ??= 6;
+
+        Console.WriteLine(Path);
+
+        if(!string.IsNullOrEmpty(Path))
+        {
+            var category = await ProductCategoryService.GetProductCategoryById(Path);
+
+            categoryName = category.Name;
+            categoryDescription = category.Description;
+
+            StateHasChanged();
+        }
     }
 }

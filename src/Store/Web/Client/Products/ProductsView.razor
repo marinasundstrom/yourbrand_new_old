@@ -1,10 +1,9 @@
+@attribute [StreamRendering(true)]
 @using BlazorApp.Products
 @using BlazorApp.ProductCategories
 @inject IProductsService ProductsService
 @inject IProductCategoryService ProductCategoryService
 @inject NavigationManager NavigationManager
-
-<AppPageTitle>@(categoryName is null ? "Products" : categoryName)</AppPageTitle>
 
 <div class="row gx-5 pt-md-4">
 
