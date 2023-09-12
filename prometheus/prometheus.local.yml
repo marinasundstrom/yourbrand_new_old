@@ -10,7 +10,7 @@ scrape_configs:
       - targets: ['host.docker.internal:5000']
   - job_name: 'catalog-api'
     static_configs:
-      - targets: ['host.docker.internal:7134']
+      - targets: ['host.docker.internal:5243']
   - job_name: 'carts-api'
     static_configs:
-      - targets: ['host.docker.internal:7154']
+      - targets: ['host.docker.internal:5245']
