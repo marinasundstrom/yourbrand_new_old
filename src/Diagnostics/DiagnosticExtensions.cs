@@ -43,25 +43,25 @@ public static class DiagnosticExtensions
                         })
                         .AddMeter("Microsoft.AspNetCore.Hosting",
                             "Microsoft.AspNetCore.Server.Kestrel")
-                        .AddPrometheusExporter()
-                        .AddConsoleExporter();
+                        .AddPrometheusExporter();
+                        //.AddConsoleExporter();
                 })
                 .WithTracing(tracing =>
                 {
                     tracing.SetResourceBuilder(resource)
-                           .AddAspNetCoreInstrumentation()
-                           .AddHttpClientInstrumentation()
+                            .AddAspNetCoreInstrumentation()
+                            .AddHttpClientInstrumentation()
                             .AddSqlClientInstrumentation()
                             .AddMassTransitInstrumentation()
                             .AddSource("MassTransit")
                             .AddRedisInstrumentation()
-                           //.AddGrpcClientInstrumentation()
-                           .AddZipkinExporter(zipkin =>
-                           {
-                               var zipkinUrl =  configuration["ZIPKIN_URL"] ?? "http://localhost:9411";
-                               zipkin.Endpoint = new Uri($"{zipkinUrl}/api/v2/spans");
-                           })
-                           .AddConsoleExporter();
+                            //.AddGrpcClientInstrumentation()
+                            .AddZipkinExporter(zipkin =>
+                            {
+                                var zipkinUrl =  configuration["ZIPKIN_URL"] ?? "http://localhost:9411";
+                                zipkin.Endpoint = new Uri($"{zipkinUrl}/api/v2/spans");
+                            });
+                            //.AddConsoleExporter();
                            
                     tracerBuilderAction?.Invoke(tracing);
                 });
