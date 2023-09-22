@@ -27,6 +27,8 @@ services:
       - 15672:15672
     environment:
       - RABBITMQ_ERLANG_COOKIE=SomeRandomStringHere
+    volumes:
+      - "./data/rabbitmq:/var/lib/rabbitmq"
 
   azurite:
     image: mcr.microsoft.com/azure-storage/azurite
