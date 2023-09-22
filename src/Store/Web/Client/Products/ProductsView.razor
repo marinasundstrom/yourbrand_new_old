@@ -4,6 +4,7 @@
 @inject IProductsService ProductsService
 @inject IProductCategoryService ProductCategoryService
 @inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
 
 <div class="row gx-5 pt-md-4">
 
@@ -141,7 +142,7 @@
     protected override async Task OnInitializedAsync()
     {
         NavigationManager.LocationChanged += OnLocationChanged;
-        Console.WriteLine(Path);
+        //Console.WriteLine(Path);
 
         if(!string.IsNullOrEmpty(Path))
         {
@@ -174,6 +175,13 @@
         await FetchItems(page);
 
         NavigationManager.NavigateTo($"/categories?page={Page}", replace: true);
+
+        await ScrollToTop();
+    }
+
+    async Task ScrollToTop() 
+    {
+        await JSRuntime.InvokeVoidAsync("scrollToTop");
     }
 
     CancellationTokenSource cts = new ();

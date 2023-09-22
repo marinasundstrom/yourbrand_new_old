@@ -1,3 +1,7 @@
+window.scrollToTop = () => {
+    window.scrollTo({ top: 0, left: 0,  behavior: 'smooth'});
+};
+
 function initScrollToTop() {
     var scrollToTop = document.querySelector("#scrollToTop");
     
@@ -6,7 +10,7 @@ function initScrollToTop() {
     scrollToTop.addEventListener("click", ev => {
         ev.preventDefault();
         
-        window.scrollTo(0, 0);
+        window.scrollToTop();
     });
 }
 
