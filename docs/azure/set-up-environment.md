@@ -30,7 +30,8 @@ Input these in the portal:
 
 ```
 Name: get-cart-by-id-rule
-Type: Custom
+Type: 
+Custom Rule Type: azure-servicebus
 Metadata:
    - messageCount: 1
    - namespace: yourbrand-servicebus
