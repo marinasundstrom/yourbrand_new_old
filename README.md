@@ -1,8 +1,8 @@
 # YourBrand
 
-Store Web: https://yourbrand-store-web.kindgrass-70ab37e8.swedencentral.azurecontainerapps.io/
+Store Web: https://yourbrand-store-web.politesky-8ec786a9.swedencentral.azurecontainerapps.io/
 
-Admin Web: https://yourbrand-admin-web.kindgrass-70ab37e8.swedencentral.azurecontainerapps.io/
+Admin Web: https://yourbrand-admin-web.politesky-8ec786a9.swedencentral.azurecontainerapps.io/
 
 ## Deployment to Azure
 

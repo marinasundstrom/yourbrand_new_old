@@ -30,7 +30,7 @@ Input these in the portal:
 
 ```
 Name: get-cart-by-id-rule
-Type: 
+Type: Custom
 Custom Rule Type: azure-servicebus
 Metadata:
    - messageCount: 1

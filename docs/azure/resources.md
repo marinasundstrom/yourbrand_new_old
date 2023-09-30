@@ -4,6 +4,8 @@
 
 A container registry.
 
+Enable Admin User, for listing images in the portal. 
+
 ## KeyVault
 
 A KeyVault named: ``yourbrand-keyvault``
@@ -28,6 +30,8 @@ Create a SQL Server and the following database:
 
 * ``yourbrand-catalog-db``
 * ``yourbrand-carts-db``
+
+Enable password for connection string used by migrations.
 
 ## Azure Service Bus
 

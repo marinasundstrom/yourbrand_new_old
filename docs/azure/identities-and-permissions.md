@@ -1,19 +1,26 @@
 # Identities and Permissions in Azure
 
-Make sure to enable Managed Identity  for each resource. 
+Make sure to enable Managed Identity for each resource. 
 
 This project uses System-assigned managed identities.
 
 Setting up managed identities, and the permissions for resources accessing other resources.
 
+You need to add yourself as a member for certain resources in order to view, and update their data.
+
 ## Container registry access
 
 The container apps need permissions to pull images from the container registry.
 
+Assign yourself as a ``Contributor``.
+
+Assign role ``AcrPull`` to all container apps.
+
 ## Key Vault access
 
-*  Both ``yourbrand-catalog-api``, ``yourbrand-carts-api``,and ``yourbrand-store-web`` should be 
-"Key Vault Secrets User" to ``yourbrand-keyvault``
+Assign yourself as a ``Contributor``.
+
+*  Both ``yourbrand-catalog-api``, ``yourbrand-carts-api``,and ``yourbrand-store-web`` should be ``Key Vault Secrets User`` to ``yourbrand-keyvault``
 
 ## Database access
 
@@ -30,7 +37,13 @@ Both ``yourbrand-catalog-api``, ``yourbrand-carts-api``, and ``yourbrand-store-w
 
 ## SQL database access
 
-Each service should have read write access to the databases they use - and only those they use.
+Permissions are assigned on the SQL Server.
+
+Assign yourself as an admin or owner.
+
+Make sure password is enabled to run migrations.
+
+Each service should have read write access to the server.
 
 ### Create database users
 
@@ -54,4 +67,10 @@ ALTER ROLE db_datawriter ADD MEMBER [yourbrand-carts-api]
 
 ## Storage Account access
 
-``yourbrand-catalog-api`` should have access to ``yourbrandstorage``
+``yourbrand-catalog-api`` should be a ``yourbrandstorage``.
+
+Set yourself as a ``Contributor``.
+
+Enable anonymous access on storage account.
+
+Enable read access on container.
