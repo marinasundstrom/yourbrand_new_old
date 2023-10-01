@@ -7,6 +7,8 @@ using BlazorApp.Products;
 using BlazorApp.ProductCategories;
 using BlazorApp.Data;
 using MassTransit;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -165,6 +167,9 @@ builder.Services.AddMassTransit(x =>
     }
 });
 
+builder.Services
+    .AddHealthChecks();
+
 var app = builder.Build();
 
 app.UseSerilogRequestLogging();
@@ -215,5 +220,11 @@ app.MapGet("/api/weatherforecast", async (DateOnly startDate, IWeatherForecastSe
     .WithOpenApi();
 
 app.UseOpenTelemetryPrometheusScrapingEndpoint();
+
+app.MapHealthChecks("/healthz", new HealthCheckOptions()
+{
+    Predicate = _ => true,
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 
 app.Run();

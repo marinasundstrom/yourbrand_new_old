@@ -1,4 +1,6 @@
 ﻿using Azure.Identity;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using YourBrand;
 using Catalog;
@@ -37,6 +39,10 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddObservability(serviceName, serviceVersion, builder.Configuration);
 
+builder.Services
+    .AddHealthChecks();
+//    .AddDbContextCheck<ApplicationDbContext>();
+
 var app = builder.Build();
 
 app.UseSerilogRequestLogging();
@@ -65,6 +71,12 @@ app.UseStaticFiles();
 app
     .MapProductsEndpoints()
     .MapProductCategoriesEndpoints();
+
+app.MapHealthChecks("/healthz", new HealthCheckOptions()
+{
+    Predicate = _ => true,
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 
 app.MapRazorPages();
 app.MapControllers();

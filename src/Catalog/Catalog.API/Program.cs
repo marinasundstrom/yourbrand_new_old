@@ -4,6 +4,8 @@ using YourBrand;
 using Catalog.API.Products;
 using Catalog.API.ProductCategories;
 using Catalog.API.Data;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Azure;
 using MassTransit;
@@ -101,6 +103,9 @@ builder.Services.AddMassTransit(x =>
     }
 });
 
+builder.Services
+    .AddHealthChecks()
+    .AddDbContextCheck<CatalogContext>();
 
 var app = builder.Build();
 
@@ -121,6 +126,12 @@ app.MapControllers();
 app
     .MapProductsEndpoints()
     .MapProductCategoriesEndpoints();
+
+app.MapHealthChecks("/healthz", new HealthCheckOptions()
+{
+    Predicate = _ => true,
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 
 /*
 app.MapGet("/api/weatherforecast", async (DateOnly startDate, WeatherForecastService weatherForecastService, CancellationToken cancellationToken) =>

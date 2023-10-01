@@ -4,6 +4,8 @@ using Carts.API;
 using Carts.API.Data;
 using Carts.API.Extensions;
 using MassTransit;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -72,6 +74,10 @@ builder.Services.AddMassTransit(x =>
     }
 });
 
+builder.Services
+    .AddHealthChecks()
+    .AddDbContextCheck<CartsContext>();
+
 var app = builder.Build();
 
 app.MapObservability();
@@ -87,6 +93,12 @@ app.UseOutputCache();
 app.UseHttpsRedirection();
 
 app.MapCartsEndpoints();
+
+app.MapHealthChecks("/healthz", new HealthCheckOptions()
+{
+    Predicate = _ => true,
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 
 try 
 {
