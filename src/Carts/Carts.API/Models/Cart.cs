@@ -9,6 +9,12 @@ public sealed class Cart
         Name = name;
     }
 
+    internal Cart(string id, string name) 
+    {
+        Id = id;
+        Name = name;
+    }
+
     public string Id { get; private set; } = Guid.NewGuid().ToString();
 
     public string Name { get; set; } = default!;

@@ -104,10 +104,18 @@ try
 {
     using (var scope = app.Services.CreateScope())
     {
-        using var context = scope.ServiceProvider.GetRequiredService<CartsContext>();
+        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+        var context = scope.ServiceProvider.GetRequiredService<CartsContext>();
+        var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
 
         //await context.Database.EnsureDeletedAsync();
-        await context.Database.EnsureCreatedAsync();
+        //await context.Database.EnsureCreatedAsync(); 
+
+        if (args.Contains("--seed"))
+        {
+            await SeedData(context, configuration, logger);
+            return;
+        }
     }
 }
 catch(Exception e) 
@@ -117,3 +125,15 @@ catch(Exception e)
 
 await app.RunAsync();
 
+static async Task SeedData(CartsContext context, IConfiguration configuration, ILogger<Program> logger)
+{
+    try
+    {
+        await Seed.SeedData(context, configuration);
+    }
+    catch (Exception ex)
+    {
+        logger.LogError(ex, "An error occurred seeding the " +
+            "database. Error: {Message}", ex.Message);
+    }
+}
