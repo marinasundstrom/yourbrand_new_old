@@ -1,4 +1,4 @@
-## Dependencies
+# Dependencies
 
 These are the dependencies that this project and all of its services have.
 

@@ -1,6 +1,6 @@
 # Run in Docker
 
-### Production mode
+## Production mode
 
 ```
 docker compose up
@@ -12,7 +12,7 @@ To run detached from the console:
 docker compose up -d
 ```
 
-### Development mode
+## Development mode
 
 ```
 docker compose -f docker-compose.debug.yml up
@@ -36,7 +36,7 @@ Just build:
 docker compose -f docker-compose.yml build store-web 
 ```
 
-### Run just the dependencies
+## Run just the dependencies
 
 This starts the local dependencies mentioned [here](dependencies.md).
 

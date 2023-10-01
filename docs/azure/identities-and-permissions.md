@@ -65,7 +65,7 @@ ALTER ROLE db_datareader ADD MEMBER [yourbrand-carts-api]
 ALTER ROLE db_datawriter ADD MEMBER [yourbrand-carts-api]
 ```
 
-## Storage Account access
+# Storage Account access
 
 ``yourbrand-catalog-api`` should be a ``yourbrandstorage``.
 

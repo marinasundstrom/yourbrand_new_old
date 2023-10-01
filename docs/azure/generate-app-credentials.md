@@ -1,4 +1,4 @@
-## Generate Azure Credentials
+# Generate Azure Credentials
 
 Used by GitHub Actions. Requires Azure CLI.
 
