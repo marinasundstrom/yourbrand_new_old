@@ -1,4 +1,4 @@
-# Bicep
+# Bicep template
 
 Bicep is a tool that allows you can define Infrastructure as code (IaC) in Azure. 
 
