@@ -55,10 +55,7 @@ Then assign the role ``Azure Service Bus Data Owner`` to resources according to 
 | ``yourbrand-catalog-api``  | Azure Service Bus Data Owner  |
 | ``yourbrand-carts-api``    | Azure Service Bus Data Owner  |
 
-Alternative roles that can be used in combination:
-
-* ``Azure Service Bus Data Receiver``
-* ``Azure Service Bus Data Sender``
+These permissions are required so that the container apps can set up topics and subscriptions.
 
 ## SQL Server and database access
 
