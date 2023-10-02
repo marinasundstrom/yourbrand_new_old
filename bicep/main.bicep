@@ -21,7 +21,7 @@ var subnetRef = resourceId('Microsoft.Network/virtualNetworks/subnets', virtualN
 param vulnerabilityAssessments_Default_storageContainerPath string
 param workspaces_workspaceyourbrand8c41_name string
 
-resource registries_yourbrandcr_name_resource 'Microsoft.ContainerRegistry/registries@2023-07-01' = {
+resource registries_yourbrandcr_resource 'Microsoft.ContainerRegistry/registries@2023-07-01' = {
   identity: {
     type: 'SystemAssigned'
   }
@@ -59,7 +59,7 @@ resource registries_yourbrandcr_name_resource 'Microsoft.ContainerRegistry/regis
   }
 }
 
-resource vaults_yourbrand_keyvault_name_resource 'Microsoft.KeyVault/vaults@2023-02-01' = {
+resource vaults_yourbrand_keyvault_resource 'Microsoft.KeyVault/vaults@2023-02-01' = {
   location: location
   name: vaults_yourbrand_keyvault_name
   properties: {
@@ -81,7 +81,7 @@ resource vaults_yourbrand_keyvault_name_resource 'Microsoft.KeyVault/vaults@2023
   }
 }
 
-resource virtualNetworks_vnet_YourBrand_bd77_name_resource 'Microsoft.Network/virtualNetworks@2023-05-01' = {
+resource virtualNetworks_vnet_YourBrand_bd77_resource 'Microsoft.Network/virtualNetworks@2023-05-01' = {
   location: location
   name: virtualNetworks_vnet_YourBrand_bd77_name
   properties: {
@@ -118,7 +118,7 @@ resource virtualNetworks_vnet_YourBrand_bd77_name_resource 'Microsoft.Network/vi
   }
 }
 
-resource workspaces_workspaceyourbrand8c41_name_resource 'Microsoft.OperationalInsights/workspaces@2021-12-01-preview' = {
+resource workspaces_workspaceyourbrand8c41_resource 'Microsoft.OperationalInsights/workspaces@2021-12-01-preview' = {
   location: location
   name: workspaces_workspaceyourbrand8c41_name
   properties: {
@@ -137,7 +137,7 @@ resource workspaces_workspaceyourbrand8c41_name_resource 'Microsoft.OperationalI
   }
 }
 
-resource namespaces_yourbrand_servicebus_name_resource 'Microsoft.ServiceBus/namespaces@2022-10-01-preview' = {
+resource namespaces_yourbrand_servicebus_resource 'Microsoft.ServiceBus/namespaces@2022-10-01-preview' = {
   location: location
   name: namespaces_yourbrand_servicebus_name
   properties: {
@@ -153,7 +153,7 @@ resource namespaces_yourbrand_servicebus_name_resource 'Microsoft.ServiceBus/nam
   }
 }
 
-resource servers_yourbrand_sqlserver_name_resource 'Microsoft.Sql/servers@2023-02-01-preview' = {
+resource servers_yourbrand_sqlserver_resource 'Microsoft.Sql/servers@2023-02-01-preview' = {
   identity: {
     type: 'SystemAssigned'
   }
@@ -218,7 +218,7 @@ resource storageAccounts_yourbrandstorage_name_resource 'Microsoft.Storage/stora
   }
 }
 
-resource containerapps_yourbrand_admin_web_name_resource 'Microsoft.App/containerapps@2023-05-02-preview' = {
+resource containerapps_yourbrand_admin_web_resource 'Microsoft.App/containerapps@2023-05-02-preview' = {
   identity: {
     type: 'SystemAssigned'
   }
@@ -254,8 +254,8 @@ resource containerapps_yourbrand_admin_web_name_resource 'Microsoft.App/containe
         }
       ]
     }
-    environmentId: managedEnvironments_yourbrand_containerappenvironment_name_resource.id
-    managedEnvironmentId: managedEnvironments_yourbrand_containerappenvironment_name_resource.id
+    environmentId: managedEnvironments_yourbrand_containerappenvironment_resource.id
+    managedEnvironmentId: managedEnvironments_yourbrand_containerappenvironment_resource.id
     template: {
       containers: [
         {
@@ -278,7 +278,7 @@ resource containerapps_yourbrand_admin_web_name_resource 'Microsoft.App/containe
   }
 }
 
-resource containerapps_yourbrand_carts_api_name_resource 'Microsoft.App/containerapps@2023-05-02-preview' = {
+resource containerapps_yourbrand_carts_api_resource 'Microsoft.App/containerapps@2023-05-02-preview' = {
   identity: {
     type: 'SystemAssigned'
   }
@@ -314,8 +314,8 @@ resource containerapps_yourbrand_carts_api_name_resource 'Microsoft.App/containe
         }
       ]
     }
-    environmentId: managedEnvironments_yourbrand_containerappenvironment_name_resource.id
-    managedEnvironmentId: managedEnvironments_yourbrand_containerappenvironment_name_resource.id
+    environmentId: managedEnvironments_yourbrand_containerappenvironment_resource.id
+    managedEnvironmentId: managedEnvironments_yourbrand_containerappenvironment_resource.id
     template: {
       containers: [
         {
@@ -351,7 +351,7 @@ resource containerapps_yourbrand_carts_api_name_resource 'Microsoft.App/containe
   }
 }
 
-resource containerapps_yourbrand_catalog_api_name_resource 'Microsoft.App/containerapps@2023-05-02-preview' = {
+resource containerapps_yourbrand_catalog_api_resource 'Microsoft.App/containerapps@2023-05-02-preview' = {
   identity: {
     type: 'SystemAssigned'
   }
@@ -387,8 +387,8 @@ resource containerapps_yourbrand_catalog_api_name_resource 'Microsoft.App/contai
         }
       ]
     }
-    environmentId: managedEnvironments_yourbrand_containerappenvironment_name_resource.id
-    managedEnvironmentId: managedEnvironments_yourbrand_containerappenvironment_name_resource.id
+    environmentId: managedEnvironments_yourbrand_containerappenvironment_resource.id
+    managedEnvironmentId: managedEnvironments_yourbrand_containerappenvironment_resource.id
     template: {
       containers: [
         {
@@ -411,7 +411,7 @@ resource containerapps_yourbrand_catalog_api_name_resource 'Microsoft.App/contai
   }
 }
 
-resource containerapps_yourbrand_store_web_name_resource 'Microsoft.App/containerapps@2023-05-02-preview' = {
+resource containerapps_yourbrand_store_web_resource 'Microsoft.App/containerapps@2023-05-02-preview' = {
   identity: {
     type: 'SystemAssigned'
   }
@@ -451,8 +451,8 @@ resource containerapps_yourbrand_store_web_name_resource 'Microsoft.App/containe
         }
       ]
     }
-    environmentId: managedEnvironments_yourbrand_containerappenvironment_name_resource.id
-    managedEnvironmentId: managedEnvironments_yourbrand_containerappenvironment_name_resource.id
+    environmentId: managedEnvironments_yourbrand_containerappenvironment_resource.id
+    managedEnvironmentId: managedEnvironments_yourbrand_containerappenvironment_resource.id
     template: {
       containers: [
         {
@@ -475,7 +475,7 @@ resource containerapps_yourbrand_store_web_name_resource 'Microsoft.App/containe
   }
 }
 
-resource managedEnvironments_yourbrand_containerappenvironment_name_resource 'Microsoft.App/managedEnvironments@2023-05-02-preview' = {
+resource managedEnvironments_yourbrand_containerappenvironment_resource 'Microsoft.App/managedEnvironments@2023-05-02-preview' = {
   location: location
   name: managedEnvironments_yourbrand_containerappenvironment_name
   properties: {
@@ -509,7 +509,7 @@ resource managedEnvironments_yourbrand_containerappenvironment_name_resource 'Mi
 }
 
 resource registries_yourbrandcr_name_repositories_admin 'Microsoft.ContainerRegistry/registries/scopeMaps@2023-07-01' = {
-  parent: registries_yourbrandcr_name_resource
+  parent: registries_yourbrandcr_resource
   name: '_repositories_admin'
   properties: {
     actions: [
@@ -524,7 +524,7 @@ resource registries_yourbrandcr_name_repositories_admin 'Microsoft.ContainerRegi
 }
 
 resource registries_yourbrandcr_name_repositories_pull 'Microsoft.ContainerRegistry/registries/scopeMaps@2023-07-01' = {
-  parent: registries_yourbrandcr_name_resource
+  parent: registries_yourbrandcr_resource
   name: '_repositories_pull'
   properties: {
     actions: [
@@ -535,7 +535,7 @@ resource registries_yourbrandcr_name_repositories_pull 'Microsoft.ContainerRegis
 }
 
 resource registries_yourbrandcr_name_repositories_push 'Microsoft.ContainerRegistry/registries/scopeMaps@2023-07-01' = {
-  parent: registries_yourbrandcr_name_resource
+  parent: registries_yourbrandcr_resource
   name: '_repositories_push'
   properties: {
     actions: [
@@ -547,7 +547,7 @@ resource registries_yourbrandcr_name_repositories_push 'Microsoft.ContainerRegis
 }
 
 resource vaults_yourbrand_keyvault_name_yourbrand_carts_api_url 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
-  parent: vaults_yourbrand_keyvault_name_resource
+  parent: vaults_yourbrand_keyvault_resource
   location: location
   name: 'yourbrand-carts-api-url'
   properties: {
@@ -558,7 +558,7 @@ resource vaults_yourbrand_keyvault_name_yourbrand_carts_api_url 'Microsoft.KeyVa
 }
 
 resource vaults_yourbrand_keyvault_name_yourbrand_carts_db_connectionstring 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
-  parent: vaults_yourbrand_keyvault_name_resource
+  parent: vaults_yourbrand_keyvault_resource
   location: location
   name: 'yourbrand-carts-db-connectionstring'
   properties: {
@@ -569,7 +569,7 @@ resource vaults_yourbrand_keyvault_name_yourbrand_carts_db_connectionstring 'Mic
 }
 
 resource vaults_yourbrand_keyvault_name_yourbrand_catalog_api_url 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
-  parent: vaults_yourbrand_keyvault_name_resource
+  parent: vaults_yourbrand_keyvault_resource
   location: location
   name: 'yourbrand-catalog-api-url'
   properties: {
@@ -580,7 +580,7 @@ resource vaults_yourbrand_keyvault_name_yourbrand_catalog_api_url 'Microsoft.Key
 }
 
 resource vaults_yourbrand_keyvault_name_yourbrand_catalog_db_connectionstring 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
-  parent: vaults_yourbrand_keyvault_name_resource
+  parent: vaults_yourbrand_keyvault_resource
   location: location
   name: 'yourbrand-catalog-db-connectionstring'
   properties: {
@@ -591,7 +591,7 @@ resource vaults_yourbrand_keyvault_name_yourbrand_catalog_db_connectionstring 'M
 }
 
 resource vaults_yourbrand_keyvault_name_yourbrand_servicebus_connectionstring 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
-  parent: vaults_yourbrand_keyvault_name_resource
+  parent: vaults_yourbrand_keyvault_resource
   location: location
   name: 'yourbrand-servicebus-connectionstring'
   properties: {
@@ -601,8 +601,8 @@ resource vaults_yourbrand_keyvault_name_yourbrand_servicebus_connectionstring 'M
   }
 }
 
-resource virtualNetworks_vnet_YourBrand_bd77_name_infra_subnet 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
-  parent: virtualNetworks_vnet_YourBrand_bd77_name_resource
+resource virtualNetworks_vnet_YourBrand_bd77_infra_subnet 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
+  parent: virtualNetworks_vnet_YourBrand_bd77_resource
   name: 'infra-subnet'
   properties: {
     addressPrefix: '10.0.0.0/23'
@@ -621,12 +621,12 @@ resource virtualNetworks_vnet_YourBrand_bd77_name_infra_subnet 'Microsoft.Networ
     serviceEndpoints: []
   }
   dependsOn: [
-    virtualNetworks_vnet_YourBrand_bd77_name_resource
+    virtualNetworks_vnet_YourBrand_bd77_resource
   ]
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_General_AlphabeticallySortedComputers 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_General|AlphabeticallySortedComputers'
   properties: {
     category: 'General Exploration'
@@ -637,7 +637,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_General_dataPointsPerManagementGroup 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_General|dataPointsPerManagementGroup'
   properties: {
     category: 'General Exploration'
@@ -648,7 +648,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_General_dataTypeDistribution 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_General|dataTypeDistribution'
   properties: {
     category: 'General Exploration'
@@ -659,7 +659,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_General_StaleComputers 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_General|StaleComputers'
   properties: {
     category: 'General Exploration'
@@ -670,7 +670,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_LogManagement_AllEvents 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_LogManagement|AllEvents'
   properties: {
     category: 'Log Management'
@@ -681,7 +681,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_LogManagement_AllSyslog 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_LogManagement|AllSyslog'
   properties: {
     category: 'Log Management'
@@ -692,7 +692,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_LogManagement_AllSyslogByFacility 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_LogManagement|AllSyslogByFacility'
   properties: {
     category: 'Log Management'
@@ -703,7 +703,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_LogManagement_AllSyslogByProcess 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_LogManagement|AllSyslogByProcessName'
   properties: {
     category: 'Log Management'
@@ -714,7 +714,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_LogManagement_AllSyslogsWithErrors 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_LogManagement|AllSyslogsWithErrors'
   properties: {
     category: 'Log Management'
@@ -725,7 +725,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_LogManagement_AverageHTTPRequestTimeByClientIPAddress 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_LogManagement|AverageHTTPRequestTimeByClientIPAddress'
   properties: {
     category: 'Log Management'
@@ -736,7 +736,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_LogManagement_AverageHTTPRequestTimeHTTPMethod 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_LogManagement|AverageHTTPRequestTimeHTTPMethod'
   properties: {
     category: 'Log Management'
@@ -747,7 +747,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_LogManagement_CountIISLogEntriesClientIPAddress 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_LogManagement|CountIISLogEntriesClientIPAddress'
   properties: {
     category: 'Log Management'
@@ -758,7 +758,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_LogManagement_CountIISLogEntriesHTTPRequestMethod 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_LogManagement|CountIISLogEntriesHTTPRequestMethod'
   properties: {
     category: 'Log Management'
@@ -769,7 +769,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_LogManagement_CountIISLogEntriesHTTPUserAgent 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_LogManagement|CountIISLogEntriesHTTPUserAgent'
   properties: {
     category: 'Log Management'
@@ -780,7 +780,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_LogManagement_CountOfIISLogEntriesByHostRequestedByClient 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_LogManagement|CountOfIISLogEntriesByHostRequestedByClient'
   properties: {
     category: 'Log Management'
@@ -791,7 +791,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_LogManagement_CountOfIISLogEntriesByURLForHost 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_LogManagement|CountOfIISLogEntriesByURLForHost'
   properties: {
     category: 'Log Management'
@@ -802,7 +802,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_LogManagement_CountOfIISLogEntriesByURLRequestedByClient 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_LogManagement|CountOfIISLogEntriesByURLRequestedByClient'
   properties: {
     category: 'Log Management'
@@ -813,7 +813,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_LogManagement_CountOfWarningEvents 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_LogManagement|CountOfWarningEvents'
   properties: {
     category: 'Log Management'
@@ -824,7 +824,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_LogManagement_DisplayBreakdownRespondCodes 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_LogManagement|DisplayBreakdownRespondCodes'
   properties: {
     category: 'Log Management'
@@ -835,7 +835,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_LogManagement_EventsByEventLog 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_LogManagement|EventsByEventLog'
   properties: {
     category: 'Log Management'
@@ -846,7 +846,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_LogManagement_EventsByEventsID 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_LogManagement|EventsByEventsID'
   properties: {
     category: 'Log Management'
@@ -857,7 +857,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_LogManagement_EventsByEventSource 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_LogManagement|EventsByEventSource'
   properties: {
     category: 'Log Management'
@@ -868,7 +868,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_LogManagement_EventsInOMBetween2000to3000 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_LogManagement|EventsInOMBetween2000to3000'
   properties: {
     category: 'Log Management'
@@ -879,7 +879,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_LogManagement_EventsWithStartedinEventID 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_LogManagement|EventsWithStartedinEventID'
   properties: {
     category: 'Log Management'
@@ -890,7 +890,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_LogManagement_FindMaximumTimeTakenForEachPage 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_LogManagement|FindMaximumTimeTakenForEachPage'
   properties: {
     category: 'Log Management'
@@ -901,7 +901,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_LogManagement_IISLogEntriesForClientIP 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_LogManagement|IISLogEntriesForClientIP'
   properties: {
     category: 'Log Management'
@@ -912,7 +912,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_LogManagement_ListAllIISLogEntries 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_LogManagement|ListAllIISLogEntries'
   properties: {
     category: 'Log Management'
@@ -923,7 +923,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_LogManagement_NoOfConnectionsToOMSDKService 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_LogManagement|NoOfConnectionsToOMSDKService'
   properties: {
     category: 'Log Management'
@@ -934,7 +934,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_LogManagement_ServerRestartTime 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_LogManagement|ServerRestartTime'
   properties: {
     category: 'Log Management'
@@ -945,7 +945,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_LogManagement_Show404PagesList 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_LogManagement|Show404PagesList'
   properties: {
     category: 'Log Management'
@@ -956,7 +956,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_LogManagement_ShowServersThrowingInternalServerError 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_LogManagement|ShowServersThrowingInternalServerError'
   properties: {
     category: 'Log Management'
@@ -967,7 +967,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_LogManagement_TotalBytesReceivedByEachAzureRoleInstance 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_LogManagement|TotalBytesReceivedByEachAzureRoleInstance'
   properties: {
     category: 'Log Management'
@@ -978,7 +978,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_LogManagement_TotalBytesReceivedByEachIISComputer 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_LogManagement|TotalBytesReceivedByEachIISComputer'
   properties: {
     category: 'Log Management'
@@ -989,7 +989,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_LogManagement_TotalBytesRespondedToClientsByClientIPAddress 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_LogManagement|TotalBytesRespondedToClientsByClientIPAddress'
   properties: {
     category: 'Log Management'
@@ -1000,7 +1000,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_LogManagement_TotalBytesRespondedToClientsByEachIISServerIPAddress 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_LogManagement|TotalBytesRespondedToClientsByEachIISServerIPAddress'
   properties: {
     category: 'Log Management'
@@ -1011,7 +1011,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_LogManagement_TotalBytesSentByClientIPAddress 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_LogManagement|TotalBytesSentByClientIPAddress'
   properties: {
     category: 'Log Management'
@@ -1022,7 +1022,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_LogManagement_WarningEvents 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_LogManagement|WarningEvents'
   properties: {
     category: 'Log Management'
@@ -1033,7 +1033,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_LogManagement_WindowsFireawallPolicySettingsChanged 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_LogManagement|WindowsFireawallPolicySettingsChanged'
   properties: {
     category: 'Log Management'
@@ -1044,7 +1044,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspaceyourbrand8c41_name_LogManagement_WindowsFireawallPolicySettingsChangedByMachines 'Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogManagement(${workspaces_workspaceyourbrand8c41_name})_LogManagement|WindowsFireawallPolicySettingsChangedByMachines'
   properties: {
     category: 'Log Management'
@@ -1055,7 +1055,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogManagement_workspaces_workspa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AACAudit 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AACAudit'
   properties: {
     plan: 'Analytics'
@@ -1068,7 +1068,7 @@ resource workspaces_workspaceyourbrand8c41_name_AACAudit 'Microsoft.OperationalI
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AACHttpRequest 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AACHttpRequest'
   properties: {
     plan: 'Analytics'
@@ -1081,7 +1081,7 @@ resource workspaces_workspaceyourbrand8c41_name_AACHttpRequest 'Microsoft.Operat
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AADB2CRequestLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AADB2CRequestLogs'
   properties: {
     plan: 'Analytics'
@@ -1094,7 +1094,7 @@ resource workspaces_workspaceyourbrand8c41_name_AADB2CRequestLogs 'Microsoft.Ope
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AADDomainServicesAccountLogon 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AADDomainServicesAccountLogon'
   properties: {
     plan: 'Analytics'
@@ -1107,7 +1107,7 @@ resource workspaces_workspaceyourbrand8c41_name_AADDomainServicesAccountLogon 'M
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AADDomainServicesAccountManagement 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AADDomainServicesAccountManagement'
   properties: {
     plan: 'Analytics'
@@ -1120,7 +1120,7 @@ resource workspaces_workspaceyourbrand8c41_name_AADDomainServicesAccountManageme
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AADDomainServicesDirectoryServiceAccess 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AADDomainServicesDirectoryServiceAccess'
   properties: {
     plan: 'Analytics'
@@ -1133,7 +1133,7 @@ resource workspaces_workspaceyourbrand8c41_name_AADDomainServicesDirectoryServic
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AADDomainServicesDNSAuditsDynamicUpdates 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AADDomainServicesDNSAuditsDynamicUpdates'
   properties: {
     plan: 'Analytics'
@@ -1146,7 +1146,7 @@ resource workspaces_workspaceyourbrand8c41_name_AADDomainServicesDNSAuditsDynami
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AADDomainServicesDNSAuditsGeneral 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AADDomainServicesDNSAuditsGeneral'
   properties: {
     plan: 'Analytics'
@@ -1159,7 +1159,7 @@ resource workspaces_workspaceyourbrand8c41_name_AADDomainServicesDNSAuditsGenera
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AADDomainServicesLogonLogoff 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AADDomainServicesLogonLogoff'
   properties: {
     plan: 'Analytics'
@@ -1172,7 +1172,7 @@ resource workspaces_workspaceyourbrand8c41_name_AADDomainServicesLogonLogoff 'Mi
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AADDomainServicesPolicyChange 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AADDomainServicesPolicyChange'
   properties: {
     plan: 'Analytics'
@@ -1185,7 +1185,7 @@ resource workspaces_workspaceyourbrand8c41_name_AADDomainServicesPolicyChange 'M
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AADDomainServicesPrivilegeUse 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AADDomainServicesPrivilegeUse'
   properties: {
     plan: 'Analytics'
@@ -1198,7 +1198,7 @@ resource workspaces_workspaceyourbrand8c41_name_AADDomainServicesPrivilegeUse 'M
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AADManagedIdentitySignInLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AADManagedIdentitySignInLogs'
   properties: {
     plan: 'Analytics'
@@ -1211,7 +1211,7 @@ resource workspaces_workspaceyourbrand8c41_name_AADManagedIdentitySignInLogs 'Mi
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AADNonInteractiveUserSignInLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AADNonInteractiveUserSignInLogs'
   properties: {
     plan: 'Analytics'
@@ -1224,7 +1224,7 @@ resource workspaces_workspaceyourbrand8c41_name_AADNonInteractiveUserSignInLogs 
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AADProvisioningLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AADProvisioningLogs'
   properties: {
     plan: 'Analytics'
@@ -1237,7 +1237,7 @@ resource workspaces_workspaceyourbrand8c41_name_AADProvisioningLogs 'Microsoft.O
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AADRiskyServicePrincipals 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AADRiskyServicePrincipals'
   properties: {
     plan: 'Analytics'
@@ -1250,7 +1250,7 @@ resource workspaces_workspaceyourbrand8c41_name_AADRiskyServicePrincipals 'Micro
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AADRiskyUsers 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AADRiskyUsers'
   properties: {
     plan: 'Analytics'
@@ -1263,7 +1263,7 @@ resource workspaces_workspaceyourbrand8c41_name_AADRiskyUsers 'Microsoft.Operati
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AADServicePrincipalRiskEvents 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AADServicePrincipalRiskEvents'
   properties: {
     plan: 'Analytics'
@@ -1276,7 +1276,7 @@ resource workspaces_workspaceyourbrand8c41_name_AADServicePrincipalRiskEvents 'M
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AADServicePrincipalSignInLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AADServicePrincipalSignInLogs'
   properties: {
     plan: 'Analytics'
@@ -1289,7 +1289,7 @@ resource workspaces_workspaceyourbrand8c41_name_AADServicePrincipalSignInLogs 'M
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AADUserRiskEvents 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AADUserRiskEvents'
   properties: {
     plan: 'Analytics'
@@ -1302,7 +1302,7 @@ resource workspaces_workspaceyourbrand8c41_name_AADUserRiskEvents 'Microsoft.Ope
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ABSBotRequests 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ABSBotRequests'
   properties: {
     plan: 'Analytics'
@@ -1315,7 +1315,7 @@ resource workspaces_workspaceyourbrand8c41_name_ABSBotRequests 'Microsoft.Operat
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ACICollaborationAudit 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ACICollaborationAudit'
   properties: {
     plan: 'Analytics'
@@ -1328,7 +1328,7 @@ resource workspaces_workspaceyourbrand8c41_name_ACICollaborationAudit 'Microsoft
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ACRConnectedClientList 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ACRConnectedClientList'
   properties: {
     plan: 'Analytics'
@@ -1341,7 +1341,7 @@ resource workspaces_workspaceyourbrand8c41_name_ACRConnectedClientList 'Microsof
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ACSAuthIncomingOperations 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ACSAuthIncomingOperations'
   properties: {
     plan: 'Analytics'
@@ -1354,7 +1354,7 @@ resource workspaces_workspaceyourbrand8c41_name_ACSAuthIncomingOperations 'Micro
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ACSBillingUsage 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ACSBillingUsage'
   properties: {
     plan: 'Analytics'
@@ -1367,7 +1367,7 @@ resource workspaces_workspaceyourbrand8c41_name_ACSBillingUsage 'Microsoft.Opera
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ACSCallAutomationIncomingOperations 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ACSCallAutomationIncomingOperations'
   properties: {
     plan: 'Analytics'
@@ -1380,7 +1380,7 @@ resource workspaces_workspaceyourbrand8c41_name_ACSCallAutomationIncomingOperati
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ACSCallAutomationMediaSummary 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ACSCallAutomationMediaSummary'
   properties: {
     plan: 'Analytics'
@@ -1393,7 +1393,7 @@ resource workspaces_workspaceyourbrand8c41_name_ACSCallAutomationMediaSummary 'M
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ACSCallDiagnostics 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ACSCallDiagnostics'
   properties: {
     plan: 'Analytics'
@@ -1406,7 +1406,7 @@ resource workspaces_workspaceyourbrand8c41_name_ACSCallDiagnostics 'Microsoft.Op
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ACSCallRecordingIncomingOperations 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ACSCallRecordingIncomingOperations'
   properties: {
     plan: 'Analytics'
@@ -1419,7 +1419,7 @@ resource workspaces_workspaceyourbrand8c41_name_ACSCallRecordingIncomingOperatio
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ACSCallRecordingSummary 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ACSCallRecordingSummary'
   properties: {
     plan: 'Analytics'
@@ -1432,7 +1432,7 @@ resource workspaces_workspaceyourbrand8c41_name_ACSCallRecordingSummary 'Microso
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ACSCallSummary 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ACSCallSummary'
   properties: {
     plan: 'Analytics'
@@ -1445,7 +1445,7 @@ resource workspaces_workspaceyourbrand8c41_name_ACSCallSummary 'Microsoft.Operat
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ACSCallSurvey 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ACSCallSurvey'
   properties: {
     plan: 'Analytics'
@@ -1458,7 +1458,7 @@ resource workspaces_workspaceyourbrand8c41_name_ACSCallSurvey 'Microsoft.Operati
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ACSChatIncomingOperations 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ACSChatIncomingOperations'
   properties: {
     plan: 'Analytics'
@@ -1471,7 +1471,7 @@ resource workspaces_workspaceyourbrand8c41_name_ACSChatIncomingOperations 'Micro
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ACSEmailSendMailOperational 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ACSEmailSendMailOperational'
   properties: {
     plan: 'Analytics'
@@ -1484,7 +1484,7 @@ resource workspaces_workspaceyourbrand8c41_name_ACSEmailSendMailOperational 'Mic
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ACSEmailStatusUpdateOperational 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ACSEmailStatusUpdateOperational'
   properties: {
     plan: 'Analytics'
@@ -1497,7 +1497,7 @@ resource workspaces_workspaceyourbrand8c41_name_ACSEmailStatusUpdateOperational 
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ACSEmailUserEngagementOperational 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ACSEmailUserEngagementOperational'
   properties: {
     plan: 'Analytics'
@@ -1510,7 +1510,7 @@ resource workspaces_workspaceyourbrand8c41_name_ACSEmailUserEngagementOperationa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ACSJobRouterIncomingOperations 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ACSJobRouterIncomingOperations'
   properties: {
     plan: 'Analytics'
@@ -1523,7 +1523,7 @@ resource workspaces_workspaceyourbrand8c41_name_ACSJobRouterIncomingOperations '
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ACSNetworkTraversalDiagnostics 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ACSNetworkTraversalDiagnostics'
   properties: {
     plan: 'Analytics'
@@ -1536,7 +1536,7 @@ resource workspaces_workspaceyourbrand8c41_name_ACSNetworkTraversalDiagnostics '
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ACSNetworkTraversalIncomingOperations 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ACSNetworkTraversalIncomingOperations'
   properties: {
     plan: 'Analytics'
@@ -1549,7 +1549,7 @@ resource workspaces_workspaceyourbrand8c41_name_ACSNetworkTraversalIncomingOpera
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ACSRoomsIncomingOperations 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ACSRoomsIncomingOperations'
   properties: {
     plan: 'Analytics'
@@ -1562,7 +1562,7 @@ resource workspaces_workspaceyourbrand8c41_name_ACSRoomsIncomingOperations 'Micr
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ACSSMSIncomingOperations 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ACSSMSIncomingOperations'
   properties: {
     plan: 'Analytics'
@@ -1575,7 +1575,7 @@ resource workspaces_workspaceyourbrand8c41_name_ACSSMSIncomingOperations 'Micros
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ADAssessmentRecommendation 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ADAssessmentRecommendation'
   properties: {
     plan: 'Analytics'
@@ -1588,7 +1588,7 @@ resource workspaces_workspaceyourbrand8c41_name_ADAssessmentRecommendation 'Micr
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AddonAzureBackupAlerts 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AddonAzureBackupAlerts'
   properties: {
     plan: 'Analytics'
@@ -1601,7 +1601,7 @@ resource workspaces_workspaceyourbrand8c41_name_AddonAzureBackupAlerts 'Microsof
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AddonAzureBackupJobs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AddonAzureBackupJobs'
   properties: {
     plan: 'Analytics'
@@ -1614,7 +1614,7 @@ resource workspaces_workspaceyourbrand8c41_name_AddonAzureBackupJobs 'Microsoft.
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AddonAzureBackupPolicy 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AddonAzureBackupPolicy'
   properties: {
     plan: 'Analytics'
@@ -1627,7 +1627,7 @@ resource workspaces_workspaceyourbrand8c41_name_AddonAzureBackupPolicy 'Microsof
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AddonAzureBackupProtectedInstance 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AddonAzureBackupProtectedInstance'
   properties: {
     plan: 'Analytics'
@@ -1640,7 +1640,7 @@ resource workspaces_workspaceyourbrand8c41_name_AddonAzureBackupProtectedInstanc
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AddonAzureBackupStorage 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AddonAzureBackupStorage'
   properties: {
     plan: 'Analytics'
@@ -1653,7 +1653,7 @@ resource workspaces_workspaceyourbrand8c41_name_AddonAzureBackupStorage 'Microso
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ADFActivityRun 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ADFActivityRun'
   properties: {
     plan: 'Analytics'
@@ -1666,7 +1666,7 @@ resource workspaces_workspaceyourbrand8c41_name_ADFActivityRun 'Microsoft.Operat
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ADFAirflowSchedulerLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ADFAirflowSchedulerLogs'
   properties: {
     plan: 'Analytics'
@@ -1679,7 +1679,7 @@ resource workspaces_workspaceyourbrand8c41_name_ADFAirflowSchedulerLogs 'Microso
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ADFAirflowTaskLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ADFAirflowTaskLogs'
   properties: {
     plan: 'Analytics'
@@ -1692,7 +1692,7 @@ resource workspaces_workspaceyourbrand8c41_name_ADFAirflowTaskLogs 'Microsoft.Op
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ADFAirflowWebLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ADFAirflowWebLogs'
   properties: {
     plan: 'Analytics'
@@ -1705,7 +1705,7 @@ resource workspaces_workspaceyourbrand8c41_name_ADFAirflowWebLogs 'Microsoft.Ope
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ADFAirflowWorkerLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ADFAirflowWorkerLogs'
   properties: {
     plan: 'Analytics'
@@ -1718,7 +1718,7 @@ resource workspaces_workspaceyourbrand8c41_name_ADFAirflowWorkerLogs 'Microsoft.
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ADFPipelineRun 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ADFPipelineRun'
   properties: {
     plan: 'Analytics'
@@ -1731,7 +1731,7 @@ resource workspaces_workspaceyourbrand8c41_name_ADFPipelineRun 'Microsoft.Operat
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ADFSandboxActivityRun 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ADFSandboxActivityRun'
   properties: {
     plan: 'Analytics'
@@ -1744,7 +1744,7 @@ resource workspaces_workspaceyourbrand8c41_name_ADFSandboxActivityRun 'Microsoft
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ADFSandboxPipelineRun 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ADFSandboxPipelineRun'
   properties: {
     plan: 'Analytics'
@@ -1757,7 +1757,7 @@ resource workspaces_workspaceyourbrand8c41_name_ADFSandboxPipelineRun 'Microsoft
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ADFSSignInLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ADFSSignInLogs'
   properties: {
     plan: 'Analytics'
@@ -1770,7 +1770,7 @@ resource workspaces_workspaceyourbrand8c41_name_ADFSSignInLogs 'Microsoft.Operat
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ADFSSISIntegrationRuntimeLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ADFSSISIntegrationRuntimeLogs'
   properties: {
     plan: 'Analytics'
@@ -1783,7 +1783,7 @@ resource workspaces_workspaceyourbrand8c41_name_ADFSSISIntegrationRuntimeLogs 'M
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ADFSSISPackageEventMessageContext 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ADFSSISPackageEventMessageContext'
   properties: {
     plan: 'Analytics'
@@ -1796,7 +1796,7 @@ resource workspaces_workspaceyourbrand8c41_name_ADFSSISPackageEventMessageContex
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ADFSSISPackageEventMessages 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ADFSSISPackageEventMessages'
   properties: {
     plan: 'Analytics'
@@ -1809,7 +1809,7 @@ resource workspaces_workspaceyourbrand8c41_name_ADFSSISPackageEventMessages 'Mic
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ADFSSISPackageExecutableStatistics 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ADFSSISPackageExecutableStatistics'
   properties: {
     plan: 'Analytics'
@@ -1822,7 +1822,7 @@ resource workspaces_workspaceyourbrand8c41_name_ADFSSISPackageExecutableStatisti
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ADFSSISPackageExecutionComponentPhases 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ADFSSISPackageExecutionComponentPhases'
   properties: {
     plan: 'Analytics'
@@ -1835,7 +1835,7 @@ resource workspaces_workspaceyourbrand8c41_name_ADFSSISPackageExecutionComponent
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ADFSSISPackageExecutionDataStatistics 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ADFSSISPackageExecutionDataStatistics'
   properties: {
     plan: 'Analytics'
@@ -1848,7 +1848,7 @@ resource workspaces_workspaceyourbrand8c41_name_ADFSSISPackageExecutionDataStati
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ADFTriggerRun 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ADFTriggerRun'
   properties: {
     plan: 'Analytics'
@@ -1861,7 +1861,7 @@ resource workspaces_workspaceyourbrand8c41_name_ADFTriggerRun 'Microsoft.Operati
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ADPAudit 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ADPAudit'
   properties: {
     plan: 'Analytics'
@@ -1874,7 +1874,7 @@ resource workspaces_workspaceyourbrand8c41_name_ADPAudit 'Microsoft.OperationalI
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ADPDiagnostics 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ADPDiagnostics'
   properties: {
     plan: 'Analytics'
@@ -1887,7 +1887,7 @@ resource workspaces_workspaceyourbrand8c41_name_ADPDiagnostics 'Microsoft.Operat
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ADPRequests 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ADPRequests'
   properties: {
     plan: 'Analytics'
@@ -1900,7 +1900,7 @@ resource workspaces_workspaceyourbrand8c41_name_ADPRequests 'Microsoft.Operation
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ADSecurityAssessmentRecommendation 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ADSecurityAssessmentRecommendation'
   properties: {
     plan: 'Analytics'
@@ -1913,7 +1913,7 @@ resource workspaces_workspaceyourbrand8c41_name_ADSecurityAssessmentRecommendati
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ADTDataHistoryOperation 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ADTDataHistoryOperation'
   properties: {
     plan: 'Analytics'
@@ -1926,7 +1926,7 @@ resource workspaces_workspaceyourbrand8c41_name_ADTDataHistoryOperation 'Microso
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ADTDigitalTwinsOperation 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ADTDigitalTwinsOperation'
   properties: {
     plan: 'Analytics'
@@ -1939,7 +1939,7 @@ resource workspaces_workspaceyourbrand8c41_name_ADTDigitalTwinsOperation 'Micros
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ADTEventRoutesOperation 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ADTEventRoutesOperation'
   properties: {
     plan: 'Analytics'
@@ -1952,7 +1952,7 @@ resource workspaces_workspaceyourbrand8c41_name_ADTEventRoutesOperation 'Microso
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ADTModelsOperation 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ADTModelsOperation'
   properties: {
     plan: 'Analytics'
@@ -1965,7 +1965,7 @@ resource workspaces_workspaceyourbrand8c41_name_ADTModelsOperation 'Microsoft.Op
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ADTQueryOperation 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ADTQueryOperation'
   properties: {
     plan: 'Analytics'
@@ -1978,7 +1978,7 @@ resource workspaces_workspaceyourbrand8c41_name_ADTQueryOperation 'Microsoft.Ope
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ADXCommand 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ADXCommand'
   properties: {
     plan: 'Analytics'
@@ -1991,7 +1991,7 @@ resource workspaces_workspaceyourbrand8c41_name_ADXCommand 'Microsoft.Operationa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ADXIngestionBatching 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ADXIngestionBatching'
   properties: {
     plan: 'Analytics'
@@ -2004,7 +2004,7 @@ resource workspaces_workspaceyourbrand8c41_name_ADXIngestionBatching 'Microsoft.
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ADXJournal 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ADXJournal'
   properties: {
     plan: 'Analytics'
@@ -2017,7 +2017,7 @@ resource workspaces_workspaceyourbrand8c41_name_ADXJournal 'Microsoft.Operationa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ADXQuery 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ADXQuery'
   properties: {
     plan: 'Analytics'
@@ -2030,7 +2030,7 @@ resource workspaces_workspaceyourbrand8c41_name_ADXQuery 'Microsoft.OperationalI
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ADXTableDetails 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ADXTableDetails'
   properties: {
     plan: 'Analytics'
@@ -2043,7 +2043,7 @@ resource workspaces_workspaceyourbrand8c41_name_ADXTableDetails 'Microsoft.Opera
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ADXTableUsageStatistics 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ADXTableUsageStatistics'
   properties: {
     plan: 'Analytics'
@@ -2056,7 +2056,7 @@ resource workspaces_workspaceyourbrand8c41_name_ADXTableUsageStatistics 'Microso
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AegDataPlaneRequests 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AegDataPlaneRequests'
   properties: {
     plan: 'Analytics'
@@ -2069,7 +2069,7 @@ resource workspaces_workspaceyourbrand8c41_name_AegDataPlaneRequests 'Microsoft.
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AegDeliveryFailureLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AegDeliveryFailureLogs'
   properties: {
     plan: 'Analytics'
@@ -2082,7 +2082,7 @@ resource workspaces_workspaceyourbrand8c41_name_AegDeliveryFailureLogs 'Microsof
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AegPublishFailureLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AegPublishFailureLogs'
   properties: {
     plan: 'Analytics'
@@ -2095,7 +2095,7 @@ resource workspaces_workspaceyourbrand8c41_name_AegPublishFailureLogs 'Microsoft
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AEWAuditLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AEWAuditLogs'
   properties: {
     plan: 'Analytics'
@@ -2108,7 +2108,7 @@ resource workspaces_workspaceyourbrand8c41_name_AEWAuditLogs 'Microsoft.Operatio
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AEWComputePipelinesLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AEWComputePipelinesLogs'
   properties: {
     plan: 'Analytics'
@@ -2121,7 +2121,7 @@ resource workspaces_workspaceyourbrand8c41_name_AEWComputePipelinesLogs 'Microso
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AFSAuditLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AFSAuditLogs'
   properties: {
     plan: 'Analytics'
@@ -2134,7 +2134,7 @@ resource workspaces_workspaceyourbrand8c41_name_AFSAuditLogs 'Microsoft.Operatio
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AgriFoodApplicationAuditLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AgriFoodApplicationAuditLogs'
   properties: {
     plan: 'Analytics'
@@ -2147,7 +2147,7 @@ resource workspaces_workspaceyourbrand8c41_name_AgriFoodApplicationAuditLogs 'Mi
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AgriFoodFarmManagementLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AgriFoodFarmManagementLogs'
   properties: {
     plan: 'Analytics'
@@ -2160,7 +2160,7 @@ resource workspaces_workspaceyourbrand8c41_name_AgriFoodFarmManagementLogs 'Micr
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AgriFoodFarmOperationLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AgriFoodFarmOperationLogs'
   properties: {
     plan: 'Analytics'
@@ -2173,7 +2173,7 @@ resource workspaces_workspaceyourbrand8c41_name_AgriFoodFarmOperationLogs 'Micro
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AgriFoodInsightLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AgriFoodInsightLogs'
   properties: {
     plan: 'Analytics'
@@ -2186,7 +2186,7 @@ resource workspaces_workspaceyourbrand8c41_name_AgriFoodInsightLogs 'Microsoft.O
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AgriFoodJobProcessedLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AgriFoodJobProcessedLogs'
   properties: {
     plan: 'Analytics'
@@ -2199,7 +2199,7 @@ resource workspaces_workspaceyourbrand8c41_name_AgriFoodJobProcessedLogs 'Micros
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AgriFoodModelInferenceLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AgriFoodModelInferenceLogs'
   properties: {
     plan: 'Analytics'
@@ -2212,7 +2212,7 @@ resource workspaces_workspaceyourbrand8c41_name_AgriFoodModelInferenceLogs 'Micr
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AgriFoodProviderAuthLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AgriFoodProviderAuthLogs'
   properties: {
     plan: 'Analytics'
@@ -2225,7 +2225,7 @@ resource workspaces_workspaceyourbrand8c41_name_AgriFoodProviderAuthLogs 'Micros
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AgriFoodSatelliteLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AgriFoodSatelliteLogs'
   properties: {
     plan: 'Analytics'
@@ -2238,7 +2238,7 @@ resource workspaces_workspaceyourbrand8c41_name_AgriFoodSatelliteLogs 'Microsoft
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AgriFoodSensorManagementLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AgriFoodSensorManagementLogs'
   properties: {
     plan: 'Analytics'
@@ -2251,7 +2251,7 @@ resource workspaces_workspaceyourbrand8c41_name_AgriFoodSensorManagementLogs 'Mi
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AgriFoodWeatherLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AgriFoodWeatherLogs'
   properties: {
     plan: 'Analytics'
@@ -2264,7 +2264,7 @@ resource workspaces_workspaceyourbrand8c41_name_AgriFoodWeatherLogs 'Microsoft.O
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AGSGrafanaLoginEvents 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AGSGrafanaLoginEvents'
   properties: {
     plan: 'Analytics'
@@ -2277,7 +2277,7 @@ resource workspaces_workspaceyourbrand8c41_name_AGSGrafanaLoginEvents 'Microsoft
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AHDSDicomAuditLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AHDSDicomAuditLogs'
   properties: {
     plan: 'Analytics'
@@ -2290,7 +2290,7 @@ resource workspaces_workspaceyourbrand8c41_name_AHDSDicomAuditLogs 'Microsoft.Op
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AHDSDicomDiagnosticLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AHDSDicomDiagnosticLogs'
   properties: {
     plan: 'Analytics'
@@ -2303,7 +2303,7 @@ resource workspaces_workspaceyourbrand8c41_name_AHDSDicomDiagnosticLogs 'Microso
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AHDSMedTechDiagnosticLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AHDSMedTechDiagnosticLogs'
   properties: {
     plan: 'Analytics'
@@ -2316,7 +2316,7 @@ resource workspaces_workspaceyourbrand8c41_name_AHDSMedTechDiagnosticLogs 'Micro
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AirflowDagProcessingLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AirflowDagProcessingLogs'
   properties: {
     plan: 'Analytics'
@@ -2329,7 +2329,7 @@ resource workspaces_workspaceyourbrand8c41_name_AirflowDagProcessingLogs 'Micros
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AKSAudit 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AKSAudit'
   properties: {
     plan: 'Analytics'
@@ -2342,7 +2342,7 @@ resource workspaces_workspaceyourbrand8c41_name_AKSAudit 'Microsoft.OperationalI
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AKSAuditAdmin 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AKSAuditAdmin'
   properties: {
     plan: 'Analytics'
@@ -2355,7 +2355,7 @@ resource workspaces_workspaceyourbrand8c41_name_AKSAuditAdmin 'Microsoft.Operati
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AKSControlPlane 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AKSControlPlane'
   properties: {
     plan: 'Analytics'
@@ -2368,7 +2368,7 @@ resource workspaces_workspaceyourbrand8c41_name_AKSControlPlane 'Microsoft.Opera
 }
 
 resource workspaces_workspaceyourbrand8c41_name_Alert 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'Alert'
   properties: {
     plan: 'Analytics'
@@ -2381,7 +2381,7 @@ resource workspaces_workspaceyourbrand8c41_name_Alert 'Microsoft.OperationalInsi
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AmlComputeClusterEvent 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AmlComputeClusterEvent'
   properties: {
     plan: 'Analytics'
@@ -2394,7 +2394,7 @@ resource workspaces_workspaceyourbrand8c41_name_AmlComputeClusterEvent 'Microsof
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AmlComputeClusterNodeEvent 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AmlComputeClusterNodeEvent'
   properties: {
     plan: 'Analytics'
@@ -2407,7 +2407,7 @@ resource workspaces_workspaceyourbrand8c41_name_AmlComputeClusterNodeEvent 'Micr
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AmlComputeCpuGpuUtilization 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AmlComputeCpuGpuUtilization'
   properties: {
     plan: 'Analytics'
@@ -2420,7 +2420,7 @@ resource workspaces_workspaceyourbrand8c41_name_AmlComputeCpuGpuUtilization 'Mic
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AmlComputeInstanceEvent 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AmlComputeInstanceEvent'
   properties: {
     plan: 'Analytics'
@@ -2433,7 +2433,7 @@ resource workspaces_workspaceyourbrand8c41_name_AmlComputeInstanceEvent 'Microso
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AmlComputeJobEvent 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AmlComputeJobEvent'
   properties: {
     plan: 'Analytics'
@@ -2446,7 +2446,7 @@ resource workspaces_workspaceyourbrand8c41_name_AmlComputeJobEvent 'Microsoft.Op
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AmlDataLabelEvent 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AmlDataLabelEvent'
   properties: {
     plan: 'Analytics'
@@ -2459,7 +2459,7 @@ resource workspaces_workspaceyourbrand8c41_name_AmlDataLabelEvent 'Microsoft.Ope
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AmlDataSetEvent 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AmlDataSetEvent'
   properties: {
     plan: 'Analytics'
@@ -2472,7 +2472,7 @@ resource workspaces_workspaceyourbrand8c41_name_AmlDataSetEvent 'Microsoft.Opera
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AmlDataStoreEvent 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AmlDataStoreEvent'
   properties: {
     plan: 'Analytics'
@@ -2485,7 +2485,7 @@ resource workspaces_workspaceyourbrand8c41_name_AmlDataStoreEvent 'Microsoft.Ope
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AmlDeploymentEvent 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AmlDeploymentEvent'
   properties: {
     plan: 'Analytics'
@@ -2498,7 +2498,7 @@ resource workspaces_workspaceyourbrand8c41_name_AmlDeploymentEvent 'Microsoft.Op
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AmlEnvironmentEvent 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AmlEnvironmentEvent'
   properties: {
     plan: 'Analytics'
@@ -2511,7 +2511,7 @@ resource workspaces_workspaceyourbrand8c41_name_AmlEnvironmentEvent 'Microsoft.O
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AmlInferencingEvent 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AmlInferencingEvent'
   properties: {
     plan: 'Analytics'
@@ -2524,7 +2524,7 @@ resource workspaces_workspaceyourbrand8c41_name_AmlInferencingEvent 'Microsoft.O
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AmlModelsEvent 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AmlModelsEvent'
   properties: {
     plan: 'Analytics'
@@ -2537,7 +2537,7 @@ resource workspaces_workspaceyourbrand8c41_name_AmlModelsEvent 'Microsoft.Operat
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AmlOnlineEndpointConsoleLog 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AmlOnlineEndpointConsoleLog'
   properties: {
     plan: 'Analytics'
@@ -2550,7 +2550,7 @@ resource workspaces_workspaceyourbrand8c41_name_AmlOnlineEndpointConsoleLog 'Mic
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AmlOnlineEndpointEventLog 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AmlOnlineEndpointEventLog'
   properties: {
     plan: 'Analytics'
@@ -2563,7 +2563,7 @@ resource workspaces_workspaceyourbrand8c41_name_AmlOnlineEndpointEventLog 'Micro
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AmlOnlineEndpointTrafficLog 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AmlOnlineEndpointTrafficLog'
   properties: {
     plan: 'Analytics'
@@ -2576,7 +2576,7 @@ resource workspaces_workspaceyourbrand8c41_name_AmlOnlineEndpointTrafficLog 'Mic
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AmlPipelineEvent 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AmlPipelineEvent'
   properties: {
     plan: 'Analytics'
@@ -2589,7 +2589,7 @@ resource workspaces_workspaceyourbrand8c41_name_AmlPipelineEvent 'Microsoft.Oper
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AmlRegistryReadEventsLog 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AmlRegistryReadEventsLog'
   properties: {
     plan: 'Analytics'
@@ -2602,7 +2602,7 @@ resource workspaces_workspaceyourbrand8c41_name_AmlRegistryReadEventsLog 'Micros
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AmlRegistryWriteEventsLog 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AmlRegistryWriteEventsLog'
   properties: {
     plan: 'Analytics'
@@ -2615,7 +2615,7 @@ resource workspaces_workspaceyourbrand8c41_name_AmlRegistryWriteEventsLog 'Micro
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AmlRunEvent 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AmlRunEvent'
   properties: {
     plan: 'Analytics'
@@ -2628,7 +2628,7 @@ resource workspaces_workspaceyourbrand8c41_name_AmlRunEvent 'Microsoft.Operation
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AmlRunStatusChangedEvent 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AmlRunStatusChangedEvent'
   properties: {
     plan: 'Analytics'
@@ -2641,7 +2641,7 @@ resource workspaces_workspaceyourbrand8c41_name_AmlRunStatusChangedEvent 'Micros
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AMSKeyDeliveryRequests 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AMSKeyDeliveryRequests'
   properties: {
     plan: 'Analytics'
@@ -2654,7 +2654,7 @@ resource workspaces_workspaceyourbrand8c41_name_AMSKeyDeliveryRequests 'Microsof
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AMSLiveEventOperations 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AMSLiveEventOperations'
   properties: {
     plan: 'Analytics'
@@ -2667,7 +2667,7 @@ resource workspaces_workspaceyourbrand8c41_name_AMSLiveEventOperations 'Microsof
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AMSMediaAccountHealth 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AMSMediaAccountHealth'
   properties: {
     plan: 'Analytics'
@@ -2680,7 +2680,7 @@ resource workspaces_workspaceyourbrand8c41_name_AMSMediaAccountHealth 'Microsoft
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AMSStreamingEndpointRequests 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AMSStreamingEndpointRequests'
   properties: {
     plan: 'Analytics'
@@ -2693,7 +2693,7 @@ resource workspaces_workspaceyourbrand8c41_name_AMSStreamingEndpointRequests 'Mi
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ANFFileAccess 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ANFFileAccess'
   properties: {
     plan: 'Analytics'
@@ -2706,7 +2706,7 @@ resource workspaces_workspaceyourbrand8c41_name_ANFFileAccess 'Microsoft.Operati
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ApiManagementGatewayLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ApiManagementGatewayLogs'
   properties: {
     plan: 'Analytics'
@@ -2719,7 +2719,7 @@ resource workspaces_workspaceyourbrand8c41_name_ApiManagementGatewayLogs 'Micros
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ApiManagementWebSocketConnectionLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ApiManagementWebSocketConnectionLogs'
   properties: {
     plan: 'Analytics'
@@ -2732,7 +2732,7 @@ resource workspaces_workspaceyourbrand8c41_name_ApiManagementWebSocketConnection
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AppAvailabilityResults 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AppAvailabilityResults'
   properties: {
     plan: 'Analytics'
@@ -2745,7 +2745,7 @@ resource workspaces_workspaceyourbrand8c41_name_AppAvailabilityResults 'Microsof
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AppBrowserTimings 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AppBrowserTimings'
   properties: {
     plan: 'Analytics'
@@ -2758,7 +2758,7 @@ resource workspaces_workspaceyourbrand8c41_name_AppBrowserTimings 'Microsoft.Ope
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AppCenterError 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AppCenterError'
   properties: {
     plan: 'Analytics'
@@ -2771,7 +2771,7 @@ resource workspaces_workspaceyourbrand8c41_name_AppCenterError 'Microsoft.Operat
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AppDependencies 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AppDependencies'
   properties: {
     plan: 'Analytics'
@@ -2784,7 +2784,7 @@ resource workspaces_workspaceyourbrand8c41_name_AppDependencies 'Microsoft.Opera
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AppEnvSpringAppConsoleLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AppEnvSpringAppConsoleLogs'
   properties: {
     plan: 'Analytics'
@@ -2797,7 +2797,7 @@ resource workspaces_workspaceyourbrand8c41_name_AppEnvSpringAppConsoleLogs 'Micr
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AppEvents 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AppEvents'
   properties: {
     plan: 'Analytics'
@@ -2810,7 +2810,7 @@ resource workspaces_workspaceyourbrand8c41_name_AppEvents 'Microsoft.Operational
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AppExceptions 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AppExceptions'
   properties: {
     plan: 'Analytics'
@@ -2823,7 +2823,7 @@ resource workspaces_workspaceyourbrand8c41_name_AppExceptions 'Microsoft.Operati
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AppMetrics 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AppMetrics'
   properties: {
     plan: 'Analytics'
@@ -2836,7 +2836,7 @@ resource workspaces_workspaceyourbrand8c41_name_AppMetrics 'Microsoft.Operationa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AppPageViews 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AppPageViews'
   properties: {
     plan: 'Analytics'
@@ -2849,7 +2849,7 @@ resource workspaces_workspaceyourbrand8c41_name_AppPageViews 'Microsoft.Operatio
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AppPerformanceCounters 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AppPerformanceCounters'
   properties: {
     plan: 'Analytics'
@@ -2862,7 +2862,7 @@ resource workspaces_workspaceyourbrand8c41_name_AppPerformanceCounters 'Microsof
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AppPlatformBuildLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AppPlatformBuildLogs'
   properties: {
     plan: 'Analytics'
@@ -2875,7 +2875,7 @@ resource workspaces_workspaceyourbrand8c41_name_AppPlatformBuildLogs 'Microsoft.
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AppPlatformContainerEventLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AppPlatformContainerEventLogs'
   properties: {
     plan: 'Analytics'
@@ -2888,7 +2888,7 @@ resource workspaces_workspaceyourbrand8c41_name_AppPlatformContainerEventLogs 'M
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AppPlatformIngressLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AppPlatformIngressLogs'
   properties: {
     plan: 'Analytics'
@@ -2901,7 +2901,7 @@ resource workspaces_workspaceyourbrand8c41_name_AppPlatformIngressLogs 'Microsof
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AppPlatformLogsforSpring 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AppPlatformLogsforSpring'
   properties: {
     plan: 'Analytics'
@@ -2914,7 +2914,7 @@ resource workspaces_workspaceyourbrand8c41_name_AppPlatformLogsforSpring 'Micros
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AppPlatformSystemLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AppPlatformSystemLogs'
   properties: {
     plan: 'Analytics'
@@ -2927,7 +2927,7 @@ resource workspaces_workspaceyourbrand8c41_name_AppPlatformSystemLogs 'Microsoft
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AppRequests 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AppRequests'
   properties: {
     plan: 'Analytics'
@@ -2940,7 +2940,7 @@ resource workspaces_workspaceyourbrand8c41_name_AppRequests 'Microsoft.Operation
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AppServiceAntivirusScanAuditLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AppServiceAntivirusScanAuditLogs'
   properties: {
     plan: 'Analytics'
@@ -2953,7 +2953,7 @@ resource workspaces_workspaceyourbrand8c41_name_AppServiceAntivirusScanAuditLogs
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AppServiceAppLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AppServiceAppLogs'
   properties: {
     plan: 'Analytics'
@@ -2966,7 +2966,7 @@ resource workspaces_workspaceyourbrand8c41_name_AppServiceAppLogs 'Microsoft.Ope
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AppServiceAuditLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AppServiceAuditLogs'
   properties: {
     plan: 'Analytics'
@@ -2979,7 +2979,7 @@ resource workspaces_workspaceyourbrand8c41_name_AppServiceAuditLogs 'Microsoft.O
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AppServiceConsoleLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AppServiceConsoleLogs'
   properties: {
     plan: 'Analytics'
@@ -2992,7 +2992,7 @@ resource workspaces_workspaceyourbrand8c41_name_AppServiceConsoleLogs 'Microsoft
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AppServiceEnvironmentPlatformLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AppServiceEnvironmentPlatformLogs'
   properties: {
     plan: 'Analytics'
@@ -3005,7 +3005,7 @@ resource workspaces_workspaceyourbrand8c41_name_AppServiceEnvironmentPlatformLog
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AppServiceFileAuditLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AppServiceFileAuditLogs'
   properties: {
     plan: 'Analytics'
@@ -3018,7 +3018,7 @@ resource workspaces_workspaceyourbrand8c41_name_AppServiceFileAuditLogs 'Microso
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AppServiceHTTPLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AppServiceHTTPLogs'
   properties: {
     plan: 'Analytics'
@@ -3031,7 +3031,7 @@ resource workspaces_workspaceyourbrand8c41_name_AppServiceHTTPLogs 'Microsoft.Op
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AppServiceIPSecAuditLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AppServiceIPSecAuditLogs'
   properties: {
     plan: 'Analytics'
@@ -3044,7 +3044,7 @@ resource workspaces_workspaceyourbrand8c41_name_AppServiceIPSecAuditLogs 'Micros
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AppServicePlatformLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AppServicePlatformLogs'
   properties: {
     plan: 'Analytics'
@@ -3057,7 +3057,7 @@ resource workspaces_workspaceyourbrand8c41_name_AppServicePlatformLogs 'Microsof
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AppServiceServerlessSecurityPluginData 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AppServiceServerlessSecurityPluginData'
   properties: {
     plan: 'Analytics'
@@ -3070,7 +3070,7 @@ resource workspaces_workspaceyourbrand8c41_name_AppServiceServerlessSecurityPlug
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AppSystemEvents 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AppSystemEvents'
   properties: {
     plan: 'Analytics'
@@ -3083,7 +3083,7 @@ resource workspaces_workspaceyourbrand8c41_name_AppSystemEvents 'Microsoft.Opera
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AppTraces 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AppTraces'
   properties: {
     plan: 'Analytics'
@@ -3096,7 +3096,7 @@ resource workspaces_workspaceyourbrand8c41_name_AppTraces 'Microsoft.Operational
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ASCAuditLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ASCAuditLogs'
   properties: {
     plan: 'Analytics'
@@ -3109,7 +3109,7 @@ resource workspaces_workspaceyourbrand8c41_name_ASCAuditLogs 'Microsoft.Operatio
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ASCDeviceEvents 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ASCDeviceEvents'
   properties: {
     plan: 'Analytics'
@@ -3122,7 +3122,7 @@ resource workspaces_workspaceyourbrand8c41_name_ASCDeviceEvents 'Microsoft.Opera
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ASimAuditEventLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ASimAuditEventLogs'
   properties: {
     plan: 'Analytics'
@@ -3135,7 +3135,7 @@ resource workspaces_workspaceyourbrand8c41_name_ASimAuditEventLogs 'Microsoft.Op
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ASimAuthenticationEventLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ASimAuthenticationEventLogs'
   properties: {
     plan: 'Analytics'
@@ -3148,7 +3148,7 @@ resource workspaces_workspaceyourbrand8c41_name_ASimAuthenticationEventLogs 'Mic
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ASimProcessEventLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ASimProcessEventLogs'
   properties: {
     plan: 'Analytics'
@@ -3161,7 +3161,7 @@ resource workspaces_workspaceyourbrand8c41_name_ASimProcessEventLogs 'Microsoft.
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ASRJobs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ASRJobs'
   properties: {
     plan: 'Analytics'
@@ -3174,7 +3174,7 @@ resource workspaces_workspaceyourbrand8c41_name_ASRJobs 'Microsoft.OperationalIn
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ASRReplicatedItems 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ASRReplicatedItems'
   properties: {
     plan: 'Analytics'
@@ -3187,7 +3187,7 @@ resource workspaces_workspaceyourbrand8c41_name_ASRReplicatedItems 'Microsoft.Op
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ATCExpressRouteCircuitIpfix 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ATCExpressRouteCircuitIpfix'
   properties: {
     plan: 'Analytics'
@@ -3200,7 +3200,7 @@ resource workspaces_workspaceyourbrand8c41_name_ATCExpressRouteCircuitIpfix 'Mic
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AuditLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AuditLogs'
   properties: {
     plan: 'Analytics'
@@ -3213,7 +3213,7 @@ resource workspaces_workspaceyourbrand8c41_name_AuditLogs 'Microsoft.Operational
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AUIEventsAudit 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AUIEventsAudit'
   properties: {
     plan: 'Analytics'
@@ -3226,7 +3226,7 @@ resource workspaces_workspaceyourbrand8c41_name_AUIEventsAudit 'Microsoft.Operat
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AUIEventsOperational 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AUIEventsOperational'
   properties: {
     plan: 'Analytics'
@@ -3239,7 +3239,7 @@ resource workspaces_workspaceyourbrand8c41_name_AUIEventsOperational 'Microsoft.
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AutoscaleEvaluationsLog 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AutoscaleEvaluationsLog'
   properties: {
     plan: 'Analytics'
@@ -3252,7 +3252,7 @@ resource workspaces_workspaceyourbrand8c41_name_AutoscaleEvaluationsLog 'Microso
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AutoscaleScaleActionsLog 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AutoscaleScaleActionsLog'
   properties: {
     plan: 'Analytics'
@@ -3265,7 +3265,7 @@ resource workspaces_workspaceyourbrand8c41_name_AutoscaleScaleActionsLog 'Micros
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AVNMNetworkGroupMembershipChange 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AVNMNetworkGroupMembershipChange'
   properties: {
     plan: 'Analytics'
@@ -3278,7 +3278,7 @@ resource workspaces_workspaceyourbrand8c41_name_AVNMNetworkGroupMembershipChange
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AVNMRuleCollectionChange 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AVNMRuleCollectionChange'
   properties: {
     plan: 'Analytics'
@@ -3291,7 +3291,7 @@ resource workspaces_workspaceyourbrand8c41_name_AVNMRuleCollectionChange 'Micros
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AVSSyslog 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AVSSyslog'
   properties: {
     plan: 'Analytics'
@@ -3304,7 +3304,7 @@ resource workspaces_workspaceyourbrand8c41_name_AVSSyslog 'Microsoft.Operational
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AZFWApplicationRule 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AZFWApplicationRule'
   properties: {
     plan: 'Analytics'
@@ -3317,7 +3317,7 @@ resource workspaces_workspaceyourbrand8c41_name_AZFWApplicationRule 'Microsoft.O
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AZFWApplicationRuleAggregation 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AZFWApplicationRuleAggregation'
   properties: {
     plan: 'Analytics'
@@ -3330,7 +3330,7 @@ resource workspaces_workspaceyourbrand8c41_name_AZFWApplicationRuleAggregation '
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AZFWDnsQuery 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AZFWDnsQuery'
   properties: {
     plan: 'Analytics'
@@ -3343,7 +3343,7 @@ resource workspaces_workspaceyourbrand8c41_name_AZFWDnsQuery 'Microsoft.Operatio
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AZFWFatFlow 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AZFWFatFlow'
   properties: {
     plan: 'Analytics'
@@ -3356,7 +3356,7 @@ resource workspaces_workspaceyourbrand8c41_name_AZFWFatFlow 'Microsoft.Operation
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AZFWFlowTrace 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AZFWFlowTrace'
   properties: {
     plan: 'Analytics'
@@ -3369,7 +3369,7 @@ resource workspaces_workspaceyourbrand8c41_name_AZFWFlowTrace 'Microsoft.Operati
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AZFWIdpsSignature 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AZFWIdpsSignature'
   properties: {
     plan: 'Analytics'
@@ -3382,7 +3382,7 @@ resource workspaces_workspaceyourbrand8c41_name_AZFWIdpsSignature 'Microsoft.Ope
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AZFWInternalFqdnResolutionFailure 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AZFWInternalFqdnResolutionFailure'
   properties: {
     plan: 'Analytics'
@@ -3395,7 +3395,7 @@ resource workspaces_workspaceyourbrand8c41_name_AZFWInternalFqdnResolutionFailur
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AZFWNatRule 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AZFWNatRule'
   properties: {
     plan: 'Analytics'
@@ -3408,7 +3408,7 @@ resource workspaces_workspaceyourbrand8c41_name_AZFWNatRule 'Microsoft.Operation
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AZFWNatRuleAggregation 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AZFWNatRuleAggregation'
   properties: {
     plan: 'Analytics'
@@ -3421,7 +3421,7 @@ resource workspaces_workspaceyourbrand8c41_name_AZFWNatRuleAggregation 'Microsof
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AZFWNetworkRule 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AZFWNetworkRule'
   properties: {
     plan: 'Analytics'
@@ -3434,7 +3434,7 @@ resource workspaces_workspaceyourbrand8c41_name_AZFWNetworkRule 'Microsoft.Opera
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AZFWNetworkRuleAggregation 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AZFWNetworkRuleAggregation'
   properties: {
     plan: 'Analytics'
@@ -3447,7 +3447,7 @@ resource workspaces_workspaceyourbrand8c41_name_AZFWNetworkRuleAggregation 'Micr
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AZFWThreatIntel 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AZFWThreatIntel'
   properties: {
     plan: 'Analytics'
@@ -3460,7 +3460,7 @@ resource workspaces_workspaceyourbrand8c41_name_AZFWThreatIntel 'Microsoft.Opera
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AZKVAuditLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AZKVAuditLogs'
   properties: {
     plan: 'Analytics'
@@ -3473,7 +3473,7 @@ resource workspaces_workspaceyourbrand8c41_name_AZKVAuditLogs 'Microsoft.Operati
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AZKVPolicyEvaluationDetailsLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AZKVPolicyEvaluationDetailsLogs'
   properties: {
     plan: 'Analytics'
@@ -3486,7 +3486,7 @@ resource workspaces_workspaceyourbrand8c41_name_AZKVPolicyEvaluationDetailsLogs 
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AZMSApplicationMetricLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AZMSApplicationMetricLogs'
   properties: {
     plan: 'Analytics'
@@ -3499,7 +3499,7 @@ resource workspaces_workspaceyourbrand8c41_name_AZMSApplicationMetricLogs 'Micro
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AZMSArchiveLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AZMSArchiveLogs'
   properties: {
     plan: 'Analytics'
@@ -3512,7 +3512,7 @@ resource workspaces_workspaceyourbrand8c41_name_AZMSArchiveLogs 'Microsoft.Opera
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AZMSAutoscaleLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AZMSAutoscaleLogs'
   properties: {
     plan: 'Analytics'
@@ -3525,7 +3525,7 @@ resource workspaces_workspaceyourbrand8c41_name_AZMSAutoscaleLogs 'Microsoft.Ope
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AZMSCustomerManagedKeyUserLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AZMSCustomerManagedKeyUserLogs'
   properties: {
     plan: 'Analytics'
@@ -3538,7 +3538,7 @@ resource workspaces_workspaceyourbrand8c41_name_AZMSCustomerManagedKeyUserLogs '
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AZMSHybridConnectionsEvents 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AZMSHybridConnectionsEvents'
   properties: {
     plan: 'Analytics'
@@ -3551,7 +3551,7 @@ resource workspaces_workspaceyourbrand8c41_name_AZMSHybridConnectionsEvents 'Mic
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AZMSKafkaCoordinatorLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AZMSKafkaCoordinatorLogs'
   properties: {
     plan: 'Analytics'
@@ -3564,7 +3564,7 @@ resource workspaces_workspaceyourbrand8c41_name_AZMSKafkaCoordinatorLogs 'Micros
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AZMSKafkaUserErrorLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AZMSKafkaUserErrorLogs'
   properties: {
     plan: 'Analytics'
@@ -3577,7 +3577,7 @@ resource workspaces_workspaceyourbrand8c41_name_AZMSKafkaUserErrorLogs 'Microsof
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AZMSOperationalLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AZMSOperationalLogs'
   properties: {
     plan: 'Analytics'
@@ -3590,7 +3590,7 @@ resource workspaces_workspaceyourbrand8c41_name_AZMSOperationalLogs 'Microsoft.O
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AZMSRunTimeAuditLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AZMSRunTimeAuditLogs'
   properties: {
     plan: 'Analytics'
@@ -3603,7 +3603,7 @@ resource workspaces_workspaceyourbrand8c41_name_AZMSRunTimeAuditLogs 'Microsoft.
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AZMSVnetConnectionEvents 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AZMSVnetConnectionEvents'
   properties: {
     plan: 'Analytics'
@@ -3616,7 +3616,7 @@ resource workspaces_workspaceyourbrand8c41_name_AZMSVnetConnectionEvents 'Micros
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AzureActivity 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AzureActivity'
   properties: {
     plan: 'Analytics'
@@ -3629,7 +3629,7 @@ resource workspaces_workspaceyourbrand8c41_name_AzureActivity 'Microsoft.Operati
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AzureActivityV2 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AzureActivityV2'
   properties: {
     plan: 'Analytics'
@@ -3642,7 +3642,7 @@ resource workspaces_workspaceyourbrand8c41_name_AzureActivityV2 'Microsoft.Opera
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AzureAssessmentRecommendation 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AzureAssessmentRecommendation'
   properties: {
     plan: 'Analytics'
@@ -3655,7 +3655,7 @@ resource workspaces_workspaceyourbrand8c41_name_AzureAssessmentRecommendation 'M
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AzureAttestationDiagnostics 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AzureAttestationDiagnostics'
   properties: {
     plan: 'Analytics'
@@ -3668,7 +3668,7 @@ resource workspaces_workspaceyourbrand8c41_name_AzureAttestationDiagnostics 'Mic
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AzureCloudHsmAuditLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AzureCloudHsmAuditLogs'
   properties: {
     plan: 'Analytics'
@@ -3681,7 +3681,7 @@ resource workspaces_workspaceyourbrand8c41_name_AzureCloudHsmAuditLogs 'Microsof
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AzureDevOpsAuditing 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AzureDevOpsAuditing'
   properties: {
     plan: 'Analytics'
@@ -3694,7 +3694,7 @@ resource workspaces_workspaceyourbrand8c41_name_AzureDevOpsAuditing 'Microsoft.O
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AzureLoadTestingOperation 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AzureLoadTestingOperation'
   properties: {
     plan: 'Analytics'
@@ -3707,7 +3707,7 @@ resource workspaces_workspaceyourbrand8c41_name_AzureLoadTestingOperation 'Micro
 }
 
 resource workspaces_workspaceyourbrand8c41_name_AzureMetrics 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'AzureMetrics'
   properties: {
     plan: 'Analytics'
@@ -3720,7 +3720,7 @@ resource workspaces_workspaceyourbrand8c41_name_AzureMetrics 'Microsoft.Operatio
 }
 
 resource workspaces_workspaceyourbrand8c41_name_BlockchainApplicationLog 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'BlockchainApplicationLog'
   properties: {
     plan: 'Analytics'
@@ -3733,7 +3733,7 @@ resource workspaces_workspaceyourbrand8c41_name_BlockchainApplicationLog 'Micros
 }
 
 resource workspaces_workspaceyourbrand8c41_name_BlockchainProxyLog 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'BlockchainProxyLog'
   properties: {
     plan: 'Analytics'
@@ -3746,7 +3746,7 @@ resource workspaces_workspaceyourbrand8c41_name_BlockchainProxyLog 'Microsoft.Op
 }
 
 resource workspaces_workspaceyourbrand8c41_name_CassandraAudit 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'CassandraAudit'
   properties: {
     plan: 'Analytics'
@@ -3759,7 +3759,7 @@ resource workspaces_workspaceyourbrand8c41_name_CassandraAudit 'Microsoft.Operat
 }
 
 resource workspaces_workspaceyourbrand8c41_name_CassandraLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'CassandraLogs'
   properties: {
     plan: 'Analytics'
@@ -3772,7 +3772,7 @@ resource workspaces_workspaceyourbrand8c41_name_CassandraLogs 'Microsoft.Operati
 }
 
 resource workspaces_workspaceyourbrand8c41_name_CCFApplicationLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'CCFApplicationLogs'
   properties: {
     plan: 'Analytics'
@@ -3785,7 +3785,7 @@ resource workspaces_workspaceyourbrand8c41_name_CCFApplicationLogs 'Microsoft.Op
 }
 
 resource workspaces_workspaceyourbrand8c41_name_CDBCassandraRequests 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'CDBCassandraRequests'
   properties: {
     plan: 'Analytics'
@@ -3798,7 +3798,7 @@ resource workspaces_workspaceyourbrand8c41_name_CDBCassandraRequests 'Microsoft.
 }
 
 resource workspaces_workspaceyourbrand8c41_name_CDBControlPlaneRequests 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'CDBControlPlaneRequests'
   properties: {
     plan: 'Analytics'
@@ -3811,7 +3811,7 @@ resource workspaces_workspaceyourbrand8c41_name_CDBControlPlaneRequests 'Microso
 }
 
 resource workspaces_workspaceyourbrand8c41_name_CDBDataPlaneRequests 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'CDBDataPlaneRequests'
   properties: {
     plan: 'Analytics'
@@ -3824,7 +3824,7 @@ resource workspaces_workspaceyourbrand8c41_name_CDBDataPlaneRequests 'Microsoft.
 }
 
 resource workspaces_workspaceyourbrand8c41_name_CDBGremlinRequests 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'CDBGremlinRequests'
   properties: {
     plan: 'Analytics'
@@ -3837,7 +3837,7 @@ resource workspaces_workspaceyourbrand8c41_name_CDBGremlinRequests 'Microsoft.Op
 }
 
 resource workspaces_workspaceyourbrand8c41_name_CDBMongoRequests 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'CDBMongoRequests'
   properties: {
     plan: 'Analytics'
@@ -3850,7 +3850,7 @@ resource workspaces_workspaceyourbrand8c41_name_CDBMongoRequests 'Microsoft.Oper
 }
 
 resource workspaces_workspaceyourbrand8c41_name_CDBPartitionKeyRUConsumption 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'CDBPartitionKeyRUConsumption'
   properties: {
     plan: 'Analytics'
@@ -3863,7 +3863,7 @@ resource workspaces_workspaceyourbrand8c41_name_CDBPartitionKeyRUConsumption 'Mi
 }
 
 resource workspaces_workspaceyourbrand8c41_name_CDBPartitionKeyStatistics 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'CDBPartitionKeyStatistics'
   properties: {
     plan: 'Analytics'
@@ -3876,7 +3876,7 @@ resource workspaces_workspaceyourbrand8c41_name_CDBPartitionKeyStatistics 'Micro
 }
 
 resource workspaces_workspaceyourbrand8c41_name_CDBQueryRuntimeStatistics 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'CDBQueryRuntimeStatistics'
   properties: {
     plan: 'Analytics'
@@ -3889,7 +3889,7 @@ resource workspaces_workspaceyourbrand8c41_name_CDBQueryRuntimeStatistics 'Micro
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ChaosStudioExperimentEventLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ChaosStudioExperimentEventLogs'
   properties: {
     plan: 'Analytics'
@@ -3902,7 +3902,7 @@ resource workspaces_workspaceyourbrand8c41_name_ChaosStudioExperimentEventLogs '
 }
 
 resource workspaces_workspaceyourbrand8c41_name_CHSMManagementAuditLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'CHSMManagementAuditLogs'
   properties: {
     plan: 'Analytics'
@@ -3915,7 +3915,7 @@ resource workspaces_workspaceyourbrand8c41_name_CHSMManagementAuditLogs 'Microso
 }
 
 resource workspaces_workspaceyourbrand8c41_name_CIEventsAudit 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'CIEventsAudit'
   properties: {
     plan: 'Analytics'
@@ -3928,7 +3928,7 @@ resource workspaces_workspaceyourbrand8c41_name_CIEventsAudit 'Microsoft.Operati
 }
 
 resource workspaces_workspaceyourbrand8c41_name_CIEventsOperational 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'CIEventsOperational'
   properties: {
     plan: 'Analytics'
@@ -3941,7 +3941,7 @@ resource workspaces_workspaceyourbrand8c41_name_CIEventsOperational 'Microsoft.O
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ComputerGroup 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ComputerGroup'
   properties: {
     plan: 'Analytics'
@@ -3954,7 +3954,7 @@ resource workspaces_workspaceyourbrand8c41_name_ComputerGroup 'Microsoft.Operati
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ContainerAppConsoleLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ContainerAppConsoleLogs'
   properties: {
     plan: 'Analytics'
@@ -3967,7 +3967,7 @@ resource workspaces_workspaceyourbrand8c41_name_ContainerAppConsoleLogs 'Microso
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ContainerAppConsoleLogs_CL 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ContainerAppConsoleLogs_CL'
   properties: {
     plan: 'Analytics'
@@ -4014,7 +4014,7 @@ resource workspaces_workspaceyourbrand8c41_name_ContainerAppConsoleLogs_CL 'Micr
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ContainerAppSystemLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ContainerAppSystemLogs'
   properties: {
     plan: 'Analytics'
@@ -4027,7 +4027,7 @@ resource workspaces_workspaceyourbrand8c41_name_ContainerAppSystemLogs 'Microsof
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ContainerAppSystemLogs_CL 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ContainerAppSystemLogs_CL'
   properties: {
     plan: 'Analytics'
@@ -4114,7 +4114,7 @@ resource workspaces_workspaceyourbrand8c41_name_ContainerAppSystemLogs_CL 'Micro
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ContainerEvent 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ContainerEvent'
   properties: {
     plan: 'Analytics'
@@ -4127,7 +4127,7 @@ resource workspaces_workspaceyourbrand8c41_name_ContainerEvent 'Microsoft.Operat
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ContainerImageInventory 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ContainerImageInventory'
   properties: {
     plan: 'Analytics'
@@ -4140,7 +4140,7 @@ resource workspaces_workspaceyourbrand8c41_name_ContainerImageInventory 'Microso
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ContainerInstanceLog 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ContainerInstanceLog'
   properties: {
     plan: 'Analytics'
@@ -4153,7 +4153,7 @@ resource workspaces_workspaceyourbrand8c41_name_ContainerInstanceLog 'Microsoft.
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ContainerInventory 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ContainerInventory'
   properties: {
     plan: 'Analytics'
@@ -4166,7 +4166,7 @@ resource workspaces_workspaceyourbrand8c41_name_ContainerInventory 'Microsoft.Op
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ContainerLog 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ContainerLog'
   properties: {
     plan: 'Analytics'
@@ -4179,7 +4179,7 @@ resource workspaces_workspaceyourbrand8c41_name_ContainerLog 'Microsoft.Operatio
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ContainerLogV2 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ContainerLogV2'
   properties: {
     plan: 'Analytics'
@@ -4192,7 +4192,7 @@ resource workspaces_workspaceyourbrand8c41_name_ContainerLogV2 'Microsoft.Operat
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ContainerNodeInventory 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ContainerNodeInventory'
   properties: {
     plan: 'Analytics'
@@ -4205,7 +4205,7 @@ resource workspaces_workspaceyourbrand8c41_name_ContainerNodeInventory 'Microsof
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ContainerRegistryLoginEvents 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ContainerRegistryLoginEvents'
   properties: {
     plan: 'Analytics'
@@ -4218,7 +4218,7 @@ resource workspaces_workspaceyourbrand8c41_name_ContainerRegistryLoginEvents 'Mi
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ContainerRegistryRepositoryEvents 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ContainerRegistryRepositoryEvents'
   properties: {
     plan: 'Analytics'
@@ -4231,7 +4231,7 @@ resource workspaces_workspaceyourbrand8c41_name_ContainerRegistryRepositoryEvent
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ContainerServiceLog 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ContainerServiceLog'
   properties: {
     plan: 'Analytics'
@@ -4244,7 +4244,7 @@ resource workspaces_workspaceyourbrand8c41_name_ContainerServiceLog 'Microsoft.O
 }
 
 resource workspaces_workspaceyourbrand8c41_name_CoreAzureBackup 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'CoreAzureBackup'
   properties: {
     plan: 'Analytics'
@@ -4257,7 +4257,7 @@ resource workspaces_workspaceyourbrand8c41_name_CoreAzureBackup 'Microsoft.Opera
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DatabricksAccounts 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DatabricksAccounts'
   properties: {
     plan: 'Analytics'
@@ -4270,7 +4270,7 @@ resource workspaces_workspaceyourbrand8c41_name_DatabricksAccounts 'Microsoft.Op
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DatabricksCapsule8Dataplane 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DatabricksCapsule8Dataplane'
   properties: {
     plan: 'Analytics'
@@ -4283,7 +4283,7 @@ resource workspaces_workspaceyourbrand8c41_name_DatabricksCapsule8Dataplane 'Mic
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DatabricksClamAVScan 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DatabricksClamAVScan'
   properties: {
     plan: 'Analytics'
@@ -4296,7 +4296,7 @@ resource workspaces_workspaceyourbrand8c41_name_DatabricksClamAVScan 'Microsoft.
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DatabricksClusterLibraries 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DatabricksClusterLibraries'
   properties: {
     plan: 'Analytics'
@@ -4309,7 +4309,7 @@ resource workspaces_workspaceyourbrand8c41_name_DatabricksClusterLibraries 'Micr
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DatabricksClusters 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DatabricksClusters'
   properties: {
     plan: 'Analytics'
@@ -4322,7 +4322,7 @@ resource workspaces_workspaceyourbrand8c41_name_DatabricksClusters 'Microsoft.Op
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DatabricksDatabricksSQL 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DatabricksDatabricksSQL'
   properties: {
     plan: 'Analytics'
@@ -4335,7 +4335,7 @@ resource workspaces_workspaceyourbrand8c41_name_DatabricksDatabricksSQL 'Microso
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DatabricksDBFS 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DatabricksDBFS'
   properties: {
     plan: 'Analytics'
@@ -4348,7 +4348,7 @@ resource workspaces_workspaceyourbrand8c41_name_DatabricksDBFS 'Microsoft.Operat
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DatabricksDeltaPipelines 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DatabricksDeltaPipelines'
   properties: {
     plan: 'Analytics'
@@ -4361,7 +4361,7 @@ resource workspaces_workspaceyourbrand8c41_name_DatabricksDeltaPipelines 'Micros
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DatabricksFeatureStore 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DatabricksFeatureStore'
   properties: {
     plan: 'Analytics'
@@ -4374,7 +4374,7 @@ resource workspaces_workspaceyourbrand8c41_name_DatabricksFeatureStore 'Microsof
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DatabricksGenie 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DatabricksGenie'
   properties: {
     plan: 'Analytics'
@@ -4387,7 +4387,7 @@ resource workspaces_workspaceyourbrand8c41_name_DatabricksGenie 'Microsoft.Opera
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DatabricksGitCredentials 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DatabricksGitCredentials'
   properties: {
     plan: 'Analytics'
@@ -4400,7 +4400,7 @@ resource workspaces_workspaceyourbrand8c41_name_DatabricksGitCredentials 'Micros
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DatabricksGlobalInitScripts 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DatabricksGlobalInitScripts'
   properties: {
     plan: 'Analytics'
@@ -4413,7 +4413,7 @@ resource workspaces_workspaceyourbrand8c41_name_DatabricksGlobalInitScripts 'Mic
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DatabricksIAMRole 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DatabricksIAMRole'
   properties: {
     plan: 'Analytics'
@@ -4426,7 +4426,7 @@ resource workspaces_workspaceyourbrand8c41_name_DatabricksIAMRole 'Microsoft.Ope
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DatabricksInstancePools 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DatabricksInstancePools'
   properties: {
     plan: 'Analytics'
@@ -4439,7 +4439,7 @@ resource workspaces_workspaceyourbrand8c41_name_DatabricksInstancePools 'Microso
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DatabricksJobs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DatabricksJobs'
   properties: {
     plan: 'Analytics'
@@ -4452,7 +4452,7 @@ resource workspaces_workspaceyourbrand8c41_name_DatabricksJobs 'Microsoft.Operat
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DatabricksMLflowAcledArtifact 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DatabricksMLflowAcledArtifact'
   properties: {
     plan: 'Analytics'
@@ -4465,7 +4465,7 @@ resource workspaces_workspaceyourbrand8c41_name_DatabricksMLflowAcledArtifact 'M
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DatabricksMLflowExperiment 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DatabricksMLflowExperiment'
   properties: {
     plan: 'Analytics'
@@ -4478,7 +4478,7 @@ resource workspaces_workspaceyourbrand8c41_name_DatabricksMLflowExperiment 'Micr
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DatabricksModelRegistry 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DatabricksModelRegistry'
   properties: {
     plan: 'Analytics'
@@ -4491,7 +4491,7 @@ resource workspaces_workspaceyourbrand8c41_name_DatabricksModelRegistry 'Microso
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DatabricksNotebook 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DatabricksNotebook'
   properties: {
     plan: 'Analytics'
@@ -4504,7 +4504,7 @@ resource workspaces_workspaceyourbrand8c41_name_DatabricksNotebook 'Microsoft.Op
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DatabricksPartnerHub 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DatabricksPartnerHub'
   properties: {
     plan: 'Analytics'
@@ -4517,7 +4517,7 @@ resource workspaces_workspaceyourbrand8c41_name_DatabricksPartnerHub 'Microsoft.
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DatabricksRemoteHistoryService 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DatabricksRemoteHistoryService'
   properties: {
     plan: 'Analytics'
@@ -4530,7 +4530,7 @@ resource workspaces_workspaceyourbrand8c41_name_DatabricksRemoteHistoryService '
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DatabricksRepos 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DatabricksRepos'
   properties: {
     plan: 'Analytics'
@@ -4543,7 +4543,7 @@ resource workspaces_workspaceyourbrand8c41_name_DatabricksRepos 'Microsoft.Opera
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DatabricksSecrets 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DatabricksSecrets'
   properties: {
     plan: 'Analytics'
@@ -4556,7 +4556,7 @@ resource workspaces_workspaceyourbrand8c41_name_DatabricksSecrets 'Microsoft.Ope
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DatabricksServerlessRealTimeInference 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DatabricksServerlessRealTimeInference'
   properties: {
     plan: 'Analytics'
@@ -4569,7 +4569,7 @@ resource workspaces_workspaceyourbrand8c41_name_DatabricksServerlessRealTimeInfe
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DatabricksSQL 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DatabricksSQL'
   properties: {
     plan: 'Analytics'
@@ -4582,7 +4582,7 @@ resource workspaces_workspaceyourbrand8c41_name_DatabricksSQL 'Microsoft.Operati
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DatabricksSQLPermissions 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DatabricksSQLPermissions'
   properties: {
     plan: 'Analytics'
@@ -4595,7 +4595,7 @@ resource workspaces_workspaceyourbrand8c41_name_DatabricksSQLPermissions 'Micros
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DatabricksSSH 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DatabricksSSH'
   properties: {
     plan: 'Analytics'
@@ -4608,7 +4608,7 @@ resource workspaces_workspaceyourbrand8c41_name_DatabricksSSH 'Microsoft.Operati
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DatabricksUnityCatalog 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DatabricksUnityCatalog'
   properties: {
     plan: 'Analytics'
@@ -4621,7 +4621,7 @@ resource workspaces_workspaceyourbrand8c41_name_DatabricksUnityCatalog 'Microsof
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DatabricksWebTerminal 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DatabricksWebTerminal'
   properties: {
     plan: 'Analytics'
@@ -4634,7 +4634,7 @@ resource workspaces_workspaceyourbrand8c41_name_DatabricksWebTerminal 'Microsoft
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DatabricksWorkspace 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DatabricksWorkspace'
   properties: {
     plan: 'Analytics'
@@ -4647,7 +4647,7 @@ resource workspaces_workspaceyourbrand8c41_name_DatabricksWorkspace 'Microsoft.O
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DataTransferOperations 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DataTransferOperations'
   properties: {
     plan: 'Analytics'
@@ -4660,7 +4660,7 @@ resource workspaces_workspaceyourbrand8c41_name_DataTransferOperations 'Microsof
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DCRLogErrors 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DCRLogErrors'
   properties: {
     plan: 'Analytics'
@@ -4673,7 +4673,7 @@ resource workspaces_workspaceyourbrand8c41_name_DCRLogErrors 'Microsoft.Operatio
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DCRLogTroubleshooting 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DCRLogTroubleshooting'
   properties: {
     plan: 'Analytics'
@@ -4686,7 +4686,7 @@ resource workspaces_workspaceyourbrand8c41_name_DCRLogTroubleshooting 'Microsoft
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DevCenterDiagnosticLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DevCenterDiagnosticLogs'
   properties: {
     plan: 'Analytics'
@@ -4699,7 +4699,7 @@ resource workspaces_workspaceyourbrand8c41_name_DevCenterDiagnosticLogs 'Microso
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DevCenterResourceOperationLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DevCenterResourceOperationLogs'
   properties: {
     plan: 'Analytics'
@@ -4712,7 +4712,7 @@ resource workspaces_workspaceyourbrand8c41_name_DevCenterResourceOperationLogs '
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DSMAzureBlobStorageLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DSMAzureBlobStorageLogs'
   properties: {
     plan: 'Analytics'
@@ -4725,7 +4725,7 @@ resource workspaces_workspaceyourbrand8c41_name_DSMAzureBlobStorageLogs 'Microso
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DSMDataClassificationLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DSMDataClassificationLogs'
   properties: {
     plan: 'Analytics'
@@ -4738,7 +4738,7 @@ resource workspaces_workspaceyourbrand8c41_name_DSMDataClassificationLogs 'Micro
 }
 
 resource workspaces_workspaceyourbrand8c41_name_DSMDataLabelingLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'DSMDataLabelingLogs'
   properties: {
     plan: 'Analytics'
@@ -4751,7 +4751,7 @@ resource workspaces_workspaceyourbrand8c41_name_DSMDataLabelingLogs 'Microsoft.O
 }
 
 resource workspaces_workspaceyourbrand8c41_name_EnrichedMicrosoft365AuditLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'EnrichedMicrosoft365AuditLogs'
   properties: {
     plan: 'Analytics'
@@ -4764,7 +4764,7 @@ resource workspaces_workspaceyourbrand8c41_name_EnrichedMicrosoft365AuditLogs 'M
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ETWEvent 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ETWEvent'
   properties: {
     plan: 'Analytics'
@@ -4777,7 +4777,7 @@ resource workspaces_workspaceyourbrand8c41_name_ETWEvent 'Microsoft.OperationalI
 }
 
 resource workspaces_workspaceyourbrand8c41_name_Event 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'Event'
   properties: {
     plan: 'Analytics'
@@ -4790,7 +4790,7 @@ resource workspaces_workspaceyourbrand8c41_name_Event 'Microsoft.OperationalInsi
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ExchangeAssessmentRecommendation 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ExchangeAssessmentRecommendation'
   properties: {
     plan: 'Analytics'
@@ -4803,7 +4803,7 @@ resource workspaces_workspaceyourbrand8c41_name_ExchangeAssessmentRecommendation
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ExchangeOnlineAssessmentRecommendation 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ExchangeOnlineAssessmentRecommendation'
   properties: {
     plan: 'Analytics'
@@ -4816,7 +4816,7 @@ resource workspaces_workspaceyourbrand8c41_name_ExchangeOnlineAssessmentRecommen
 }
 
 resource workspaces_workspaceyourbrand8c41_name_FailedIngestion 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'FailedIngestion'
   properties: {
     plan: 'Analytics'
@@ -4829,7 +4829,7 @@ resource workspaces_workspaceyourbrand8c41_name_FailedIngestion 'Microsoft.Opera
 }
 
 resource workspaces_workspaceyourbrand8c41_name_FunctionAppLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'FunctionAppLogs'
   properties: {
     plan: 'Analytics'
@@ -4842,7 +4842,7 @@ resource workspaces_workspaceyourbrand8c41_name_FunctionAppLogs 'Microsoft.Opera
 }
 
 resource workspaces_workspaceyourbrand8c41_name_HDInsightAmbariClusterAlerts 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'HDInsightAmbariClusterAlerts'
   properties: {
     plan: 'Analytics'
@@ -4855,7 +4855,7 @@ resource workspaces_workspaceyourbrand8c41_name_HDInsightAmbariClusterAlerts 'Mi
 }
 
 resource workspaces_workspaceyourbrand8c41_name_HDInsightAmbariSystemMetrics 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'HDInsightAmbariSystemMetrics'
   properties: {
     plan: 'Analytics'
@@ -4868,7 +4868,7 @@ resource workspaces_workspaceyourbrand8c41_name_HDInsightAmbariSystemMetrics 'Mi
 }
 
 resource workspaces_workspaceyourbrand8c41_name_HDInsightGatewayAuditLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'HDInsightGatewayAuditLogs'
   properties: {
     plan: 'Analytics'
@@ -4881,7 +4881,7 @@ resource workspaces_workspaceyourbrand8c41_name_HDInsightGatewayAuditLogs 'Micro
 }
 
 resource workspaces_workspaceyourbrand8c41_name_HDInsightHadoopAndYarnLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'HDInsightHadoopAndYarnLogs'
   properties: {
     plan: 'Analytics'
@@ -4894,7 +4894,7 @@ resource workspaces_workspaceyourbrand8c41_name_HDInsightHadoopAndYarnLogs 'Micr
 }
 
 resource workspaces_workspaceyourbrand8c41_name_HDInsightHadoopAndYarnMetrics 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'HDInsightHadoopAndYarnMetrics'
   properties: {
     plan: 'Analytics'
@@ -4907,7 +4907,7 @@ resource workspaces_workspaceyourbrand8c41_name_HDInsightHadoopAndYarnMetrics 'M
 }
 
 resource workspaces_workspaceyourbrand8c41_name_HDInsightHBaseLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'HDInsightHBaseLogs'
   properties: {
     plan: 'Analytics'
@@ -4920,7 +4920,7 @@ resource workspaces_workspaceyourbrand8c41_name_HDInsightHBaseLogs 'Microsoft.Op
 }
 
 resource workspaces_workspaceyourbrand8c41_name_HDInsightHBaseMetrics 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'HDInsightHBaseMetrics'
   properties: {
     plan: 'Analytics'
@@ -4933,7 +4933,7 @@ resource workspaces_workspaceyourbrand8c41_name_HDInsightHBaseMetrics 'Microsoft
 }
 
 resource workspaces_workspaceyourbrand8c41_name_HDInsightHiveAndLLAPLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'HDInsightHiveAndLLAPLogs'
   properties: {
     plan: 'Analytics'
@@ -4946,7 +4946,7 @@ resource workspaces_workspaceyourbrand8c41_name_HDInsightHiveAndLLAPLogs 'Micros
 }
 
 resource workspaces_workspaceyourbrand8c41_name_HDInsightHiveAndLLAPMetrics 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'HDInsightHiveAndLLAPMetrics'
   properties: {
     plan: 'Analytics'
@@ -4959,7 +4959,7 @@ resource workspaces_workspaceyourbrand8c41_name_HDInsightHiveAndLLAPMetrics 'Mic
 }
 
 resource workspaces_workspaceyourbrand8c41_name_HDInsightHiveQueryAppStats 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'HDInsightHiveQueryAppStats'
   properties: {
     plan: 'Analytics'
@@ -4972,7 +4972,7 @@ resource workspaces_workspaceyourbrand8c41_name_HDInsightHiveQueryAppStats 'Micr
 }
 
 resource workspaces_workspaceyourbrand8c41_name_HDInsightHiveTezAppStats 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'HDInsightHiveTezAppStats'
   properties: {
     plan: 'Analytics'
@@ -4985,7 +4985,7 @@ resource workspaces_workspaceyourbrand8c41_name_HDInsightHiveTezAppStats 'Micros
 }
 
 resource workspaces_workspaceyourbrand8c41_name_HDInsightJupyterNotebookEvents 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'HDInsightJupyterNotebookEvents'
   properties: {
     plan: 'Analytics'
@@ -4998,7 +4998,7 @@ resource workspaces_workspaceyourbrand8c41_name_HDInsightJupyterNotebookEvents '
 }
 
 resource workspaces_workspaceyourbrand8c41_name_HDInsightKafkaLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'HDInsightKafkaLogs'
   properties: {
     plan: 'Analytics'
@@ -5011,7 +5011,7 @@ resource workspaces_workspaceyourbrand8c41_name_HDInsightKafkaLogs 'Microsoft.Op
 }
 
 resource workspaces_workspaceyourbrand8c41_name_HDInsightKafkaMetrics 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'HDInsightKafkaMetrics'
   properties: {
     plan: 'Analytics'
@@ -5024,7 +5024,7 @@ resource workspaces_workspaceyourbrand8c41_name_HDInsightKafkaMetrics 'Microsoft
 }
 
 resource workspaces_workspaceyourbrand8c41_name_HDInsightKafkaServerLog 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'HDInsightKafkaServerLog'
   properties: {
     plan: 'Analytics'
@@ -5037,7 +5037,7 @@ resource workspaces_workspaceyourbrand8c41_name_HDInsightKafkaServerLog 'Microso
 }
 
 resource workspaces_workspaceyourbrand8c41_name_HDInsightOozieLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'HDInsightOozieLogs'
   properties: {
     plan: 'Analytics'
@@ -5050,7 +5050,7 @@ resource workspaces_workspaceyourbrand8c41_name_HDInsightOozieLogs 'Microsoft.Op
 }
 
 resource workspaces_workspaceyourbrand8c41_name_HDInsightRangerAuditLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'HDInsightRangerAuditLogs'
   properties: {
     plan: 'Analytics'
@@ -5063,7 +5063,7 @@ resource workspaces_workspaceyourbrand8c41_name_HDInsightRangerAuditLogs 'Micros
 }
 
 resource workspaces_workspaceyourbrand8c41_name_HDInsightSecurityLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'HDInsightSecurityLogs'
   properties: {
     plan: 'Analytics'
@@ -5076,7 +5076,7 @@ resource workspaces_workspaceyourbrand8c41_name_HDInsightSecurityLogs 'Microsoft
 }
 
 resource workspaces_workspaceyourbrand8c41_name_HDInsightSparkApplicationEvents 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'HDInsightSparkApplicationEvents'
   properties: {
     plan: 'Analytics'
@@ -5089,7 +5089,7 @@ resource workspaces_workspaceyourbrand8c41_name_HDInsightSparkApplicationEvents 
 }
 
 resource workspaces_workspaceyourbrand8c41_name_HDInsightSparkBlockManagerEvents 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'HDInsightSparkBlockManagerEvents'
   properties: {
     plan: 'Analytics'
@@ -5102,7 +5102,7 @@ resource workspaces_workspaceyourbrand8c41_name_HDInsightSparkBlockManagerEvents
 }
 
 resource workspaces_workspaceyourbrand8c41_name_HDInsightSparkEnvironmentEvents 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'HDInsightSparkEnvironmentEvents'
   properties: {
     plan: 'Analytics'
@@ -5115,7 +5115,7 @@ resource workspaces_workspaceyourbrand8c41_name_HDInsightSparkEnvironmentEvents 
 }
 
 resource workspaces_workspaceyourbrand8c41_name_HDInsightSparkExecutorEvents 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'HDInsightSparkExecutorEvents'
   properties: {
     plan: 'Analytics'
@@ -5128,7 +5128,7 @@ resource workspaces_workspaceyourbrand8c41_name_HDInsightSparkExecutorEvents 'Mi
 }
 
 resource workspaces_workspaceyourbrand8c41_name_HDInsightSparkExtraEvents 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'HDInsightSparkExtraEvents'
   properties: {
     plan: 'Analytics'
@@ -5141,7 +5141,7 @@ resource workspaces_workspaceyourbrand8c41_name_HDInsightSparkExtraEvents 'Micro
 }
 
 resource workspaces_workspaceyourbrand8c41_name_HDInsightSparkJobEvents 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'HDInsightSparkJobEvents'
   properties: {
     plan: 'Analytics'
@@ -5154,7 +5154,7 @@ resource workspaces_workspaceyourbrand8c41_name_HDInsightSparkJobEvents 'Microso
 }
 
 resource workspaces_workspaceyourbrand8c41_name_HDInsightSparkLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'HDInsightSparkLogs'
   properties: {
     plan: 'Analytics'
@@ -5167,7 +5167,7 @@ resource workspaces_workspaceyourbrand8c41_name_HDInsightSparkLogs 'Microsoft.Op
 }
 
 resource workspaces_workspaceyourbrand8c41_name_HDInsightSparkSQLExecutionEvents 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'HDInsightSparkSQLExecutionEvents'
   properties: {
     plan: 'Analytics'
@@ -5180,7 +5180,7 @@ resource workspaces_workspaceyourbrand8c41_name_HDInsightSparkSQLExecutionEvents
 }
 
 resource workspaces_workspaceyourbrand8c41_name_HDInsightSparkStageEvents 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'HDInsightSparkStageEvents'
   properties: {
     plan: 'Analytics'
@@ -5193,7 +5193,7 @@ resource workspaces_workspaceyourbrand8c41_name_HDInsightSparkStageEvents 'Micro
 }
 
 resource workspaces_workspaceyourbrand8c41_name_HDInsightSparkStageTaskAccumulables 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'HDInsightSparkStageTaskAccumulables'
   properties: {
     plan: 'Analytics'
@@ -5206,7 +5206,7 @@ resource workspaces_workspaceyourbrand8c41_name_HDInsightSparkStageTaskAccumulab
 }
 
 resource workspaces_workspaceyourbrand8c41_name_HDInsightSparkTaskEvents 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'HDInsightSparkTaskEvents'
   properties: {
     plan: 'Analytics'
@@ -5219,7 +5219,7 @@ resource workspaces_workspaceyourbrand8c41_name_HDInsightSparkTaskEvents 'Micros
 }
 
 resource workspaces_workspaceyourbrand8c41_name_HDInsightStormLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'HDInsightStormLogs'
   properties: {
     plan: 'Analytics'
@@ -5232,7 +5232,7 @@ resource workspaces_workspaceyourbrand8c41_name_HDInsightStormLogs 'Microsoft.Op
 }
 
 resource workspaces_workspaceyourbrand8c41_name_HDInsightStormMetrics 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'HDInsightStormMetrics'
   properties: {
     plan: 'Analytics'
@@ -5245,7 +5245,7 @@ resource workspaces_workspaceyourbrand8c41_name_HDInsightStormMetrics 'Microsoft
 }
 
 resource workspaces_workspaceyourbrand8c41_name_HDInsightStormTopologyMetrics 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'HDInsightStormTopologyMetrics'
   properties: {
     plan: 'Analytics'
@@ -5258,7 +5258,7 @@ resource workspaces_workspaceyourbrand8c41_name_HDInsightStormTopologyMetrics 'M
 }
 
 resource workspaces_workspaceyourbrand8c41_name_Heartbeat 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'Heartbeat'
   properties: {
     plan: 'Analytics'
@@ -5271,7 +5271,7 @@ resource workspaces_workspaceyourbrand8c41_name_Heartbeat 'Microsoft.Operational
 }
 
 resource workspaces_workspaceyourbrand8c41_name_InsightsMetrics 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'InsightsMetrics'
   properties: {
     plan: 'Analytics'
@@ -5284,7 +5284,7 @@ resource workspaces_workspaceyourbrand8c41_name_InsightsMetrics 'Microsoft.Opera
 }
 
 resource workspaces_workspaceyourbrand8c41_name_IntuneAuditLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'IntuneAuditLogs'
   properties: {
     plan: 'Analytics'
@@ -5297,7 +5297,7 @@ resource workspaces_workspaceyourbrand8c41_name_IntuneAuditLogs 'Microsoft.Opera
 }
 
 resource workspaces_workspaceyourbrand8c41_name_IntuneDeviceComplianceOrg 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'IntuneDeviceComplianceOrg'
   properties: {
     plan: 'Analytics'
@@ -5310,7 +5310,7 @@ resource workspaces_workspaceyourbrand8c41_name_IntuneDeviceComplianceOrg 'Micro
 }
 
 resource workspaces_workspaceyourbrand8c41_name_IntuneDevices 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'IntuneDevices'
   properties: {
     plan: 'Analytics'
@@ -5323,7 +5323,7 @@ resource workspaces_workspaceyourbrand8c41_name_IntuneDevices 'Microsoft.Operati
 }
 
 resource workspaces_workspaceyourbrand8c41_name_IntuneOperationalLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'IntuneOperationalLogs'
   properties: {
     plan: 'Analytics'
@@ -5336,7 +5336,7 @@ resource workspaces_workspaceyourbrand8c41_name_IntuneOperationalLogs 'Microsoft
 }
 
 resource workspaces_workspaceyourbrand8c41_name_KubeEvents 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'KubeEvents'
   properties: {
     plan: 'Analytics'
@@ -5349,7 +5349,7 @@ resource workspaces_workspaceyourbrand8c41_name_KubeEvents 'Microsoft.Operationa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_KubeHealth 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'KubeHealth'
   properties: {
     plan: 'Analytics'
@@ -5362,7 +5362,7 @@ resource workspaces_workspaceyourbrand8c41_name_KubeHealth 'Microsoft.Operationa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_KubeMonAgentEvents 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'KubeMonAgentEvents'
   properties: {
     plan: 'Analytics'
@@ -5375,7 +5375,7 @@ resource workspaces_workspaceyourbrand8c41_name_KubeMonAgentEvents 'Microsoft.Op
 }
 
 resource workspaces_workspaceyourbrand8c41_name_KubeNodeInventory 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'KubeNodeInventory'
   properties: {
     plan: 'Analytics'
@@ -5388,7 +5388,7 @@ resource workspaces_workspaceyourbrand8c41_name_KubeNodeInventory 'Microsoft.Ope
 }
 
 resource workspaces_workspaceyourbrand8c41_name_KubePodInventory 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'KubePodInventory'
   properties: {
     plan: 'Analytics'
@@ -5401,7 +5401,7 @@ resource workspaces_workspaceyourbrand8c41_name_KubePodInventory 'Microsoft.Oper
 }
 
 resource workspaces_workspaceyourbrand8c41_name_KubePVInventory 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'KubePVInventory'
   properties: {
     plan: 'Analytics'
@@ -5414,7 +5414,7 @@ resource workspaces_workspaceyourbrand8c41_name_KubePVInventory 'Microsoft.Opera
 }
 
 resource workspaces_workspaceyourbrand8c41_name_KubeServices 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'KubeServices'
   properties: {
     plan: 'Analytics'
@@ -5427,7 +5427,7 @@ resource workspaces_workspaceyourbrand8c41_name_KubeServices 'Microsoft.Operatio
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LAQueryLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LAQueryLogs'
   properties: {
     plan: 'Analytics'
@@ -5440,7 +5440,7 @@ resource workspaces_workspaceyourbrand8c41_name_LAQueryLogs 'Microsoft.Operation
 }
 
 resource workspaces_workspaceyourbrand8c41_name_LogicAppWorkflowRuntime 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'LogicAppWorkflowRuntime'
   properties: {
     plan: 'Analytics'
@@ -5453,7 +5453,7 @@ resource workspaces_workspaceyourbrand8c41_name_LogicAppWorkflowRuntime 'Microso
 }
 
 resource workspaces_workspaceyourbrand8c41_name_MCCEventLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'MCCEventLogs'
   properties: {
     plan: 'Analytics'
@@ -5466,7 +5466,7 @@ resource workspaces_workspaceyourbrand8c41_name_MCCEventLogs 'Microsoft.Operatio
 }
 
 resource workspaces_workspaceyourbrand8c41_name_MCVPAuditLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'MCVPAuditLogs'
   properties: {
     plan: 'Analytics'
@@ -5479,7 +5479,7 @@ resource workspaces_workspaceyourbrand8c41_name_MCVPAuditLogs 'Microsoft.Operati
 }
 
 resource workspaces_workspaceyourbrand8c41_name_MCVPOperationLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'MCVPOperationLogs'
   properties: {
     plan: 'Analytics'
@@ -5492,7 +5492,7 @@ resource workspaces_workspaceyourbrand8c41_name_MCVPOperationLogs 'Microsoft.Ope
 }
 
 resource workspaces_workspaceyourbrand8c41_name_MicrosoftAzureBastionAuditLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'MicrosoftAzureBastionAuditLogs'
   properties: {
     plan: 'Analytics'
@@ -5505,7 +5505,7 @@ resource workspaces_workspaceyourbrand8c41_name_MicrosoftAzureBastionAuditLogs '
 }
 
 resource workspaces_workspaceyourbrand8c41_name_MicrosoftDataShareReceivedSnapshotLog 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'MicrosoftDataShareReceivedSnapshotLog'
   properties: {
     plan: 'Analytics'
@@ -5518,7 +5518,7 @@ resource workspaces_workspaceyourbrand8c41_name_MicrosoftDataShareReceivedSnapsh
 }
 
 resource workspaces_workspaceyourbrand8c41_name_MicrosoftDataShareSentSnapshotLog 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'MicrosoftDataShareSentSnapshotLog'
   properties: {
     plan: 'Analytics'
@@ -5531,7 +5531,7 @@ resource workspaces_workspaceyourbrand8c41_name_MicrosoftDataShareSentSnapshotLo
 }
 
 resource workspaces_workspaceyourbrand8c41_name_MicrosoftDataShareShareLog 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'MicrosoftDataShareShareLog'
   properties: {
     plan: 'Analytics'
@@ -5544,7 +5544,7 @@ resource workspaces_workspaceyourbrand8c41_name_MicrosoftDataShareShareLog 'Micr
 }
 
 resource workspaces_workspaceyourbrand8c41_name_MicrosoftGraphActivityLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'MicrosoftGraphActivityLogs'
   properties: {
     plan: 'Analytics'
@@ -5557,7 +5557,7 @@ resource workspaces_workspaceyourbrand8c41_name_MicrosoftGraphActivityLogs 'Micr
 }
 
 resource workspaces_workspaceyourbrand8c41_name_MicrosoftHealthcareApisAuditLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'MicrosoftHealthcareApisAuditLogs'
   properties: {
     plan: 'Analytics'
@@ -5570,7 +5570,7 @@ resource workspaces_workspaceyourbrand8c41_name_MicrosoftHealthcareApisAuditLogs
 }
 
 resource workspaces_workspaceyourbrand8c41_name_NCBMSecurityLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'NCBMSecurityLogs'
   properties: {
     plan: 'Analytics'
@@ -5583,7 +5583,7 @@ resource workspaces_workspaceyourbrand8c41_name_NCBMSecurityLogs 'Microsoft.Oper
 }
 
 resource workspaces_workspaceyourbrand8c41_name_NCBMSystemLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'NCBMSystemLogs'
   properties: {
     plan: 'Analytics'
@@ -5596,7 +5596,7 @@ resource workspaces_workspaceyourbrand8c41_name_NCBMSystemLogs 'Microsoft.Operat
 }
 
 resource workspaces_workspaceyourbrand8c41_name_NCCKubernetesLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'NCCKubernetesLogs'
   properties: {
     plan: 'Analytics'
@@ -5609,7 +5609,7 @@ resource workspaces_workspaceyourbrand8c41_name_NCCKubernetesLogs 'Microsoft.Ope
 }
 
 resource workspaces_workspaceyourbrand8c41_name_NCCVMOrchestrationLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'NCCVMOrchestrationLogs'
   properties: {
     plan: 'Analytics'
@@ -5622,7 +5622,7 @@ resource workspaces_workspaceyourbrand8c41_name_NCCVMOrchestrationLogs 'Microsof
 }
 
 resource workspaces_workspaceyourbrand8c41_name_NCSStorageAlerts 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'NCSStorageAlerts'
   properties: {
     plan: 'Analytics'
@@ -5635,7 +5635,7 @@ resource workspaces_workspaceyourbrand8c41_name_NCSStorageAlerts 'Microsoft.Oper
 }
 
 resource workspaces_workspaceyourbrand8c41_name_NCSStorageLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'NCSStorageLogs'
   properties: {
     plan: 'Analytics'
@@ -5648,7 +5648,7 @@ resource workspaces_workspaceyourbrand8c41_name_NCSStorageLogs 'Microsoft.Operat
 }
 
 resource workspaces_workspaceyourbrand8c41_name_NetworkAccessTraffic 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'NetworkAccessTraffic'
   properties: {
     plan: 'Analytics'
@@ -5661,7 +5661,7 @@ resource workspaces_workspaceyourbrand8c41_name_NetworkAccessTraffic 'Microsoft.
 }
 
 resource workspaces_workspaceyourbrand8c41_name_NSPAccessLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'NSPAccessLogs'
   properties: {
     plan: 'Analytics'
@@ -5674,7 +5674,7 @@ resource workspaces_workspaceyourbrand8c41_name_NSPAccessLogs 'Microsoft.Operati
 }
 
 resource workspaces_workspaceyourbrand8c41_name_NTAIpDetails 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'NTAIpDetails'
   properties: {
     plan: 'Analytics'
@@ -5687,7 +5687,7 @@ resource workspaces_workspaceyourbrand8c41_name_NTAIpDetails 'Microsoft.Operatio
 }
 
 resource workspaces_workspaceyourbrand8c41_name_NTANetAnalytics 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'NTANetAnalytics'
   properties: {
     plan: 'Analytics'
@@ -5700,7 +5700,7 @@ resource workspaces_workspaceyourbrand8c41_name_NTANetAnalytics 'Microsoft.Opera
 }
 
 resource workspaces_workspaceyourbrand8c41_name_NTATopologyDetails 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'NTATopologyDetails'
   properties: {
     plan: 'Analytics'
@@ -5713,7 +5713,7 @@ resource workspaces_workspaceyourbrand8c41_name_NTATopologyDetails 'Microsoft.Op
 }
 
 resource workspaces_workspaceyourbrand8c41_name_NWConnectionMonitorDNSResult 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'NWConnectionMonitorDNSResult'
   properties: {
     plan: 'Analytics'
@@ -5726,7 +5726,7 @@ resource workspaces_workspaceyourbrand8c41_name_NWConnectionMonitorDNSResult 'Mi
 }
 
 resource workspaces_workspaceyourbrand8c41_name_NWConnectionMonitorPathResult 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'NWConnectionMonitorPathResult'
   properties: {
     plan: 'Analytics'
@@ -5739,7 +5739,7 @@ resource workspaces_workspaceyourbrand8c41_name_NWConnectionMonitorPathResult 'M
 }
 
 resource workspaces_workspaceyourbrand8c41_name_NWConnectionMonitorTestResult 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'NWConnectionMonitorTestResult'
   properties: {
     plan: 'Analytics'
@@ -5752,7 +5752,7 @@ resource workspaces_workspaceyourbrand8c41_name_NWConnectionMonitorTestResult 'M
 }
 
 resource workspaces_workspaceyourbrand8c41_name_OEPAirFlowTask 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'OEPAirFlowTask'
   properties: {
     plan: 'Analytics'
@@ -5765,7 +5765,7 @@ resource workspaces_workspaceyourbrand8c41_name_OEPAirFlowTask 'Microsoft.Operat
 }
 
 resource workspaces_workspaceyourbrand8c41_name_OEPAuditLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'OEPAuditLogs'
   properties: {
     plan: 'Analytics'
@@ -5778,7 +5778,7 @@ resource workspaces_workspaceyourbrand8c41_name_OEPAuditLogs 'Microsoft.Operatio
 }
 
 resource workspaces_workspaceyourbrand8c41_name_OEPDataplaneLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'OEPDataplaneLogs'
   properties: {
     plan: 'Analytics'
@@ -5791,7 +5791,7 @@ resource workspaces_workspaceyourbrand8c41_name_OEPDataplaneLogs 'Microsoft.Oper
 }
 
 resource workspaces_workspaceyourbrand8c41_name_OEPElasticOperator 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'OEPElasticOperator'
   properties: {
     plan: 'Analytics'
@@ -5804,7 +5804,7 @@ resource workspaces_workspaceyourbrand8c41_name_OEPElasticOperator 'Microsoft.Op
 }
 
 resource workspaces_workspaceyourbrand8c41_name_OEPElasticsearch 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'OEPElasticsearch'
   properties: {
     plan: 'Analytics'
@@ -5817,7 +5817,7 @@ resource workspaces_workspaceyourbrand8c41_name_OEPElasticsearch 'Microsoft.Oper
 }
 
 resource workspaces_workspaceyourbrand8c41_name_OLPSupplyChainEntityOperations 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'OLPSupplyChainEntityOperations'
   properties: {
     plan: 'Analytics'
@@ -5830,7 +5830,7 @@ resource workspaces_workspaceyourbrand8c41_name_OLPSupplyChainEntityOperations '
 }
 
 resource workspaces_workspaceyourbrand8c41_name_OLPSupplyChainEvents 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'OLPSupplyChainEvents'
   properties: {
     plan: 'Analytics'
@@ -5843,7 +5843,7 @@ resource workspaces_workspaceyourbrand8c41_name_OLPSupplyChainEvents 'Microsoft.
 }
 
 resource workspaces_workspaceyourbrand8c41_name_Operation 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'Operation'
   properties: {
     plan: 'Analytics'
@@ -5856,7 +5856,7 @@ resource workspaces_workspaceyourbrand8c41_name_Operation 'Microsoft.Operational
 }
 
 resource workspaces_workspaceyourbrand8c41_name_Perf 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'Perf'
   properties: {
     plan: 'Analytics'
@@ -5869,7 +5869,7 @@ resource workspaces_workspaceyourbrand8c41_name_Perf 'Microsoft.OperationalInsig
 }
 
 resource workspaces_workspaceyourbrand8c41_name_PFTitleAuditLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'PFTitleAuditLogs'
   properties: {
     plan: 'Analytics'
@@ -5882,7 +5882,7 @@ resource workspaces_workspaceyourbrand8c41_name_PFTitleAuditLogs 'Microsoft.Oper
 }
 
 resource workspaces_workspaceyourbrand8c41_name_PowerBIAuditTenant 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'PowerBIAuditTenant'
   properties: {
     plan: 'Analytics'
@@ -5895,7 +5895,7 @@ resource workspaces_workspaceyourbrand8c41_name_PowerBIAuditTenant 'Microsoft.Op
 }
 
 resource workspaces_workspaceyourbrand8c41_name_PowerBIDatasetsTenant 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'PowerBIDatasetsTenant'
   properties: {
     plan: 'Analytics'
@@ -5908,7 +5908,7 @@ resource workspaces_workspaceyourbrand8c41_name_PowerBIDatasetsTenant 'Microsoft
 }
 
 resource workspaces_workspaceyourbrand8c41_name_PowerBIDatasetsWorkspace 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'PowerBIDatasetsWorkspace'
   properties: {
     plan: 'Analytics'
@@ -5921,7 +5921,7 @@ resource workspaces_workspaceyourbrand8c41_name_PowerBIDatasetsWorkspace 'Micros
 }
 
 resource workspaces_workspaceyourbrand8c41_name_PowerBIReportUsageTenant 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'PowerBIReportUsageTenant'
   properties: {
     plan: 'Analytics'
@@ -5934,7 +5934,7 @@ resource workspaces_workspaceyourbrand8c41_name_PowerBIReportUsageTenant 'Micros
 }
 
 resource workspaces_workspaceyourbrand8c41_name_PowerBIReportUsageWorkspace 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'PowerBIReportUsageWorkspace'
   properties: {
     plan: 'Analytics'
@@ -5947,7 +5947,7 @@ resource workspaces_workspaceyourbrand8c41_name_PowerBIReportUsageWorkspace 'Mic
 }
 
 resource workspaces_workspaceyourbrand8c41_name_PurviewDataSensitivityLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'PurviewDataSensitivityLogs'
   properties: {
     plan: 'Analytics'
@@ -5960,7 +5960,7 @@ resource workspaces_workspaceyourbrand8c41_name_PurviewDataSensitivityLogs 'Micr
 }
 
 resource workspaces_workspaceyourbrand8c41_name_PurviewScanStatusLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'PurviewScanStatusLogs'
   properties: {
     plan: 'Analytics'
@@ -5973,7 +5973,7 @@ resource workspaces_workspaceyourbrand8c41_name_PurviewScanStatusLogs 'Microsoft
 }
 
 resource workspaces_workspaceyourbrand8c41_name_PurviewSecurityLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'PurviewSecurityLogs'
   properties: {
     plan: 'Analytics'
@@ -5986,7 +5986,7 @@ resource workspaces_workspaceyourbrand8c41_name_PurviewSecurityLogs 'Microsoft.O
 }
 
 resource workspaces_workspaceyourbrand8c41_name_REDConnectionEvents 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'REDConnectionEvents'
   properties: {
     plan: 'Analytics'
@@ -5999,7 +5999,7 @@ resource workspaces_workspaceyourbrand8c41_name_REDConnectionEvents 'Microsoft.O
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ResourceManagementPublicAccessLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ResourceManagementPublicAccessLogs'
   properties: {
     plan: 'Analytics'
@@ -6012,7 +6012,7 @@ resource workspaces_workspaceyourbrand8c41_name_ResourceManagementPublicAccessLo
 }
 
 resource workspaces_workspaceyourbrand8c41_name_SCCMAssessmentRecommendation 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'SCCMAssessmentRecommendation'
   properties: {
     plan: 'Analytics'
@@ -6025,7 +6025,7 @@ resource workspaces_workspaceyourbrand8c41_name_SCCMAssessmentRecommendation 'Mi
 }
 
 resource workspaces_workspaceyourbrand8c41_name_SCOMAssessmentRecommendation 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'SCOMAssessmentRecommendation'
   properties: {
     plan: 'Analytics'
@@ -6038,7 +6038,7 @@ resource workspaces_workspaceyourbrand8c41_name_SCOMAssessmentRecommendation 'Mi
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ServiceFabricOperationalEvent 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ServiceFabricOperationalEvent'
   properties: {
     plan: 'Analytics'
@@ -6051,7 +6051,7 @@ resource workspaces_workspaceyourbrand8c41_name_ServiceFabricOperationalEvent 'M
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ServiceFabricReliableActorEvent 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ServiceFabricReliableActorEvent'
   properties: {
     plan: 'Analytics'
@@ -6064,7 +6064,7 @@ resource workspaces_workspaceyourbrand8c41_name_ServiceFabricReliableActorEvent 
 }
 
 resource workspaces_workspaceyourbrand8c41_name_ServiceFabricReliableServiceEvent 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'ServiceFabricReliableServiceEvent'
   properties: {
     plan: 'Analytics'
@@ -6077,7 +6077,7 @@ resource workspaces_workspaceyourbrand8c41_name_ServiceFabricReliableServiceEven
 }
 
 resource workspaces_workspaceyourbrand8c41_name_SfBAssessmentRecommendation 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'SfBAssessmentRecommendation'
   properties: {
     plan: 'Analytics'
@@ -6090,7 +6090,7 @@ resource workspaces_workspaceyourbrand8c41_name_SfBAssessmentRecommendation 'Mic
 }
 
 resource workspaces_workspaceyourbrand8c41_name_SfBOnlineAssessmentRecommendation 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'SfBOnlineAssessmentRecommendation'
   properties: {
     plan: 'Analytics'
@@ -6103,7 +6103,7 @@ resource workspaces_workspaceyourbrand8c41_name_SfBOnlineAssessmentRecommendatio
 }
 
 resource workspaces_workspaceyourbrand8c41_name_SharePointOnlineAssessmentRecommendation 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'SharePointOnlineAssessmentRecommendation'
   properties: {
     plan: 'Analytics'
@@ -6116,7 +6116,7 @@ resource workspaces_workspaceyourbrand8c41_name_SharePointOnlineAssessmentRecomm
 }
 
 resource workspaces_workspaceyourbrand8c41_name_SignalRServiceDiagnosticLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'SignalRServiceDiagnosticLogs'
   properties: {
     plan: 'Analytics'
@@ -6129,7 +6129,7 @@ resource workspaces_workspaceyourbrand8c41_name_SignalRServiceDiagnosticLogs 'Mi
 }
 
 resource workspaces_workspaceyourbrand8c41_name_SigninLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'SigninLogs'
   properties: {
     plan: 'Analytics'
@@ -6142,7 +6142,7 @@ resource workspaces_workspaceyourbrand8c41_name_SigninLogs 'Microsoft.Operationa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_SPAssessmentRecommendation 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'SPAssessmentRecommendation'
   properties: {
     plan: 'Analytics'
@@ -6155,7 +6155,7 @@ resource workspaces_workspaceyourbrand8c41_name_SPAssessmentRecommendation 'Micr
 }
 
 resource workspaces_workspaceyourbrand8c41_name_SQLAssessmentRecommendation 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'SQLAssessmentRecommendation'
   properties: {
     plan: 'Analytics'
@@ -6168,7 +6168,7 @@ resource workspaces_workspaceyourbrand8c41_name_SQLAssessmentRecommendation 'Mic
 }
 
 resource workspaces_workspaceyourbrand8c41_name_SQLSecurityAuditEvents 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'SQLSecurityAuditEvents'
   properties: {
     plan: 'Analytics'
@@ -6181,7 +6181,7 @@ resource workspaces_workspaceyourbrand8c41_name_SQLSecurityAuditEvents 'Microsof
 }
 
 resource workspaces_workspaceyourbrand8c41_name_StorageAntimalwareScanResults 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'StorageAntimalwareScanResults'
   properties: {
     plan: 'Analytics'
@@ -6194,7 +6194,7 @@ resource workspaces_workspaceyourbrand8c41_name_StorageAntimalwareScanResults 'M
 }
 
 resource workspaces_workspaceyourbrand8c41_name_StorageBlobLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'StorageBlobLogs'
   properties: {
     plan: 'Analytics'
@@ -6207,7 +6207,7 @@ resource workspaces_workspaceyourbrand8c41_name_StorageBlobLogs 'Microsoft.Opera
 }
 
 resource workspaces_workspaceyourbrand8c41_name_StorageCacheOperationEvents 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'StorageCacheOperationEvents'
   properties: {
     plan: 'Analytics'
@@ -6220,7 +6220,7 @@ resource workspaces_workspaceyourbrand8c41_name_StorageCacheOperationEvents 'Mic
 }
 
 resource workspaces_workspaceyourbrand8c41_name_StorageCacheUpgradeEvents 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'StorageCacheUpgradeEvents'
   properties: {
     plan: 'Analytics'
@@ -6233,7 +6233,7 @@ resource workspaces_workspaceyourbrand8c41_name_StorageCacheUpgradeEvents 'Micro
 }
 
 resource workspaces_workspaceyourbrand8c41_name_StorageCacheWarningEvents 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'StorageCacheWarningEvents'
   properties: {
     plan: 'Analytics'
@@ -6246,7 +6246,7 @@ resource workspaces_workspaceyourbrand8c41_name_StorageCacheWarningEvents 'Micro
 }
 
 resource workspaces_workspaceyourbrand8c41_name_StorageFileLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'StorageFileLogs'
   properties: {
     plan: 'Analytics'
@@ -6259,7 +6259,7 @@ resource workspaces_workspaceyourbrand8c41_name_StorageFileLogs 'Microsoft.Opera
 }
 
 resource workspaces_workspaceyourbrand8c41_name_StorageMalwareScanningResults 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'StorageMalwareScanningResults'
   properties: {
     plan: 'Analytics'
@@ -6272,7 +6272,7 @@ resource workspaces_workspaceyourbrand8c41_name_StorageMalwareScanningResults 'M
 }
 
 resource workspaces_workspaceyourbrand8c41_name_StorageMoverCopyLogsFailed 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'StorageMoverCopyLogsFailed'
   properties: {
     plan: 'Analytics'
@@ -6285,7 +6285,7 @@ resource workspaces_workspaceyourbrand8c41_name_StorageMoverCopyLogsFailed 'Micr
 }
 
 resource workspaces_workspaceyourbrand8c41_name_StorageMoverCopyLogsTransferred 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'StorageMoverCopyLogsTransferred'
   properties: {
     plan: 'Analytics'
@@ -6298,7 +6298,7 @@ resource workspaces_workspaceyourbrand8c41_name_StorageMoverCopyLogsTransferred 
 }
 
 resource workspaces_workspaceyourbrand8c41_name_StorageMoverJobRunLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'StorageMoverJobRunLogs'
   properties: {
     plan: 'Analytics'
@@ -6311,7 +6311,7 @@ resource workspaces_workspaceyourbrand8c41_name_StorageMoverJobRunLogs 'Microsof
 }
 
 resource workspaces_workspaceyourbrand8c41_name_StorageQueueLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'StorageQueueLogs'
   properties: {
     plan: 'Analytics'
@@ -6324,7 +6324,7 @@ resource workspaces_workspaceyourbrand8c41_name_StorageQueueLogs 'Microsoft.Oper
 }
 
 resource workspaces_workspaceyourbrand8c41_name_StorageTableLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'StorageTableLogs'
   properties: {
     plan: 'Analytics'
@@ -6337,7 +6337,7 @@ resource workspaces_workspaceyourbrand8c41_name_StorageTableLogs 'Microsoft.Oper
 }
 
 resource workspaces_workspaceyourbrand8c41_name_SucceededIngestion 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'SucceededIngestion'
   properties: {
     plan: 'Analytics'
@@ -6350,7 +6350,7 @@ resource workspaces_workspaceyourbrand8c41_name_SucceededIngestion 'Microsoft.Op
 }
 
 resource workspaces_workspaceyourbrand8c41_name_SynapseBigDataPoolApplicationsEnded 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'SynapseBigDataPoolApplicationsEnded'
   properties: {
     plan: 'Analytics'
@@ -6363,7 +6363,7 @@ resource workspaces_workspaceyourbrand8c41_name_SynapseBigDataPoolApplicationsEn
 }
 
 resource workspaces_workspaceyourbrand8c41_name_SynapseBuiltinSqlPoolRequestsEnded 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'SynapseBuiltinSqlPoolRequestsEnded'
   properties: {
     plan: 'Analytics'
@@ -6376,7 +6376,7 @@ resource workspaces_workspaceyourbrand8c41_name_SynapseBuiltinSqlPoolRequestsEnd
 }
 
 resource workspaces_workspaceyourbrand8c41_name_SynapseDXCommand 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'SynapseDXCommand'
   properties: {
     plan: 'Analytics'
@@ -6389,7 +6389,7 @@ resource workspaces_workspaceyourbrand8c41_name_SynapseDXCommand 'Microsoft.Oper
 }
 
 resource workspaces_workspaceyourbrand8c41_name_SynapseDXFailedIngestion 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'SynapseDXFailedIngestion'
   properties: {
     plan: 'Analytics'
@@ -6402,7 +6402,7 @@ resource workspaces_workspaceyourbrand8c41_name_SynapseDXFailedIngestion 'Micros
 }
 
 resource workspaces_workspaceyourbrand8c41_name_SynapseDXIngestionBatching 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'SynapseDXIngestionBatching'
   properties: {
     plan: 'Analytics'
@@ -6415,7 +6415,7 @@ resource workspaces_workspaceyourbrand8c41_name_SynapseDXIngestionBatching 'Micr
 }
 
 resource workspaces_workspaceyourbrand8c41_name_SynapseDXQuery 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'SynapseDXQuery'
   properties: {
     plan: 'Analytics'
@@ -6428,7 +6428,7 @@ resource workspaces_workspaceyourbrand8c41_name_SynapseDXQuery 'Microsoft.Operat
 }
 
 resource workspaces_workspaceyourbrand8c41_name_SynapseDXSucceededIngestion 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'SynapseDXSucceededIngestion'
   properties: {
     plan: 'Analytics'
@@ -6441,7 +6441,7 @@ resource workspaces_workspaceyourbrand8c41_name_SynapseDXSucceededIngestion 'Mic
 }
 
 resource workspaces_workspaceyourbrand8c41_name_SynapseDXTableDetails 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'SynapseDXTableDetails'
   properties: {
     plan: 'Analytics'
@@ -6454,7 +6454,7 @@ resource workspaces_workspaceyourbrand8c41_name_SynapseDXTableDetails 'Microsoft
 }
 
 resource workspaces_workspaceyourbrand8c41_name_SynapseDXTableUsageStatistics 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'SynapseDXTableUsageStatistics'
   properties: {
     plan: 'Analytics'
@@ -6467,7 +6467,7 @@ resource workspaces_workspaceyourbrand8c41_name_SynapseDXTableUsageStatistics 'M
 }
 
 resource workspaces_workspaceyourbrand8c41_name_SynapseGatewayApiRequests 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'SynapseGatewayApiRequests'
   properties: {
     plan: 'Analytics'
@@ -6480,7 +6480,7 @@ resource workspaces_workspaceyourbrand8c41_name_SynapseGatewayApiRequests 'Micro
 }
 
 resource workspaces_workspaceyourbrand8c41_name_SynapseIntegrationActivityRuns 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'SynapseIntegrationActivityRuns'
   properties: {
     plan: 'Analytics'
@@ -6493,7 +6493,7 @@ resource workspaces_workspaceyourbrand8c41_name_SynapseIntegrationActivityRuns '
 }
 
 resource workspaces_workspaceyourbrand8c41_name_SynapseIntegrationPipelineRuns 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'SynapseIntegrationPipelineRuns'
   properties: {
     plan: 'Analytics'
@@ -6506,7 +6506,7 @@ resource workspaces_workspaceyourbrand8c41_name_SynapseIntegrationPipelineRuns '
 }
 
 resource workspaces_workspaceyourbrand8c41_name_SynapseIntegrationTriggerRuns 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'SynapseIntegrationTriggerRuns'
   properties: {
     plan: 'Analytics'
@@ -6519,7 +6519,7 @@ resource workspaces_workspaceyourbrand8c41_name_SynapseIntegrationTriggerRuns 'M
 }
 
 resource workspaces_workspaceyourbrand8c41_name_SynapseLinkEvent 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'SynapseLinkEvent'
   properties: {
     plan: 'Analytics'
@@ -6532,7 +6532,7 @@ resource workspaces_workspaceyourbrand8c41_name_SynapseLinkEvent 'Microsoft.Oper
 }
 
 resource workspaces_workspaceyourbrand8c41_name_SynapseRbacOperations 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'SynapseRbacOperations'
   properties: {
     plan: 'Analytics'
@@ -6545,7 +6545,7 @@ resource workspaces_workspaceyourbrand8c41_name_SynapseRbacOperations 'Microsoft
 }
 
 resource workspaces_workspaceyourbrand8c41_name_SynapseScopePoolScopeJobsEnded 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'SynapseScopePoolScopeJobsEnded'
   properties: {
     plan: 'Analytics'
@@ -6558,7 +6558,7 @@ resource workspaces_workspaceyourbrand8c41_name_SynapseScopePoolScopeJobsEnded '
 }
 
 resource workspaces_workspaceyourbrand8c41_name_SynapseScopePoolScopeJobsStateChange 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'SynapseScopePoolScopeJobsStateChange'
   properties: {
     plan: 'Analytics'
@@ -6571,7 +6571,7 @@ resource workspaces_workspaceyourbrand8c41_name_SynapseScopePoolScopeJobsStateCh
 }
 
 resource workspaces_workspaceyourbrand8c41_name_SynapseSqlPoolDmsWorkers 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'SynapseSqlPoolDmsWorkers'
   properties: {
     plan: 'Analytics'
@@ -6584,7 +6584,7 @@ resource workspaces_workspaceyourbrand8c41_name_SynapseSqlPoolDmsWorkers 'Micros
 }
 
 resource workspaces_workspaceyourbrand8c41_name_SynapseSqlPoolExecRequests 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'SynapseSqlPoolExecRequests'
   properties: {
     plan: 'Analytics'
@@ -6597,7 +6597,7 @@ resource workspaces_workspaceyourbrand8c41_name_SynapseSqlPoolExecRequests 'Micr
 }
 
 resource workspaces_workspaceyourbrand8c41_name_SynapseSqlPoolRequestSteps 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'SynapseSqlPoolRequestSteps'
   properties: {
     plan: 'Analytics'
@@ -6610,7 +6610,7 @@ resource workspaces_workspaceyourbrand8c41_name_SynapseSqlPoolRequestSteps 'Micr
 }
 
 resource workspaces_workspaceyourbrand8c41_name_SynapseSqlPoolSqlRequests 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'SynapseSqlPoolSqlRequests'
   properties: {
     plan: 'Analytics'
@@ -6623,7 +6623,7 @@ resource workspaces_workspaceyourbrand8c41_name_SynapseSqlPoolSqlRequests 'Micro
 }
 
 resource workspaces_workspaceyourbrand8c41_name_SynapseSqlPoolWaits 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'SynapseSqlPoolWaits'
   properties: {
     plan: 'Analytics'
@@ -6636,7 +6636,7 @@ resource workspaces_workspaceyourbrand8c41_name_SynapseSqlPoolWaits 'Microsoft.O
 }
 
 resource workspaces_workspaceyourbrand8c41_name_Syslog 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'Syslog'
   properties: {
     plan: 'Analytics'
@@ -6649,7 +6649,7 @@ resource workspaces_workspaceyourbrand8c41_name_Syslog 'Microsoft.OperationalIns
 }
 
 resource workspaces_workspaceyourbrand8c41_name_TSIIngress 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'TSIIngress'
   properties: {
     plan: 'Analytics'
@@ -6662,7 +6662,7 @@ resource workspaces_workspaceyourbrand8c41_name_TSIIngress 'Microsoft.Operationa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_UCClient 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'UCClient'
   properties: {
     plan: 'Analytics'
@@ -6675,7 +6675,7 @@ resource workspaces_workspaceyourbrand8c41_name_UCClient 'Microsoft.OperationalI
 }
 
 resource workspaces_workspaceyourbrand8c41_name_UCClientReadinessStatus 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'UCClientReadinessStatus'
   properties: {
     plan: 'Analytics'
@@ -6688,7 +6688,7 @@ resource workspaces_workspaceyourbrand8c41_name_UCClientReadinessStatus 'Microso
 }
 
 resource workspaces_workspaceyourbrand8c41_name_UCClientUpdateStatus 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'UCClientUpdateStatus'
   properties: {
     plan: 'Analytics'
@@ -6701,7 +6701,7 @@ resource workspaces_workspaceyourbrand8c41_name_UCClientUpdateStatus 'Microsoft.
 }
 
 resource workspaces_workspaceyourbrand8c41_name_UCDeviceAlert 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'UCDeviceAlert'
   properties: {
     plan: 'Analytics'
@@ -6714,7 +6714,7 @@ resource workspaces_workspaceyourbrand8c41_name_UCDeviceAlert 'Microsoft.Operati
 }
 
 resource workspaces_workspaceyourbrand8c41_name_UCDOAggregatedStatus 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'UCDOAggregatedStatus'
   properties: {
     plan: 'Analytics'
@@ -6727,7 +6727,7 @@ resource workspaces_workspaceyourbrand8c41_name_UCDOAggregatedStatus 'Microsoft.
 }
 
 resource workspaces_workspaceyourbrand8c41_name_UCDOStatus 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'UCDOStatus'
   properties: {
     plan: 'Analytics'
@@ -6740,7 +6740,7 @@ resource workspaces_workspaceyourbrand8c41_name_UCDOStatus 'Microsoft.Operationa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_UCServiceUpdateStatus 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'UCServiceUpdateStatus'
   properties: {
     plan: 'Analytics'
@@ -6753,7 +6753,7 @@ resource workspaces_workspaceyourbrand8c41_name_UCServiceUpdateStatus 'Microsoft
 }
 
 resource workspaces_workspaceyourbrand8c41_name_UCUpdateAlert 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'UCUpdateAlert'
   properties: {
     plan: 'Analytics'
@@ -6766,7 +6766,7 @@ resource workspaces_workspaceyourbrand8c41_name_UCUpdateAlert 'Microsoft.Operati
 }
 
 resource workspaces_workspaceyourbrand8c41_name_Usage 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'Usage'
   properties: {
     plan: 'Analytics'
@@ -6779,7 +6779,7 @@ resource workspaces_workspaceyourbrand8c41_name_Usage 'Microsoft.OperationalInsi
 }
 
 resource workspaces_workspaceyourbrand8c41_name_VIAudit 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'VIAudit'
   properties: {
     plan: 'Analytics'
@@ -6792,7 +6792,7 @@ resource workspaces_workspaceyourbrand8c41_name_VIAudit 'Microsoft.OperationalIn
 }
 
 resource workspaces_workspaceyourbrand8c41_name_VIIndexing 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'VIIndexing'
   properties: {
     plan: 'Analytics'
@@ -6805,7 +6805,7 @@ resource workspaces_workspaceyourbrand8c41_name_VIIndexing 'Microsoft.Operationa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_VMBoundPort 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'VMBoundPort'
   properties: {
     plan: 'Analytics'
@@ -6818,7 +6818,7 @@ resource workspaces_workspaceyourbrand8c41_name_VMBoundPort 'Microsoft.Operation
 }
 
 resource workspaces_workspaceyourbrand8c41_name_VMComputer 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'VMComputer'
   properties: {
     plan: 'Analytics'
@@ -6831,7 +6831,7 @@ resource workspaces_workspaceyourbrand8c41_name_VMComputer 'Microsoft.Operationa
 }
 
 resource workspaces_workspaceyourbrand8c41_name_VMConnection 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'VMConnection'
   properties: {
     plan: 'Analytics'
@@ -6844,7 +6844,7 @@ resource workspaces_workspaceyourbrand8c41_name_VMConnection 'Microsoft.Operatio
 }
 
 resource workspaces_workspaceyourbrand8c41_name_VMProcess 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'VMProcess'
   properties: {
     plan: 'Analytics'
@@ -6857,7 +6857,7 @@ resource workspaces_workspaceyourbrand8c41_name_VMProcess 'Microsoft.Operational
 }
 
 resource workspaces_workspaceyourbrand8c41_name_W3CIISLog 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'W3CIISLog'
   properties: {
     plan: 'Analytics'
@@ -6870,7 +6870,7 @@ resource workspaces_workspaceyourbrand8c41_name_W3CIISLog 'Microsoft.Operational
 }
 
 resource workspaces_workspaceyourbrand8c41_name_WebPubSubConnectivity 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'WebPubSubConnectivity'
   properties: {
     plan: 'Analytics'
@@ -6883,7 +6883,7 @@ resource workspaces_workspaceyourbrand8c41_name_WebPubSubConnectivity 'Microsoft
 }
 
 resource workspaces_workspaceyourbrand8c41_name_WebPubSubHttpRequest 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'WebPubSubHttpRequest'
   properties: {
     plan: 'Analytics'
@@ -6896,7 +6896,7 @@ resource workspaces_workspaceyourbrand8c41_name_WebPubSubHttpRequest 'Microsoft.
 }
 
 resource workspaces_workspaceyourbrand8c41_name_WebPubSubMessaging 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'WebPubSubMessaging'
   properties: {
     plan: 'Analytics'
@@ -6909,7 +6909,7 @@ resource workspaces_workspaceyourbrand8c41_name_WebPubSubMessaging 'Microsoft.Op
 }
 
 resource workspaces_workspaceyourbrand8c41_name_Windows365AuditLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'Windows365AuditLogs'
   properties: {
     plan: 'Analytics'
@@ -6922,7 +6922,7 @@ resource workspaces_workspaceyourbrand8c41_name_Windows365AuditLogs 'Microsoft.O
 }
 
 resource workspaces_workspaceyourbrand8c41_name_WindowsClientAssessmentRecommendation 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'WindowsClientAssessmentRecommendation'
   properties: {
     plan: 'Analytics'
@@ -6935,7 +6935,7 @@ resource workspaces_workspaceyourbrand8c41_name_WindowsClientAssessmentRecommend
 }
 
 resource workspaces_workspaceyourbrand8c41_name_WindowsServerAssessmentRecommendation 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'WindowsServerAssessmentRecommendation'
   properties: {
     plan: 'Analytics'
@@ -6948,7 +6948,7 @@ resource workspaces_workspaceyourbrand8c41_name_WindowsServerAssessmentRecommend
 }
 
 resource workspaces_workspaceyourbrand8c41_name_WorkloadDiagnosticLogs 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'WorkloadDiagnosticLogs'
   properties: {
     plan: 'Analytics'
@@ -6961,7 +6961,7 @@ resource workspaces_workspaceyourbrand8c41_name_WorkloadDiagnosticLogs 'Microsof
 }
 
 resource workspaces_workspaceyourbrand8c41_name_WVDAgentHealthStatus 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'WVDAgentHealthStatus'
   properties: {
     plan: 'Analytics'
@@ -6974,7 +6974,7 @@ resource workspaces_workspaceyourbrand8c41_name_WVDAgentHealthStatus 'Microsoft.
 }
 
 resource workspaces_workspaceyourbrand8c41_name_WVDAutoscaleEvaluationPooled 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'WVDAutoscaleEvaluationPooled'
   properties: {
     plan: 'Analytics'
@@ -6987,7 +6987,7 @@ resource workspaces_workspaceyourbrand8c41_name_WVDAutoscaleEvaluationPooled 'Mi
 }
 
 resource workspaces_workspaceyourbrand8c41_name_WVDCheckpoints 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'WVDCheckpoints'
   properties: {
     plan: 'Analytics'
@@ -7000,7 +7000,7 @@ resource workspaces_workspaceyourbrand8c41_name_WVDCheckpoints 'Microsoft.Operat
 }
 
 resource workspaces_workspaceyourbrand8c41_name_WVDConnectionGraphicsDataPreview 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'WVDConnectionGraphicsDataPreview'
   properties: {
     plan: 'Analytics'
@@ -7013,7 +7013,7 @@ resource workspaces_workspaceyourbrand8c41_name_WVDConnectionGraphicsDataPreview
 }
 
 resource workspaces_workspaceyourbrand8c41_name_WVDConnectionNetworkData 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'WVDConnectionNetworkData'
   properties: {
     plan: 'Analytics'
@@ -7026,7 +7026,7 @@ resource workspaces_workspaceyourbrand8c41_name_WVDConnectionNetworkData 'Micros
 }
 
 resource workspaces_workspaceyourbrand8c41_name_WVDConnections 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'WVDConnections'
   properties: {
     plan: 'Analytics'
@@ -7039,7 +7039,7 @@ resource workspaces_workspaceyourbrand8c41_name_WVDConnections 'Microsoft.Operat
 }
 
 resource workspaces_workspaceyourbrand8c41_name_WVDErrors 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'WVDErrors'
   properties: {
     plan: 'Analytics'
@@ -7052,7 +7052,7 @@ resource workspaces_workspaceyourbrand8c41_name_WVDErrors 'Microsoft.Operational
 }
 
 resource workspaces_workspaceyourbrand8c41_name_WVDFeeds 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'WVDFeeds'
   properties: {
     plan: 'Analytics'
@@ -7065,7 +7065,7 @@ resource workspaces_workspaceyourbrand8c41_name_WVDFeeds 'Microsoft.OperationalI
 }
 
 resource workspaces_workspaceyourbrand8c41_name_WVDHostRegistrations 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'WVDHostRegistrations'
   properties: {
     plan: 'Analytics'
@@ -7078,7 +7078,7 @@ resource workspaces_workspaceyourbrand8c41_name_WVDHostRegistrations 'Microsoft.
 }
 
 resource workspaces_workspaceyourbrand8c41_name_WVDManagement 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'WVDManagement'
   properties: {
     plan: 'Analytics'
@@ -7091,7 +7091,7 @@ resource workspaces_workspaceyourbrand8c41_name_WVDManagement 'Microsoft.Operati
 }
 
 resource workspaces_workspaceyourbrand8c41_name_WVDSessionHostManagement 'Microsoft.OperationalInsights/workspaces/tables@2021-12-01-preview' = {
-  parent: workspaces_workspaceyourbrand8c41_name_resource
+  parent: workspaces_workspaceyourbrand8c41_resource
   name: 'WVDSessionHostManagement'
   properties: {
     plan: 'Analytics'
@@ -7104,7 +7104,7 @@ resource workspaces_workspaceyourbrand8c41_name_WVDSessionHostManagement 'Micros
 }
 
 resource namespaces_yourbrand_servicebus_name_RootManageSharedAccessKey 'Microsoft.ServiceBus/namespaces/authorizationrules@2022-10-01-preview' = {
-  parent: namespaces_yourbrand_servicebus_name_resource
+  parent: namespaces_yourbrand_servicebus_resource
   location: location
   name: 'RootManageSharedAccessKey'
   properties: {
@@ -7117,7 +7117,7 @@ resource namespaces_yourbrand_servicebus_name_RootManageSharedAccessKey 'Microso
 }
 
 resource namespaces_yourbrand_servicebus_name_default 'Microsoft.ServiceBus/namespaces/networkrulesets@2022-10-01-preview' = {
-  parent: namespaces_yourbrand_servicebus_name_resource
+  parent: namespaces_yourbrand_servicebus_resource
   location: location
   name: 'default'
   properties: {
@@ -7130,7 +7130,7 @@ resource namespaces_yourbrand_servicebus_name_default 'Microsoft.ServiceBus/name
 }
 
 resource namespaces_yourbrand_servicebus_name_add_cart_item 'Microsoft.ServiceBus/namespaces/queues@2022-10-01-preview' = {
-  parent: namespaces_yourbrand_servicebus_name_resource
+  parent: namespaces_yourbrand_servicebus_resource
   location: location
   name: 'add-cart-item'
   properties: {
@@ -7152,7 +7152,7 @@ resource namespaces_yourbrand_servicebus_name_add_cart_item 'Microsoft.ServiceBu
 }
 
 resource namespaces_yourbrand_servicebus_name_add_cart_item_error 'Microsoft.ServiceBus/namespaces/queues@2022-10-01-preview' = {
-  parent: namespaces_yourbrand_servicebus_name_resource
+  parent: namespaces_yourbrand_servicebus_resource
   location: location
   name: 'add-cart-item_error'
   properties: {
@@ -7174,7 +7174,7 @@ resource namespaces_yourbrand_servicebus_name_add_cart_item_error 'Microsoft.Ser
 }
 
 resource namespaces_yourbrand_servicebus_name_get_cart_by_id 'Microsoft.ServiceBus/namespaces/queues@2022-10-01-preview' = {
-  parent: namespaces_yourbrand_servicebus_name_resource
+  parent: namespaces_yourbrand_servicebus_resource
   location: location
   name: 'get-cart-by-id'
   properties: {
@@ -7196,7 +7196,7 @@ resource namespaces_yourbrand_servicebus_name_get_cart_by_id 'Microsoft.ServiceB
 }
 
 resource namespaces_yourbrand_servicebus_name_get_cart_by_id_error 'Microsoft.ServiceBus/namespaces/queues@2022-10-01-preview' = {
-  parent: namespaces_yourbrand_servicebus_name_resource
+  parent: namespaces_yourbrand_servicebus_resource
   location: location
   name: 'get-cart-by-id_error'
   properties: {
@@ -7218,7 +7218,7 @@ resource namespaces_yourbrand_servicebus_name_get_cart_by_id_error 'Microsoft.Se
 }
 
 resource namespaces_yourbrand_servicebus_name_get_carts 'Microsoft.ServiceBus/namespaces/queues@2022-10-01-preview' = {
-  parent: namespaces_yourbrand_servicebus_name_resource
+  parent: namespaces_yourbrand_servicebus_resource
   location: location
   name: 'get-carts'
   properties: {
@@ -7240,7 +7240,7 @@ resource namespaces_yourbrand_servicebus_name_get_carts 'Microsoft.ServiceBus/na
 }
 
 resource namespaces_yourbrand_servicebus_name_product_details_updated 'Microsoft.ServiceBus/namespaces/queues@2022-10-01-preview' = {
-  parent: namespaces_yourbrand_servicebus_name_resource
+  parent: namespaces_yourbrand_servicebus_resource
   location: location
   name: 'product-details-updated'
   properties: {
@@ -7262,7 +7262,7 @@ resource namespaces_yourbrand_servicebus_name_product_details_updated 'Microsoft
 }
 
 resource namespaces_yourbrand_servicebus_name_product_handle_updated 'Microsoft.ServiceBus/namespaces/queues@2022-10-01-preview' = {
-  parent: namespaces_yourbrand_servicebus_name_resource
+  parent: namespaces_yourbrand_servicebus_resource
   location: location
   name: 'product-handle-updated'
   properties: {
@@ -7284,7 +7284,7 @@ resource namespaces_yourbrand_servicebus_name_product_handle_updated 'Microsoft.
 }
 
 resource namespaces_yourbrand_servicebus_name_product_image_updated 'Microsoft.ServiceBus/namespaces/queues@2022-10-01-preview' = {
-  parent: namespaces_yourbrand_servicebus_name_resource
+  parent: namespaces_yourbrand_servicebus_resource
   location: location
   name: 'product-image-updated'
   properties: {
@@ -7306,7 +7306,7 @@ resource namespaces_yourbrand_servicebus_name_product_image_updated 'Microsoft.S
 }
 
 resource namespaces_yourbrand_servicebus_name_product_price_updated 'Microsoft.ServiceBus/namespaces/queues@2022-10-01-preview' = {
-  parent: namespaces_yourbrand_servicebus_name_resource
+  parent: namespaces_yourbrand_servicebus_resource
   location: location
   name: 'product-price-updated'
   properties: {
@@ -7328,7 +7328,7 @@ resource namespaces_yourbrand_servicebus_name_product_price_updated 'Microsoft.S
 }
 
 resource namespaces_yourbrand_servicebus_name_remove_cart_item_quantity 'Microsoft.ServiceBus/namespaces/queues@2022-10-01-preview' = {
-  parent: namespaces_yourbrand_servicebus_name_resource
+  parent: namespaces_yourbrand_servicebus_resource
   location: location
   name: 'remove-cart-item-quantity'
   properties: {
@@ -7350,7 +7350,7 @@ resource namespaces_yourbrand_servicebus_name_remove_cart_item_quantity 'Microso
 }
 
 resource namespaces_yourbrand_servicebus_name_update_cart_item_quantity 'Microsoft.ServiceBus/namespaces/queues@2022-10-01-preview' = {
-  parent: namespaces_yourbrand_servicebus_name_resource
+  parent: namespaces_yourbrand_servicebus_resource
   location: location
   name: 'update-cart-item-quantity'
   properties: {
@@ -7372,7 +7372,7 @@ resource namespaces_yourbrand_servicebus_name_update_cart_item_quantity 'Microso
 }
 
 resource namespaces_yourbrand_servicebus_name_carts_contracts_addcartitem 'Microsoft.ServiceBus/namespaces/topics@2022-10-01-preview' = {
-  parent: namespaces_yourbrand_servicebus_name_resource
+  parent: namespaces_yourbrand_servicebus_resource
   location: location
   name: 'carts.contracts~addcartitem'
   properties: {
@@ -7391,7 +7391,7 @@ resource namespaces_yourbrand_servicebus_name_carts_contracts_addcartitem 'Micro
 }
 
 resource namespaces_yourbrand_servicebus_name_carts_contracts_getcartbyid 'Microsoft.ServiceBus/namespaces/topics@2022-10-01-preview' = {
-  parent: namespaces_yourbrand_servicebus_name_resource
+  parent: namespaces_yourbrand_servicebus_resource
   location: location
   name: 'carts.contracts~getcartbyid'
   properties: {
@@ -7410,7 +7410,7 @@ resource namespaces_yourbrand_servicebus_name_carts_contracts_getcartbyid 'Micro
 }
 
 resource namespaces_yourbrand_servicebus_name_carts_contracts_getcarts 'Microsoft.ServiceBus/namespaces/topics@2022-10-01-preview' = {
-  parent: namespaces_yourbrand_servicebus_name_resource
+  parent: namespaces_yourbrand_servicebus_resource
   location: location
   name: 'carts.contracts~getcarts'
   properties: {
@@ -7429,7 +7429,7 @@ resource namespaces_yourbrand_servicebus_name_carts_contracts_getcarts 'Microsof
 }
 
 resource namespaces_yourbrand_servicebus_name_carts_contracts_removecartitem 'Microsoft.ServiceBus/namespaces/topics@2022-10-01-preview' = {
-  parent: namespaces_yourbrand_servicebus_name_resource
+  parent: namespaces_yourbrand_servicebus_resource
   location: location
   name: 'carts.contracts~removecartitem'
   properties: {
@@ -7448,7 +7448,7 @@ resource namespaces_yourbrand_servicebus_name_carts_contracts_removecartitem 'Mi
 }
 
 resource namespaces_yourbrand_servicebus_name_carts_contracts_updatecartitemquantity 'Microsoft.ServiceBus/namespaces/topics@2022-10-01-preview' = {
-  parent: namespaces_yourbrand_servicebus_name_resource
+  parent: namespaces_yourbrand_servicebus_resource
   location: location
   name: 'carts.contracts~updatecartitemquantity'
   properties: {
@@ -7467,7 +7467,7 @@ resource namespaces_yourbrand_servicebus_name_carts_contracts_updatecartitemquan
 }
 
 resource namespaces_yourbrand_servicebus_name_catalog_contracts_productdetailsupdated 'Microsoft.ServiceBus/namespaces/topics@2022-10-01-preview' = {
-  parent: namespaces_yourbrand_servicebus_name_resource
+  parent: namespaces_yourbrand_servicebus_resource
   location: location
   name: 'catalog.contracts~productdetailsupdated'
   properties: {
@@ -7486,7 +7486,7 @@ resource namespaces_yourbrand_servicebus_name_catalog_contracts_productdetailsup
 }
 
 resource namespaces_yourbrand_servicebus_name_catalog_contracts_producthandleupdated 'Microsoft.ServiceBus/namespaces/topics@2022-10-01-preview' = {
-  parent: namespaces_yourbrand_servicebus_name_resource
+  parent: namespaces_yourbrand_servicebus_resource
   location: location
   name: 'catalog.contracts~producthandleupdated'
   properties: {
@@ -7505,7 +7505,7 @@ resource namespaces_yourbrand_servicebus_name_catalog_contracts_producthandleupd
 }
 
 resource namespaces_yourbrand_servicebus_name_catalog_contracts_productimageupdated 'Microsoft.ServiceBus/namespaces/topics@2022-10-01-preview' = {
-  parent: namespaces_yourbrand_servicebus_name_resource
+  parent: namespaces_yourbrand_servicebus_resource
   location: location
   name: 'catalog.contracts~productimageupdated'
   properties: {
@@ -7524,7 +7524,7 @@ resource namespaces_yourbrand_servicebus_name_catalog_contracts_productimageupda
 }
 
 resource namespaces_yourbrand_servicebus_name_catalog_contracts_productpriceupdated 'Microsoft.ServiceBus/namespaces/topics@2022-10-01-preview' = {
-  parent: namespaces_yourbrand_servicebus_name_resource
+  parent: namespaces_yourbrand_servicebus_resource
   location: location
   name: 'catalog.contracts~productpriceupdated'
   properties: {
@@ -7543,7 +7543,7 @@ resource namespaces_yourbrand_servicebus_name_catalog_contracts_productpriceupda
 }
 
 resource servers_yourbrand_sqlserver_name_ActiveDirectory 'Microsoft.Sql/servers/administrators@2023-02-01-preview' = {
-  parent: servers_yourbrand_sqlserver_name_resource
+  parent: servers_yourbrand_sqlserver_resource
   name: 'ActiveDirectory'
   properties: {
     administratorType: 'ActiveDirectory'
@@ -7554,7 +7554,7 @@ resource servers_yourbrand_sqlserver_name_ActiveDirectory 'Microsoft.Sql/servers
 }
 
 resource servers_yourbrand_sqlserver_name_Default 'Microsoft.Sql/servers/advancedThreatProtectionSettings@2023-02-01-preview' = {
-  parent: servers_yourbrand_sqlserver_name_resource
+  parent: servers_yourbrand_sqlserver_resource
   name: 'Default'
   properties: {
     state: 'Disabled'
@@ -7562,7 +7562,7 @@ resource servers_yourbrand_sqlserver_name_Default 'Microsoft.Sql/servers/advance
 }
 
 resource servers_yourbrand_sqlserver_name_CreateIndex 'Microsoft.Sql/servers/advisors@2014-04-01' = {
-  parent: servers_yourbrand_sqlserver_name_resource
+  parent: servers_yourbrand_sqlserver_resource
   name: 'CreateIndex'
   properties: {
     autoExecuteValue: 'Disabled'
@@ -7570,7 +7570,7 @@ resource servers_yourbrand_sqlserver_name_CreateIndex 'Microsoft.Sql/servers/adv
 }
 
 resource servers_yourbrand_sqlserver_name_DbParameterization 'Microsoft.Sql/servers/advisors@2014-04-01' = {
-  parent: servers_yourbrand_sqlserver_name_resource
+  parent: servers_yourbrand_sqlserver_resource
   name: 'DbParameterization'
   properties: {
     autoExecuteValue: 'Disabled'
@@ -7578,7 +7578,7 @@ resource servers_yourbrand_sqlserver_name_DbParameterization 'Microsoft.Sql/serv
 }
 
 resource servers_yourbrand_sqlserver_name_DefragmentIndex 'Microsoft.Sql/servers/advisors@2014-04-01' = {
-  parent: servers_yourbrand_sqlserver_name_resource
+  parent: servers_yourbrand_sqlserver_resource
   name: 'DefragmentIndex'
   properties: {
     autoExecuteValue: 'Disabled'
@@ -7586,7 +7586,7 @@ resource servers_yourbrand_sqlserver_name_DefragmentIndex 'Microsoft.Sql/servers
 }
 
 resource servers_yourbrand_sqlserver_name_DropIndex 'Microsoft.Sql/servers/advisors@2014-04-01' = {
-  parent: servers_yourbrand_sqlserver_name_resource
+  parent: servers_yourbrand_sqlserver_resource
   name: 'DropIndex'
   properties: {
     autoExecuteValue: 'Disabled'
@@ -7594,7 +7594,7 @@ resource servers_yourbrand_sqlserver_name_DropIndex 'Microsoft.Sql/servers/advis
 }
 
 resource servers_yourbrand_sqlserver_name_ForceLastGoodPlan 'Microsoft.Sql/servers/advisors@2014-04-01' = {
-  parent: servers_yourbrand_sqlserver_name_resource
+  parent: servers_yourbrand_sqlserver_resource
   name: 'ForceLastGoodPlan'
   properties: {
     autoExecuteValue: 'Enabled'
@@ -7602,7 +7602,7 @@ resource servers_yourbrand_sqlserver_name_ForceLastGoodPlan 'Microsoft.Sql/serve
 }
 
 resource Microsoft_Sql_servers_auditingPolicies_servers_yourbrand_sqlserver_name_Default 'Microsoft.Sql/servers/auditingPolicies@2014-04-01' = {
-  parent: servers_yourbrand_sqlserver_name_resource
+  parent: servers_yourbrand_sqlserver_resource
   location: location
   name: 'Default'
   properties: {
@@ -7611,7 +7611,7 @@ resource Microsoft_Sql_servers_auditingPolicies_servers_yourbrand_sqlserver_name
 }
 
 resource Microsoft_Sql_servers_auditingSettings_servers_yourbrand_sqlserver_name_Default 'Microsoft.Sql/servers/auditingSettings@2023-02-01-preview' = {
-  parent: servers_yourbrand_sqlserver_name_resource
+  parent: servers_yourbrand_sqlserver_resource
   name: 'default'
   properties: {
     auditActionsAndGroups: []
@@ -7625,7 +7625,7 @@ resource Microsoft_Sql_servers_auditingSettings_servers_yourbrand_sqlserver_name
 }
 
 resource Microsoft_Sql_servers_azureADOnlyAuthentications_servers_yourbrand_sqlserver_name_Default 'Microsoft.Sql/servers/azureADOnlyAuthentications@2023-02-01-preview' = {
-  parent: servers_yourbrand_sqlserver_name_resource
+  parent: servers_yourbrand_sqlserver_resource
   name: 'Default'
   properties: {
     azureADOnlyAuthentication: false
@@ -7633,7 +7633,7 @@ resource Microsoft_Sql_servers_azureADOnlyAuthentications_servers_yourbrand_sqls
 }
 
 resource Microsoft_Sql_servers_connectionPolicies_servers_yourbrand_sqlserver_name_default 'Microsoft.Sql/servers/connectionPolicies@2023-02-01-preview' = {
-  parent: servers_yourbrand_sqlserver_name_resource
+  parent: servers_yourbrand_sqlserver_resource
   location: location
   name: 'default'
   properties: {
@@ -7642,7 +7642,7 @@ resource Microsoft_Sql_servers_connectionPolicies_servers_yourbrand_sqlserver_na
 }
 
 resource servers_yourbrand_sqlserver_name_yourbrand_carts_db 'Microsoft.Sql/servers/databases@2023-02-01-preview' = {
-  parent: servers_yourbrand_sqlserver_name_resource
+  parent: servers_yourbrand_sqlserver_resource
   kind: 'v12.0,user'
   location: location
   name: 'yourbrand-carts-db'
@@ -7665,7 +7665,7 @@ resource servers_yourbrand_sqlserver_name_yourbrand_carts_db 'Microsoft.Sql/serv
 }
 
 resource servers_yourbrand_sqlserver_name_yourbrand_catalog_db 'Microsoft.Sql/servers/databases@2023-02-01-preview' = {
-  parent: servers_yourbrand_sqlserver_name_resource
+  parent: servers_yourbrand_sqlserver_resource
   kind: 'v12.0,user'
   location: location
   name: 'yourbrand-catalog-db'
@@ -7693,7 +7693,7 @@ resource servers_yourbrand_sqlserver_name_master_Default 'Microsoft.Sql/servers/
     state: 'Disabled'
   }
   dependsOn: [
-    servers_yourbrand_sqlserver_name_resource
+    servers_yourbrand_sqlserver_resource
   ]
 }
 
@@ -7704,7 +7704,7 @@ resource Microsoft_Sql_servers_databases_auditingPolicies_servers_yourbrand_sqls
     auditingState: 'Disabled'
   }
   dependsOn: [
-    servers_yourbrand_sqlserver_name_resource
+    servers_yourbrand_sqlserver_resource
   ]
 }
 
@@ -7717,7 +7717,7 @@ resource Microsoft_Sql_servers_databases_auditingSettings_servers_yourbrand_sqls
     storageAccountSubscriptionId: '00000000-0000-0000-0000-000000000000'
   }
   dependsOn: [
-    servers_yourbrand_sqlserver_name_resource
+    servers_yourbrand_sqlserver_resource
   ]
 }
 
@@ -7730,7 +7730,7 @@ resource Microsoft_Sql_servers_databases_extendedAuditingSettings_servers_yourbr
     storageAccountSubscriptionId: '00000000-0000-0000-0000-000000000000'
   }
   dependsOn: [
-    servers_yourbrand_sqlserver_name_resource
+    servers_yourbrand_sqlserver_resource
   ]
 }
 
@@ -7740,7 +7740,7 @@ resource Microsoft_Sql_servers_databases_geoBackupPolicies_servers_yourbrand_sql
     state: 'Enabled'
   }
   dependsOn: [
-    servers_yourbrand_sqlserver_name_resource
+    servers_yourbrand_sqlserver_resource
   ]
 }
 
@@ -7748,7 +7748,7 @@ resource servers_yourbrand_sqlserver_name_master_Current 'Microsoft.Sql/servers/
   name: '${servers_yourbrand_sqlserver_name}/master/Current'
   properties: {}
   dependsOn: [
-    servers_yourbrand_sqlserver_name_resource
+    servers_yourbrand_sqlserver_resource
   ]
 }
 
@@ -7766,7 +7766,7 @@ resource Microsoft_Sql_servers_databases_securityAlertPolicies_servers_yourbrand
     state: 'Disabled'
   }
   dependsOn: [
-    servers_yourbrand_sqlserver_name_resource
+    servers_yourbrand_sqlserver_resource
   ]
 }
 
@@ -7776,7 +7776,7 @@ resource Microsoft_Sql_servers_databases_transparentDataEncryption_servers_yourb
     state: 'Disabled'
   }
   dependsOn: [
-    servers_yourbrand_sqlserver_name_resource
+    servers_yourbrand_sqlserver_resource
   ]
 }
 
@@ -7789,12 +7789,12 @@ resource Microsoft_Sql_servers_databases_vulnerabilityAssessments_servers_yourbr
     }
   }
   dependsOn: [
-    servers_yourbrand_sqlserver_name_resource
+    servers_yourbrand_sqlserver_resource
   ]
 }
 
 resource Microsoft_Sql_servers_devOpsAuditingSettings_servers_yourbrand_sqlserver_name_Default 'Microsoft.Sql/servers/devOpsAuditingSettings@2023-02-01-preview' = {
-  parent: servers_yourbrand_sqlserver_name_resource
+  parent: servers_yourbrand_sqlserver_resource
   name: 'Default'
   properties: {
     isAzureMonitorTargetEnabled: false
@@ -7805,7 +7805,7 @@ resource Microsoft_Sql_servers_devOpsAuditingSettings_servers_yourbrand_sqlserve
 }
 
 resource servers_yourbrand_sqlserver_name_current 'Microsoft.Sql/servers/encryptionProtector@2023-02-01-preview' = {
-  parent: servers_yourbrand_sqlserver_name_resource
+  parent: servers_yourbrand_sqlserver_resource
   kind: 'servicemanaged'
   name: 'current'
   properties: {
@@ -7816,7 +7816,7 @@ resource servers_yourbrand_sqlserver_name_current 'Microsoft.Sql/servers/encrypt
 }
 
 resource Microsoft_Sql_servers_extendedAuditingSettings_servers_yourbrand_sqlserver_name_Default 'Microsoft.Sql/servers/extendedAuditingSettings@2023-02-01-preview' = {
-  parent: servers_yourbrand_sqlserver_name_resource
+  parent: servers_yourbrand_sqlserver_resource
   name: 'default'
   properties: {
     auditActionsAndGroups: []
@@ -7830,22 +7830,22 @@ resource Microsoft_Sql_servers_extendedAuditingSettings_servers_yourbrand_sqlser
 }
 
 resource servers_yourbrand_sqlserver_name_AllowAllWindowsAzureIps 'Microsoft.Sql/servers/firewallRules@2023-02-01-preview' = {
-  parent: servers_yourbrand_sqlserver_name_resource
+  parent: servers_yourbrand_sqlserver_resource
   name: 'AllowAllWindowsAzureIps'
 }
 
 resource servers_yourbrand_sqlserver_name_ClientIPAddress_2023_10_01_17_21_33 'Microsoft.Sql/servers/firewallRules@2023-02-01-preview' = {
-  parent: servers_yourbrand_sqlserver_name_resource
+  parent: servers_yourbrand_sqlserver_resource
   name: 'ClientIPAddress_2023-10-01_17-21-33'
 }
 
 resource servers_yourbrand_sqlserver_name_ClientIPAddress_2023_9_30_19_48_38 'Microsoft.Sql/servers/firewallRules@2023-02-01-preview' = {
-  parent: servers_yourbrand_sqlserver_name_resource
+  parent: servers_yourbrand_sqlserver_resource
   name: 'ClientIPAddress_2023-9-30_19-48-38'
 }
 
 resource servers_yourbrand_sqlserver_name_ServiceManaged 'Microsoft.Sql/servers/keys@2023-02-01-preview' = {
-  parent: servers_yourbrand_sqlserver_name_resource
+  parent: servers_yourbrand_sqlserver_resource
   kind: 'servicemanaged'
   name: 'ServiceManaged'
   properties: {
@@ -7854,7 +7854,7 @@ resource servers_yourbrand_sqlserver_name_ServiceManaged 'Microsoft.Sql/servers/
 }
 
 resource Microsoft_Sql_servers_securityAlertPolicies_servers_yourbrand_sqlserver_name_Default 'Microsoft.Sql/servers/securityAlertPolicies@2023-02-01-preview' = {
-  parent: servers_yourbrand_sqlserver_name_resource
+  parent: servers_yourbrand_sqlserver_resource
   name: 'Default'
   properties: {
     disabledAlerts: [
@@ -7870,7 +7870,7 @@ resource Microsoft_Sql_servers_securityAlertPolicies_servers_yourbrand_sqlserver
 }
 
 resource Microsoft_Sql_servers_sqlVulnerabilityAssessments_servers_yourbrand_sqlserver_name_Default 'Microsoft.Sql/servers/sqlVulnerabilityAssessments@2023-02-01-preview' = {
-  parent: servers_yourbrand_sqlserver_name_resource
+  parent: servers_yourbrand_sqlserver_resource
   name: 'Default'
   properties: {
     state: 'Disabled'
@@ -7878,7 +7878,7 @@ resource Microsoft_Sql_servers_sqlVulnerabilityAssessments_servers_yourbrand_sql
 }
 
 resource Microsoft_Sql_servers_vulnerabilityAssessments_servers_yourbrand_sqlserver_name_Default 'Microsoft.Sql/servers/vulnerabilityAssessments@2023-02-01-preview' = {
-  parent: servers_yourbrand_sqlserver_name_resource
+  parent: servers_yourbrand_sqlserver_resource
   name: 'Default'
   properties: {
     recurringScans: {
@@ -8565,5 +8565,196 @@ resource namespaces_yourbrand_servicebus_name_catalog_contracts_productpriceupda
       compatibilityLevel: 20
       sqlExpression: '1=1'
     }
+  }
+}
+
+/* ACR Roles */
+
+@description('This is the built-in AcrPull role. See https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#acrpull')
+resource acrPullRoleDefinition 'Microsoft.Authorization/roleDefinitions@2018-01-01-preview' existing = {
+  scope: subscription()
+  name: '7f951dda-4ed3-4680-a7ca-43fe172d538d'
+}
+
+resource acrpull_store_web_roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  scope: registries_yourbrandcr_resource
+  name: guid(resourceGroup().id, containerapps_yourbrand_store_web_resource.id, acrPullRoleDefinition.id)
+  properties: {
+    roleDefinitionId: acrPullRoleDefinition.id
+    principalId: containerapps_yourbrand_store_web_resource.identity.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
+resource acrpull_admin_web_roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  scope: registries_yourbrandcr_resource
+  name: guid(resourceGroup().id, containerapps_yourbrand_admin_web_resource.id, acrPullRoleDefinition.id)
+  properties: {
+    roleDefinitionId: acrPullRoleDefinition.id
+    principalId: containerapps_yourbrand_admin_web_resource.identity.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
+resource acrpull_carts_api_roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  scope: registries_yourbrandcr_resource
+  name: guid(resourceGroup().id, containerapps_yourbrand_carts_api_resource.id, acrPullRoleDefinition.id)
+  properties: {
+    roleDefinitionId: acrPullRoleDefinition.id
+    principalId: containerapps_yourbrand_carts_api_resource.identity.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
+resource acrpull_catalog_api_roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  scope: registries_yourbrandcr_resource
+  name: guid(resourceGroup().id, containerapps_yourbrand_catalog_api_resource.id, acrPullRoleDefinition.id)
+  properties: {
+    roleDefinitionId: acrPullRoleDefinition.id
+    principalId: containerapps_yourbrand_catalog_api_resource.identity.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
+
+/* KeyVault Roles */
+
+@description('This is the built-in KeyVault Secrets User role. See https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#key-vault-secrets-user')
+resource keyVaultSecretsUserRoleDefinition 'Microsoft.Authorization/roleDefinitions@2018-01-01-preview' existing = {
+  scope: subscription()
+  name: '4633458b-17de-408a-b874-0445c86b69e6'
+}
+
+resource kvsu_store_web_roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  scope: vaults_yourbrand_keyvault_resource
+  name: guid(resourceGroup().id, containerapps_yourbrand_store_web_resource.id, keyVaultSecretsUserRoleDefinition.id)
+  properties: {
+    roleDefinitionId: keyVaultSecretsUserRoleDefinition.id
+    principalId: containerapps_yourbrand_store_web_resource.identity.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
+resource kvsu_admin_web_roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  scope: vaults_yourbrand_keyvault_resource
+  name: guid(resourceGroup().id, containerapps_yourbrand_admin_web_resource.id, keyVaultSecretsUserRoleDefinition.id)
+  properties: {
+    roleDefinitionId: keyVaultSecretsUserRoleDefinition.id
+    principalId: containerapps_yourbrand_admin_web_resource.identity.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
+resource kvsu_carts_api_roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  scope: vaults_yourbrand_keyvault_resource
+  name: guid(resourceGroup().id, containerapps_yourbrand_carts_api_resource.id, keyVaultSecretsUserRoleDefinition.id)
+  properties: {
+    roleDefinitionId: keyVaultSecretsUserRoleDefinition.id
+    principalId: containerapps_yourbrand_carts_api_resource.identity.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
+resource kvsu_catalog_api_roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  scope: vaults_yourbrand_keyvault_resource
+  name: guid(resourceGroup().id, containerapps_yourbrand_catalog_api_resource.id, keyVaultSecretsUserRoleDefinition.id)
+  properties: {
+    roleDefinitionId: keyVaultSecretsUserRoleDefinition.id
+    principalId: containerapps_yourbrand_catalog_api_resource.identity.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
+/* Service Bus Roles */
+
+@description('This is the built-in Azure Service Bus Data Owner role. See https://learn.microsoft.com/en-gb/azure/role-based-access-control/built-in-roles#azure-service-bus-data-owner')
+resource azureServiceBusDataOwnerRoleDefinition 'Microsoft.Authorization/roleDefinitions@2018-01-01-preview' existing = {
+  scope: subscription()
+  name: '090c5cfd-751d-490a-894a-3ce6f1109419'
+}
+
+resource asbdo_store_web_roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  scope: namespaces_yourbrand_servicebus_resource
+  name: guid(resourceGroup().id, containerapps_yourbrand_store_web_resource.id, azureServiceBusDataOwnerRoleDefinition.id)
+  properties: {
+    roleDefinitionId: azureServiceBusDataOwnerRoleDefinition.id
+    principalId: containerapps_yourbrand_store_web_resource.identity.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
+resource asbdo_admin_web_roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  scope: namespaces_yourbrand_servicebus_resource
+  name: guid(resourceGroup().id, containerapps_yourbrand_admin_web_resource.id, azureServiceBusDataOwnerRoleDefinition.id)
+  properties: {
+    roleDefinitionId: azureServiceBusDataOwnerRoleDefinition.id
+    principalId: containerapps_yourbrand_admin_web_resource.identity.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
+resource asbdo_carts_api_roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  scope: namespaces_yourbrand_servicebus_resource
+  name: guid(resourceGroup().id, containerapps_yourbrand_carts_api_resource.id, azureServiceBusDataOwnerRoleDefinition.id)
+  properties: {
+    roleDefinitionId: azureServiceBusDataOwnerRoleDefinition.id
+    principalId: containerapps_yourbrand_carts_api_resource.identity.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
+resource asbdo_catalog_api_roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  scope: namespaces_yourbrand_servicebus_resource
+  name: guid(resourceGroup().id, containerapps_yourbrand_catalog_api_resource.id, azureServiceBusDataOwnerRoleDefinition.id)
+  properties: {
+    roleDefinitionId: azureServiceBusDataOwnerRoleDefinition.id
+    principalId: containerapps_yourbrand_catalog_api_resource.identity.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
+/* SQL Server Roles */
+
+@description('This is the built-in Contributor role. See https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#contributor')
+resource contributorRoleDefinition 'Microsoft.Authorization/roleDefinitions@2018-01-01-preview' existing = {
+  scope: subscription()
+  name: 'b24988ac-6180-42a0-ab88-20f7382dd24c'
+}
+
+resource sqldb_carts_api_roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  scope: servers_yourbrand_sqlserver_resource
+  name: guid(resourceGroup().id, containerapps_yourbrand_carts_api_resource.id, contributorRoleDefinition.id)
+  properties: {
+    roleDefinitionId: contributorRoleDefinition.id
+    principalId: containerapps_yourbrand_carts_api_resource.identity.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
+resource sqldb_catalog_api_roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  scope: servers_yourbrand_sqlserver_resource
+  name: guid(resourceGroup().id, containerapps_yourbrand_catalog_api_resource.id, contributorRoleDefinition.id)
+  properties: {
+    roleDefinitionId: contributorRoleDefinition.id
+    principalId: containerapps_yourbrand_catalog_api_resource.identity.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
+/* Storage Account Roles */
+
+@description('This is the built-in Storage Blob Data Owner role. See https://learn.microsoft.com/en-gb/azure/role-based-access-control/built-in-roles#storage-blob-data-owner')
+resource storageBlobDataOwnerRoleDefinition 'Microsoft.Authorization/roleDefinitions@2018-01-01-preview' existing = {
+  scope: subscription()
+  name: 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b'
+}
+
+resource sa_catalog_api_roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  scope: storageAccounts_yourbrandstorage_name_resource
+  name: guid(resourceGroup().id, containerapps_yourbrand_catalog_api_resource.id, storageBlobDataOwnerRoleDefinition.id)
+  properties: {
+    roleDefinitionId: storageBlobDataOwnerRoleDefinition.id
+    principalId: containerapps_yourbrand_catalog_api_resource.identity.principalId
+    principalType: 'ServicePrincipal'
   }
 }
