@@ -1,0 +1,48 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "prefix": {
+        "value": ""
+      },
+      "suffix": {
+          "value": ""
+      },
+      "tags": {
+          "value": {}
+      },
+      "containerapps_yourbrand_admin_web_name": {
+        "value": "yourbrand-admin-web"
+      },
+      "containerapps_yourbrand_carts_api_name": {
+        "value": "yourbrand-carts-api"
+      },
+      "containerapps_yourbrand_catalog_api_name": {
+        "value": "yourbrand-catalog-api"
+      },
+      "containerapps_yourbrand_store_web_name": {
+        "value": "yourbrand-store-web"
+      },
+      "managedEnvironments_yourbrand_containerappenvironment_name": {
+        "value": "yourbrand-containerappenvironment"
+      },
+      "namespaces_yourbrand_servicebus_name": {
+        "value": "yourbrand-servicebus"
+      },
+      "registries_yourbrandcr_name": {
+        "value": "yourbrandcr"
+      },
+      "servers_yourbrand_sqlserver_name": {
+        "value": "yourbrand-sqlserver"
+      },
+      "storageAccounts_yourbrandstorage_name": {
+        "value": "yourbrandstorage"
+      },
+      "vaults_yourbrand_keyvault_name": {
+        "value": "yourbrand-keyvault"
+      },
+      "virtualNetworks_vnet_YourBrand_bd77_name": {
+        "value": "yourbrand-vnet"
+      }
+    }
+  }
