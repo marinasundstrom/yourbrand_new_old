@@ -4,6 +4,8 @@ This project uses System-assigned managed identities and roles to authorize reso
 
 You also need to add yourself as a member for certain resources in order to view, and update their data.
 
+Some resources migh have more permissions than they need. This will be reviewed and changed in the future.
+
 ## How to enable managed identities and roles
 
 Managed identities are enabled in for each service in their "Identity" blade, for services where it has to be explicitly enabled.
@@ -18,23 +20,47 @@ The container apps need roles to pull images from the container registry.
 
 Assign yourself as a ``Contributor`` so that you will be able to view and edit the contents in the Azure Portal.
 
-Assign role ``AcrPull`` to all container apps so that they can pull the images.
+Then assign the role ``AcrPull`` to allow container apps to pull images from ACR.
+
+| Resource                   | Role    |
+|--------                    |----     |
+| ``yourbrand-store-web``    | AcrPull |
+| ``yourbrand-admin-web``    | AcrPull |
+| ``yourbrand-catalog-api``  | AcrPull |
+| ``yourbrand-carts-api``    | AcrPull |
 
 ## Key Vault access
 
 Assign yourself as a ``Contributor`` so that you will be able to view and edit contents in the Azure Portal.
 
-Assign the role ``Key Vault Secrets User`` in ``yourbrand-keyvault`` to all Container apps.
+Then assign the role ``Key Vault Secrets User`` to resources according to this:
+
+| Resource                   | Role                    |
+|--------                    |----                     |
+| ``yourbrand-store-web``    | Key Vault Secrets User  |
+| ``yourbrand-admin-web``    | Key Vault Secrets User  |
+| ``yourbrand-catalog-api``  | Key Vault Secrets User  |
+| ``yourbrand-carts-api``    | Key Vault Secrets User  |
 
 ## Service bus access
 
-Assign the following roles in ``yourbrand-servicebus`` to all Container apps:
+To allow container apps to use ``yourbrand-servicebus``.
 
-* ``Azure Service Bus Data Owner`` (?)
+Then assign the role ``Azure Service Bus Data Owner`` to resources according to this:
+
+| Resource                   | Role                          |
+|--------                    |----                           |
+| ``yourbrand-store-web``    | Azure Service Bus Data Owner  |
+| ``yourbrand-admin-web``    | Azure Service Bus Data Owner  |
+| ``yourbrand-catalog-api``  | Azure Service Bus Data Owner  |
+| ``yourbrand-carts-api``    | Azure Service Bus Data Owner  |
+
+Alternative roles that can be used in combination:
+
 * ``Azure Service Bus Data Receiver``
 * ``Azure Service Bus Data Sender``
 
-## SQL Server and databases
+## SQL Server and database access
 
 Roles are to be assigned on the SQL Server.
 
@@ -46,8 +72,10 @@ Make sure password is enabled to run migrations as part of GitHub Actions.
 
 Assign these role ``Contributor`` to the following Container apps:
 
-* ``yourbrand-catalog-api``
-* ``yourbrand-carts-api``
+| Resource                   | Role          |
+|--------                    |----           |
+| ``yourbrand-catalog-api``  | Contributor   |
+| ``yourbrand-carts-api``    | Contributor   |
 
 _This list might change as more  container apps and databases are added._
 
@@ -77,7 +105,11 @@ ALTER ROLE db_datawriter ADD MEMBER [yourbrand-carts-api]
 
 Assign yourself as a ``Contributor`` to be able to view and edit contents in the Azure Portal.
 
-``yourbrand-catalog-api`` should be a ``Storage Blob Data Owner``.
+Then assign the role ``Storage Blob Data Owner`` to consuming resources:
+
+| Resource                   | Role                      |
+|--------                    |----                       |
+| ``yourbrand-catalog-api``  | Storage Blob Data Owner   |
 
 Enable anonymous access on storage account.
 
