@@ -132,8 +132,6 @@ builder.Services.AddSingleton<RenderingContext, ServerRenderingContext>();
 
 builder.Services.AddSingleton<RequestContext>();
 
-builder.Services.AddScoped<ServerNavigationManager>();
-
 builder.Services.AddLocalization();
 
 builder.Services.AddMassTransit(x =>
