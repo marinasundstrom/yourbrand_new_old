@@ -16,6 +16,8 @@ az login
 
 Create resources listed [here](resources.md).
 
+Or use the [Bicep templates](/bicep) (Follow these [instructions](/docs/azure/bicep.md))
+
 ## Assigning managed identities
 
 Described [here](identities-and-roles.md).
