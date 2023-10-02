@@ -12,13 +12,13 @@ You need to add yourself as a member for certain resources in order to view, and
 
 The container apps need roles to pull images from the container registry.
 
-Assign yourself as a ``Contributor``.
+Assign yourself as a ``Contributor`` to be able to view and edit the contents in the Azure Portal.
 
 Assign role ``AcrPull`` to all container apps.
 
 ## Key Vault access
 
-Assign yourself as a ``Contributor``.
+Assign yourself as a ``Contributor`` to be able to view and edit contents in the Azure Portal.
 
 *  Both ``yourbrand-catalog-api``, ``yourbrand-carts-api``,and ``yourbrand-store-web`` should be ``Key Vault Secrets User`` to ``yourbrand-keyvault``
 
@@ -69,7 +69,7 @@ ALTER ROLE db_datawriter ADD MEMBER [yourbrand-carts-api]
 
 ## Storage Account access
 
-Set yourself as a ``Contributor``.
+Set yourself as a ``Contributor`` to be able to view and edit contents in the Azure Portal.
 
 ``yourbrand-catalog-api`` should be a ``Storage Blob Data Owner``.
 
