@@ -18,7 +18,7 @@ Create resources listed [here](resources.md).
 
 ## Assigning managed identities
 
-Described [here](identities-and-permissions.md).
+Described [here](identities-and-roles.md).
 
 ## Add secrets to KeyVault
 
