@@ -11,38 +11,41 @@
       "tags": {
           "value": {}
       },
-      "containerapps_yourbrand_admin_web_name": {
+      "adminWebName": {
         "value": "yourbrand-admin-web"
       },
-      "containerapps_yourbrand_carts_api_name": {
+      "cartsApiName": {
         "value": "yourbrand-carts-api"
       },
-      "containerapps_yourbrand_catalog_api_name": {
+      "catalogApiName": {
         "value": "yourbrand-catalog-api"
       },
-      "containerapps_yourbrand_store_web_name": {
+      "storeWebName": {
         "value": "yourbrand-store-web"
       },
-      "managedEnvironments_yourbrand_containerappenvironment_name": {
+      "containerAppEnvironmentName": {
         "value": "yourbrand-containerappenvironment"
       },
-      "namespaces_yourbrand_servicebus_name": {
+      "serviceBusName": {
         "value": "yourbrand-servicebus"
       },
-      "registries_yourbrandcr_name": {
+      "containerRegistryName": {
         "value": "yourbrandcr"
       },
-      "servers_yourbrand_sqlserver_name": {
+      "sqlServerName": {
         "value": "yourbrand-sqlserver"
       },
-      "storageAccounts_yourbrandstorage_name": {
+      "storageAccountName": {
         "value": "yourbrandstorage"
       },
-      "vaults_yourbrand_keyvault_name": {
+      "keyVaultName": {
         "value": "yourbrand-keyvault"
       },
-      "virtualNetworks_vnet_YourBrand_bd77_name": {
+      "vNetName": {
         "value": "yourbrand-vnet"
+      },
+      "logAnalyticsWorkspaceName": {
+        "value": "yourbrand-loganalytics-workspace"
       }
     }
   }
