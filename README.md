@@ -1,8 +1,8 @@
 # YourBrand
 
-Store Web: https://yourbrand-store-web.politesky-8ec786a9.swedencentral.azurecontainerapps.io/
+Store Web: https://yourbrand-store-web.wonderfulsea-5402179d.swedencentral.azurecontainerapps.io/
 
-Admin Web: https://yourbrand-admin-web.politesky-8ec786a9.swedencentral.azurecontainerapps.io/
+Admin Web: https://yourbrand-admin-web.wonderfulsea-5402179d.swedencentral.azurecontainerapps.io/
 
 ## Deployment to Azure
 
