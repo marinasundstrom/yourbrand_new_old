@@ -41,9 +41,6 @@
       "keyVaultName": {
         "value": "yourbrand-keyvault"
       },
-      "vNetName": {
-        "value": "yourbrand-vnet"
-      },
       "logAnalyticsWorkspaceName": {
         "value": "yourbrand-loganalytics-workspace"
       }

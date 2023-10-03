@@ -22,10 +22,6 @@ param sqlServerName string
 param storageAccountName string
 param keyVaultName string
 
-param vNetName string
-var subnetName = 'backendSubnet'
-var subnetRef = resourceId('Microsoft.Network/virtualNetworks/subnets', vNetName, subnetName)
-
 param logAnalyticsWorkspaceName string =  '${prefix}log-${uniqueString(resourceGroup().id)}${suffix}'
 
 resource containerRegistry 'Microsoft.ContainerRegistry/registries@2023-07-01' = {
@@ -88,43 +84,6 @@ resource keyVault 'Microsoft.KeyVault/vaults@2023-02-01' = {
   }
 }
 
-resource vNet 'Microsoft.Network/virtualNetworks@2023-05-01' = {
-  location: location
-  name: vNetName
-  properties: {
-    addressSpace: {
-      addressPrefixes: [
-        '10.0.0.0/16'
-      ]
-    }
-    enableDdosProtection: false
-    subnets: [
-      {
-        id: subnetRef
-        name: 'infra-subnet'
-        properties: {
-          addressPrefix: '10.0.0.0/23'
-          delegations: [
-            {
-              id: '${subnetRef}/delegations/Microsoft.App.environments'
-              name: 'Microsoft.App.environments'
-              properties: {
-                serviceName: 'Microsoft.App/environments'
-              }
-              type: 'Microsoft.Network/virtualNetworks/subnets/delegations'
-            }
-          ]
-          privateEndpointNetworkPolicies: 'Disabled'
-          privateLinkServiceNetworkPolicies: 'Enabled'
-          serviceEndpoints: []
-        }
-        type: 'Microsoft.Network/virtualNetworks/subnets'
-      }
-    ]
-    virtualNetworkPeerings: []
-  }
-}
-
 resource serviceBus 'Microsoft.ServiceBus/namespaces@2022-10-01-preview' = {
   location: location
   name: serviceBusName
@@ -150,14 +109,6 @@ resource sqlServer 'Microsoft.Sql/servers@2023-02-01-preview' = {
   name: sqlServerName
   properties: {
     administratorLogin: 'CloudSA88e7889a'
-    administrators: {
-      administratorType: 'ActiveDirectory'
-      azureADOnlyAuthentication: false
-      login: 'robert.sundstrom_outlook.com#EXT#@robertsundstromoutlook.onmicrosoft.com'
-      principalType: 'User'
-      sid: 'a37f7582-181d-46d5-8403-f45c75dd39b2'
-      tenantId: '99305724-84f9-474d-aa7b-759e7b4d38d2'
-    }
     minimalTlsVersion: '1.2'
     publicNetworkAccess: 'Enabled'
     restrictOutboundNetworkAccess: 'Disabled'
@@ -454,26 +405,6 @@ resource containerAppEnvironment 'Microsoft.App/managedEnvironments@2023-05-02-p
         sharedKey:  logAnalyticsWorkspace.listKeys().primarySharedKey
       }
     }
-    customDomainConfiguration: {}
-    daprConfiguration: {}
-    infrastructureResourceGroup: 'ME_${containerAppEnvironmentName}_YourBrand_swedencentral'
-    kedaConfiguration: {}
-    peerAuthentication: {
-      mtls: {
-        enabled: false
-      }
-    }
-    vnetConfiguration: {
-      infrastructureSubnetId: subnetRef
-      internal: false
-    }
-    workloadProfiles: [
-      {
-        name: 'Consumption'
-        workloadProfileType: 'Consumption'
-      }
-    ]
-    zoneRedundant: false
   }
 }
 
@@ -589,40 +520,6 @@ resource secret_yourbrand_servicebus_connectionstring 'Microsoft.KeyVault/vaults
     }
   }
 }
-
-resource vNet_infra_subnet 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
-  parent: vNet
-  name: 'infra-subnet'
-  properties: {
-    addressPrefix: '10.0.0.0/23'
-    delegations: [
-      {
-        id: '${subnetRef}/delegations/Microsoft.App.environments'
-        name: 'Microsoft.App.environments'
-        properties: {
-          serviceName: 'Microsoft.App/environments'
-        }
-        type: 'Microsoft.Network/virtualNetworks/subnets/delegations'
-      }
-    ]
-    privateEndpointNetworkPolicies: 'Disabled'
-    privateLinkServiceNetworkPolicies: 'Enabled'
-    serviceEndpoints: []
-  }
-}
-
-/*
-resource sqlServer_ActiveDirectory 'Microsoft.Sql/servers/administrators@2023-02-01-preview' = {
-  parent: sqlServer
-  name: 'ActiveDirectory'
-  properties: {
-    administratorType: 'ActiveDirectory'
-    login: 'robert.sundstrom_outlook.com#EXT#@robertsundstromoutlook.onmicrosoft.com'
-    sid: 'a37f7582-181d-46d5-8403-f45c75dd39b2'
-    tenantId: '99305724-84f9-474d-aa7b-759e7b4d38d2'
-  }
-}
-*/
 
 resource sqlServer_yourbrand_carts_db 'Microsoft.Sql/servers/databases@2023-02-01-preview' = {
   parent: sqlServer
