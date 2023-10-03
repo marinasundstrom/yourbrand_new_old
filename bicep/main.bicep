@@ -533,7 +533,7 @@ resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-06
 resource secret_carts_api_url 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
   parent: keyVault
   location: location
-  name: 'yourbrand-carts-api-url'
+  name: 'yourbrand-carts-svc-url'
   properties: {
     value: cartsApi.properties.configuration.ingress.fqdn
     attributes: {
@@ -557,7 +557,7 @@ resource secret_yourbrand_carts_db_connectionstring 'Microsoft.KeyVault/vaults/s
 resource secret_yourbrand_catalog_api_url 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
   parent: keyVault
   location: location
-  name: 'yourbrand-catalog-api-url'
+  name: 'yourbrand-catalog-svc-url'
   properties: {
     value: catalogApi.properties.configuration.ingress.fqdn
     attributes: {

@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-		<OpenApiReference Include="OpenAPIs\catalog-api.yaml" Options="/UseBaseUrl:false /GenerateClientInterfaces:true /GenerateNullableReferenceTypes:true" Namespace="CatalogAPI">
+		<OpenApiReference Include="OpenAPIs\catalog-svc.yaml" Options="/UseBaseUrl:false /GenerateClientInterfaces:true /GenerateNullableReferenceTypes:true" Namespace="CatalogAPI">
 			<SourceUri>https://localhost:5001/swagger/v1/swagger.yaml</SourceUri>
 			<ClassName>{controller}Client</ClassName>
 			<OutputPath>CatalogApiClient.cs</OutputPath>

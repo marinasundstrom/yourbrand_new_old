@@ -26,7 +26,7 @@ Described [here](identities-and-roles.md).
 
 Add the [secrets](secrets.md) to KeyVault.
 
-## Scale rule for ``yourbrand-carts-api``
+## Scale rule for ``yourbrand-carts-svc``
 
 Input these in the portal:
 

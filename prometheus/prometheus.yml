@@ -8,9 +8,9 @@ scrape_configs:
   - job_name: 'admin-web'
     static_configs:
       - targets: ['admin-web:8084']
-  - job_name: 'catalog-api'
+  - job_name: 'catalog-svc'
     static_configs:
-      - targets: ['catalog-api:8082']
-  - job_name: 'carts-api'
+      - targets: ['catalog-svc:8082']
+  - job_name: 'carts-svc'
     static_configs:
-      - targets: ['carts-api:8083']
+      - targets: ['carts-svc:8083']

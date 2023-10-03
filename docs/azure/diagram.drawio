@@ -28,10 +28,10 @@
         <mxCell id="_eD--tQv2EBPczZDE6vB-7" value="yourbrand-keyvault" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/security/Key_Vaults.svg;hachureGap=4;fontFamily=Helvetica;labelBackgroundColor=none;" parent="1" vertex="1">
           <mxGeometry x="430" y="850" width="68" height="68" as="geometry" />
         </mxCell>
-        <mxCell id="_eD--tQv2EBPczZDE6vB-9" value="yourbrand-catalog-api" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/other/Worker_Container_App.svg;hachureGap=4;fontFamily=Helvetica;labelBackgroundColor=none;fontColor=#FFFFFF;" parent="1" vertex="1">
+        <mxCell id="_eD--tQv2EBPczZDE6vB-9" value="yourbrand-catalog-svc" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/other/Worker_Container_App.svg;hachureGap=4;fontFamily=Helvetica;labelBackgroundColor=none;fontColor=#FFFFFF;" parent="1" vertex="1">
           <mxGeometry x="690" y="620" width="68" height="66" as="geometry" />
         </mxCell>
-        <mxCell id="_eD--tQv2EBPczZDE6vB-10" value="yourbrand-carts-api" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/other/Worker_Container_App.svg;hachureGap=4;fontFamily=Helvetica;labelBackgroundColor=none;fontColor=#FFFFFF;" parent="1" vertex="1">
+        <mxCell id="_eD--tQv2EBPczZDE6vB-10" value="yourbrand-carts-svc" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/other/Worker_Container_App.svg;hachureGap=4;fontFamily=Helvetica;labelBackgroundColor=none;fontColor=#FFFFFF;" parent="1" vertex="1">
           <mxGeometry x="850" y="620" width="68" height="66" as="geometry" />
         </mxCell>
         <mxCell id="_eD--tQv2EBPczZDE6vB-11" value="yourbrand-store-web" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/other/Worker_Container_App.svg;hachureGap=4;fontFamily=Helvetica;labelBackgroundColor=none;fontColor=#FFFFFF;" parent="1" vertex="1">

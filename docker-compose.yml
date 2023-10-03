@@ -13,18 +13,18 @@ services:
     ports:
       - 8080:8080
 
-  catalog-api:
-    image: catalog-api
-    container_name: catalog-api
+  catalog-svc:
+    image: catalog-svc
+    container_name: catalog-svc
     build:
       context: .
       dockerfile: src/Catalog/Catalog.API/Dockerfile
     ports:
       - 8082:8080
 
-  carts-api:
-    image: carts-api
-    container_name: carts-api
+  carts-svc:
+    image: carts-svc
+    container_name: carts-svc
     build:
       context: .
       dockerfile: src/Carts/Carts.API/Dockerfile

@@ -15,8 +15,8 @@ A KeyVault named: ``yourbrand-keyvault``
 Create a container app environment with containers:
 
 * ``yourbrand-store-web``
-* ``yourbrand-catalog-api``
-* ``yourbrand-carts-api``
+* ``yourbrand-catalog-svc``
+* ``yourbrand-carts-svc``
 
 Make sure that the container of each container app has a system-assigned managed identity.
 

@@ -19,17 +19,17 @@ services:
       - 8080:8080
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "yourbrand-catalog-api-url=http://host.docker.internal:8082"
+      - "yourbrand-catalog-svc-url=http://host.docker.internal:8082"
       - RABBITMQ_HOST=host.docker.internal
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
     depends_on:
-      - catalog-api
+      - catalog-svc
       - rabbitmq
 
-  catalog-api:
-    image: catalog-api
-    container_name: catalog-api
+  catalog-svc:
+    image: catalog-svc
+    container_name: catalog-svc
     build:
       context: .
       dockerfile: src/Catalog/Catalog.API/Dockerfile
@@ -50,9 +50,9 @@ services:
     - rabbitmq
     - azurite
 
-  carts-api:
-    image: carts-api
-    container_name: carts-api
+  carts-svc:
+    image: carts-svc
+    container_name: carts-svc
     build:
       context: .
       dockerfile: src/Carts/Carts.API/Dockerfile
@@ -83,9 +83,9 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - RABBITMQ_HOST=host.docker.internal
-      - "yourbrand-catalog-api-url=http://host.docker.internal:8082"
+      - "yourbrand-catalog-svc-url=http://host.docker.internal:8082"
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
     depends_on:
-      - catalog-api
+      - catalog-svc
       - rabbitmq

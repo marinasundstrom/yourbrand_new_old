@@ -26,8 +26,8 @@ Then assign the role ``AcrPull`` to allow container apps to pull images from ACR
 |--------                    |----     |
 | ``yourbrand-store-web``    | AcrPull |
 | ``yourbrand-admin-web``    | AcrPull |
-| ``yourbrand-catalog-api``  | AcrPull |
-| ``yourbrand-carts-api``    | AcrPull |
+| ``yourbrand-catalog-svc``  | AcrPull |
+| ``yourbrand-carts-svc``    | AcrPull |
 
 ## Key Vault access
 
@@ -39,8 +39,8 @@ Then assign the role ``Key Vault Secrets User`` to resources according to this:
 |--------                    |----                     |
 | ``yourbrand-store-web``    | Key Vault Secrets User  |
 | ``yourbrand-admin-web``    | Key Vault Secrets User  |
-| ``yourbrand-catalog-api``  | Key Vault Secrets User  |
-| ``yourbrand-carts-api``    | Key Vault Secrets User  |
+| ``yourbrand-catalog-svc``  | Key Vault Secrets User  |
+| ``yourbrand-carts-svc``    | Key Vault Secrets User  |
 
 ## Service bus access
 
@@ -52,8 +52,8 @@ Then assign the role ``Azure Service Bus Data Owner`` to resources according to 
 |--------                    |----                           |
 | ``yourbrand-store-web``    | Azure Service Bus Data Owner  |
 | ``yourbrand-admin-web``    | Azure Service Bus Data Owner  |
-| ``yourbrand-catalog-api``  | Azure Service Bus Data Owner  |
-| ``yourbrand-carts-api``    | Azure Service Bus Data Owner  |
+| ``yourbrand-catalog-svc``  | Azure Service Bus Data Owner  |
+| ``yourbrand-carts-svc``    | Azure Service Bus Data Owner  |
 
 These permissions are required so that the container apps can set up topics and subscriptions.
 
@@ -71,8 +71,8 @@ Assign these role ``Contributor`` to the following Container apps:
 
 | Resource                   | Role          |
 |--------                    |----           |
-| ``yourbrand-catalog-api``  | Contributor   |
-| ``yourbrand-carts-api``    | Contributor   |
+| ``yourbrand-catalog-svc``  | Contributor   |
+| ``yourbrand-carts-svc``    | Contributor   |
 
 _This list might change as more  container apps and databases are added._
 
@@ -82,20 +82,20 @@ Provided that the services have got permission to the SQL Server.
 
 Create users for each container app to each DB:
 
-In ``yourbrand-catalog-db`` run this to create user for ``yourbrand-catalog-api``:
+In ``yourbrand-catalog-db`` run this to create user for ``yourbrand-catalog-svc``:
 
 ```sql
-CREATE USER [yourbrand-catalog-api] FROM EXTERNAL PROVIDER
-ALTER ROLE db_datareader ADD MEMBER [yourbrand-catalog-api]
-ALTER ROLE db_datawriter ADD MEMBER [yourbrand-catalog-api]
+CREATE USER [yourbrand-catalog-svc] FROM EXTERNAL PROVIDER
+ALTER ROLE db_datareader ADD MEMBER [yourbrand-catalog-svc]
+ALTER ROLE db_datawriter ADD MEMBER [yourbrand-catalog-svc]
 ```
 
-And, in ``yourbrand-carts-db`` run this to create user for ``yourbrand-carts-api``:
+And, in ``yourbrand-carts-db`` run this to create user for ``yourbrand-carts-svc``:
 
 ```sql
-CREATE USER [yourbrand-carts-api] FROM EXTERNAL PROVIDER
-ALTER ROLE db_datareader ADD MEMBER [yourbrand-carts-api]
-ALTER ROLE db_datawriter ADD MEMBER [yourbrand-carts-api]
+CREATE USER [yourbrand-carts-svc] FROM EXTERNAL PROVIDER
+ALTER ROLE db_datareader ADD MEMBER [yourbrand-carts-svc]
+ALTER ROLE db_datawriter ADD MEMBER [yourbrand-carts-svc]
 ```
 
 ## Storage Account access
@@ -106,7 +106,7 @@ Then assign the role ``Storage Blob Data Owner`` to consuming resources:
 
 | Resource                   | Role                      |
 |--------                    |----                       |
-| ``yourbrand-catalog-api``  | Storage Blob Data Owner   |
+| ``yourbrand-catalog-svc``  | Storage Blob Data Owner   |
 
 Enable anonymous access on storage account.
 

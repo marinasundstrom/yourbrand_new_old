@@ -70,7 +70,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddHttpClient("CatalogAPI", (sp, http) =>
 {
-    http.BaseAddress = new Uri(builder.Configuration["yourbrand-catalog-api-url"]!);
+    http.BaseAddress = new Uri(builder.Configuration["yourbrand-catalog-svc-url"]!);
 });
 
 builder.Services.AddHttpClient<IProductsClient>("CatalogAPI")
@@ -78,7 +78,7 @@ builder.Services.AddHttpClient<IProductsClient>("CatalogAPI")
 
 builder.Services.AddHttpClient("CatalogAPI", (sp, http) =>
 {
-    http.BaseAddress = new Uri(builder.Configuration["yourbrand-catalog-api-url"]!);
+    http.BaseAddress = new Uri(builder.Configuration["yourbrand-catalog-svc-url"]!);
 });
 
 builder.Services.AddHttpClient<IProductCategoriesClient>("CatalogAPI")
@@ -86,7 +86,7 @@ builder.Services.AddHttpClient<IProductCategoriesClient>("CatalogAPI")
 
 builder.Services.AddHttpClient("CartsAPI", (sp, http) =>
 {
-    http.BaseAddress = new Uri(builder.Configuration["yourbrand-carts-api-url"]!);
+    http.BaseAddress = new Uri(builder.Configuration["yourbrand-carts-svc-url"]!);
 });
 
 builder.Services.AddHttpClient<ICartsClient>("CartsAPI")
@@ -97,7 +97,7 @@ builder.Services
     .AddProductCategoriesServices()
     .AddCartServices();
 
-//builder.Services.AddCartsClient(builder.Configuration["yourbrand-carts-api-url"]!);
+//builder.Services.AddCartsClient(builder.Configuration["yourbrand-carts-svc-url"]!);
 
 if (builder.Environment.IsProduction())
 {

@@ -15,10 +15,10 @@
         "value": "yourbrand-admin-web"
       },
       "cartsApiName": {
-        "value": "yourbrand-carts-api"
+        "value": "yourbrand-carts-svc"
       },
       "catalogApiName": {
-        "value": "yourbrand-catalog-api"
+        "value": "yourbrand-catalog-svc"
       },
       "storeWebName": {
         "value": "yourbrand-store-web"

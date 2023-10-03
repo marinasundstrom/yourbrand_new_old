@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-		<OpenApiReference Include="OpenAPIs\carts-api.yaml" Options="/UseBaseUrl:false /GenerateClientInterfaces:true /GenerateNullableReferenceTypes:true" Namespace="CartsAPI">
+		<OpenApiReference Include="OpenAPIs\carts-svc.yaml" Options="/UseBaseUrl:false /GenerateClientInterfaces:true /GenerateNullableReferenceTypes:true" Namespace="CartsAPI">
 			<SourceUri>https://localhost:5001/swagger/v1/swagger.yaml</SourceUri>
 			<ClassName>{controller}Client</ClassName>
 			<OutputPath>CartsApiClient.cs</OutputPath>

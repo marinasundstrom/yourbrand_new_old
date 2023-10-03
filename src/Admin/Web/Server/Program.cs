@@ -32,7 +32,7 @@ if (builder.Environment.IsProduction())
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
-builder.Services.AddCatalogClients(builder.Configuration["yourbrand-catalog-api-url"]);
+builder.Services.AddCatalogClients(builder.Configuration["yourbrand-catalog-svc-url"]);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();

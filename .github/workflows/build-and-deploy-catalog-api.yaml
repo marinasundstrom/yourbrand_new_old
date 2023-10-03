@@ -34,7 +34,7 @@ jobs:
         registryUrl: ${{ secrets.REGISTRY_LOGIN_SERVER }}
         registryUsername: ${{ secrets.REGISTRY_USERNAME }}
         registryPassword: ${{ secrets.REGISTRY_PASSWORD }}
-        containerAppName: yourbrand-catalog-api
+        containerAppName: yourbrand-catalog-svc
         resourceGroup: ${{ secrets.RESOURCE_GROUP }}
         location: 'Sweden Central'
         targetPort: 8080
