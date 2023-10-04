@@ -23,24 +23,46 @@
             @if(cartItems!.Any()) 
             {
                 <li>
-                    <ul  class="list-group mb-3">
+                    <ul class="mb-4 list-unstyled">
                         @foreach (var cartItem in cartItems)
                         {
-                            <li @key="cartItem.Id" class="list-group-item d-flex justify-content-between lh-sm">
-                                <div class="my-2">
-                                    <h6 class="mb-2">@cartItem.Name x @cartItem.Quantity</h6>
-                                    <small class="text-muted">@cartItem.Description</small>
+                            <li @key="cartItem.Id">
+                                <div class="row">
+                                    <div class="col-1" style="width: 90px;">
+                                        <a href="/products/@cartItem.ProductHandle">
+                                            <img src="@cartItem.Image" class="ms-0 my-2 mx-2 me-4 img-border-rounded shadow" style="width: 60px; height: 60px; aspect-ratio: 1 / 1; object-fit: cover;" />
+                                        </a>    
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="py-2">
+                                                <h6 class="mb-2">@cartItem.Name x @cartItem.Quantity</h6>
+                                                <small class="text-muted">@cartItem.Description</small>
+                                                <p class="small text-muted my-2">@((cartItem.Price * cartItem.Quantity).FormatCurrency(currency))</p>
+                                            </div>
+
+                                            <div>
+                                                <button class="btn" @onclick="async () => await DeleteItem(cartItem)"><i class="bi bi-trash" /></button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <span class="small text-muted my-2">@((cartItem.Price * cartItem.Quantity).FormatCurrency(currency))</span>
                             </li>   
                         }
-                        <li class="list-group-item d-flex justify-content-between">
-                        <span>Total</span>
-                        <strong>@(cartItems.Sum(x => x.Total).FormatCurrency(currency))</strong>
+
+                        <hr />
+
+                        <li class="mt-4 d-flex justify-content-between">
+                            <span>Total</span>
+                            <strong>@(cartItems.Sum(x => x.Total).FormatCurrency(currency))</strong>
                         </li>
                     </ul>
                 </li>
-                <CartButtons />
+
+                <li class="mb-2">
+                    <CartButtons />
+                </li>
             }
             else 
             {
@@ -79,6 +101,11 @@
     {
         cartItems = CartService.Items.ToList();
         await InvokeAsync(StateHasChanged);
+    }
+
+    async Task DeleteItem(CartItem cartItem)
+    {
+        await CartService.RemoveCartItem(cartItem.Id);
     }
 
     public void Dispose() 

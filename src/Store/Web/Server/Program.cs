@@ -197,6 +197,7 @@ app.UseStaticFiles();
 app.UseCors(MyAllowSpecificOrigins);
 
 app.MapRazorComponents<App>()
+    .AddAdditionalAssemblies(typeof(BlazorApp.CookieHandler).Assembly)
     .AddWebAssemblyRenderMode()
     .AddServerRenderMode();
 

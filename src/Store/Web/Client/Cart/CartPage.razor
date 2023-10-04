@@ -1,9 +1,16 @@
+@page "/basket"
+@attribute [StreamRendering(false)]
 @attribute [RenderModeWebAssembly(prerender: false)]
 @using BlazorApp
 @using BlazorApp.Cart
 @using BlazorApp.Shared
 @using Client.Shared
 @inject ICartService CartService
+
+
+<AppPageTitle>Basket</AppPageTitle>
+
+<h1>Basket</h1>
 
 @if(cartItems is null) 
 {
@@ -12,38 +19,41 @@
 else 
 {
     <div style="row">
-        <div class="col-12 col-sm-12 col-lg-9 col-md-12">
+        <div class="col-12 col-sm-12 col-lg-6 col-md-12">
             @if(cartItems.Any()) 
             {
-                <ul class="list-group mb-3 my-3 bg-body">
+                <ul class="mb-4 my-3 bg-body list-unstyled">
                     @foreach (var cartItem in cartItems)
                     {
-                        <li @key="cartItem.Id" class="list-group-item lh-sm"> @* d-flex flex-row justify-content-between flex-md-wrap *@
-                            <div class="row">
-                                <div class="col d-flex">
-                                    <a href="/products/@cartItem.ProductHandle">
-                                        <img src="@cartItem.Image" class="ms-0 my-2 mx-2 me-4 img-border-rounded shadow" style="width: 80px; height: 80px; aspect-ratio: 1 / 1; object-fit: cover;" />
-                                    </a>                                        
-                                    <div class="py-2">
-                                        <a class="text-decoration-none text-dark" href="/products/@cartItem.ProductId">
-                                            <h6 class="my-0 mb-2">@cartItem.Name</h6>
-                                        </a>
-                                        <small class="text-muted">@cartItem.Description</small>
+                        <li @key="cartItem.Id"> @* d-flex flex-row justify-content-between flex-md-wrap *@
+                           <div class="row mb-3">
+                                    <div class="col-1" style="width: 110px;">
+                                        <a href="/products/@cartItem.ProductHandle">
+                                            <img src="@cartItem.Image" class="ms-0 my-2 mx-2 me-4 img-border-rounded shadow" style="width: 80px; height: 80px; aspect-ratio: 1 / 1; object-fit: cover;" />
+                                        </a>    
                                     </div>
-                                </div>
-                                <div class="col-sm-12 col-md-4 mt-2 mt-md-0 py-2">
-                                    <span class="text-muted small">@((cartItem.Total).FormatCurrency(Currency))</span>
-                                    <div class="d-flex flex-wrap">
-                                        <InputQuantity Class="mt-2" MinValue="0" Value="cartItem.Quantity" ValueChanged="async (v) => await ItemQuantityChanged(cartItem, v)" />
-                                        <div class="d-flex">
-                                            <button class="btn ms-2" @onclick="async () => await UpdateItem(cartItem)"><i class="bi bi-pencil-square" /></button>
-                                            <button class="btn" @onclick="async () => await DeleteItem(cartItem)"><i class="bi bi-x-lg" /></button>
+
+                                    <div class="col">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="py-2">
+                                                <h6 class="mb-2">@cartItem.Name x @cartItem.Quantity</h6>
+                                                <small class="text-muted">@cartItem.Description</small>
+                                                <InputQuantity Class="mt-2" MinValue="0" Value="cartItem.Quantity" ValueChanged="async (v) => await ItemQuantityChanged(cartItem, v)" />
+                                                <p class="small text-muted my-2">@((cartItem.Price * cartItem.Quantity).FormatCurrency(Currency))</p>
+                                            </div>
+
+                                            <div>
+                                                @* <button class="btn ms-2" @onclick="async () => await UpdateItem(cartItem)"><i class="bi bi-pencil-square" /></button> *@
+                                                <button class="btn" @onclick="async () => await DeleteItem(cartItem)"><i class="bi bi-trash" /></button>                                           
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
                         </li>   
                     }
+
+                    <hr />
+
                     <li class="list-group-item d-flex justify-content-end">
                         <div>
                             <li class="d-flex justify-content-between">
