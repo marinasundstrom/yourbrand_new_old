@@ -112,8 +112,8 @@ builder.Services.AddObservability(serviceName, serviceVersion, builder.Configura
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
-    .AddWebAssemblyComponents()
-    .AddServerComponents();
+    .AddInteractiveWebAssemblyComponents()
+    .AddInteractiveServerComponents();
 
 builder.Services.AddAuthorization()
     .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -196,10 +196,12 @@ app.UseStaticFiles();
 
 app.UseCors(MyAllowSpecificOrigins);
 
+app.UseAntiforgery();
+
 app.MapRazorComponents<App>()
     .AddAdditionalAssemblies(typeof(BlazorApp.CookieHandler).Assembly)
-    .AddWebAssemblyRenderMode()
-    .AddServerRenderMode();
+    .AddInteractiveWebAssemblyRenderMode()
+    .AddInteractiveServerRenderMode();
 
 app
     .MapProductsEndpoints()

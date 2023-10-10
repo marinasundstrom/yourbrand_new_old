@@ -1,4 +1,5 @@
-@attribute [RenderModeWebAssembly]
+@using static Microsoft.AspNetCore.Components.Web.RenderMode
+@rendermode InteractiveWebAssembly
 @attribute [StreamRendering(true)]
 @inject BlazorApp.Cart.ICartService CartService
 

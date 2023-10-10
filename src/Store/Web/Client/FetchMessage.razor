@@ -1,4 +1,4 @@
-@attribute [RenderModeWebAssembly(false)]
+@rendermode renderMode
 
 @inject HttpClient HttpClient
 
@@ -7,6 +7,8 @@
 <p class="mt-4">@result</p>
 
 @code {
+    static IComponentRenderMode renderMode = new InteractiveWebAssemblyRenderMode(prerender: false);
+
     string? result;
 
     public async Task Fetch() 

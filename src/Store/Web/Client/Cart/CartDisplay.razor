@@ -1,5 +1,6 @@
-@attribute [RenderModeWebAssembly(prerender: true)]
+@using static Microsoft.AspNetCore.Components.Web.RenderMode
 @attribute [StreamRendering(true)]
+@rendermode renderMode
 @using BlazorApp.Cart
 @inject ICartService CartService
 
@@ -15,6 +16,8 @@
 </a>
 
 @code {
+    static IComponentRenderMode renderMode = new InteractiveWebAssemblyRenderMode(prerender: false);
+
     [Parameter]
     public int NoOfItems { get; set; }
 

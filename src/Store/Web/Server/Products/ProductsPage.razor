@@ -4,7 +4,7 @@
 
 <AppPageTitle>@(categoryName is null ? "Products" : categoryName)</AppPageTitle>
 
-<Client.Products.ProductsView Page="Page" PageSize="PageSize" SearchTerm="@SearchTerm" Path="@Path" @rendermode="@RenderMode.Auto" />
+<Client.Products.ProductsView Page="Page" PageSize="PageSize" SearchTerm="@SearchTerm" Path="@Path" @rendermode="@RenderMode.InteractiveAuto" />
 
 @code {
     string? categoryName = null;

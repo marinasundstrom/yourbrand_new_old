@@ -1,6 +1,6 @@
 @page "/basket"
 @attribute [StreamRendering(false)]
-@attribute [RenderModeWebAssembly(prerender: false)]
+@rendermode renderMode
 @using BlazorApp
 @using BlazorApp.Cart
 @using BlazorApp.Shared
@@ -83,6 +83,8 @@ else
 
 @code 
 {
+    static IComponentRenderMode renderMode = new InteractiveWebAssemblyRenderMode(prerender: false);
+
     string Currency = "SEK";
     IEnumerable<BlazorApp.Cart.CartItem>? cartItems;
 
