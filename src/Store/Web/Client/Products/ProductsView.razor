@@ -1,10 +1,12 @@
 @attribute [StreamRendering(true)]
+@implements IDisposable
 @using BlazorApp.Products
 @using BlazorApp.ProductCategories
 @inject IProductsService ProductsService
 @inject IProductCategoryService ProductCategoryService
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime
+@inject PersistentComponentState ApplicationState
 
 <div class="row gx-5 pt-md-4">
 
@@ -119,7 +121,10 @@
 
 @code
 {
+    private PersistingComponentStateSubscription persistingSubscription;
+
     ICollection<BlazorApp.Products.Product>? products;
+
     int pageCount = 0;
     bool loading = false;
     bool error = false;
@@ -139,22 +144,61 @@
     [Parameter]
     public string? Path { get; set; }
 
+    BlazorApp.ProductCategories.ProductCategoryDto? category;
+
     protected override async Task OnInitializedAsync()
     {
         NavigationManager.LocationChanged += OnLocationChanged;
         //Console.WriteLine(Path);
 
+        persistingSubscription = 
+            ApplicationState.RegisterOnPersisting(PersistData);
+
         if(!string.IsNullOrEmpty(Path))
         {
-            var category = await ProductCategoryService.GetProductCategoryById(Path);
-
+            if (!ApplicationState.TryTakeFromJson<BlazorApp.ProductCategories.ProductCategoryDto>(
+                "productCategory", out var restored2))
+            {
+                category = await ProductCategoryService.GetProductCategoryById(Path);
+            }
+            else
+            {
+                category = restored2!;
+            }
+        
             categoryName = category.Name;
             categoryDescription = category.Description;
 
              // TODO: Set title to node.Name using JS
         }
 
-        await FetchItems(Page.GetValueOrDefault());
+        //await FetchItems(Page.GetValueOrDefault());
+
+        if (!ApplicationState.TryTakeFromJson<ICollection<Product>>(
+            "products", out var restored))
+        {
+            await FetchItems(Page.GetValueOrDefault());
+            products = products;
+        }
+        else
+        {
+            products = restored!;
+        }
+
+        if (ApplicationState.TryTakeFromJson<int>(
+            "pageCount", out var restored3))
+        {
+            pageCount = restored3!;
+        }
+    }
+
+    private Task PersistData()
+    {
+        ApplicationState.PersistAsJson("productCategory", category);
+        ApplicationState.PersistAsJson("products", products);
+        ApplicationState.PersistAsJson("pageCount", pageCount);
+
+        return Task.CompletedTask;
     }
 
     private async void OnLocationChanged(object? sender, LocationChangedEventArgs eventArgs)
@@ -254,8 +298,9 @@
         // TODO: Set title to node.Name using JS
     }
 
-    public void Dispose()
+    void IDisposable.Dispose()
     {
+        persistingSubscription.Dispose();
         NavigationManager.LocationChanged -= OnLocationChanged;
     }
 }

@@ -1,8 +1,9 @@
 @using BlazorApp.ProductCategories
 @using Client.ProductCategories
+@implements IDisposable
 @inject IProductCategoryService ProductCategoryService
 @inject NavigationManager NavigationManager
-@implements IDisposable
+@inject PersistentComponentState ApplicationState
 
 @if(categoryTree is not null)
 {
@@ -28,17 +29,41 @@
 
 @code 
 {
+    private PersistingComponentStateSubscription persistingSubscription;
+
     string? path;
 
     ProductCategoryTreeRootDto? categoryTree;
 
     protected override async Task OnInitializedAsync()
     {
-        NavigationManager.LocationChanged += OnLocationChanged;
-        path = new Uri(NavigationManager.Uri).LocalPath[1..];
-        path = path.Substring(path.IndexOf("/") + 1);
 
-        categoryTree = await ProductCategoryService.GetProductCategories();
+        persistingSubscription = 
+            ApplicationState.RegisterOnPersisting(PersistData);
+
+                path = new Uri(NavigationManager.Uri).LocalPath[1..];
+                path = path.Substring(path.IndexOf("/") + 1);
+
+
+            if (!ApplicationState.TryTakeFromJson<BlazorApp.ProductCategories.ProductCategoryTreeRootDto>(
+                "categoryTree", out var restored))
+            {
+                categoryTree = await ProductCategoryService.GetProductCategories();           
+            }
+            else
+            {
+                categoryTree = restored!;
+            }
+
+        NavigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    private Task PersistData()
+    {
+        ApplicationState.PersistAsJson("path", path);
+        ApplicationState.PersistAsJson("categoryTree", categoryTree);
+
+        return Task.CompletedTask;
     }
 
     [Parameter] public EventCallback<ProductCategoryTreeNodeDto> OnClick { get; set; } = default!;
@@ -51,8 +76,9 @@
         Console.WriteLine("Tree" + path);
     }
 
-    public void Dispose()
+     void IDisposable.Dispose()
     {
+        persistingSubscription.Dispose();
         NavigationManager.LocationChanged -= OnLocationChanged;
     }
 }
