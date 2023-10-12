@@ -18,6 +18,8 @@ Main dependencies:
 * Azure SQL Edge
 * Azurite Storage Emulator
 
+### Dependants
+
 For observability:
 
 * Grafana
