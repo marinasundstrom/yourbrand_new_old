@@ -1,3 +1,68 @@
 {
-    "dotnet.defaultSolution": "YourBrand.sln"
+    "dotnet.defaultSolution": "YourBrand.sln",
+    "restoreTerminals.terminals": [
+        {
+            "splitTerminals": [
+                {
+                    "name": "Main",
+                    "shouldRunCommands": false
+                }
+            ]
+        },
+        {
+            "splitTerminals": [
+                {
+                    "name": "Store Web",
+                    "commands": [
+                        "dotnet run --project src/Store/Web/Server"
+                    ],
+                    "shouldRunCommands": false
+                }
+            ]
+        },
+        {
+            "splitTerminals": [
+                {
+                    "name": "Admin Web",
+                    "commands": [
+                        "dotnet run --project src/Admin/Web/Server"
+                    ],
+                    "shouldRunCommands": false
+                }
+            ]
+        },
+        {
+            "splitTerminals": [
+                {
+                    "name": "Catalog service",
+                    "commands": [
+                        "dotnet run --project src/Catalog/Catalog.API"
+                    ],
+                    "shouldRunCommands": false
+                }
+            ]
+        },
+        {
+            "splitTerminals": [
+                {
+                    "name": "Carts service",
+                    "commands": [
+                        "dotnet run --project src/Carts/Carts.API"
+                    ],
+                    "shouldRunCommands": false
+                }
+            ]
+        },
+        {
+            "splitTerminals": [
+                {
+                    "name": "Docker",
+                    "commands": [
+                        "docker compose -f docker-compose.deps.yml up -d"
+                    ],
+                    "shouldRunCommands": false
+                }
+            ]
+        }
+    ]
 }

@@ -11,6 +11,12 @@ The following software has to be present on your development machine in order to
 * .NET SDK 8
 * Docker desktop
 
+## VS Code extensions
+
+Run the ``install-vscode-extensions.sh`` script to install some useful extensions, like _Restore Terminals_.
+
+**Restore Terminals** will make it easier for you to start up all services locally by automatically creating a terminal window for each of them.
+
 ## Run dependencies in Docker
 
 To start the database and other [dependencies](dependencies.md), run this:
@@ -35,6 +41,12 @@ dotnet run --project src/Admin/Web/Server
 dotnet run --project src/Catalog/Catalog.API
 dotnet run --project src/Carts/Carts.API
 ```
+
+### VS Code
+
+You can use the [Restore Terminal](https://marketplace.visualstudio.com/items?itemName=EthanSK.restore-terminals) VS Code extension to restore Terminal windows with these commands.
+
+The terminals are configured in the ``.vscode/settings.json`` file.
 
 ## Developing the Store Web
 
