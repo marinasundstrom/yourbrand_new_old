@@ -48,6 +48,15 @@ You can use the [Restore Terminal](https://marketplace.visualstudio.com/items?it
 
 The terminals are configured in the ``.vscode/settings.json`` file.
 
+## Service hosts
+
+* Store Web: https://localhost:7188/
+* Admin Web: https://localhost:5001/
+* Catalog https://localhost:7134/
+* Carts: https://localhost:7154/
+
+Each services has a Swagger UI endpoint at ``/swagger``.
+
 ## Developing the Store Web
 
 ### Developing Store Web against services running locally
