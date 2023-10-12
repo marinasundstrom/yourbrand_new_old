@@ -4,15 +4,17 @@ This project uses System-assigned managed identities and roles to authorize reso
 
 You also need to add yourself as a member for certain resources in order to view, and update their data.
 
-Some resources migh have more permissions than they need. This will be reviewed and changed in the future.
+Some resources might have more permissions than they need. This will be reviewed and changed in the future.
+
+In this document the words "service" and "resource" are being used interchangeably - meaning the same.
 
 ## How to enable managed identities and roles
 
-Managed identities are enabled in for each service in their "Identity" blade, for services where it has to be explicitly enabled.
+Most of the resources require you to enable managed identity. You do that in the "Identity" blade of each resource.
 
-Enable "System-assigned managed identity".
+Choose "System-assigned managed identity".
 
-You are now able to manage the roles for each service in their respective "Access control (IAM)" blades.
+You are now able to manage member resources and their roles in the "Access control (IAM)" blades.
 
 ## Container registry access
 
@@ -28,6 +30,14 @@ Then assign the role ``AcrPull`` to allow container apps to pull images from ACR
 | ``yourbrand-admin-web``    | AcrPull |
 | ``yourbrand-catalog-svc``  | AcrPull |
 | ``yourbrand-carts-svc``    | AcrPull |
+
+### Container apps
+
+In order for the container apps to be able to pull images, you need to configure each app to pull a certain image from the registry using a managed identity.
+
+You basically do that from the Portal, where you are updating the revision.
+
+This part can be tricky. More on this will be added.
 
 ## Key Vault access
 
@@ -63,7 +73,9 @@ Roles are to be assigned on the SQL Server.
 
 Assign yourself as an admin /owner.
 
-Make sure password is enabled to run migrations as part of GitHub Actions.
+Make sure password is enabled to run migrations as part of GitHub Actions. 
+
+Remember the passwords that you set, since it has to be added as a Secret in GitHub.
 
 ### Roles
 
