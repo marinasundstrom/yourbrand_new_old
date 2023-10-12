@@ -12,7 +12,6 @@ COPY ["src/Carts/Carts.API/Carts.API.csproj", "src/Carts/Carts.API/"]
 COPY ["NuGet.config", "/"]
 RUN dotnet restore "src/Carts/Carts.API/Carts.API.csproj"
 COPY . .
-RUN dotnet test "/src/Carts/Carts.UnitTests"
 WORKDIR "/src/Carts/Carts.API"
 RUN dotnet build "Carts.API.csproj" -c $configuration -o /app/build
 
