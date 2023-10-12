@@ -65,3 +65,7 @@ const navbarLinks = document.querySelectorAll("#offcanvasNavbar .nav-link")
 for(let navbarLink of navbarLinks) {
     navbarLink.addEventListener("click", hideNavbarOffcanvas)
 }
+
+Blazor.addEventListener('enhancedload', () => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+});
