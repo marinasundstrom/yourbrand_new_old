@@ -137,3 +137,6 @@ static async Task SeedData(CartsContext context, IConfiguration configuration, I
             "database. Error: {Message}", ex.Message);
     }
 }
+
+// INFO: Makes Program class visible to IntegrationTests.
+public partial class Program { }

@@ -31,7 +31,7 @@ public sealed record AddCartItem
     public string Description { get; init; }
     public decimal Price { get; init; }
     public decimal? RegularPrice { get; init; } 
-    public int Quantity { get; init; }
+    public int Quantity { get; init; } = 1;
 }
 
 public sealed record AddCartItemResponse 
