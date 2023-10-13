@@ -4,6 +4,8 @@ Store Web: https://yourbrand-store-web.wonderfulsea-5402179d.swedencentral.azure
 
 Admin Web: https://yourbrand-admin-web.wonderfulsea-5402179d.swedencentral.azurecontainerapps.io/
 
+<img src="screenshot.png" height="600" />
+
 ## Goal
 
 Build an e-commerce solution that is ready for the cloud.
