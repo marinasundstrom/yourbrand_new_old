@@ -5,8 +5,6 @@ using Xunit.Abstractions;
 using Meziantou.Extensions.Logging.Xunit;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Testcontainers.SqlEdge;
-using DotNet.Testcontainers.Builders;
-using DotNet.Testcontainers.Networks;
 using Microsoft.EntityFrameworkCore;
 using Carts.API.Data;
 using MassTransit;
@@ -18,15 +16,13 @@ public class CartsTest : IAsyncLifetime
     private WebApplicationFactory<Program> factory;
     private HttpClient client;
     private ITestHarness harness;
-    const string cartsDb = "carts";
-
-    static readonly INetwork network = new NetworkBuilder()
-        .Build();
+    private const string CartsDbName = "yourbrand-carts-db";
+    private const string DbServerName = "yourbrand-test-sqlserver";
 
     static readonly SqlEdgeContainer _sqlEdgeContainer = new SqlEdgeBuilder()
         .WithImage("mcr.microsoft.com/azure-sql-edge:1.0.7")
-        .WithHostname(cartsDb)
-        .WithName("yourbrand-test-sqlserver")
+        .WithHostname(DbServerName)
+        .WithName(DbServerName)
         .Build();
 
     public CartsTest(ITestOutputHelper testOutputHelper)
@@ -36,8 +32,6 @@ public class CartsTest : IAsyncLifetime
 
     public async Task InitializeAsync()
     {
-        await network.CreateAsync();
-
         await _sqlEdgeContainer.StartAsync();
 
         factory = new WebApplicationFactory<Program>()
@@ -56,7 +50,7 @@ public class CartsTest : IAsyncLifetime
 
                         services.AddDbContext<CartsContext>((sp, options) =>
                         {
-                            var connectionString = _sqlEdgeContainer.GetConnectionString().Replace("master", "carts-db");
+                            var connectionString = _sqlEdgeContainer.GetConnectionString().Replace("master", CartsDbName);
                             options.UseSqlServer(connectionString);
                         });
 
