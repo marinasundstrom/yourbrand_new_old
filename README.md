@@ -4,7 +4,7 @@ Store Web: https://yourbrand-store-web.wonderfulsea-5402179d.swedencentral.azure
 
 Admin Web: https://yourbrand-admin-web.wonderfulsea-5402179d.swedencentral.azurecontainerapps.io/
 
-<img src="screenshot.png" height="600" />
+<img src="screenshot.png" style="max-height: 600px" />
 
 ## Goal
 
