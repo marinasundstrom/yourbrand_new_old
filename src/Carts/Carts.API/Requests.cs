@@ -113,7 +113,7 @@ public sealed record UpdateCartItemQuantity(string CartId, string CartItemId, in
                 return Result.Failure<CartItem>(Errors.CartItemNotFound);
             }
 
-            cartItem.Quantity = request.Quantity;
+            cart.UpdateCartItemQuantity(request.CartItemId, request.Quantity); 
             
             await cartsContext.SaveChangesAsync(cancellationToken);
 

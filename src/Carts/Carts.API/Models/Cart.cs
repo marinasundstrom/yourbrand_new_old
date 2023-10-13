@@ -22,7 +22,7 @@ public sealed class Cart
     public decimal Total { get; private set; }
 
     public IReadOnlyCollection<CartItem> Items => _cartItems;
-
+ 
     public CartItem AddItem(string name, string? image, long? productId, string? productHandle, string description, decimal price, decimal? regularPrice, int quantity)
     {
         var cartItem = _cartItems.FirstOrDefault(item => item.ProductId == productId);
@@ -31,13 +31,12 @@ public sealed class Cart
         {
             cartItem = new CartItem(name, image, productId, productHandle, description, price, regularPrice, quantity);
             _cartItems.Add(cartItem);
+            Total += cartItem.Total;
         }
         else 
         {
-            cartItem.Quantity += quantity;
+            UpdateCartItemQuantity(cartItem.Id, (int)cartItem.Quantity + quantity);
         }
-
-        Total += price * quantity;
 
         return cartItem;
     }
@@ -50,7 +49,21 @@ public sealed class Cart
         {
             _cartItems.Remove(cartItem);
 
-            Total -= cartItem.Price * (decimal)cartItem.Quantity;
+            Total -= cartItem.Total;
+        }
+    }
+
+    public void UpdateCartItemQuantity(string cartId, int quantity)
+    {
+        var cartItem = _cartItems.FirstOrDefault(item => item.Id == cartId);
+
+        if(cartItem is not null) 
+        {
+            decimal oldTotal = cartItem.Total;
+            Total -= oldTotal;
+
+            cartItem.Quantity = quantity;
+            Total += cartItem.Total;
         }
     }
 }
