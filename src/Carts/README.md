@@ -1,9 +1,9 @@
-# Catalog
+# Carts
 
 ## Seeding test data
 
 ```
-dotnet run --project Catalog.API -- --seed
+dotnet run --project Carts.API -- --seed
 ```
 
 This will create a sample cart with id "test". It is currently being used during development.
