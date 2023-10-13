@@ -4,6 +4,11 @@ To monitor instance, see metrics, and view logs in Grafana.
 
 Using Prometheus and Loki.
 
+## Monitored services
+
+* ``StoreWeb``
+* ``AdminWeb``
+
 ## Local development with Docker
 
 Grafana is one of the dependencies running in Docker Compose.
