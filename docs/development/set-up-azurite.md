@@ -29,3 +29,7 @@ Add the ```"publicAccess": "blob"``` key-value in the section shown below:
 ```
 
 Then, restart Azurite. 
+
+## Seed data
+
+Read about the [seed](/docs/seed/blobs).
