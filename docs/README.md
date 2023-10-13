@@ -1,9 +1,10 @@
 # Documentation
 
-## Local development
-* [Local development](local-development.md)
-* [Set up Azurite](set-up-azurite.md)
-* [Database migrations](database-migrations.md)
+## Development
+
+* [Local development](development/local-development.md)
+* [Set up Azurite](development/set-up-azurite.md)
+* [Database migrations](development/database-migrations.md)
 
 ## Azure
 

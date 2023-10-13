@@ -2,26 +2,20 @@
 
 These are the dependencies that this project, and all of its services have.
 
-## Azure
 
-In the cloud, in Azure:
+| Azure                         |  Locally (Docker)             |
+|--------                       |--------                       |       
+| ``Azure Service Bus``         | ``RabbitMQ``                  |
+| ``Azure SQL Server``          | ``Azure SQL Edge``            |
+| ``Azure Storage Account``     | ``Azurite Storage Emulator``  |
 
-* Azure Service Bus
-* Azure SQL Server
-* Azure Storage Account
 
-## Locally
-
-Main dependencies:
-
-* RabbitMQ
-* Azure SQL Edge
-* Azurite Storage Emulator
-
-### Dependants
+## Dependants
 
 For observability:
 
 * Grafana
 * Prometheus
 * Loki
+
+At the moment, only running locally.
