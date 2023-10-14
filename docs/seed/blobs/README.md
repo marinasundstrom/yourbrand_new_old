@@ -13,4 +13,4 @@ Folder: products
 
 ## Setting up Azurite Storage Emulator
 
-More on [setting up Azurite](/docs/set-up-azurite.md).
+More on [setting up Azurite](/docs/development/set-up-azurite.md).
