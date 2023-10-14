@@ -97,9 +97,13 @@ public sealed record CreateProduct(string Name, string Description, long Categor
                 return Result.Failure<Product>(Errors.HandleAlreadyTaken);
             }
 
-            string cdnBaseUrl = configuration["CdnBaseUrl"] ?? "https://yourbrandstorage.blob.core.windows.net";
+            var connectionString = catalogContext.Database.GetConnectionString()!;
 
-            var product = new Model.Product()
+            string cdnBaseUrl = connectionString.Contains("localhost") 
+                ? configuration["CdnBaseUrl"]! 
+                : "https://yourbrandstorage.blob.core.windows.net";
+
+            var product = new Domain.Entities.Product()
             {
                 Name = request.Name,
                 Description = request.Description,
@@ -213,7 +217,11 @@ public sealed record UpdateProductImage(string IdOrHandle, Stream Stream, string
 
             await blobClient.UploadAsync(request.Stream, new BlobHttpHeaders { ContentType = request.ContentType });
 
-            string cdnBaseUrl = configuration["CdnBaseUrl"] ?? "https://yourbrandstorage.blob.core.windows.net";
+            var connectionString = catalogContext.Database.GetConnectionString()!;
+
+            string cdnBaseUrl = connectionString.Contains("localhost") 
+                ? configuration["CdnBaseUrl"]! 
+                : "https://yourbrandstorage.blob.core.windows.net";
 
             product.Image = $"{cdnBaseUrl}/images/products/{request.FileName}";
 
