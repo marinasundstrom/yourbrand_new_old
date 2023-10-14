@@ -1,10 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Catalog.API.Model;
+using Catalog.API.Domain.Entities;
 
-namespace Catalog.API.Data;
+namespace Catalog.API.Persistence;
 
 public static class Seed
 {

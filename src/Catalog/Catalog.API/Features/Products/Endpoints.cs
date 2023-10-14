@@ -1,4 +1,4 @@
-using Catalog.API.Data;
+using Catalog.API.Persistence;
 using Catalog.API.Model;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
@@ -7,13 +7,13 @@ using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using MassTransit;
-using Catalog.API.ProductCategories;
+using Catalog.API.Features.ProductCategories;
 using System.ComponentModel.DataAnnotations;
 using FluentValidation;
 using MediatR;
 using MassTransit.Transports;
 
-namespace Catalog.API.Products;
+namespace Catalog.API.Features.Products;
 
 public static class Endpoints 
 {
@@ -220,7 +220,7 @@ public sealed record Product(
 
 public static class Mapping
 {
-    public static Product ToDto(this Model.Product product)
+    public static Product ToDto(this Domain.Entities.Product product)
     {
         return new(product.Id, product.Name, product.Category.ToShortDto(), product.Description, product.Price, product.RegularPrice, product.Image, product.Handle);
     }

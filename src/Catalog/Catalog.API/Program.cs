@@ -1,9 +1,9 @@
 ﻿using Azure.Storage.Blobs;
 using Azure.Identity;
 using YourBrand;
-using Catalog.API.Products;
-using Catalog.API.ProductCategories;
-using Catalog.API.Data;
+using Catalog.API.Features.Products;
+using Catalog.API.Features.ProductCategories;
+using Catalog.API.Persistence;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
@@ -68,8 +68,6 @@ builder.Services.AddSqlServer<CatalogContext>(
     ?? builder.Configuration.GetConnectionString("CatalogDb"),
     c => c.EnableRetryOnFailure());
 
-builder.Services.AddScoped<WeatherForecastService>();
-
 builder.Services.AddMediatR(c => c.RegisterServicesFromAssemblyContaining<Program>());
 
 builder.Services.AddMassTransit(x =>
@@ -132,16 +130,6 @@ app.MapHealthChecks("/healthz", new HealthCheckOptions()
     Predicate = _ => true,
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 });
-
-/*
-app.MapGet("/api/weatherforecast", async (DateOnly startDate, WeatherForecastService weatherForecastService, CancellationToken cancellationToken) =>
-    {
-        var forecasts = await weatherForecastService.GetWeatherForecasts(startDate, cancellationToken);
-        return Results.Ok(forecasts);
-    })
-    .WithName("GetWeatherForecast")
-    .WithOpenApi();
-*/
 
 using (var scope = app.Services.CreateScope())
 {

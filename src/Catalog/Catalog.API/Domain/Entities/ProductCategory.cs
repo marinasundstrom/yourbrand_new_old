@@ -1,4 +1,4 @@
-namespace Catalog.API.Model;
+namespace Catalog.API.Domain.Entities;
 
 public sealed class ProductCategory 
 {

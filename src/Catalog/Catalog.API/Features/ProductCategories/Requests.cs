@@ -1,10 +1,10 @@
 ﻿using System.Net;
-using Catalog.API.Data;
+using Catalog.API.Persistence;
 using Catalog.API.Model;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Catalog.API.ProductCategories;
+namespace Catalog.API.Features.ProductCategories;
 
 public static class Errors
 {
@@ -47,7 +47,7 @@ public sealed record GetProductCategoryById(string IdOrPath) : IRequest<Result<P
             var idOrPath = request.IdOrPath;
             var isId = int.TryParse(request.IdOrPath, out var id);
 
-            Model.ProductCategory? productCategory;
+            Domain.Entities.ProductCategory? productCategory;
 
             if (isId)
             {
@@ -104,7 +104,7 @@ public sealed record CreateProductCategory(string Name, string Description, long
             var parentCategory = await catalogContext.ProductCategories
                 .FirstOrDefaultAsync(p => p.Id == request.ParentCategoryId, cancellationToken);
 
-            var product = new Model.ProductCategory()
+            var product = new Domain.Entities.ProductCategory()
             {
                 Name = request.Name,
                 Description = request.Description,

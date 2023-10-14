@@ -2,14 +2,14 @@
 using System.Globalization;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using Catalog.API.Data;
+using Catalog.API.Persistence;
 using Catalog.API.Model;
 using MassTransit;
 using MassTransit.Transports;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Catalog.API.Products;
+namespace Catalog.API.Features.Products;
 
 public static class Errors
 {

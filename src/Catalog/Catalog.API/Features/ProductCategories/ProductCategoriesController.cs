@@ -1,8 +1,8 @@
-using Catalog.API.Data;
+using Catalog.API.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
 
-namespace Catalog.API.ProductCategories;
+namespace Catalog.API.Features.ProductCategories;
 
 [ApiController]
 [Route("api/[controller]")]

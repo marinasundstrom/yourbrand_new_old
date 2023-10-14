@@ -2,7 +2,7 @@ using Catalog.API.Model;
 using Microsoft.AspNetCore.Http.HttpResults;
 using MediatR;
 
-namespace Catalog.API.ProductCategories;
+namespace Catalog.API.Features.ProductCategories;
 
 public static class Endpoints 
 {
@@ -106,22 +106,22 @@ public sealed record UpdateProductCategoryDetailsRequest(string Name, string Des
 
 public static class Mapping
 {
-    public static ProductCategory ToDto(this Model.ProductCategory productCategory)
+    public static ProductCategory ToDto(this Domain.Entities.ProductCategory productCategory)
     {
         return new(productCategory.Id, productCategory.Name, productCategory.Description, productCategory.Parent?.ToShortDto(), productCategory.CanAddProducts, productCategory.ProductsCount, productCategory.Handle, productCategory.Path);
     }
 
-    public static ProductCategoryParent ToShortDto(this Model.ProductCategory productCategory)
+    public static ProductCategoryParent ToShortDto(this Domain.Entities.ProductCategory productCategory)
     {
         return new(productCategory.Id, productCategory.Name, productCategory.Description, productCategory.Handle, productCategory.Path, productCategory.Parent?.ToShortDto());
     }
 
-    public static ProductCategoryTreeNodeDto ToProductCategoryTreeNodeDto(this Model.ProductCategory productCategory)
+    public static ProductCategoryTreeNodeDto ToProductCategoryTreeNodeDto(this Domain.Entities.ProductCategory productCategory)
     {
         return new (productCategory.Id, productCategory.Name, productCategory.Handle, productCategory.Path, productCategory.Description, productCategory.Parent?.ToParentDto(), productCategory.SubCategories.Select(x => x.ToProductCategoryTreeNodeDto()), productCategory.ProductsCount, productCategory.CanAddProducts);
     }
 
-    public static ParentProductCategoryDto ToParentDto(this Model.ProductCategory productCategory)
+    public static ParentProductCategoryDto ToParentDto(this Domain.Entities.ProductCategory productCategory)
     {
         return new(productCategory.Id, productCategory.Name, productCategory.Handle, productCategory.Path, productCategory.Parent?.ToParentDto(), productCategory.ProductsCount);
     }
