@@ -19,7 +19,3 @@ dotnet run --project Carts.API -- --seed
 ```
 
 Revert the changes to restore connection string to local database.
-
-#### To do
-
-Need to make sure that the product images have the correct URLs for remote.

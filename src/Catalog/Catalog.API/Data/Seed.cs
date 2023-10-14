@@ -13,7 +13,11 @@ public static class Seed
         //await context.Database.EnsureDeletedAsync();
         await context.Database.EnsureCreatedAsync();
 
-        string cdnBaseUrl = configuration["CdnBaseUrl"] ?? "https://yourbrandstorage.blob.core.windows.net";
+        var connectionString = context.Database.GetConnectionString()!;
+
+        string cdnBaseUrl = connectionString.Contains("localhost") 
+            ? configuration["CdnBaseUrl"]! 
+            : "https://yourbrandstorage.blob.core.windows.net";
 
         var pastries = new ProductCategory() {
             Name = "Pastries",
