@@ -2,6 +2,9 @@ name: Build and deploy Catalog.API
 
 env:
   DOTNET_VERSION: '8.0.x' # set this to the .NET Core version to use
+  SERVICE_DIR: 'src/Catalog/Catalog.API'
+  UNITTESTS_DIR: 'src/Catalog/Catalog.UnitTests'
+  CONTAINERAPP_NAME: 'yourbrand-catalog-svc'
 
 on:
   workflow_dispatch:
@@ -15,6 +18,7 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
+
     - name: 'Checkout GitHub Action'
       uses: actions/checkout@main
       with:
@@ -26,34 +30,34 @@ jobs:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
     - name: Install dependencies
-      run: dotnet restore "src/Catalog/Catalog.API"
+      run: dotnet restore "${{ env.SERVICE_DIR }}"
 
     - name: Build
-      run: dotnet build "src/Catalog/Catalog.API"
+      run: dotnet build "${{ env.SERVICE_DIR }}"
 
     - name: Test with the dotnet CLI
-      run: dotnet test "src/Catalog/Catalog.UnitTests"
+      run: dotnet test "${{ env.UNITTESTS_DIR }}"
 
     - name: 'Login via Azure CLI'
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
-     
+    
     - name: Build and deploy Container App
       uses: azure/container-apps-deploy-action@v1
       with:
         appSourcePath: ${{ github.workspace }}
-        dockerfilePath: src/Catalog/Catalog.API/Dockerfile
+        dockerfilePath: ${{ env.SERVICE_DIR }}/Dockerfile
         registryUrl: ${{ secrets.REGISTRY_LOGIN_SERVER }}
         registryUsername: ${{ secrets.REGISTRY_USERNAME }}
         registryPassword: ${{ secrets.REGISTRY_PASSWORD }}
-        containerAppName: yourbrand-catalog-svc
+        containerAppName: ${{ env.CONTAINERAPP_NAME }}
         resourceGroup: ${{ secrets.RESOURCE_GROUP }}
         location: 'Sweden Central'
         targetPort: 8080
-
+    
     - name: Run EF migrations
       run: | 
         dotnet tool install --global dotnet-ef --version 8.0.0-rc.2.*
         dotnet tool restore
-        dotnet ef database update -p src/Catalog/Catalog.API --connection '${{ secrets.CATALOGDBCONNECTION }}'
+        dotnet ef database update -p '${{ env.SERVICE_DIR }}' --connection '${{ secrets.CATALOGDBCONNECTION }}'

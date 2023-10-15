@@ -2,8 +2,8 @@ name: Build and deploy Carts.API
 
 env:
   DOTNET_VERSION: '8.0.x' # set this to the .NET Core version to use
-  SERVICE_FOLDER: 'src/Carts/Carts.API'
-  UNITTESTS_FOLDER: 'src/Carts/Carts.UnitTests'
+  SERVICE_DIR: 'src/Carts/Carts.API'
+  UNITTESTS_DIR: 'src/Carts/Carts.UnitTests'
   CONTAINERAPP_NAME: 'yourbrand-carts-svc'
 
 on:
@@ -30,13 +30,13 @@ jobs:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
     - name: Install dependencies
-      run: dotnet restore "${{ env.SERVICE_FOLDER }}"
+      run: dotnet restore "${{ env.SERVICE_DIR }}"
 
     - name: Build
-      run: dotnet build "${{ env.SERVICE_FOLDER }}"
+      run: dotnet build "${{ env.SERVICE_DIR }}"
 
     - name: Test with the dotnet CLI
-      run: dotnet test "${{ env.UNITTESTS_FOLDER }}"
+      run: dotnet test "${{ env.UNITTESTS_DIR }}"
 
     - name: 'Login via Azure CLI'
       uses: azure/login@v1
@@ -47,7 +47,7 @@ jobs:
       uses: azure/container-apps-deploy-action@v1
       with:
         appSourcePath: ${{ github.workspace }}
-        dockerfilePath: ${{ env.SERVICE_FOLDER }}/Dockerfile
+        dockerfilePath: ${{ env.SERVICE_DIR }}/Dockerfile
         registryUrl: ${{ secrets.REGISTRY_LOGIN_SERVER }}
         registryUsername: ${{ secrets.REGISTRY_USERNAME }}
         registryPassword: ${{ secrets.REGISTRY_PASSWORD }}
@@ -60,4 +60,4 @@ jobs:
       run: | 
         dotnet tool install --global dotnet-ef --version 8.0.0-rc.2.*
         dotnet tool restore
-        dotnet ef database update -p "${{ env.SERVICE_FOLDER }}" --connection '${{ secrets.CARTSDBCONNECTION }}'
+        dotnet ef database update -p '${{ env.SERVICE_DIR }}' --connection '${{ secrets.CARTSDBCONNECTION }}'
