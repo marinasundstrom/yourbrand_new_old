@@ -17,7 +17,7 @@ namespace Catalog.API.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0-preview.7.23375.4")
+                .HasAnnotation("ProductVersion", "8.0.0-rc.2.23480.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -29,6 +29,9 @@ namespace Catalog.API.Migrations
                         .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("CategoryId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -48,17 +51,14 @@ namespace Catalog.API.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<long?>("ProductCategoryId")
-                        .HasColumnType("bigint");
-
                     b.Property<decimal?>("RegularPrice")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Handle");
+                    b.HasIndex("CategoryId");
 
-                    b.HasIndex("ProductCategoryId");
+                    b.HasIndex("Handle");
 
                     b.ToTable("Products");
                 });
@@ -108,17 +108,17 @@ namespace Catalog.API.Migrations
 
             modelBuilder.Entity("Catalog.API.Domain.Entities.Product", b =>
                 {
-                    b.HasOne("Catalog.API.Domain.Entities.ProductCategory", "ProductCategory")
+                    b.HasOne("Catalog.API.Domain.Entities.ProductCategory", "Category")
                         .WithMany("Products")
-                        .HasForeignKey("ProductCategoryId");
+                        .HasForeignKey("CategoryId");
 
-                    b.Navigation("ProductCategory");
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Catalog.API.Domain.Entities.ProductCategory", b =>
                 {
                     b.HasOne("Catalog.API.Domain.Entities.ProductCategory", "Parent")
-                        .WithMany("ProductCategories")
+                        .WithMany("SubCategories")
                         .HasForeignKey("ParentId");
 
                     b.Navigation("Parent");
@@ -126,9 +126,9 @@ namespace Catalog.API.Migrations
 
             modelBuilder.Entity("Catalog.API.Domain.Entities.ProductCategory", b =>
                 {
-                    b.Navigation("ProductCategories");
-
                     b.Navigation("Products");
+
+                    b.Navigation("SubCategories");
                 });
 #pragma warning restore 612, 618
         }

@@ -51,7 +51,7 @@ namespace Catalog.API.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<long?>("ProductCategoryId")
+                    b.Property<long?>("CategoryId")
                         .HasColumnType("bigint");
 
                     b.Property<decimal?>("RegularPrice")
@@ -61,7 +61,7 @@ namespace Catalog.API.Migrations
 
                     b.HasIndex("Handle");
 
-                    b.HasIndex("ProductCategoryId");
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
                 });
@@ -113,9 +113,9 @@ namespace Catalog.API.Migrations
                 {
                     b.HasOne("Catalog.API.Domain.Entities.ProductCategory", "ProductCategory")
                         .WithMany("Products")
-                        .HasForeignKey("ProductCategoryId");
+                        .HasForeignKey("CategoryId");
 
-                    b.Navigation("ProductCategory");
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Catalog.API.Domain.Entities.ProductCategory", b =>
