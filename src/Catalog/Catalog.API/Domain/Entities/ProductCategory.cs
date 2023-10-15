@@ -13,6 +13,8 @@ public sealed class ProductCategory
 
     public ProductCategory? Parent { get; set; }
 
+    public long? ParentId { get; set; }
+
     public bool CanAddProducts { get; set; }
 
     public IReadOnlyCollection<Product> Products => _products;
@@ -72,4 +74,8 @@ public sealed class ProductCategory
     public string Handle { get; set; } = default!;
 
     public string Path { get; set; } = default!;
+
+    public List<Attribute> Attributes { get; } = new List<Attribute>();
+
+    public List<Option> Options { get; } = new List<Option>();
 }

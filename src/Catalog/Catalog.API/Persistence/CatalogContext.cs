@@ -13,14 +13,7 @@ public sealed class CatalogContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Product>()
-            .HasIndex(p => p.Handle);
-
-        modelBuilder.Entity<ProductCategory>()
-            .HasIndex(p => p.Handle);
-
-        modelBuilder.Entity<ProductCategory>()
-            .HasIndex(p => p.Path);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(CatalogContext).Assembly);
     }
 
     public DbSet<Product> Products { get; set; } = default!;
