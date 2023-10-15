@@ -19,3 +19,11 @@ For observability:
 * Loki
 
 At the moment, only running locally.
+
+## Settings and Secrets
+
+Azure KeyVault are used to store secrets in the cloud.
+
+Locally, settings are injected into service as environment variables. When running a service as is, then they are defined in the ``Properties/launchSettings.json`` of each project.
+
+If you run teh services in Docker, then check the Docker compose file for the environment variables.
