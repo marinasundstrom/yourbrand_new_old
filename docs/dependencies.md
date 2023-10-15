@@ -22,7 +22,7 @@ At the moment, only running locally.
 
 ## Settings and Secrets
 
-Azure KeyVault are used to store secrets in the cloud.
+Azure KeyVault is used to store secrets in the cloud.
 
 Locally, settings are injected into service as environment variables. When running a service as is, then they are defined in the ``Properties/launchSettings.json`` of each project.
 
