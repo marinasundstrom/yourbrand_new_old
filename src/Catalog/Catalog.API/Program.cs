@@ -2,8 +2,8 @@
 using Azure.Storage.Blobs;
 
 using Catalog.API.Extensions;
-using Catalog.API.Features.ProductCategories;
-using Catalog.API.Features.Products;
+using Catalog.API.Features.ProductManagement.ProductCategories;
+using Catalog.API.Features.ProductManagement.Products;
 using Catalog.API.Persistence;
 
 using FluentValidation;
