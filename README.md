@@ -12,7 +12,7 @@ Build an e-commerce solution that is ready for the cloud.
 
 Learning in the process.
 
-Porting stuff from [eShop](https://github.com/marinasundstrom/eShop) when possible, but make better.
+Porting stuff from [eShop](https://github.com/marinasundstrom/eShop) whenever possible, but make it better.
 
 ## Local development
 
