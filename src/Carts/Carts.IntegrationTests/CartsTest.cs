@@ -66,7 +66,7 @@ public class CartsTest : IAsyncLifetime
                     {
                         x.AddDelayedMessageScheduler();
 
-                        x.AddConsumers(typeof(Carts.API.Consumers.GetCartsConsumer).Assembly);
+                        x.AddConsumers(typeof(Carts.API.Features.CartsManagement.Consumers.GetCartsConsumer).Assembly);
 
                         x.UsingInMemory((context, cfg) =>
                         {

@@ -27,10 +27,10 @@ jobs:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
     - name: Install dependencies
-      run: dotnet restore
+      run: dotnet restore "src/Carts/Carts.API"
 
     - name: Build
-      run: dotnet build
+      run: dotnet build "src/Carts/Carts.API"
 
     - name: Test with the dotnet CLI
       run: dotnet test "src/Carts/Carts.UnitTests"

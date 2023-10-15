@@ -26,10 +26,10 @@ jobs:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
     - name: Install dependencies
-      run: dotnet restore
+      run: dotnet restore "src/Catalog/Catalog.API"
 
     - name: Build
-      run: dotnet build
+      run: dotnet build "src/Catalog/Catalog.API"
 
     - name: Test with the dotnet CLI
       run: dotnet test "src/Catalog/Catalog.UnitTests"
