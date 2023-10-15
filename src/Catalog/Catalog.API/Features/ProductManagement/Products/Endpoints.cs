@@ -1,3 +1,5 @@
+using Catalog.API.Features.ProductManagement.Attributes;
+using Catalog.API.Features.ProductManagement.Options;
 using Catalog.API.Features.ProductManagement.ProductCategories;
 using Catalog.API.Model;
 
@@ -78,14 +80,14 @@ public static class Endpoints
         return app;
     }
 
-    private static async Task<Ok<PagedResult<Product>>> GetProducts(int page = 1, int pageSize = 10, string? searchTerm = null, string? categoryPath = null,
+    private static async Task<Ok<PagedResult<ProductDto>>> GetProducts(int page = 1, int pageSize = 10, string? searchTerm = null, string? categoryPath = null,
         string? sortBy = null, SortDirection? sortDirection = null, IMediator mediator = default!, CancellationToken cancellationToken = default!)
     {
         var pagedResult = await mediator.Send(new GetProducts(page, pageSize, searchTerm, categoryPath, sortBy, sortDirection), cancellationToken);
         return TypedResults.Ok(pagedResult);
     }
 
-    private static async Task<Results<Ok<Product>, NotFound>> GetProductById(string idOrHandle,
+    private static async Task<Results<Ok<ProductDto>, NotFound>> GetProductById(string idOrHandle,
         IMediator mediator, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new GetProductById(idOrHandle), cancellationToken);
@@ -93,7 +95,7 @@ public static class Endpoints
         return result.IsSuccess ? TypedResults.Ok(result.GetValue()) : TypedResults.NotFound();
     }
 
-    private static async Task<Results<Ok<Product>, BadRequest, ProblemHttpResult>> CreateProduct(CreateProductRequest request,
+    private static async Task<Results<Ok<ProductDto>, BadRequest, ProblemHttpResult>> CreateProduct(CreateProductRequest request,
         IMediator mediator, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new CreateProduct(request.Name, request.Description, request.CategoryId, request.Price, request.Handle), cancellationToken);
@@ -201,7 +203,7 @@ public sealed record UpdateProductCategoryRequest(long ProductCategoryId)
 }
 
 
-public sealed record Product(
+public sealed record ProductDto(
     long Id,
     string Name,
     ProductCategoryParent? Category,
@@ -212,10 +214,18 @@ public sealed record Product(
     string Handle
 );
 
-public static class Mapping
-{
-    public static Product ToDto(this Domain.Entities.Product product)
-    {
-        return new(product.Id, product.Name, product.Category.ToShortDto(), product.Description, product.Price, product.RegularPrice, product.Image, product.Handle);
-    }
-}
+public record class ParentProductDto(
+    long Id,
+    string Name,
+    ProductCategoryParent? Category,
+    string Description,
+    decimal Price,
+    decimal? RegularPrice,
+    string? Image,
+    string Handle);
+
+public record class ProductAttributeDto(
+    AttributeDto Attribute, AttributeValueDto? Value, bool ForVariant, bool IsMainAttribute);
+
+public record class ProductOptionDto(
+    OptionDto Option, bool IsInherited);

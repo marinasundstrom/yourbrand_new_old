@@ -6,17 +6,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.API.Features.ProductManagement.Products;
 
-public sealed record CreateProduct(string Name, string Description, long CategoryId, decimal Price, string Handle) : IRequest<Result<Product>>
+public sealed record CreateProduct(string Name, string Description, long CategoryId, decimal Price, string Handle) : IRequest<Result<ProductDto>>
 {
-    public sealed class Handler(IConfiguration configuration, CatalogContext catalogContext = default!) : IRequestHandler<CreateProduct, Result<Product>>
+    public sealed class Handler(IConfiguration configuration, CatalogContext catalogContext = default!) : IRequestHandler<CreateProduct, Result<ProductDto>>
     {
-        public async Task<Result<Product>> Handle(CreateProduct request, CancellationToken cancellationToken)
+        public async Task<Result<ProductDto>> Handle(CreateProduct request, CancellationToken cancellationToken)
         {
             var handleInUse = await catalogContext.Products.AnyAsync(product => product.Handle == request.Handle, cancellationToken);
 
             if (handleInUse)
             {
-                return Result.Failure<Product>(Errors.HandleAlreadyTaken);
+                return Result.Failure<ProductDto>(Errors.HandleAlreadyTaken);
             }
 
             var connectionString = catalogContext.Database.GetConnectionString()!;

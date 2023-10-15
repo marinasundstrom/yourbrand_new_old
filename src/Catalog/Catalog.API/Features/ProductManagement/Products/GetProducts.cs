@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.API.Features.ProductManagement.Products;
 
-public sealed record GetProducts(int Page = 1, int PageSize = 10, string? SearchTerm = null, string? CategoryPath = null, string? SortBy = null, SortDirection? SortDirection = null) : IRequest<PagedResult<Product>>
+public sealed record GetProducts(int Page = 1, int PageSize = 10, string? SearchTerm = null, string? CategoryPath = null, string? SortBy = null, SortDirection? SortDirection = null) : IRequest<PagedResult<ProductDto>>
 {
-    public sealed class Handler(CatalogContext catalogContext = default!) : IRequestHandler<GetProducts, PagedResult<Product>>
+    public sealed class Handler(CatalogContext catalogContext = default!) : IRequestHandler<GetProducts, PagedResult<ProductDto>>
     {
-        public async Task<PagedResult<Product>> Handle(GetProducts request, CancellationToken cancellationToken)
+        public async Task<PagedResult<ProductDto>> Handle(GetProducts request, CancellationToken cancellationToken)
         {
             var query = catalogContext.Products
                         .Include(x => x.Category)
@@ -44,7 +44,7 @@ public sealed record GetProducts(int Page = 1, int PageSize = 10, string? Search
                 .Take(request.PageSize)
                 .ToListAsync(cancellationToken);
 
-            return new PagedResult<Product>(products.Select(x => x.ToDto()), total);
+            return new PagedResult<ProductDto>(products.Select(x => x.ToDto()), total);
         }
     }
 }

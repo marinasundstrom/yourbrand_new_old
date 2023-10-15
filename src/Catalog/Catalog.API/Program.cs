@@ -4,6 +4,7 @@ using Azure.Storage.Blobs;
 using Catalog.API.Extensions;
 using Catalog.API.Features.ProductManagement.ProductCategories;
 using Catalog.API.Features.ProductManagement.Products;
+using Catalog.API.Features.ProductManagement.Products.Variants;
 using Catalog.API.Persistence;
 
 using FluentValidation;
@@ -111,6 +112,8 @@ builder.Services.AddMassTransit(x =>
 builder.Services
     .AddHealthChecks()
     .AddDbContextCheck<CatalogContext>();
+
+builder.Services.AddScoped<ProductsService>();
 
 var app = builder.Build();
 
