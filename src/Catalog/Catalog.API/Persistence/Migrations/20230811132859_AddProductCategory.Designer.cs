@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Catalog.API.Migrations
+namespace Catalog.API.Persistence.Migrations
 {
     [DbContext(typeof(CatalogContext))]
     [Migration("20230811132859_AddProductCategory")]

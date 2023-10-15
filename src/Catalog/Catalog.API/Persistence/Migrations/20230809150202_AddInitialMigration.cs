@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Catalog.API.Migrations
+namespace Catalog.API.Persistence.Migrations
 {
     /// <inheritdoc />
     public partial class AddInitialMigration : Migration
