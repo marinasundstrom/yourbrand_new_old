@@ -1,25 +1,13 @@
-using System.ComponentModel.DataAnnotations;
-
-using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
-
-using Catalog.API.Features.ProductCategories;
+using Catalog.API.Features.ProductManagement.ProductCategories;
 using Catalog.API.Model;
-using Catalog.API.Persistence;
 
 using FluentValidation;
-
-using MassTransit;
-using MassTransit.Transports;
 
 using MediatR;
 
 using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Http.Json;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
-namespace Catalog.API.Features.Products;
+namespace Catalog.API.Features.ProductManagement.Products;
 
 public static class Endpoints
 {

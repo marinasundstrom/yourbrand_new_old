@@ -4,7 +4,7 @@ using MediatR;
 
 using Microsoft.AspNetCore.Http.HttpResults;
 
-namespace Catalog.API.Features.ProductCategories;
+namespace Catalog.API.Features.ProductManagement.ProductCategories;
 
 public static class Endpoints
 {

@@ -4,7 +4,7 @@ using MediatR;
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace Catalog.API.Features.ProductCategories;
+namespace Catalog.API.Features.ProductManagement.ProductCategories;
 
 [ApiController]
 [Route("api/[controller]")]
