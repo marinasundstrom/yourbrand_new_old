@@ -6,7 +6,7 @@ using Meziantou.Extensions.Logging.Xunit;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Testcontainers.SqlEdge;
 using Microsoft.EntityFrameworkCore;
-using Carts.API.Data;
+using Carts.API.Persistence;
 using MassTransit;
 
 namespace Carts.IntegrationTests;

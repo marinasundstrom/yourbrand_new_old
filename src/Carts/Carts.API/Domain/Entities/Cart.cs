@@ -1,4 +1,4 @@
-namespace Carts.API.Model;
+namespace Carts.API.Domain.Entities;
 
 public sealed class Cart 
 {

@@ -1,11 +1,9 @@
-using Carts.API.Data;
-using Carts.API.Model;
-using Carts.API.Requests;
+using Carts.API.Domain.Entities;
+using Carts.API.Features.CartsManagement.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.EntityFrameworkCore;
 
-namespace Carts.API;
+namespace Carts.API.Features.CartsManagement;
 
 public static class Endpoints 
 {

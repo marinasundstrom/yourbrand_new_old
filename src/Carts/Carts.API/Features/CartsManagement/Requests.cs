@@ -1,9 +1,9 @@
-using Carts.API.Data;
-using Carts.API.Model;
+using Carts.API.Persistence;
+using Carts.API.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Carts.API.Requests;
+namespace Carts.API.Features.CartsManagement.Requests;
 
 public static class Errors 
 {

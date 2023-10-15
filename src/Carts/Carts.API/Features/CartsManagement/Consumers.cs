@@ -3,7 +3,7 @@ using MediatR;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 
-namespace Carts.API.Consumers;
+namespace Carts.API.Features.CartsManagement.Consumers;
 
 public sealed class GetCartsConsumer(MediatR.IMediator mediator) : IConsumer<Carts.Contracts.GetCarts>
 {
@@ -91,14 +91,14 @@ public sealed class RemoveCartItemQuantityConsumer(MediatR.IMediator mediator) :
 
 public static class Mappings 
 {
-    public static Carts.Contracts.Cart Map(this Carts.API.Model.Cart cart) => new Carts.Contracts.Cart {
+    public static Carts.Contracts.Cart Map(this Carts.API.Domain.Entities.Cart cart) => new Carts.Contracts.Cart {
         Id = cart.Id, 
         Name = cart.Name, 
         Total = cart.Total, 
         Items = cart.Items.Select(cartItem => cartItem.Map()) 
     };
 
-    public static Carts.Contracts.CartItem Map(this Carts.API.Model.CartItem cartItem) => new Carts.Contracts.CartItem {
+    public static Carts.Contracts.CartItem Map(this Carts.API.Domain.Entities.CartItem cartItem) => new Carts.Contracts.CartItem {
         Id = cartItem.Id, 
         Name = cartItem.Name, 
         Image = cartItem.Image, 
@@ -113,7 +113,7 @@ public static class Mappings
     };
 }
 
-public sealed class ProductPriceUpdatedConsumer(Carts.API.Data.CartsContext cartsContext) : IConsumer<Catalog.Contracts.ProductPriceUpdated>
+public sealed class ProductPriceUpdatedConsumer(Carts.API.Persistence.CartsContext cartsContext) : IConsumer<Catalog.Contracts.ProductPriceUpdated>
 {
     public async Task Consume(ConsumeContext<Catalog.Contracts.ProductPriceUpdated> context)
     {
@@ -126,7 +126,7 @@ public sealed class ProductPriceUpdatedConsumer(Carts.API.Data.CartsContext cart
     }
 }
 
-public sealed class ProductDetailsUpdatedConsumer(Carts.API.Data.CartsContext cartsContext) : IConsumer<Catalog.Contracts.ProductDetailsUpdated>
+public sealed class ProductDetailsUpdatedConsumer(Carts.API.Persistence.CartsContext cartsContext) : IConsumer<Catalog.Contracts.ProductDetailsUpdated>
 {
     public async Task Consume(ConsumeContext<Catalog.Contracts.ProductDetailsUpdated> context)
     {
@@ -140,7 +140,7 @@ public sealed class ProductDetailsUpdatedConsumer(Carts.API.Data.CartsContext ca
     }
 }
 
-public sealed class ProductImageUpdatedConsumer(Carts.API.Data.CartsContext cartsContext) : IConsumer<Catalog.Contracts.ProductImageUpdated>
+public sealed class ProductImageUpdatedConsumer(Carts.API.Persistence.CartsContext cartsContext) : IConsumer<Catalog.Contracts.ProductImageUpdated>
 {
     public async Task Consume(ConsumeContext<Catalog.Contracts.ProductImageUpdated> context)
     {
@@ -153,7 +153,7 @@ public sealed class ProductImageUpdatedConsumer(Carts.API.Data.CartsContext cart
 }
 
 
-public sealed class ProductHandleUpdatedConsumer(Carts.API.Data.CartsContext cartsContext) : IConsumer<Catalog.Contracts.ProductHandleUpdated>
+public sealed class ProductHandleUpdatedConsumer(Carts.API.Persistence.CartsContext cartsContext) : IConsumer<Catalog.Contracts.ProductHandleUpdated>
 {
     public async Task Consume(ConsumeContext<Catalog.Contracts.ProductHandleUpdated> context)
     {

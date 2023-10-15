@@ -1,12 +1,13 @@
 ﻿using Azure.Identity;
 using YourBrand;
 using Carts.API;
-using Carts.API.Data;
+using Carts.API.Persistence;
 using Carts.API.Extensions;
 using MassTransit;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
+using Carts.API.Features.CartsManagement;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,8 +39,6 @@ builder.Services.AddSqlServer<CartsContext>(
     builder.Configuration.GetValue<string>("yourbrand-carts-db-connectionstring")
     ?? builder.Configuration.GetConnectionString("CartsDb"),
     c => c.EnableRetryOnFailure());
-
-builder.Services.AddScoped<WeatherForecastService>();
 
 builder.Services.AddMediatR(x => x.RegisterServicesFromAssemblyContaining<Program>());
 

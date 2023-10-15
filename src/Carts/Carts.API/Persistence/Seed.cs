@@ -2,9 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Carts.API.Model;
+using Carts.API.Domain.Entities;
 
-namespace Carts.API.Data;
+namespace Carts.API.Persistence;
 
 public static class Seed
 {
