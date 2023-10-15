@@ -1,8 +1,7 @@
+using Catalog.API.Model;
 using Catalog.API.Persistence;
 
 using MediatR;
-
-using Catalog.API.Model;
 
 using Microsoft.EntityFrameworkCore;
 

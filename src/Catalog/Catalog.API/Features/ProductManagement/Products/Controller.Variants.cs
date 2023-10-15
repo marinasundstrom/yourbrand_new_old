@@ -1,10 +1,9 @@
 using Catalog.API.Features.ProductManagement.Products;
 using Catalog.API.Features.ProductManagement.Products.Variants;
+using Catalog.API.Model;
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
-using Catalog.API.Model;
 
 namespace Catalog.API.Features.ProductManagement;
 

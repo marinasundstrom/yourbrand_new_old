@@ -1,5 +1,6 @@
-﻿using NJsonSchema.Generation;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+
+using NJsonSchema.Generation;
 
 namespace Catalog.API.Extensions;
 

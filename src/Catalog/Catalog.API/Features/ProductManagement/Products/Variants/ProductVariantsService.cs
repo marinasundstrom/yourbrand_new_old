@@ -38,7 +38,7 @@ public class ProductsService
                 .ThenInclude(pv => (pv as ChoiceOption)!.Values)
             .AsQueryable();
 
-        query = isProductId ? 
+        query = isProductId ?
             query.Where(pv => pv.ParentProduct!.Id == productId)
             : query.Where(pv => pv.ParentProduct!.Handle == productIdOrHandle);
 
@@ -46,7 +46,7 @@ public class ProductsService
         {
             bool isItemVariantId = long.TryParse(itemVariantIdOrHandle, out var itemVariantId);
 
-            query = isItemVariantId ? 
+            query = isItemVariantId ?
                 query.Where(pv => pv.Id == itemVariantId)
                 : query.Where(pv => pv.Handle == itemVariantIdOrHandle);
         }

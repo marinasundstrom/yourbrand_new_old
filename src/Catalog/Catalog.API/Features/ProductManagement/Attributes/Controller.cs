@@ -1,14 +1,13 @@
 ﻿using Catalog.API;
+using Catalog.API.Features.ProductManagement.Attributes;
+using Catalog.API.Features.ProductManagement.Attributes.Groups;
+using Catalog.API.Features.ProductManagement.Attributes.Values;
+using Catalog.API.Features.ProductManagement.Options;
 using Catalog.API.Model;
 
 using MediatR;
 
 using Microsoft.AspNetCore.Mvc;
-
-using Catalog.API.Features.ProductManagement.Attributes;
-using Catalog.API.Features.ProductManagement.Attributes.Groups;
-using Catalog.API.Features.ProductManagement.Attributes.Values;
-using Catalog.API.Features.ProductManagement.Options;
 
 namespace Catalog.API.Features.ProductManagement.Options;
 

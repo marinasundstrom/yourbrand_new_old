@@ -1,10 +1,10 @@
+using Catalog.API.Domain.Entities;
+using Catalog.API.Features.ProductManagement.Options;
+using Catalog.API.Persistence;
+
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
-
-using Catalog.API.Features.ProductManagement.Options;
-using Catalog.API.Persistence;
-using Catalog.API.Domain.Entities;
 
 namespace Catalog.API.Features.ProductManagement.Products.Options;
 
@@ -29,7 +29,7 @@ public record CreateProductOption(long ProductId, CreateProductOptionData Data) 
 
             Option option = default!;
 
-            if (request.Data.OptionType == OptionType.YesOrNo) 
+            if (request.Data.OptionType == OptionType.YesOrNo)
             {
                 var selectableOption = new SelectableOption(request.Data.Name);
 
@@ -39,7 +39,7 @@ public record CreateProductOption(long ProductId, CreateProductOptionData Data) 
 
                 option = selectableOption;
             }
-            else if(request.Data.OptionType == OptionType.NumericalValue) 
+            else if (request.Data.OptionType == OptionType.NumericalValue)
             {
                 var numericalValue = new NumericalValueOption(request.Data.Name);
 
@@ -49,7 +49,7 @@ public record CreateProductOption(long ProductId, CreateProductOptionData Data) 
 
                 option = numericalValue;
             }
-            else if(request.Data.OptionType == OptionType.TextValue) 
+            else if (request.Data.OptionType == OptionType.TextValue)
             {
                 var textValueOption = new TextValueOption(request.Data.Name);
 
@@ -59,7 +59,7 @@ public record CreateProductOption(long ProductId, CreateProductOptionData Data) 
 
                 option = textValueOption;
             }
-            else if(request.Data.OptionType == OptionType.Choice) 
+            else if (request.Data.OptionType == OptionType.Choice)
             {
                 var choiceOption = new ChoiceOption(request.Data.Name);
 
@@ -84,16 +84,17 @@ public record CreateProductOption(long ProductId, CreateProductOptionData Data) 
 
             item.Options.Add(option);
 
-            if(item.HasVariants) 
+            if (item.HasVariants)
             {
                 var variants = await _context.Products
                     .Where(x => x.ParentProductId == item.Id)
                     .Include(x => x.Options)
                     .ToArrayAsync(cancellationToken);
-                
-                foreach(var variant in item.Variants) 
+
+                foreach (var variant in item.Variants)
                 {
-                    variant.ProductOptions.Add(new ProductOption() {
+                    variant.ProductOptions.Add(new ProductOption()
+                    {
                         Option = option,
                         IsInherited = true
                     });

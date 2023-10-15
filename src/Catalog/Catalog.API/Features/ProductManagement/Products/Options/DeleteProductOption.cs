@@ -29,17 +29,17 @@ public record DeleteProductOption(long ProductId, string OptionId) : IRequest
             item.Options.Remove(option);
             _context.Options.Remove(option);
 
-            if(item.HasVariants) 
+            if (item.HasVariants)
             {
                 var variants = await _context.Products
                     .Where(x => x.ParentProductId == item.Id)
                     .Include(x => x.ProductOptions.Where(z => z.OptionId == option.Id))
                     .ToArrayAsync(cancellationToken);
-                
-                foreach(var variant in item.Variants) 
+
+                foreach (var variant in item.Variants)
                 {
                     var option1 = variant.ProductOptions.FirstOrDefault(x => x.OptionId == option.Id);
-                    if(option1 is not null) 
+                    if (option1 is not null)
                     {
                         variant.ProductOptions.Remove(option1);
                     }

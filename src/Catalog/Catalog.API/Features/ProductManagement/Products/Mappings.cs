@@ -11,7 +11,7 @@ public static class Mappings
         return new(product.Id, product.Name, product.Category.ToShortDto(), product.Description, product.Price, product.RegularPrice, product.Image, product.Handle);
     }
 
-        public static ProductAttributeDto ToDto(this Domain.Entities.ProductAttribute x)
+    public static ProductAttributeDto ToDto(this Domain.Entities.ProductAttribute x)
     {
         return new ProductAttributeDto(x.Attribute.ToDto(), x.Value?.ToDto(), x.ForVariant, x.IsMainAttribute);
     }

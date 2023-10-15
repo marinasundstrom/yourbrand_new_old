@@ -1,9 +1,9 @@
+using Catalog.API.Features.ProductManagement.Options;
+using Catalog.API.Persistence;
+
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
-
-using Catalog.API.Features.ProductManagement.Options;
-using Catalog.API.Persistence;
 
 namespace Catalog.API.Features.ProductManagement.Products.Options.Groups;
 

@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Catalog.API.Domain.Entities;
 
-using Catalog.API.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Catalog.API.Persistence.Configurations;
 
@@ -14,7 +14,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder
             .Property(x => x.Handle)
             .HasMaxLength(150);
-             
+
         builder.HasIndex(p => p.Handle);
 
         builder

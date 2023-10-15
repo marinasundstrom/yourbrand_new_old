@@ -1,10 +1,10 @@
+using Catalog.API.Domain.Entities;
+using Catalog.API.Features.ProductManagement.Attributes;
+using Catalog.API.Persistence;
+
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
-
-using Catalog.API.Features.ProductManagement.Attributes;
-using Catalog.API.Persistence;
-using Catalog.API.Domain.Entities;
 
 namespace Catalog.API.Features.ProductManagement.Products.Variants;
 

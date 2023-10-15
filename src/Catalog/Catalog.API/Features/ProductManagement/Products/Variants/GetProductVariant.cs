@@ -43,11 +43,11 @@ public record GetProductVariant(string ProductIdOrHandle, string ProductVariantI
                     .ThenInclude(pv => (pv as ChoiceOption)!.Values)
                 .AsQueryable();
 
-            query = isProductId ? 
+            query = isProductId ?
                 query.Where(pv => pv.ParentProduct!.Id == productId)
                 : query.Where(pv => pv.ParentProduct!.Handle == request.ProductIdOrHandle);
 
-            var itemVariant = isProductVariantId ? 
+            var itemVariant = isProductVariantId ?
                 await query.FirstOrDefaultAsync(pv => pv!.Handle == request.ProductVariantIdOrHandle, cancellationToken)
                 : await query.FirstOrDefaultAsync(pv => pv!.Id == productVariantId, cancellationToken);
 

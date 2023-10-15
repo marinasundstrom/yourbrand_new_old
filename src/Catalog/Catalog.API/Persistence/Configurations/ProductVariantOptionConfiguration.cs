@@ -1,7 +1,7 @@
+using Catalog.API.Domain.Entities;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-using Catalog.API.Domain.Entities;
 
 namespace Catalog.API.Persistence.Configurations;
 

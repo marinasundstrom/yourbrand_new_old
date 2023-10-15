@@ -1,10 +1,10 @@
+using Catalog.API.Domain.Entities;
+using Catalog.API.Features.ProductManagement.Options;
+using Catalog.API.Persistence;
+
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
-
-using Catalog.API.Features.ProductManagement.Options;
-using Catalog.API.Persistence;
-using Catalog.API.Domain.Entities;
 
 namespace Catalog.API.Features.ProductManagement.Products.Options;
 
@@ -37,36 +37,36 @@ public record UpdateProductOption(long ProductId, string OptionId, UpdateProduct
             option.Description = request.Data.Description;
             option.Group = group;
 
-            if (option.OptionType == Domain.Enums.OptionType.YesOrNo) 
+            if (option.OptionType == Domain.Enums.OptionType.YesOrNo)
             {
-                if(option is SelectableOption selectableOption) 
+                if (option is SelectableOption selectableOption)
                 {
                     selectableOption.IsSelected = request.Data.IsSelected.GetValueOrDefault();
                     selectableOption.SKU = request.Data.SKU;
                     selectableOption.Price = request.Data.Price;
                 }
             }
-            else if(option.OptionType == Domain.Enums.OptionType.NumericalValue) 
+            else if (option.OptionType == Domain.Enums.OptionType.NumericalValue)
             {
-                if(option is NumericalValueOption numericalValue) 
+                if (option is NumericalValueOption numericalValue)
                 {
                     numericalValue.MinNumericalValue = request.Data.MinNumericalValue;
                     numericalValue.MaxNumericalValue = request.Data.MaxNumericalValue;
                     numericalValue.DefaultNumericalValue = request.Data.DefaultNumericalValue;
                 }
             }
-            else if(option.OptionType == Domain.Enums.OptionType.TextValue) 
+            else if (option.OptionType == Domain.Enums.OptionType.TextValue)
             {
-                if(option is TextValueOption textValueOption) 
+                if (option is TextValueOption textValueOption)
                 {
                     textValueOption.TextValueMinLength = request.Data.TextValueMinLength;
                     textValueOption.TextValueMaxLength = request.Data.TextValueMaxLength;
                     textValueOption.DefaultTextValue = request.Data.DefaultTextValue;
                 }
             }
-            else if(option.OptionType == Domain.Enums.OptionType.Choice) 
+            else if (option.OptionType == Domain.Enums.OptionType.Choice)
             {
-                if(option is ChoiceOption choiceOption) 
+                if (option is ChoiceOption choiceOption)
                 {
                     foreach (var v in request.Data.Values)
                     {
