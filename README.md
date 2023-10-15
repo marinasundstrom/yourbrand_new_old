@@ -1,5 +1,10 @@
 # YourBrand
 
+![Store Web](https://github.com/marinasundstrom/yourbrand/actions/workflows/build-and-deploy-store-web.yaml/badge.svg)
+![Catalog API](https://github.com/marinasundstrom/yourbrand/actions/workflows/build-and-deploy-catalog-api.yaml/badge.svg)
+![Carts API](https://github.com/marinasundstrom/yourbrand/actions/workflows/build-and-deploy-carts-api.yaml/badge.svg)
+![Admin Web](https://github.com/marinasundstrom/yourbrand/actions/workflows/build-and-deploy-admin-web.yaml/badge.svg)
+
 Store Web: https://yourbrand-store-web.wonderfulsea-5402179d.swedencentral.azurecontainerapps.io/
 
 Admin Web: https://yourbrand-admin-web.wonderfulsea-5402179d.swedencentral.azurecontainerapps.io/
