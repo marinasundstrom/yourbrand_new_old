@@ -1,15 +1,17 @@
 using Catalog.API.Model;
-using Microsoft.AspNetCore.Http.HttpResults;
+
 using MediatR;
+
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Catalog.API.Features.ProductCategories;
 
-public static class Endpoints 
+public static class Endpoints
 {
-    public static IEndpointRouteBuilder MapProductCategoriesEndpoints(this IEndpointRouteBuilder app) 
-    {  
+    public static IEndpointRouteBuilder MapProductCategoriesEndpoints(this IEndpointRouteBuilder app)
+    {
         string GetProductCategoriesExpire20 = nameof(GetProductCategoriesExpire20);
-        
+
         app.MapGet("/api/productCategories", GetProductCategories)
             .WithName($"ProductCategories_{nameof(GetProductCategories)}")
             .WithTags("ProductCategories")
@@ -118,7 +120,7 @@ public static class Mapping
 
     public static ProductCategoryTreeNodeDto ToProductCategoryTreeNodeDto(this Domain.Entities.ProductCategory productCategory)
     {
-        return new (productCategory.Id, productCategory.Name, productCategory.Handle, productCategory.Path, productCategory.Description, productCategory.Parent?.ToParentDto(), productCategory.SubCategories.Select(x => x.ToProductCategoryTreeNodeDto()), productCategory.ProductsCount, productCategory.CanAddProducts);
+        return new(productCategory.Id, productCategory.Name, productCategory.Handle, productCategory.Path, productCategory.Description, productCategory.Parent?.ToParentDto(), productCategory.SubCategories.Select(x => x.ToProductCategoryTreeNodeDto()), productCategory.ProductsCount, productCategory.CanAddProducts);
     }
 
     public static ParentProductCategoryDto ToParentDto(this Domain.Entities.ProductCategory productCategory)

@@ -1,9 +1,9 @@
 namespace Catalog.API.Domain.Entities;
 
-public sealed class ProductCategory 
+public sealed class ProductCategory
 {
-    private HashSet<Product> _products = new HashSet<Product>();
-    private HashSet<ProductCategory> _subCategories = new HashSet<ProductCategory>();
+    private readonly HashSet<Product> _products = new HashSet<Product>();
+    private readonly HashSet<ProductCategory> _subCategories = new HashSet<ProductCategory>();
 
     public long Id { get; private set; }
 
@@ -19,9 +19,9 @@ public sealed class ProductCategory
 
     public long ProductsCount { get; set; }
 
-    public void AddProduct(Product product) 
+    public void AddProduct(Product product)
     {
-        if(!CanAddProducts)
+        if (!CanAddProducts)
         {
             throw new InvalidOperationException("Can not add products.");
         }
@@ -32,24 +32,24 @@ public sealed class ProductCategory
         IncrementProductsCount();
     }
 
-    public void RemoveProduct(Product product) 
+    public void RemoveProduct(Product product)
     {
         product.Category = null;
         _products.Remove(product);
-        
+
         DecrementProductsCount();
     }
 
     public IReadOnlyCollection<ProductCategory> SubCategories => _subCategories;
 
-    public void AddSubCategory(ProductCategory productCategory) 
+    public void AddSubCategory(ProductCategory productCategory)
     {
         productCategory.Parent = this;
         productCategory.Path = $"{(Path is null ? Handle : Path)}/{productCategory.Handle}";
         _subCategories.Add(productCategory);
     }
 
-    public void RemoveSubCategory(ProductCategory productCategory) 
+    public void RemoveSubCategory(ProductCategory productCategory)
     {
         productCategory.Parent = null;
         _subCategories.Remove(productCategory);

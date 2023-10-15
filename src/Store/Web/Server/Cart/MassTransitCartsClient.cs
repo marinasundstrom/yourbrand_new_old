@@ -18,7 +18,8 @@ public sealed class MassTransitCartsClient(
 
     public async Task<CartItem> AddCartItem(string cartId, string name, string? image, long? productId, string productHandle, string description, decimal price, decimal? regularPrice, int quantity, CancellationToken cancellationToken = default)
     {
-        var request2 = new Carts.Contracts.AddCartItem {
+        var request2 = new Carts.Contracts.AddCartItem
+        {
             CartId = cartId,
             Name = name,
             Image = image,
@@ -36,7 +37,8 @@ public sealed class MassTransitCartsClient(
 
     public async Task<CartItem> UpdateCartItemQuantity(string cartId, string cartItemId, int quantity, CancellationToken cancellationToken = default)
     {
-        var request2 = new Carts.Contracts.UpdateCartItemQuantity {
+        var request2 = new Carts.Contracts.UpdateCartItemQuantity
+        {
             CartId = "test",
             CartItemId = cartItemId,
             Quantity = quantity
@@ -48,7 +50,8 @@ public sealed class MassTransitCartsClient(
 
     public async Task RemoveCartItem(string cartId, string cartItemId, CancellationToken cancellationToken = default)
     {
-        var request2 = new Carts.Contracts.RemoveCartItem {
+        var request2 = new Carts.Contracts.RemoveCartItem
+        {
             CartId = "test",
             CartItemId = cartItemId
         };
@@ -57,11 +60,11 @@ public sealed class MassTransitCartsClient(
     }
 }
 
-public static class Mapper 
+public static class Mapper
 {
-    public static Cart Map(this Carts.Contracts.Cart cart) 
-        => new (cart.Id!, cart.Name!, cart.Items.Select(cartItem => cartItem.Map()));
+    public static Cart Map(this Carts.Contracts.Cart cart)
+        => new(cart.Id!, cart.Name!, cart.Items.Select(cartItem => cartItem.Map()));
 
-    public static CartItem Map(this Carts.Contracts.CartItem cartItem) 
-        => new (cartItem.Id!, cartItem.Name!, cartItem.Image!, cartItem.ProductId, cartItem.ProductHandle, cartItem.Description!, cartItem.Price, cartItem.RegularPrice, (int)cartItem.Quantity);
+    public static CartItem Map(this Carts.Contracts.CartItem cartItem)
+        => new(cartItem.Id!, cartItem.Name!, cartItem.Image!, cartItem.ProductId, cartItem.ProductHandle, cartItem.Description!, cartItem.Price, cartItem.RegularPrice, (int)cartItem.Quantity);
 }

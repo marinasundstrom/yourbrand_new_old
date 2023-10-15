@@ -1,15 +1,15 @@
 namespace Carts.API.Domain.Entities;
 
-public sealed class Cart 
+public sealed class Cart
 {
-    private HashSet<CartItem> _cartItems = new HashSet<CartItem>();
+    private readonly HashSet<CartItem> _cartItems = new HashSet<CartItem>();
 
-    public Cart(string name) 
+    public Cart(string name)
     {
         Name = name;
     }
 
-    internal Cart(string id, string name) 
+    internal Cart(string id, string name)
     {
         Id = id;
         Name = name;
@@ -22,18 +22,18 @@ public sealed class Cart
     public decimal Total { get; private set; }
 
     public IReadOnlyCollection<CartItem> Items => _cartItems;
- 
+
     public CartItem AddItem(string name, string? image, long? productId, string? productHandle, string description, decimal price, decimal? regularPrice, int quantity)
     {
         var cartItem = _cartItems.FirstOrDefault(item => item.ProductId == productId);
 
-        if(cartItem is null)
+        if (cartItem is null)
         {
             cartItem = new CartItem(name, image, productId, productHandle, description, price, regularPrice, quantity);
             _cartItems.Add(cartItem);
             Total += cartItem.Total;
         }
-        else 
+        else
         {
             UpdateCartItemQuantity(cartItem.Id, (int)cartItem.Quantity + quantity);
         }
@@ -45,7 +45,7 @@ public sealed class Cart
     {
         var cartItem = _cartItems.FirstOrDefault(item => item.Id == cartId);
 
-        if(cartItem is not null) 
+        if (cartItem is not null)
         {
             _cartItems.Remove(cartItem);
 
@@ -57,7 +57,7 @@ public sealed class Cart
     {
         var cartItem = _cartItems.FirstOrDefault(item => item.Id == cartId);
 
-        if(cartItem is not null) 
+        if (cartItem is not null)
         {
             decimal oldTotal = cartItem.Total;
             Total -= oldTotal;
@@ -68,7 +68,7 @@ public sealed class Cart
     }
 }
 
-public sealed class CartItem 
+public sealed class CartItem
 {
     private CartItem()
     {

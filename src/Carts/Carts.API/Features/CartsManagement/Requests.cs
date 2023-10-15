@@ -1,15 +1,17 @@
-using Carts.API.Persistence;
 using Carts.API.Domain.Entities;
+using Carts.API.Persistence;
+
 using MediatR;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace Carts.API.Features.CartsManagement.Requests;
 
-public static class Errors 
+public static class Errors
 {
-    public readonly static Error CartNotFound = new ("cart-not-found", "Cart not found", "");
+    public readonly static Error CartNotFound = new("cart-not-found", "Cart not found", "");
 
-    public readonly static Error CartItemNotFound = new ("cart-not-found", "Cart not found", "");
+    public readonly static Error CartItemNotFound = new("cart-not-found", "Cart not found", "");
 }
 
 public sealed record GetCarts(int Page = 1, int PageSize = 2) : IRequest<Result<PagedResult<Cart>>>
@@ -17,7 +19,7 @@ public sealed record GetCarts(int Page = 1, int PageSize = 2) : IRequest<Result<
     public sealed class Handler(CartsContext cartsContext = default!) : IRequestHandler<GetCarts, Result<PagedResult<Cart>>>
     {
         public async Task<Result<PagedResult<Cart>>> Handle(GetCarts request, CancellationToken cancellationToken)
-        {            
+        {
             var query = cartsContext.Carts
                 .Include(cart => cart.Items.OrderBy(cartItem => cartItem.Created))
                 .AsQueryable();
@@ -45,7 +47,7 @@ public sealed record GetCartById(string Id) : IRequest<Result<Cart>>
             var cart = await cartsContext.Carts
                 .Include(cart => cart.Items.OrderBy(cartItem => cartItem.Created))
                 .FirstOrDefaultAsync(cart => cart.Id == request.Id, cancellationToken);
-            
+
             return cart is not null ? Result.Success(cart) : Result.Failure<Cart>(Errors.CartNotFound);
         }
     }
@@ -77,13 +79,13 @@ public sealed record AddCartItem(string CartId, string Name, string? Image, long
                 .Include(cart => cart.Items)
                 .FirstOrDefaultAsync(cart => cart.Id == request.CartId, cancellationToken);
 
-            if (cart is null) 
-            { 
+            if (cart is null)
+            {
                 return Result.Failure<CartItem>(Errors.CartNotFound);
             }
 
             var cartItem = cart.AddItem(request.Name, request.Image, request.ProductId, request.ProductHandle, request.Description, request.Price, request.RegularPrice, request.Quantity);
-            
+
             await cartsContext.SaveChangesAsync(cancellationToken);
 
             return Result.Success(cartItem);
@@ -101,20 +103,20 @@ public sealed record UpdateCartItemQuantity(string CartId, string CartItemId, in
                 .Include(cart => cart.Items)
                 .FirstOrDefaultAsync(cart => cart.Id == request.CartId, cancellationToken);
 
-            if (cart is null) 
-            { 
+            if (cart is null)
+            {
                 return Result.Failure<CartItem>(Errors.CartNotFound);
             }
 
             var cartItem = cart.Items.FirstOrDefault(x => x.Id == request.CartItemId!);
 
-            if (cartItem is null) 
-            { 
+            if (cartItem is null)
+            {
                 return Result.Failure<CartItem>(Errors.CartItemNotFound);
             }
 
-            cart.UpdateCartItemQuantity(request.CartItemId, request.Quantity); 
-            
+            cart.UpdateCartItemQuantity(request.CartItemId, request.Quantity);
+
             await cartsContext.SaveChangesAsync(cancellationToken);
 
             return Result.Success(cartItem);
@@ -132,13 +134,13 @@ public sealed record RemoveCartItem(string CartId, string CartItemId) : IRequest
                 .Include(cart => cart.Items)
                 .FirstOrDefaultAsync(cart => cart.Id == request.CartId, cancellationToken);
 
-            if (cart is null) 
-            { 
+            if (cart is null)
+            {
                 return Result.Failure<CartItem>(Errors.CartNotFound);
             }
 
             cart.RemoveItem(request.CartItemId!);
-            
+
             await cartsContext.SaveChangesAsync(cancellationToken);
 
             return Result.Success();
@@ -155,8 +157,8 @@ public sealed record GetCartItemById(string CartId, string CartItemId) : IReques
             var cartItem = await cartsContext.CartItems
                 .FirstOrDefaultAsync(cartItem => cartItem.Id == request.CartItemId, cancellationToken);
 
-            if (cartItem is null) 
-            { 
+            if (cartItem is null)
+            {
                 return Result.Failure<CartItem>(Errors.CartItemNotFound);
             }
 

@@ -1,20 +1,25 @@
 ﻿using Azure.Identity;
+
+using Catalog;
+
 using HealthChecks.UI.Client;
+
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
-using YourBrand;
-using Catalog;
-using YourBrand.Server.Products;
-using YourBrand.Server.ProductCategories;
-using YourBrand.Server.Extensions;
+
 using Serilog;
+
+using YourBrand;
+using YourBrand.Server.Extensions;
+using YourBrand.Server.ProductCategories;
+using YourBrand.Server.Products;
 
 var builder = WebApplication.CreateBuilder(args);
 
 string serviceName = "Admin.Web";
 string serviceVersion = "1.0";
 
-builder.Host.UseSerilog((ctx, cfg) =>  cfg.ReadFrom.Configuration(builder.Configuration)
+builder.Host.UseSerilog((ctx, cfg) => cfg.ReadFrom.Configuration(builder.Configuration)
                         .Enrich.WithProperty("Application", serviceName)
                         .Enrich.WithProperty("Environment", ctx.HostingEnvironment.EnvironmentName));
 
@@ -54,7 +59,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseOpenApi();
 
-    app.UseWebAssemblyDebugging();;
+    app.UseWebAssemblyDebugging(); ;
 }
 else
 {

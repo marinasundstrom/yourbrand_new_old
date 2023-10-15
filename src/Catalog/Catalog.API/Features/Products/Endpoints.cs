@@ -1,24 +1,30 @@
-using Catalog.API.Persistence;
-using Catalog.API.Model;
+using System.ComponentModel.DataAnnotations;
+
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http.Json;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.EntityFrameworkCore;
-using MassTransit;
+
 using Catalog.API.Features.ProductCategories;
-using System.ComponentModel.DataAnnotations;
+using Catalog.API.Model;
+using Catalog.API.Persistence;
+
 using FluentValidation;
-using MediatR;
+
+using MassTransit;
 using MassTransit.Transports;
+
+using MediatR;
+
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Http.Json;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.API.Features.Products;
 
-public static class Endpoints 
+public static class Endpoints
 {
-    public static IEndpointRouteBuilder MapProductsEndpoints(this IEndpointRouteBuilder app) 
-    {  
+    public static IEndpointRouteBuilder MapProductsEndpoints(this IEndpointRouteBuilder app)
+    {
         string GetProductsExpire20 = nameof(GetProductsExpire20);
 
         app.MapGet("/api/products", GetProducts)
@@ -208,9 +214,9 @@ public sealed record UpdateProductCategoryRequest(long ProductCategoryId)
 
 
 public sealed record Product(
-    long Id, 
+    long Id,
     string Name,
-    ProductCategoryParent? Category, 
+    ProductCategoryParent? Category,
     string Description,
     decimal Price,
     decimal? RegularPrice,

@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BlazorApp.Products;
 
-public static class Endpoints 
+public static class Endpoints
 {
-    public static IEndpointRouteBuilder MapProductsEndpoints(this IEndpointRouteBuilder app) 
-    {  
+    public static IEndpointRouteBuilder MapProductsEndpoints(this IEndpointRouteBuilder app)
+    {
         string GetProductsExpire20 = nameof(GetProductsExpire20);
 
         app.MapGet("/api/products", GetProducts)
@@ -32,7 +32,7 @@ public static class Endpoints
         return results is not null ? TypedResults.Ok(results) : TypedResults.NotFound();
     }
 
-    private static async Task<Results<Ok<Product>, NotFound>> GetProductById(string id, IProductsService productsService = default!,CancellationToken cancellationToken = default)
+    private static async Task<Results<Ok<Product>, NotFound>> GetProductById(string id, IProductsService productsService = default!, CancellationToken cancellationToken = default)
     {
         var product = await productsService.GetProductById(id, cancellationToken);
         return product is not null ? TypedResults.Ok(product) : TypedResults.NotFound();

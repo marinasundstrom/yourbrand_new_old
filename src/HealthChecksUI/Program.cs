@@ -22,4 +22,3 @@ app.UseRouting();
 app.MapHealthChecksUI(options => options.UIPath = "/dashboard");
 
 app.Run();
-

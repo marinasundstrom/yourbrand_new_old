@@ -1,8 +1,9 @@
+using Carts.API.Domain.Entities;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Carts.API.Domain.Entities;
 
 namespace Carts.API.Persistence;
 

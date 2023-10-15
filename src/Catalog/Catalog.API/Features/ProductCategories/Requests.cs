@@ -1,7 +1,10 @@
 ﻿using System.Net;
-using Catalog.API.Persistence;
+
 using Catalog.API.Model;
+using Catalog.API.Persistence;
+
 using MediatR;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.API.Features.ProductCategories;

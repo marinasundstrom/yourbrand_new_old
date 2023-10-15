@@ -1,14 +1,15 @@
 using CatalogAPI;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http.Json;
+
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Http.Json;
+using Microsoft.AspNetCore.Mvc;
 
 namespace YourBrand.Server.Products;
 
-public static class Endpoints 
+public static class Endpoints
 {
-    public static IEndpointRouteBuilder MapProductsEndpoints(this IEndpointRouteBuilder app) 
-    {  
+    public static IEndpointRouteBuilder MapProductsEndpoints(this IEndpointRouteBuilder app)
+    {
         string GetProductsExpire20 = nameof(GetProductsExpire20);
 
         var productsGroup = app.MapGroup("/api/products");
@@ -17,7 +18,7 @@ public static class Endpoints
             .WithName($"Products_{nameof(GetProducts)}")
             .WithTags("Products")
             .WithOpenApi();
-            //.CacheOutput(GetProductsExpire20);
+        //.CacheOutput(GetProductsExpire20);
 
         productsGroup.MapGet("/{id}", GetProductById)
             .WithName($"Products_{nameof(GetProductById)}")
@@ -97,16 +98,16 @@ public static class Endpoints
         return TypedResults.Ok();
     }
 
-    private static async Task<Results<Ok<string>, NotFound>> UploadProductImage(string id, IFormFile file, 
+    private static async Task<Results<Ok<string>, NotFound>> UploadProductImage(string id, IFormFile file,
         CatalogAPI.IProductsClient productsClient, CancellationToken cancellationToken)
     {
-        var path = await productsClient.UploadProductImageAsync(id, 
+        var path = await productsClient.UploadProductImageAsync(id,
             new CatalogAPI.FileParameter(file.OpenReadStream(), file.FileName, file.ContentType), cancellationToken);
 
         return TypedResults.Ok(path);
     }
 
-    private static async Task<Results<Ok, NotFound>> UpdateProductHandle(string id, UpdateProductHandleRequest request,  CatalogAPI.IProductsClient productsClient, CancellationToken cancellationToken)
+    private static async Task<Results<Ok, NotFound>> UpdateProductHandle(string id, UpdateProductHandleRequest request, CatalogAPI.IProductsClient productsClient, CancellationToken cancellationToken)
     {
         await productsClient.UpdateProductHandleAsync(id, request, cancellationToken);
         return TypedResults.Ok();

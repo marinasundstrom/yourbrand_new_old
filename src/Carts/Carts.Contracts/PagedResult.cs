@@ -1,6 +1,6 @@
 ﻿namespace Carts.Contracts;
 
-public sealed record PagedCartResult 
+public sealed record PagedCartResult
 {
     public IEnumerable<Cart> Items { get; init; }
     public int Total { get; init; }

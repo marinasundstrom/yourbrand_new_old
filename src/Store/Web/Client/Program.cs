@@ -1,10 +1,13 @@
 using BlazorApp;
+
 using Client;
 using Client.Cart;
-using Client.Products;
 using Client.ProductCategories;
+using Client.Products;
+
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+
 using Polly;
 using Polly.Extensions.Http;
 

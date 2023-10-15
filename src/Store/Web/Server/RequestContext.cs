@@ -12,7 +12,7 @@ public sealed class RequestContext
     public string Method => _httpContextAccessor.HttpContext!.Request.Method;
 }
 
-public static class RequestContextExtensions 
+public static class RequestContextExtensions
 {
     public static bool IsGet(this RequestContext requestContext) => requestContext.Method == "GET";
 

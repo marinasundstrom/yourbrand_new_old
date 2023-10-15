@@ -1,4 +1,5 @@
 using Carts.API.Domain.Entities;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace Carts.API.Persistence;
@@ -9,7 +10,7 @@ public sealed class CartsContext : DbContext
     {
     }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder) 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Cart>()
             .HasMany(cart => cart.Items)

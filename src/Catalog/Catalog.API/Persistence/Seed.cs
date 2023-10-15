@@ -1,5 +1,6 @@
-using Microsoft.EntityFrameworkCore;
 using Catalog.API.Domain.Entities;
+
+using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.API.Persistence;
 
@@ -12,11 +13,12 @@ public static class Seed
 
         var connectionString = context.Database.GetConnectionString()!;
 
-        string cdnBaseUrl = connectionString.Contains("localhost") 
-            ? configuration["CdnBaseUrl"]! 
+        string cdnBaseUrl = connectionString.Contains("localhost")
+            ? configuration["CdnBaseUrl"]!
             : "https://yourbrandstorage.blob.core.windows.net";
 
-        var pastries = new ProductCategory() {
+        var pastries = new ProductCategory()
+        {
             Name = "Pastries",
             Description = "Try some of our tasty pastries.",
             Handle = "pastries",
@@ -26,7 +28,8 @@ public static class Seed
 
         context.ProductCategories.Add(pastries);
 
-        var drinks = new ProductCategory() {
+        var drinks = new ProductCategory()
+        {
             Name = "Drinks",
             Description = "All of our drinks.",
             Handle = "drinks",
@@ -35,7 +38,8 @@ public static class Seed
 
         context.ProductCategories.Add(drinks);
 
-        var coffee = new ProductCategory() {
+        var coffee = new ProductCategory()
+        {
             Name = "Coffee",
             Description = "Enjoy your favorite coffee.",
             Handle = "coffee",
@@ -46,7 +50,8 @@ public static class Seed
 
         context.ProductCategories.Add(coffee);
 
-        var otherDrinks = new ProductCategory() {
+        var otherDrinks = new ProductCategory()
+        {
             Name = "Other drinks",
             Description = "Try some of our special drinks.",
             Handle = "other",
@@ -59,7 +64,8 @@ public static class Seed
 
         await context.SaveChangesAsync();
 
-        var biscotti = new Product() {
+        var biscotti = new Product()
+        {
             Name = "Biscotti",
             Description = "Small biscuit",
             Price = 10,
@@ -72,7 +78,8 @@ public static class Seed
 
         context.Products.Add(biscotti);
 
-        var signatureBrewed = new Product() {
+        var signatureBrewed = new Product()
+        {
             Name = "Signature Brew",
             Description = "Freshly brewed coffee",
             Price = 32,
@@ -85,7 +92,7 @@ public static class Seed
 
         context.Products.Add(signatureBrewed);
 
-        var caffeLatte = new Product() 
+        var caffeLatte = new Product()
         {
             Name = "Caffe Latte",
             Description = "Freshly ground espresso coffee with steamed milk",
@@ -99,7 +106,7 @@ public static class Seed
 
         context.Products.Add(caffeLatte);
 
-        var cinnamonRoll = new Product() 
+        var cinnamonRoll = new Product()
         {
             Name = "Cinnamon roll",
             Description = "Newly baked cinnamon rolls",
@@ -113,7 +120,7 @@ public static class Seed
 
         context.Products.Add(cinnamonRoll);
 
-        var espresso = new Product() 
+        var espresso = new Product()
         {
             Name = "Espresso",
             Description = "Single shot espresso",
@@ -127,7 +134,7 @@ public static class Seed
 
         context.Products.Add(espresso);
 
-        var milkshake = new Product() 
+        var milkshake = new Product()
         {
             Name = "Milkshake",
             Description = "Our fabulous milkshake",
@@ -141,7 +148,7 @@ public static class Seed
 
         context.Products.Add(milkshake);
 
-        var moccaLatte = new Product() 
+        var moccaLatte = new Product()
         {
             Name = "Mocca Latte",
             Description = "Caffe Latte with chocolate syrup",
@@ -155,7 +162,7 @@ public static class Seed
 
         context.Products.Add(moccaLatte);
 
-        var applePie = new Product() 
+        var applePie = new Product()
         {
             Name = "Apple Pie",
             Description = "Test",

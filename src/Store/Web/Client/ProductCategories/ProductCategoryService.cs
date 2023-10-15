@@ -2,13 +2,13 @@ namespace BlazorApp.ProductCategories;
 
 public sealed class ProductCategoryService(StoreWeb.IProductCategoriesClient productCategoriesClient) : IProductCategoryService
 {
-    public async Task<ProductCategoryTreeRootDto> GetProductCategories(CancellationToken cancellationToken = default) 
+    public async Task<ProductCategoryTreeRootDto> GetProductCategories(CancellationToken cancellationToken = default)
     {
         var treeRoot = await productCategoriesClient.GetProductCategoriesAsync(cancellationToken);
         return new ProductCategoryTreeRootDto(treeRoot.Categories.Select(x => x.ToProductCategoryTreeNodeDto()), treeRoot.ProductsCount);
     }
 
-    public async Task<ProductCategoryDto> GetProductCategoryById(string productCategoryId, CancellationToken cancellationToken = default) 
+    public async Task<ProductCategoryDto> GetProductCategoryById(string productCategoryId, CancellationToken cancellationToken = default)
     {
         var productCategory = await productCategoriesClient.GetProductCategoryByIdAsync(productCategoryId, cancellationToken);
         return productCategory.ToDto();

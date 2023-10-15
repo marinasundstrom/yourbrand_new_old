@@ -1,5 +1,6 @@
 using Catalog.API.Domain.Entities;
 using Catalog.API.Model;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.API.Persistence;

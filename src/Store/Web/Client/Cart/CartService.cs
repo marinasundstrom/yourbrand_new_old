@@ -1,17 +1,18 @@
 using BlazorApp.Cart;
+
 using StoreWeb;
 
 namespace Client.Cart;
 
 public sealed class CartService(StoreWeb.ICartClient client) : ICartService
 {
-    private List<BlazorApp.Cart.CartItem> _items = new();
+    private readonly List<BlazorApp.Cart.CartItem> _items = new();
 
-    public async Task InitializeAsync() 
+    public async Task InitializeAsync()
     {
         _items.Clear();
         _items.AddRange(await GetCartItemsAsync());
-        
+
         CartUpdated?.Invoke(this, EventArgs.Empty);
     }
 
@@ -23,7 +24,8 @@ public sealed class CartService(StoreWeb.ICartClient client) : ICartService
 
     public async Task AddCartItem(string name, string? image, long? productId, string? productHandle, string description, decimal price, decimal? regularPrice, int quantity)
     {
-        var ci = await client.AddCartItemAsync(new AddCartItemRequest {
+        var ci = await client.AddCartItemAsync(new AddCartItemRequest
+        {
             Name = name,
             Image = image,
             ProductId = productId,
@@ -36,11 +38,11 @@ public sealed class CartService(StoreWeb.ICartClient client) : ICartService
 
         var cartItem = _items.FirstOrDefault(x => x.ProductId == productId);
 
-        if(cartItem is not null) 
+        if (cartItem is not null)
         {
             cartItem.Quantity += quantity;
         }
-        else 
+        else
         {
             cartItem = new BlazorApp.Cart.CartItem(ci.Id, name, image, productId, productHandle, description, price, regularPrice, quantity);
 
@@ -52,11 +54,11 @@ public sealed class CartService(StoreWeb.ICartClient client) : ICartService
 
     public async Task UpdateCartItemQuantity(string cartItemId, int quantity)
     {
-        await client.UpdateCartItemQuantityAsync(cartItemId, new UpdateCartItemQuantityRequest { Quantity = quantity });
+        await client.UpdateCartItemQuantityAsync(cartItemId, new UpdateCartItemQuantityRequest { Quantity = quantity });
 
         var cartItem = _items.FirstOrDefault(x => x.Id == cartItemId);
 
-        if(cartItem is not null) 
+        if (cartItem is not null)
         {
             cartItem.Quantity = quantity;
         }
@@ -70,7 +72,7 @@ public sealed class CartService(StoreWeb.ICartClient client) : ICartService
 
         var cartItem = _items.FirstOrDefault(x => x.Id == cartItemId);
 
-        if(cartItem is not null) 
+        if (cartItem is not null)
         {
             _items.Remove(cartItem);
         }

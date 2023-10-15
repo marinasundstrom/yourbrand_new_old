@@ -1,14 +1,15 @@
 using CatalogAPI;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http.Json;
+
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Http.Json;
+using Microsoft.AspNetCore.Mvc;
 
 namespace YourBrand.Server.ProductCategories;
 
-public static class Endpoints 
+public static class Endpoints
 {
-    public static IEndpointRouteBuilder MapProductCategoriesEndpoints(this IEndpointRouteBuilder app) 
-    {  
+    public static IEndpointRouteBuilder MapProductCategoriesEndpoints(this IEndpointRouteBuilder app)
+    {
         string GetProductsExpire20 = nameof(GetProductsExpire20);
 
         var productsGroup = app.MapGroup("/api/ProductCategories");
@@ -17,7 +18,7 @@ public static class Endpoints
             .WithName($"ProductCategories_{nameof(GetProductsCategories)}")
             .WithTags("ProductCategories")
             .WithOpenApi();
-            //.CacheOutput(GetProductsExpire20);
+        //.CacheOutput(GetProductsExpire20);
 
         app.MapGet("/api/productCategories/{idOrPath}", GetProductCategoryById)
             .WithName($"ProductCategories_{nameof(GetProductCategoryById)}")

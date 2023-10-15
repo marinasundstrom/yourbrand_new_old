@@ -2,13 +2,13 @@ namespace BlazorApp.ProductCategories;
 
 public sealed class ProductCategoryService(CatalogAPI.IProductCategoriesClient productCategoriesClient) : IProductCategoryService
 {
-    public async Task<ProductCategoryTreeRootDto> GetProductCategories(CancellationToken cancellationToken = default) 
+    public async Task<ProductCategoryTreeRootDto> GetProductCategories(CancellationToken cancellationToken = default)
     {
         var treeRoot = await productCategoriesClient.GetProductCategoryTreeAsync(cancellationToken);
         return new ProductCategoryTreeRootDto(treeRoot.Categories.Select(x => x.ToProductCategoryTreeNodeDto()), treeRoot.ProductsCount);
     }
 
-    public async Task<ProductCategoryDto> GetProductCategoryById(string productCategoryId, CancellationToken cancellationToken = default) 
+    public async Task<ProductCategoryDto> GetProductCategoryById(string productCategoryId, CancellationToken cancellationToken = default)
     {
         var productCategory = await productCategoriesClient.GetProductCategoryByIdAsync(productCategoryId, cancellationToken);
         return productCategory.ToDto();
@@ -24,7 +24,7 @@ public static class Mapping
 
     public static ProductCategoryTreeNodeDto ToProductCategoryTreeNodeDto(this CatalogAPI.ProductCategoryTreeNodeDto productCategory)
     {
-        return new (productCategory.Id, productCategory.Name, productCategory.Handle, productCategory.Path, productCategory.Description, productCategory.Parent?.ToParentDto(), productCategory.SubCategories.Select(x => x.ToProductCategoryTreeNodeDto()), productCategory.ProductsCount, productCategory.CanAddProducts);
+        return new(productCategory.Id, productCategory.Name, productCategory.Handle, productCategory.Path, productCategory.Description, productCategory.Parent?.ToParentDto(), productCategory.SubCategories.Select(x => x.ToProductCategoryTreeNodeDto()), productCategory.ProductsCount, productCategory.CanAddProducts);
     }
 
     public static ProductCategoryParent ToParentDto(this CatalogAPI.ParentProductCategoryDto productCategory)

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BlazorApp.Data;
 
-public sealed class ApplicationDbContext : IdentityDbContext<IdentityUser> 
+public sealed class ApplicationDbContext : IdentityDbContext<IdentityUser>
 {
     public ApplicationDbContext(DbContextOptions options) : base(options)
     {

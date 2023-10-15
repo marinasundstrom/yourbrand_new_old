@@ -1,6 +1,8 @@
 using Catalog.API.Persistence;
-using Microsoft.AspNetCore.Mvc;
+
 using MediatR;
+
+using Microsoft.AspNetCore.Mvc;
 
 namespace Catalog.API.Features.ProductCategories;
 
@@ -11,7 +13,7 @@ public sealed class ProductCategoriesController : Controller
     [HttpGet("{*idOrPath}")]
     [ProducesDefaultResponseType]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<ProductCategory>> GetProductCategoryById(string idOrPath, IMediator mediator, CatalogContext catalogContext, CancellationToken cancellationToken) 
+    public async Task<ActionResult<ProductCategory>> GetProductCategoryById(string idOrPath, IMediator mediator, CatalogContext catalogContext, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new GetProductCategoryById(idOrPath), cancellationToken);
 

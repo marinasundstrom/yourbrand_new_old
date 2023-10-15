@@ -1,6 +1,6 @@
 namespace Catalog.API.Domain.Entities;
 
-public sealed class Product 
+public sealed class Product
 {
     public long Id { get; private set; }
 

@@ -1,11 +1,12 @@
 using BlazorApp.Products;
+
 using StoreWeb;
 
 namespace Client.Products;
 
 public static class ServiceExtensions
 {
-    public static IServiceCollection AddProductsServices(this IServiceCollection services) 
+    public static IServiceCollection AddProductsServices(this IServiceCollection services)
     {
         services.AddSingleton<IProductsService, ProductsService>();
 

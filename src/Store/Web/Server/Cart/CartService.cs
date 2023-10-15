@@ -4,9 +4,9 @@ namespace BlazorApp.Cart;
 
 public sealed class CartService(MassTransitCartsClient cartsClient) : ICartService
 {
-    private List<CartItem> _items = new();
+    private readonly List<CartItem> _items = new();
 
-    public async Task InitializeAsync() 
+    public async Task InitializeAsync()
     {
         //_items.AddRange(await GetCartItemsAsync());
 

@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Globalization;
+
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using Catalog.API.Persistence;
+
 using Catalog.API.Model;
+using Catalog.API.Persistence;
+
 using MassTransit;
 using MassTransit.Transports;
+
 using MediatR;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.API.Features.Products;
@@ -99,8 +104,8 @@ public sealed record CreateProduct(string Name, string Description, long Categor
 
             var connectionString = catalogContext.Database.GetConnectionString()!;
 
-            string cdnBaseUrl = connectionString.Contains("localhost") 
-                ? configuration["CdnBaseUrl"]! 
+            string cdnBaseUrl = connectionString.Contains("localhost")
+                ? configuration["CdnBaseUrl"]!
                 : "https://yourbrandstorage.blob.core.windows.net";
 
             var product = new Domain.Entities.Product()
@@ -219,8 +224,8 @@ public sealed record UpdateProductImage(string IdOrHandle, Stream Stream, string
 
             var connectionString = catalogContext.Database.GetConnectionString()!;
 
-            string cdnBaseUrl = connectionString.Contains("localhost") 
-                ? configuration["CdnBaseUrl"]! 
+            string cdnBaseUrl = connectionString.Contains("localhost")
+                ? configuration["CdnBaseUrl"]!
                 : "https://yourbrandstorage.blob.core.windows.net";
 
             product.Image = $"{cdnBaseUrl}/images/products/{request.FileName}";

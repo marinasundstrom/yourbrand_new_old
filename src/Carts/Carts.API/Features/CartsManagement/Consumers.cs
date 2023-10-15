@@ -1,6 +1,9 @@
 using Carts.Contracts;
-using MediatR;
+
 using MassTransit;
+
+using MediatR;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace Carts.API.Features.CartsManagement.Consumers;
@@ -15,8 +18,9 @@ public sealed class GetCartsConsumer(MediatR.IMediator mediator) : IConsumer<Car
         var r = await mediator.Send(new Requests.GetCarts(page, pageSize), context.CancellationToken);
         var cartsResult = r.GetValue();
 
-        var result = new PagedCartResult {
-            Items = cartsResult.Items.Select(x => x.Map()), 
+        var result = new PagedCartResult
+        {
+            Items = cartsResult.Items.Select(x => x.Map()),
             Total = cartsResult.Total
         };
 
@@ -57,7 +61,7 @@ public sealed class AddCartItemConsumer(MediatR.IMediator mediator) : IConsumer<
 
         var cartItem = r.GetValue();
 
-        await context.RespondAsync<AddCartItemResponse>(new AddCartItemResponse {  CartItem = cartItem.Map() });
+        await context.RespondAsync<AddCartItemResponse>(new AddCartItemResponse { CartItem = cartItem.Map() });
     }
 }
 
@@ -89,26 +93,28 @@ public sealed class RemoveCartItemQuantityConsumer(MediatR.IMediator mediator) :
     }
 }
 
-public static class Mappings 
+public static class Mappings
 {
-    public static Carts.Contracts.Cart Map(this Carts.API.Domain.Entities.Cart cart) => new Carts.Contracts.Cart {
-        Id = cart.Id, 
-        Name = cart.Name, 
-        Total = cart.Total, 
-        Items = cart.Items.Select(cartItem => cartItem.Map()) 
+    public static Carts.Contracts.Cart Map(this Carts.API.Domain.Entities.Cart cart) => new Carts.Contracts.Cart
+    {
+        Id = cart.Id,
+        Name = cart.Name,
+        Total = cart.Total,
+        Items = cart.Items.Select(cartItem => cartItem.Map())
     };
 
-    public static Carts.Contracts.CartItem Map(this Carts.API.Domain.Entities.CartItem cartItem) => new Carts.Contracts.CartItem {
-        Id = cartItem.Id, 
-        Name = cartItem.Name, 
-        Image = cartItem.Image, 
-        ProductId = cartItem.ProductId, 
-        ProductHandle = cartItem.ProductHandle, 
-        Description = cartItem.Description, 
-        Price = cartItem.Price, 
-        RegularPrice = cartItem.RegularPrice, 
-        Quantity = cartItem.Quantity, 
-        Total = cartItem.Total, 
+    public static Carts.Contracts.CartItem Map(this Carts.API.Domain.Entities.CartItem cartItem) => new Carts.Contracts.CartItem
+    {
+        Id = cartItem.Id,
+        Name = cartItem.Name,
+        Image = cartItem.Image,
+        ProductId = cartItem.ProductId,
+        ProductHandle = cartItem.ProductHandle,
+        Description = cartItem.Description,
+        Price = cartItem.Price,
+        RegularPrice = cartItem.RegularPrice,
+        Quantity = cartItem.Quantity,
+        Total = cartItem.Total,
         Created = cartItem.Created
     };
 }
@@ -134,7 +140,7 @@ public sealed class ProductDetailsUpdatedConsumer(Carts.API.Persistence.CartsCon
 
         await cartsContext.CartItems
             .Where(cartItem => cartItem.ProductId == message.ProductId)
-            .ExecuteUpdateAsync(s => 
+            .ExecuteUpdateAsync(s =>
                 s.SetProperty(e => e.Name, e => message.Name)
                  .SetProperty(e => e.Description, e => message.Description), context.CancellationToken);
     }

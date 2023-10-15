@@ -1,22 +1,31 @@
 using System.Security.Claims;
+using System.Threading.RateLimiting;
+
 using Azure.Identity;
-using YourBrand;
+
 using BlazorApp;
 using BlazorApp.Cart;
-using BlazorApp.Products;
-using BlazorApp.ProductCategories;
 using BlazorApp.Data;
-using MassTransit;
+using BlazorApp.Extensions;
+using BlazorApp.ProductCategories;
+using BlazorApp.Products;
+
+using CartsAPI;
+
+using CatalogAPI;
+
 using HealthChecks.UI.Client;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+
+using MassTransit;
+
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using CartsAPI;
-using CatalogAPI;
-using System.Threading.RateLimiting;
-using BlazorApp.Extensions;
+
 using Serilog;
+
+using YourBrand;
 
 string MyAllowSpecificOrigins = nameof(MyAllowSpecificOrigins);
 
@@ -25,20 +34,20 @@ string serviceVersion = "1.0";
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Host.UseSerilog((ctx, cfg) =>  cfg.ReadFrom.Configuration(builder.Configuration)
+builder.Host.UseSerilog((ctx, cfg) => cfg.ReadFrom.Configuration(builder.Configuration)
                         .Enrich.WithProperty("Application", serviceName)
                         .Enrich.WithProperty("Environment", ctx.HostingEnvironment.EnvironmentName));
 
 string GetProductsExpire20 = nameof(GetProductsExpire20);
 
-builder.Services.AddRateLimiter(options => 
+builder.Services.AddRateLimiter(options =>
 {
-    options. RejectionStatusCode = StatusCodes.Status429TooManyRequests;
-    
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
     options.AddPolicy("fixed", httpContext =>
         RateLimitPartition.GetFixedWindowLimiter(
-        partitionKey: httpContext.Connection.RemoteIpAddress?.ToString(), 
-        factory: _ => new FixedWindowRateLimiterOptions 
+        partitionKey: httpContext.Connection.RemoteIpAddress?.ToString(),
+        factory: _ => new FixedWindowRateLimiterOptions
         {
             PermitLimit = 10,
             Window = TimeSpan.FromSeconds(10)
@@ -47,7 +56,7 @@ builder.Services.AddRateLimiter(options =>
 
 builder.Services.AddOutputCache(options =>
 {
-    options.AddPolicy(GetProductsExpire20, builder => 
+    options.AddPolicy(GetProductsExpire20, builder =>
     {
         builder.Expire(TimeSpan.FromSeconds(20));
         builder.SetVaryByQuery("page", "pageSize", "searchTerm");
@@ -140,20 +149,21 @@ builder.Services.AddMassTransit(x =>
 
     x.AddConsumers(typeof(Program).Assembly);
 
-    if(builder.Environment.IsProduction()) 
+    if (builder.Environment.IsProduction())
     {
-        x.UsingAzureServiceBus((context, cfg) => {
+        x.UsingAzureServiceBus((context, cfg) =>
+        {
             cfg.Host(builder.Configuration["yourbrand-servicebus-connectionstring"]);
 
             cfg.ConfigureEndpoints(context);
         });
     }
-    else 
+    else
     {
         x.UsingRabbitMq((context, cfg) =>
         {
             var rabbitmqHost = builder.Configuration["RABBITMQ_HOST"] ?? "localhost";
-            
+
             cfg.Host(rabbitmqHost, "/", h =>
             {
                 h.Username("guest");

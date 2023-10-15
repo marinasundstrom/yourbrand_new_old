@@ -1,14 +1,16 @@
 using Carts.API.Domain.Entities;
 using Carts.API.Features.CartsManagement.Requests;
+
 using MediatR;
+
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Carts.API.Features.CartsManagement;
 
-public static class Endpoints 
+public static class Endpoints
 {
-    public static IEndpointRouteBuilder MapCartsEndpoints(this IEndpointRouteBuilder app) 
-    {  
+    public static IEndpointRouteBuilder MapCartsEndpoints(this IEndpointRouteBuilder app)
+    {
         string GetCartsExpire20 = nameof(GetCartsExpire20);
 
         app.MapGet("/api/carts", GetCarts)
@@ -30,7 +32,7 @@ public static class Endpoints
         app.MapPost("/api/carts/{id}/items", AddCartItem)
             .WithName($"Carts_{nameof(AddCartItem)}")
             .WithTags("Carts")
-            .WithOpenApi(); 
+            .WithOpenApi();
 
         app.MapGet("/api/carts/{cartId}/items/{id}", GetCartItemById)
             .WithName($"Carts_{nameof(GetCartItemById)}")
@@ -60,10 +62,10 @@ public static class Endpoints
     {
         var result = await mediator.Send(new GetCartById(id), cancellationToken);
 
-        if(result.HasError(Errors.CartNotFound))
+        if (result.HasError(Errors.CartNotFound))
         {
             return TypedResults.NotFound();
-        } 
+        }
 
         return TypedResults.Ok(result.GetValue());
     }
@@ -72,7 +74,7 @@ public static class Endpoints
     {
         var result = await mediator.Send(new CreateCart(request.Name), cancellationToken);
 
-        if(result.HasError(Errors.CartNotFound))
+        if (result.HasError(Errors.CartNotFound))
         {
             return TypedResults.NotFound();
         }
@@ -88,7 +90,7 @@ public static class Endpoints
     {
         var result = await mediator.Send(new AddCartItem(id, cartItemRequest.Name, cartItemRequest.Image, cartItemRequest.ProductId, cartItemRequest.ProductHandle, cartItemRequest.Description, cartItemRequest.Price, cartItemRequest.RegularPrice, cartItemRequest.Quantity), cancellationToken);
 
-        if(result.HasError(Errors.CartNotFound))
+        if (result.HasError(Errors.CartNotFound))
         {
             return TypedResults.NotFound();
         }
@@ -104,12 +106,12 @@ public static class Endpoints
     {
         var result = await mediator.Send(new GetCartItemById(cartId, id), cancellationToken);
 
-        if(result.HasError(Errors.CartNotFound))
+        if (result.HasError(Errors.CartNotFound))
         {
             return TypedResults.NotFound();
         }
 
-        if(result.HasError(Errors.CartItemNotFound))
+        if (result.HasError(Errors.CartItemNotFound))
         {
             return TypedResults.NotFound();
         }
@@ -121,12 +123,12 @@ public static class Endpoints
     {
         var result = await mediator.Send(new UpdateCartItemQuantity(cartId, id, quantity), cancellationToken);
 
-        if(result.HasError(Errors.CartNotFound))
+        if (result.HasError(Errors.CartNotFound))
         {
             return TypedResults.NotFound();
         }
 
-        if(result.HasError(Errors.CartItemNotFound))
+        if (result.HasError(Errors.CartItemNotFound))
         {
             return TypedResults.NotFound();
         }
@@ -138,12 +140,12 @@ public static class Endpoints
     {
         var result = await mediator.Send(new RemoveCartItem(cartId, id), cancellationToken);
 
-        if(result.HasError(Errors.CartNotFound))
+        if (result.HasError(Errors.CartNotFound))
         {
             return TypedResults.NotFound();
         }
 
-        if(result.HasError(Errors.CartItemNotFound))
+        if (result.HasError(Errors.CartItemNotFound))
         {
             return TypedResults.NotFound();
         }

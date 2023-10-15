@@ -3,7 +3,7 @@ namespace BlazorApp.Cart;
 public interface ICartService
 {
     Task InitializeAsync();
-    
+
     Task<IEnumerable<CartItem>> GetCartItemsAsync(CancellationToken cancellationToken = default);
 
     Task AddCartItem(string name, string? image, long? productId, string? productHandle, string description, decimal price, decimal? regularPrice, int quantity);
@@ -12,21 +12,22 @@ public interface ICartService
 
     Task RemoveCartItem(string cartItemId);
 
-    IReadOnlyCollection<CartItem> Items { get;}
+    IReadOnlyCollection<CartItem> Items { get; }
 
     event EventHandler? CartUpdated;
 }
 
-public sealed class Cart(string id, string name, IEnumerable<CartItem> items) 
+public sealed class Cart(string id, string name, IEnumerable<CartItem> items)
 {
     public string Id { get; set; } = id;
 
     public string Name { get; set; } = name;
 
-    public IEnumerable<CartItem> Items{ get; set; } = items;
+    public IEnumerable<CartItem> Items { get; set; } = items;
 }
 
-public sealed class CartItem(string id, string name, string? image, long? productId, string? productHandle, string description, decimal price, decimal? regularPrice, int quantity) {
+public sealed class CartItem(string id, string name, string? image, long? productId, string? productHandle, string description, decimal price, decimal? regularPrice, int quantity)
+{
     public string Id { get; set; } = id;
 
     public string Name { get; set; } = name;
@@ -34,14 +35,14 @@ public sealed class CartItem(string id, string name, string? image, long? produc
     public string? Image { get; set; } = image;
 
     public long? ProductId { get; set; } = productId;
-    
+
     public string? ProductHandle { get; set; } = productHandle;
 
     public string Description { get; set; } = description;
 
     public decimal Price { get; set; } = price;
 
-    public decimal? RegularPrice  { get; set; } = regularPrice;
+    public decimal? RegularPrice { get; set; } = regularPrice;
 
     public int Quantity { get; set; } = quantity;
 

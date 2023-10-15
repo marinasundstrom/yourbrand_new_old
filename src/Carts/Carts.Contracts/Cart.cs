@@ -1,6 +1,6 @@
 namespace Carts.Contracts;
 
-public sealed record Cart 
+public sealed record Cart
 {
     public string Id { get; init; }
     public string Name { get; init; }
@@ -8,7 +8,7 @@ public sealed record Cart
     public IEnumerable<CartItem> Items { get; init; }
 }
 
-public sealed record CartItem 
+public sealed record CartItem
 {
     public string Id { get; init; }
     public string Name { get; init; }
@@ -16,7 +16,7 @@ public sealed record CartItem
     public long? ProductId { get; init; }
     public string? ProductHandle { get; init; }
     public string Description { get; init; }
-    public decimal Price { get; init; } 
+    public decimal Price { get; init; }
     public decimal? RegularPrice { get; init; }
     public double Quantity { get; init; }
     public decimal Total { get; init; }

@@ -2,10 +2,11 @@
 
 public static class OpenApiExtensions
 {
-	public static IServiceCollection AddOpenApi(this IServiceCollection services)
-	{
+    public static IServiceCollection AddOpenApi(this IServiceCollection services)
+    {
         services.AddEndpointsApiExplorer();
-        services.AddOpenApiDocument(config => {
+        services.AddOpenApiDocument(config =>
+        {
             config.PostProcess = document =>
             {
                 document.Info.Title = "Admin API";
@@ -15,7 +16,7 @@ public static class OpenApiExtensions
         });
 
         return services;
-	}
+    }
 
     public static WebApplication UseOpenApi(this WebApplication app)
     {
@@ -25,4 +26,3 @@ public static class OpenApiExtensions
         return app;
     }
 }
-

@@ -1,14 +1,16 @@
 using CartsAPI;
+
 using MassTransit;
+
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlazorApp.Cart;
 
-public static class Endpoints 
+public static class Endpoints
 {
-    public static IEndpointRouteBuilder MapCartEndpoints(this IEndpointRouteBuilder app) 
-    {  
+    public static IEndpointRouteBuilder MapCartEndpoints(this IEndpointRouteBuilder app)
+    {
         string GetCartsExpire20 = nameof(GetCartsExpire20);
 
         app.MapGet("/api/cart", GetCart)
@@ -56,7 +58,7 @@ public static class Endpoints
 
     private static async Task<Results<Ok<CartItem>, NotFound>> UpdateCartItemQuantity(string cartItemId, UpdateCartItemQuantityRequest request, MassTransitCartsClient cartsClient, CancellationToken cancellationToken)
     {
-        if(request.Quantity <= 0) throw new ArgumentException("Invalid quantity", nameof(request));
+        if (request.Quantity <= 0) throw new ArgumentException("Invalid quantity", nameof(request));
 
         var cartItem = await cartsClient.UpdateCartItemQuantity("test", cartItemId, request.Quantity, cancellationToken);
 

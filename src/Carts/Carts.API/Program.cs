@@ -1,13 +1,18 @@
 ﻿using Azure.Identity;
-using YourBrand;
+
 using Carts.API;
-using Carts.API.Persistence;
 using Carts.API.Extensions;
-using MassTransit;
+using Carts.API.Features.CartsManagement;
+using Carts.API.Persistence;
+
 using HealthChecks.UI.Client;
+
+using MassTransit;
+
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
-using Carts.API.Features.CartsManagement;
+
+using YourBrand;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +20,7 @@ string GetCartsExpire20 = nameof(GetCartsExpire20);
 
 builder.Services.AddOutputCache(options =>
 {
-    options.AddPolicy(GetCartsExpire20, builder => 
+    options.AddPolicy(GetCartsExpire20, builder =>
     {
         builder.Expire(TimeSpan.FromSeconds(20));
         builder.SetVaryByQuery("page", "pageSize", "searchTerm");
@@ -48,20 +53,21 @@ builder.Services.AddMassTransit(x =>
 
     x.AddConsumers(typeof(Program).Assembly);
 
-    if(builder.Environment.IsProduction()) 
+    if (builder.Environment.IsProduction())
     {
-        x.UsingAzureServiceBus((context, cfg) => {
+        x.UsingAzureServiceBus((context, cfg) =>
+        {
             cfg.Host(builder.Configuration["yourbrand-servicebus-connectionstring"]);
 
             cfg.ConfigureEndpoints(context);
         });
     }
-    else 
+    else
     {
         x.UsingRabbitMq((context, cfg) =>
         {
             var rabbitmqHost = builder.Configuration["RABBITMQ_HOST"] ?? "localhost";
-            
+
             cfg.Host(rabbitmqHost, "/", h =>
             {
                 h.Username("guest");
@@ -99,7 +105,7 @@ app.MapHealthChecks("/healthz", new HealthCheckOptions()
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 });
 
-try 
+try
 {
     using (var scope = app.Services.CreateScope())
     {
@@ -117,7 +123,7 @@ try
         }
     }
 }
-catch(Exception e) 
+catch (Exception e)
 {
     Console.WriteLine(e);
 }

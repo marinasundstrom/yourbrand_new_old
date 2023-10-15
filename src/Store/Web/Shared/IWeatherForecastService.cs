@@ -1,6 +1,6 @@
 namespace BlazorApp;
 
-public interface IWeatherForecastService 
+public interface IWeatherForecastService
 {
     Task<IEnumerable<WeatherForecast>> GetWeatherForecasts(DateOnly startDate, CancellationToken cancellationToken = default);
 }

@@ -1,18 +1,23 @@
 
-using MassTransit.Testing;
-using Carts.Contracts;
-using Xunit.Abstractions;
-using Meziantou.Extensions.Logging.Xunit;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Testcontainers.SqlEdge;
-using Microsoft.EntityFrameworkCore;
 using Carts.API.Persistence;
+using Carts.Contracts;
+
 using MassTransit;
+using MassTransit.Testing;
+
+using Meziantou.Extensions.Logging.Xunit;
+
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.EntityFrameworkCore;
+
+using Testcontainers.SqlEdge;
+
+using Xunit.Abstractions;
 
 namespace Carts.IntegrationTests;
 public class CartsTest : IAsyncLifetime
 {
-    ITestOutputHelper _testOutputHelper;
+    readonly ITestOutputHelper _testOutputHelper;
     private WebApplicationFactory<Program> factory;
     private HttpClient client;
     private ITestHarness harness;
@@ -35,60 +40,63 @@ public class CartsTest : IAsyncLifetime
         await _sqlEdgeContainer.StartAsync();
 
         factory = new WebApplicationFactory<Program>()
-            .WithWebHostBuilder(builder => {
-                builder.ConfigureLogging(x =>  {
+            .WithWebHostBuilder(builder =>
+            {
+                builder.ConfigureLogging(x =>
+                {
                     x.ClearProviders();
                     x.Services.AddSingleton<ILoggerProvider>(new XUnitLoggerProvider(_testOutputHelper));
                 });
 
-                builder.ConfigureServices(async services => {
-                        var descriptor = services.Single(
-                    d => d.ServiceType ==
-                        typeof(DbContextOptions<CartsContext>));
+                builder.ConfigureServices(async services =>
+                {
+                    var descriptor = services.Single(
+                d => d.ServiceType ==
+                    typeof(DbContextOptions<CartsContext>));
 
-                        services.Remove(descriptor);
+                    services.Remove(descriptor);
 
-                        services.AddDbContext<CartsContext>((sp, options) =>
-                        {
-                            var connectionString = _sqlEdgeContainer.GetConnectionString().Replace("master", CartsDbName);
-                            options.UseSqlServer(connectionString);
-                        });
-
-                        services.AddMassTransitTestHarness(x =>
-                        {
-                            x.AddDelayedMessageScheduler();
-    
-                            x.AddConsumers(typeof(Carts.API.Consumers.GetCartsConsumer).Assembly);
-                            
-                            x.UsingInMemory((context, cfg) =>
-                            {
-                                cfg.UseDelayedMessageScheduler();
-                                
-                                cfg.ConfigureEndpoints(context);
-                            });
-                        });
-
-                        var sp = services.BuildServiceProvider();
-
-                        using (var scope = sp.CreateScope())
-                        {
-                            var scopedServices = scope.ServiceProvider;
-                            var db = scopedServices.GetRequiredService<CartsContext>();
-                            var configuration = scopedServices.GetRequiredService<IConfiguration>();
-
-                            db.Database.EnsureDeleted();
-                            db.Database.EnsureCreated();
-
-                            try
-                            {
-                                await Seed.SeedData(db, configuration);
-                            }
-                            catch (Exception ex)
-                            {
-                                throw;
-                            }
-                        }
+                    services.AddDbContext<CartsContext>((sp, options) =>
+                    {
+                        var connectionString = _sqlEdgeContainer.GetConnectionString().Replace("master", CartsDbName);
+                        options.UseSqlServer(connectionString);
                     });
+
+                    services.AddMassTransitTestHarness(x =>
+                    {
+                        x.AddDelayedMessageScheduler();
+
+                        x.AddConsumers(typeof(Carts.API.Consumers.GetCartsConsumer).Assembly);
+
+                        x.UsingInMemory((context, cfg) =>
+                        {
+                            cfg.UseDelayedMessageScheduler();
+
+                            cfg.ConfigureEndpoints(context);
+                        });
+                    });
+
+                    var sp = services.BuildServiceProvider();
+
+                    using (var scope = sp.CreateScope())
+                    {
+                        var scopedServices = scope.ServiceProvider;
+                        var db = scopedServices.GetRequiredService<CartsContext>();
+                        var configuration = scopedServices.GetRequiredService<IConfiguration>();
+
+                        db.Database.EnsureDeleted();
+                        db.Database.EnsureCreated();
+
+                        try
+                        {
+                            await Seed.SeedData(db, configuration);
+                        }
+                        catch (Exception ex)
+                        {
+                            throw;
+                        }
+                    }
+                });
             });
 
         client = factory.CreateClient();
@@ -108,13 +116,14 @@ public class CartsTest : IAsyncLifetime
     public async Task AddNewCartItem()
     {
         // Arrange
-        
+
         var client = harness.GetRequestClient<AddCartItem>();
 
         // Act
 
         var response = await client.GetResponse<AddCartItemResponse>(
-            new AddCartItem {
+            new AddCartItem
+            {
                 CartId = "test",
                 Name = "Test",
                 ProductId = 100,

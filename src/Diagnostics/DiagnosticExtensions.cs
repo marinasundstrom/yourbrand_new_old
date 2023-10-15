@@ -1,9 +1,11 @@
 using System.Diagnostics;
+
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace YourBrand;
 
@@ -44,7 +46,7 @@ public static class DiagnosticExtensions
                         .AddMeter("Microsoft.AspNetCore.Hosting",
                             "Microsoft.AspNetCore.Server.Kestrel")
                         .AddPrometheusExporter();
-                        //.AddConsoleExporter();
+                    //.AddConsoleExporter();
                 })
                 .WithTracing(tracing =>
                 {
@@ -58,11 +60,11 @@ public static class DiagnosticExtensions
                             //.AddGrpcClientInstrumentation()
                             .AddZipkinExporter(zipkin =>
                             {
-                                var zipkinUrl =  configuration["ZIPKIN_URL"] ?? "http://localhost:9411";
+                                var zipkinUrl = configuration["ZIPKIN_URL"] ?? "http://localhost:9411";
                                 zipkin.Endpoint = new Uri($"{zipkinUrl}/api/v2/spans");
                             });
-                            //.AddConsoleExporter();
-                           
+                    //.AddConsoleExporter();
+
                     tracerBuilderAction?.Invoke(tracing);
                 });
 
