@@ -17,13 +17,13 @@ partial class ProductsController : Controller
     }
 
     [HttpPost("{id}/options")]
-    public async Task<ActionResult<OptionDto>> CreateProductOption(long id, ApiCreateProductOption data, CancellationToken cancellationToken)
+    public async Task<ActionResult<OptionDto>> CreateProductOption(long id, CreateProductOptionData data, CancellationToken cancellationToken)
     {
         return Ok(await _mediator.Send(new CreateProductOption(id, data), cancellationToken));
     }
 
     [HttpPut("{id}/options/{optionId}")]
-    public async Task<ActionResult<OptionDto>> UpdateProductOption(long id, string optionId, ApiUpdateProductOption data, CancellationToken cancellationToken)
+    public async Task<ActionResult<OptionDto>> UpdateProductOption(long id, string optionId, UpdateProductOptionData data, CancellationToken cancellationToken)
     {
         return Ok(await _mediator.Send(new UpdateProductOption(id, optionId, data), cancellationToken));
     }
@@ -36,7 +36,7 @@ partial class ProductsController : Controller
     }
 
     [HttpPost("{id}/options/{optionId}/values")]
-    public async Task<ActionResult<OptionValueDto>> CreateProductOptionValue(long id, string optionId, ApiCreateProductOptionValue data, CancellationToken cancellationToken)
+    public async Task<ActionResult<OptionValueDto>> CreateProductOptionValue(long id, string optionId, CreateProductOptionValueData data, CancellationToken cancellationToken)
     {
 
         return Ok(await _mediator.Send(new CreateProductOptionValue(id, optionId, data), cancellationToken));
@@ -62,13 +62,13 @@ partial class ProductsController : Controller
     }
 
     [HttpPost("{id}/options/groups")]
-    public async Task<ActionResult<OptionGroupDto>> CreateOptionGroup(long id, ApiCreateProductOptionGroup data)
+    public async Task<ActionResult<OptionGroupDto>> CreateOptionGroup(long id, CreateProductOptionGroupData data)
     {
         return Ok(await _mediator.Send(new CreateProductOptionGroup(id, data)));
     }
 
     [HttpPut("{id}/options/groups/{optionGroupId}")]
-    public async Task<ActionResult<OptionGroupDto>> UpdateOptionGroup(long id, string optionGroupId, ApiUpdateProductOptionGroup data)
+    public async Task<ActionResult<OptionGroupDto>> UpdateOptionGroup(long id, string optionGroupId, UpdateProductOptionGroupData data)
     {
         return Ok(await _mediator.Send(new UpdateProductOptionGroup(id, optionGroupId, data)));
     }

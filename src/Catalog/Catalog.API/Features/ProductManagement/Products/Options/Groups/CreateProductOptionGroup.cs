@@ -8,7 +8,7 @@ using Catalog.API.Domain.Entities;
 
 namespace Catalog.API.Features.ProductManagement.Products.Options.Groups;
 
-public record CreateProductOptionGroup(long ProductId, ApiCreateProductOptionGroup Data) : IRequest<OptionGroupDto>
+public record CreateProductOptionGroup(long ProductId, CreateProductOptionGroupData Data) : IRequest<OptionGroupDto>
 {
     public class Handler : IRequestHandler<CreateProductOptionGroup, OptionGroupDto>
     {

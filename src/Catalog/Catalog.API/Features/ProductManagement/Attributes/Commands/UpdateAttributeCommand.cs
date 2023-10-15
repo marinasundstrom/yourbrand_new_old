@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.API.Features.ProductManagement.Attributes;
 
-public record UpdateAttributeCommand(string Id, string Name, string? Description, string? GroupId, IEnumerable<ApiUpdateProductAttributeValue> Values) : IRequest
+public record UpdateAttributeCommand(string Id, string Name, string? Description, string? GroupId, IEnumerable<UpdateProductAttributeValueData> Values) : IRequest
 {
     public class UpdateAttributeCommandHandler : IRequestHandler<UpdateAttributeCommand>
     {

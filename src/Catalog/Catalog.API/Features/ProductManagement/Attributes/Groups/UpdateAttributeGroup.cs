@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.API.Features.ProductManagement.Attributes.Groups;
 
-public record UpdateAttributeGroup(string Id, ApiUpdateProductAttributeGroup Data) : IRequest<AttributeGroupDto>
+public record UpdateAttributeGroup(string Id, UpdateProductAttributeGroupData Data) : IRequest<AttributeGroupDto>
 {
     public class Handler : IRequestHandler<UpdateAttributeGroup, AttributeGroupDto>
     {

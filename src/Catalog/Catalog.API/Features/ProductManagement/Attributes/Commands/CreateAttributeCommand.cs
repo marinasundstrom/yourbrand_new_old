@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.API.Features.ProductManagement.Attributes;
 
-public record CreateAttributeCommand(string Name, string? Description, string? GroupId, IEnumerable<ApiCreateProductAttributeValue> Values) : IRequest<AttributeDto>
+public record CreateAttributeCommand(string Name, string? Description, string? GroupId, IEnumerable<CreateProductAttributeValueData> Values) : IRequest<AttributeDto>
 {
     public class CreateAttributeCommandHandler : IRequestHandler<CreateAttributeCommand, AttributeDto>
     {

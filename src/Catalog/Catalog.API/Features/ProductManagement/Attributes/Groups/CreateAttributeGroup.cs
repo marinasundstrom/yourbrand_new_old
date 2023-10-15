@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Catalog.API.Features.ProductManagement.Attributes.Groups;
 
-public record CreateAttributeGroup(ApiCreateProductAttributeGroup Data) : IRequest<AttributeGroupDto>
+public record CreateAttributeGroup(CreateProductAttributeGroupData Data) : IRequest<AttributeGroupDto>
 {
     public class Handler : IRequestHandler<CreateAttributeGroup, AttributeGroupDto>
     {

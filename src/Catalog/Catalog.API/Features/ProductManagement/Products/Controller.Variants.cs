@@ -50,7 +50,7 @@ partial class ProductsController : Controller
     [HttpPost("{id}/variants")]
     [ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<ProductDto>> CreateVariant(long id, ApiCreateProductVariant data)
+    public async Task<ActionResult<ProductDto>> CreateVariant(long id, CreateProductVariantData data)
     {
         try
         {
@@ -69,7 +69,7 @@ partial class ProductsController : Controller
     [HttpPut("{id}/variants/{variantId}")]
     [ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<ProductDto>> UpdateVariant(long id, long variantId, ApiUpdateProductVariant data)
+    public async Task<ActionResult<ProductDto>> UpdateVariant(long id, long variantId, UpdateProductVariantData data)
     {
         try
         {

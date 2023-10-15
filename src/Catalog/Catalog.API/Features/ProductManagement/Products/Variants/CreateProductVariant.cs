@@ -6,7 +6,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 namespace Catalog.API.Features.ProductManagement.Products.Variants;
 
-public record CreateProductVariant(long ProductId, ApiCreateProductVariant Data) : IRequest<ProductDto>
+public record CreateProductVariant(long ProductId, CreateProductVariantData Data) : IRequest<ProductDto>
 {
     public class Handler : IRequestHandler<CreateProductVariant, ProductDto>
     {

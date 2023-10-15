@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.API.Features.ProductManagement.Attributes.Values;
 
-public record CreateProductAttributeValue(string Id, ApiCreateProductAttributeValue Data) : IRequest<AttributeValueDto>
+public record CreateProductAttributeValue(string Id, CreateProductAttributeValueData Data) : IRequest<AttributeValueDto>
 {
     public class Handler : IRequestHandler<CreateProductAttributeValue, AttributeValueDto>
     {

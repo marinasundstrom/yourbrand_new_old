@@ -7,7 +7,7 @@ using Catalog.API.Persistence;
 
 namespace Catalog.API.Features.ProductManagement.Products.Options.Groups;
 
-public record UpdateProductOptionGroup(long ProductId, string OptionGroupId, ApiUpdateProductOptionGroup Data) : IRequest<OptionGroupDto>
+public record UpdateProductOptionGroup(long ProductId, string OptionGroupId, UpdateProductOptionGroupData Data) : IRequest<OptionGroupDto>
 {
     public class Handler : IRequestHandler<UpdateProductOptionGroup, OptionGroupDto>
     {

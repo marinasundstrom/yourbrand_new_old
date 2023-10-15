@@ -8,7 +8,7 @@ using Catalog.API.Domain.Entities;
 
 namespace Catalog.API.Features.ProductManagement.Products.Options;
 
-public record CreateProductOptionValue(long ProductId, string OptionId, ApiCreateProductOptionValue Data) : IRequest<OptionValueDto>
+public record CreateProductOptionValue(long ProductId, string OptionId, CreateProductOptionValueData Data) : IRequest<OptionValueDto>
 {
     public class Handler : IRequestHandler<CreateProductOptionValue, OptionValueDto>
     {

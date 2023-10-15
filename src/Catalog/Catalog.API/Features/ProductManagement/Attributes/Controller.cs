@@ -61,7 +61,7 @@ public class AttributesController : Controller
     }
 
     [HttpPost("{id}/values")]
-    public async Task<ActionResult<AttributeValueDto>> CreateAttributeValue(string id, ApiCreateProductAttributeValue data, CancellationToken cancellationToken)
+    public async Task<ActionResult<AttributeValueDto>> CreateAttributeValue(string id, CreateProductAttributeValueData data, CancellationToken cancellationToken)
     {
         return Ok(await _mediator.Send(new CreateProductAttributeValue(id, data), cancellationToken));
     }
@@ -80,13 +80,13 @@ public class AttributesController : Controller
     }
 
     [HttpPost("groups")]
-    public async Task<ActionResult<AttributeGroupDto>> CreateAttributeGroup(ApiCreateProductAttributeGroup data)
+    public async Task<ActionResult<AttributeGroupDto>> CreateAttributeGroup(CreateProductAttributeGroupData data)
     {
         return Ok(await _mediator.Send(new CreateAttributeGroup(data)));
     }
 
     [HttpPut("groups/{id}")]
-    public async Task<ActionResult<AttributeGroupDto>> UpdateAttributeGroup(string id, ApiUpdateProductAttributeGroup data)
+    public async Task<ActionResult<AttributeGroupDto>> UpdateAttributeGroup(string id, UpdateProductAttributeGroupData data)
     {
         return Ok(await _mediator.Send(new UpdateAttributeGroup(id, data)));
     }
@@ -100,6 +100,6 @@ public class AttributesController : Controller
 
 }
 
-public record CreateAttributeDto(string Name, string? Description, string? GroupId, IEnumerable<ApiCreateProductAttributeValue> Values);
+public record CreateAttributeDto(string Name, string? Description, string? GroupId, IEnumerable<CreateProductAttributeValueData> Values);
 
-public record UpdateAttributeDto(string Name, string? Description, string? GroupId, IEnumerable<ApiUpdateProductAttributeValue> Values);
+public record UpdateAttributeDto(string Name, string? Description, string? GroupId, IEnumerable<UpdateProductAttributeValueData> Values);
