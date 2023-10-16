@@ -26,7 +26,7 @@ public record DeleteProductOption(long ProductId, string OptionId) : IRequest
             var option = item.Options
                 .First(x => x.Id == request.OptionId);
 
-            item.Options.Remove(option);
+            item.RemoveOption(option);
             _context.Options.Remove(option);
 
             if (item.HasVariants)
@@ -41,7 +41,7 @@ public record DeleteProductOption(long ProductId, string OptionId) : IRequest
                     var option1 = variant.ProductOptions.FirstOrDefault(x => x.OptionId == option.Id);
                     if (option1 is not null)
                     {
-                        variant.ProductOptions.Remove(option1);
+                        variant.RemoveProductOption(option1);
                     }
                 }
             }

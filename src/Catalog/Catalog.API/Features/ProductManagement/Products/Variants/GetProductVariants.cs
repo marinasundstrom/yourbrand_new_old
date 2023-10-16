@@ -48,6 +48,7 @@ public record GetProductVariants(string ProductIdOrHandle, int Page = 10, int Pa
             }
 
             var variants = await query
+                .Include(x => x.Category)
                 .Include(pv => pv.ParentProduct)
                     .ThenInclude(pv => pv!.Category)
                 .Include(pv => pv.ProductAttributes)

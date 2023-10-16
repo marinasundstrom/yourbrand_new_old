@@ -56,7 +56,7 @@ public record UpdateProductVariant(long ProductId, long ProductVariantId, Update
 
                     var value2 = attribute.Values.First(x => x.Id == v.ValueId);
 
-                    variant.ProductAttributes.Add(new ProductAttribute()
+                    variant.AddProductAttribute(new ProductAttribute()
                     {
                         Attribute = attribute,
                         Value = value2
@@ -84,7 +84,7 @@ public record UpdateProductVariant(long ProductId, long ProductVariantId, Update
 
                 if (value is null)
                 {
-                    variant.ProductAttributes.Remove(v);
+                    variant.RemoveProductAttribute(v);
                 }
             }
 

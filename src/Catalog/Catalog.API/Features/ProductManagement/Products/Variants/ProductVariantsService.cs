@@ -21,6 +21,7 @@ public class ProductsService
         var query = _context.Products
             .AsSplitQuery()
             .AsNoTracking()
+            .Include(x => x.Category)
             .Include(pv => pv.ParentProduct)
                 .ThenInclude(pv => pv!.Category)
             .Include(pv => pv.ProductAttributes)

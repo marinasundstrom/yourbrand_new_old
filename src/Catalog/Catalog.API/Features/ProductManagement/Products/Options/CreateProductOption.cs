@@ -82,7 +82,7 @@ public record CreateProductOption(long ProductId, CreateProductOptionData Data) 
             option.Description = request.Data.Description;
             option.Group = group;
 
-            item.Options.Add(option);
+            item.AddOption(option);
 
             if (item.HasVariants)
             {
@@ -93,7 +93,7 @@ public record CreateProductOption(long ProductId, CreateProductOptionData Data) 
 
                 foreach (var variant in item.Variants)
                 {
-                    variant.ProductOptions.Add(new ProductOption()
+                    variant.AddProductOption(new ProductOption()
                     {
                         Option = option,
                         IsInherited = true

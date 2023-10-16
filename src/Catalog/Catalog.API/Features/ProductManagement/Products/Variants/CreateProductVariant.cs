@@ -55,14 +55,14 @@ public record CreateProductVariant(long ProductId, CreateProductVariantData Data
 
                 var value2 = attribute.Values.First(x => x.Id == value.ValueId);
 
-                variant.ProductAttributes.Add(new ProductAttribute()
+                variant.AddProductAttribute(new ProductAttribute()
                 {
                     Attribute = attribute,
                     Value = value2
                 });
             }
 
-            item.Variants.Add(variant);
+            item.AddVariant(variant);
 
             await _context.SaveChangesAsync();
 

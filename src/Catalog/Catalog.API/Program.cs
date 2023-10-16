@@ -163,7 +163,7 @@ static async Task SeedData(CatalogContext context, IConfiguration configuration,
 {
     try
     {
-        await Seed.SeedData(context, configuration);
+        await Seed2.SeedData(context, configuration);
     }
     catch (Exception ex)
     {

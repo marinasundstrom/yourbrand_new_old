@@ -14,6 +14,7 @@ public sealed record GetProducts(int Page = 1, int PageSize = 10, string? Search
         public async Task<PagedResult<ProductDto>> Handle(GetProducts request, CancellationToken cancellationToken)
         {
             var query = catalogContext.Products
+                        .Where(x => x.Category != null)
                         .Include(x => x.Category)
                         .ThenInclude(x => x.Parent)
                         .AsNoTracking().AsQueryable();

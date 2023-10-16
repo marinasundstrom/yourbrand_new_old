@@ -5,7 +5,18 @@ public sealed class ProductCategory
     private readonly HashSet<Product> _products = new HashSet<Product>();
     private readonly HashSet<ProductCategory> _subCategories = new HashSet<ProductCategory>();
 
+    public ProductCategory() { }
+
+    public ProductCategory(string name) 
+    {
+        Name = name;
+    }
+
     public long Id { get; private set; }
+
+    public Store? Store { get; set; }
+
+    public string? StoreId { get; set; }
 
     public string Name { get; set; } = default!;
 

@@ -35,7 +35,7 @@ public record UpdateProductAttribute(long ProductId, string AttributeId, string 
             productAttribute.ProductId = item.Id;
             productAttribute.Value = value;
 
-            item.ProductAttributes.Add(productAttribute);
+            item.AddProductAttribute(productAttribute);
 
             await _context.SaveChangesAsync(cancellationToken);
 

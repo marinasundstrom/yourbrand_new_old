@@ -36,7 +36,7 @@ public record AddProductAttribute(long ProductId, string AttributeId, string Val
                 Value = value!
             };
 
-            item.ProductAttributes.Add(productAttribute);
+            item.AddProductAttribute(productAttribute);
 
             await _context.SaveChangesAsync(cancellationToken);
 

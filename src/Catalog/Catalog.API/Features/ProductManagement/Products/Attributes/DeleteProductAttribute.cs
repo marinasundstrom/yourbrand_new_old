@@ -26,7 +26,7 @@ public record DeleteProductAttribute(long ProductId, string AttributeId) : IRequ
             var attribute = item.ProductAttributes
                 .First(x => x.AttributeId == request.AttributeId);
 
-            item.ProductAttributes.Remove(attribute);
+            item.RemoveProductAttribute(attribute);
             _context.ProductAttributes.Remove(attribute);
 
             await _context.SaveChangesAsync();

@@ -29,7 +29,7 @@ public record DeleteProductOptionGroup(long ProductId, string OptionGroupId) : I
 
             optionGroup.Options.Clear();
 
-            item.OptionGroups.Remove(optionGroup);
+            item.RemoveOptionGroup(optionGroup);
             _context.OptionGroups.Remove(optionGroup);
 
             await _context.SaveChangesAsync();

@@ -26,7 +26,7 @@ public record DeleteProductVariant(long ProductId, long ProductVariantId) : IReq
 
             var variant = item.Variants.First(x => x.Id == request.ProductVariantId);
 
-            item.Variants.Remove(variant);
+            item.RemoveVariant(variant);
             _context.Products.Remove(variant);
 
             await _context.SaveChangesAsync();

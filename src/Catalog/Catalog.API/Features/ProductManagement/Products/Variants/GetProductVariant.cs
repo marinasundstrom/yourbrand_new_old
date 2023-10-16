@@ -26,6 +26,7 @@ public record GetProductVariant(string ProductIdOrHandle, string ProductVariantI
             var query = _context.Products
                 .AsSplitQuery()
                 .AsNoTracking()
+                .Include(x => x.Category)
                 .Include(pv => pv.Variants)
                 .Include(pv => pv.ProductAttributes)
                 .ThenInclude(pv => pv.Attribute)

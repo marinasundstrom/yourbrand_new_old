@@ -17,65 +17,43 @@ public static class Endpoints
     {
         string GetProductsExpire20 = nameof(GetProductsExpire20);
 
-        app.MapGet("/api/products", GetProducts)
-            .WithName($"Products_{nameof(GetProducts)}")
+        var group = app.MapGroup("/api/products")
             .WithTags("Products")
-            .WithOpenApi()
             .RequireRateLimiting("fixed")
+            .WithOpenApi();
+
+        group.MapGet("/", GetProducts)
+            .WithName($"Products_{nameof(GetProducts)}")
             .CacheOutput(GetProductsExpire20);
 
-        app.MapGet("/api/products/{idOrHandle}", GetProductById)
-            .WithName($"Products_{nameof(GetProductById)}")
-            .WithTags("Products")
-            .RequireRateLimiting("fixed")
-            .WithOpenApi();
+        group.MapGet("/{idOrHandle}", GetProductById)
+            .WithName($"Products_{nameof(GetProductById)}");
 
-        app.MapPost("/api/products", CreateProduct)
+        group.MapPost("/", CreateProduct)
             .AddEndpointFilter<ValidationFilter<CreateProductRequest>>()
-            .WithName($"Products_{nameof(CreateProduct)}")
-            .WithTags("Products")
-            .RequireRateLimiting("fixed")
-            .WithOpenApi();
+            .WithName($"Products_{nameof(CreateProduct)}");
 
-        app.MapPut("/api/products/{idOrHandle}", UpdateProductDetails)
+        group.MapPut("/{idOrHandle}", UpdateProductDetails)
             .AddEndpointFilter<ValidationFilter<UpdateProductDetailsRequest>>()
-            .WithName($"Products_{nameof(UpdateProductDetails)}")
-            .WithTags("Products")
-            .RequireRateLimiting("fixed")
-            .WithOpenApi();
+            .WithName($"Products_{nameof(UpdateProductDetails)}");
 
-        app.MapPut("/api/products/{idOrHandle}/price", UpdateProductPrice)
-            .WithName($"Products_{nameof(UpdateProductPrice)}")
-            .WithTags("Products")
-            .RequireRateLimiting("fixed")
-            .WithOpenApi();
+        group.MapPut("/{idOrHandle}/price", UpdateProductPrice)
+            .WithName($"Products_{nameof(UpdateProductPrice)}");
 
-        app.MapPost("/api/products/{idOrHandle}/image", UploadProductImage)
+        group.MapPost("/{idOrHandle}/image", UploadProductImage)
             .WithName($"Products_{nameof(UploadProductImage)}")
-            .WithTags("Products")
-            .RequireRateLimiting("fixed")
-            .WithOpenApi()
             .DisableAntiforgery();
 
-        app.MapPut("/api/products/{idOrHandle}/handle", UpdateProductHandle)
+        group.MapPut("/{idOrHandle}/handle", UpdateProductHandle)
             .AddEndpointFilter<ValidationFilter<UpdateProductHandleRequest>>()
-            .WithName($"Products_{nameof(UpdateProductHandle)}")
-            .WithTags("Products")
-            .RequireRateLimiting("fixed")
-            .WithOpenApi();
+            .WithName($"Products_{nameof(UpdateProductHandle)}");
 
-        app.MapPut("/api/products/{idOrHandle}/category", UpdateProductCategory)
+        group.MapPut("/{idOrHandle}/category", UpdateProductCategory)
             .AddEndpointFilter<ValidationFilter<CreateProductCategoryRequest>>()
-            .WithName($"Products_{nameof(UpdateProductCategory)}")
-            .WithTags("Products")
-            .RequireRateLimiting("fixed")
-            .WithOpenApi();
+            .WithName($"Products_{nameof(UpdateProductCategory)}");
 
-        app.MapDelete("/api/products/{idOrHandle}", DeleteProduct)
-            .WithName($"Products_{nameof(DeleteProduct)}")
-            .WithTags("Products")
-            .RequireRateLimiting("fixed")
-            .WithOpenApi();
+        group.MapDelete("/{idOrHandle}", DeleteProduct)
+            .WithName($"Products_{nameof(DeleteProduct)}");
 
         return app;
     }

@@ -32,7 +32,7 @@ public record CreateProductOptionGroup(long ProductId, CreateProductOptionGroupD
                 Max = request.Data.Max
             };
 
-            item.OptionGroups.Add(group);
+            item.AddOptionGroup(group);
 
             await _context.SaveChangesAsync();
 
