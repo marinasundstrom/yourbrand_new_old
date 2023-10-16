@@ -19,6 +19,8 @@ public sealed record GetProducts(int Page = 1, int PageSize = 10, string? Search
                         .ThenInclude(x => x.Parent)
                         .AsNoTracking().AsQueryable();
 
+            query = query.Where(x => x.ParentProductId == null);
+
             if (!string.IsNullOrEmpty(request.CategoryPath))
             {
                 query = query.Where(x => x.Category.Path.StartsWith(request.CategoryPath));
