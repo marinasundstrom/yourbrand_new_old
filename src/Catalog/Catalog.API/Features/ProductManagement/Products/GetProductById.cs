@@ -15,8 +15,8 @@ public sealed record GetProductById(string IdOrHandle) : IRequest<Result<Product
             var isId = int.TryParse(request.IdOrHandle, out var id);
 
             var query = catalogContext.Products
-                .Include(x => x.Category)
-                .ThenInclude(x => x.Parent)
+                .IncludeAll()
+                .AsSplitQuery()
                 .AsQueryable();
 
             var product = isId ?

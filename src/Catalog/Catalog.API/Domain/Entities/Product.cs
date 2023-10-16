@@ -18,7 +18,7 @@ public sealed class Product
 
     readonly List<ProductVariantOption> _productVariantOptions = new List<ProductVariantOption>();
 
-    public Product() {}
+    public Product() { }
 
     public Product(string name, string handle)
     {
@@ -80,13 +80,13 @@ public sealed class Product
 
     public List<ProductVariantOption> ProductVariantOptions { get; } = new List<ProductVariantOption>();
 
-    public void AddVariant(Product variant) 
+    public void AddVariant(Product variant)
     {
         _variants.Add(variant);
         variant.Category = this.Category;
     }
 
-    public void RemoveVariant(Product variant) 
+    public void RemoveVariant(Product variant)
     {
         _variants.Add(variant);
     }

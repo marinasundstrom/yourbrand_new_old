@@ -7,7 +7,7 @@ public sealed class ProductCategory
 
     public ProductCategory() { }
 
-    public ProductCategory(string name) 
+    public ProductCategory(string name)
     {
         Name = name;
     }

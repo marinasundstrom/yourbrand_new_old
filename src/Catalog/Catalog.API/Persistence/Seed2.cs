@@ -136,7 +136,8 @@ public static class Seed2
 
         context.Products.Add(item);
 
-        item.AddProductAttribute(new ProductAttribute {
+        item.AddProductAttribute(new ProductAttribute
+        {
             ForVariant = true,
             IsMainAttribute = true,
             Attribute = colorAttribute,
@@ -219,7 +220,7 @@ public static class Seed2
         variantBlueLarge.AddProductAttribute(new ProductAttribute
         {
             Attribute = sizeAttribute,
-            Value = valueLarge,  
+            Value = valueLarge,
             ForVariant = true
         });
 
@@ -273,7 +274,7 @@ public static class Seed2
         variantRedMedium.AddProductAttribute(new ProductAttribute
         {
             Attribute = sizeAttribute,
-            Value = valueMedium,     
+            Value = valueMedium,
             ForVariant = true,
         });
 
@@ -329,7 +330,7 @@ public static class Seed2
             Price = 89,
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
             Image = $"{cdnBaseUrl}/images/products/placeholder.jpeg",
-        };  
+        };
 
         food.AddProduct(item);
 
@@ -355,7 +356,7 @@ public static class Seed2
         option.DefaultValue = valueSmall;
 
         option.Values.Add(valueLarge);
-        
+
         await context.SaveChangesAsync();
     }
 
@@ -472,12 +473,14 @@ public static class Seed2
 
         item.AddOption(optionSauce);
 
-        optionSauce.Values.Add(new OptionValue("Favoritsås"){
-            Price = 10    
+        optionSauce.Values.Add(new OptionValue("Favoritsås")
+        {
+            Price = 10
         });
 
-        optionSauce.Values.Add(new OptionValue("Barbecuesås"){
-            Price = 10    
+        optionSauce.Values.Add(new OptionValue("Barbecuesås")
+        {
+            Price = 10
         });
 
         await context.SaveChangesAsync();
@@ -806,7 +809,7 @@ public static class Seed2
         };
 
         item.AddOption(optionCitronLime);
-        
+
         await context.SaveChangesAsync();
     }
 }

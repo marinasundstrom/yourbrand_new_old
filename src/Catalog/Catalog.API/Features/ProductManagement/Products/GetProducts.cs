@@ -15,9 +15,10 @@ public sealed record GetProducts(int Page = 1, int PageSize = 10, string? Search
         {
             var query = catalogContext.Products
                         .Where(x => x.Category != null)
-                        .Include(x => x.Category)
-                        .ThenInclude(x => x.Parent)
-                        .AsNoTracking().AsQueryable();
+                        .IncludeAll()
+                        .AsSplitQuery()
+                        .AsNoTracking()
+                        .AsQueryable();
 
             query = query.Where(x => x.ParentProductId == null);
 

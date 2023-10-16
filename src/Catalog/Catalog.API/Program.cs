@@ -1,6 +1,7 @@
 ﻿using Azure.Identity;
 using Azure.Storage.Blobs;
 
+using Catalog.API.Common;
 using Catalog.API.Extensions;
 using Catalog.API.Features.ProductManagement.ProductCategories;
 using Catalog.API.Features.ProductManagement.Products;
@@ -114,6 +115,8 @@ builder.Services
     .AddDbContextCheck<CatalogContext>();
 
 builder.Services.AddScoped<ProductsService>();
+
+builder.Services.AddScoped<ICurrentUserService>(sp => null!);
 
 var app = builder.Build();
 

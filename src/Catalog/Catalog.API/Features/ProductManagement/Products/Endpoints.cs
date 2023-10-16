@@ -180,7 +180,6 @@ public sealed record UpdateProductCategoryRequest(long ProductCategoryId)
     }
 }
 
-
 public sealed record ProductDto(
     long Id,
     string Name,
@@ -189,13 +188,17 @@ public sealed record ProductDto(
     decimal Price,
     decimal? RegularPrice,
     string? Image,
-    string Handle
+    string Handle,
+    bool HasVariants,
+    ProductVisibility Visibility,
+    IEnumerable<ProductAttributeDto> Attributes,
+    IEnumerable<ProductOptionDto> Options
 );
 
 public record class ParentProductDto(
     long Id,
     string Name,
-    ProductCategoryParent? Category,
+    ProductCategory? Category,
     string Description,
     decimal Price,
     decimal? RegularPrice,
