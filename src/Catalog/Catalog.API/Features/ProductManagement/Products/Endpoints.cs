@@ -183,7 +183,8 @@ public sealed record UpdateProductCategoryRequest(long ProductCategoryId)
 public sealed record ProductDto(
     long Id,
     string Name,
-    ProductCategoryParent? Category,
+    ProductCategory2? Category,
+    ParentProductDto? Parent,
     string Description,
     decimal Price,
     decimal? RegularPrice,

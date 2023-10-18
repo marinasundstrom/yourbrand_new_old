@@ -27,7 +27,8 @@ public static class Mappings
         return new ProductDto(
             product.Id,
             product.Name,
-            product.Category.ToShortDto(),
+            product.Category?.ToProductCategory2(),
+            product.ParentProduct?.ToParentProductDto(),
             product.Description,
             product.Price,
             product.RegularPrice,
@@ -39,7 +40,7 @@ public static class Mappings
             product.ProductOptions.Select(x => x.ToDto()));
     }
 
-    public static ParentProductDto ToDto2(this Domain.Entities.Product item)
+    public static ParentProductDto ToParentProductDto(this Domain.Entities.Product item)
     {
         return new ParentProductDto(
                 item.Id,

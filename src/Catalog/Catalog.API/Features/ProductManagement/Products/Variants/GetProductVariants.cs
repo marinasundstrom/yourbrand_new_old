@@ -48,24 +48,7 @@ public record GetProductVariants(string ProductIdOrHandle, int Page = 10, int Pa
             }
 
             var variants = await query
-                .Include(x => x.Category)
-                .Include(pv => pv.ParentProduct)
-                    .ThenInclude(pv => pv!.Category)
-                .Include(pv => pv.ProductAttributes)
-                    .ThenInclude(pv => pv!.Attribute)
-                    .ThenInclude(pv => pv!.Values)
-                .Include(pv => pv.ProductAttributes)
-                    .ThenInclude(pv => pv!.Value)
-                .Include(pv => pv.ProductOptions)
-                    .ThenInclude(pv => pv.Option)
-                    .ThenInclude(pv => pv.Group)
-                .Include(pv => pv.ProductOptions)
-                    .ThenInclude(pv => pv.Option)
-                    .ThenInclude(pv => (pv as ChoiceOption)!.DefaultValue)
-                .Include(pv => pv.ProductOptions)
-                    .ThenInclude(pv => pv.Option)
-                    .ThenInclude(pv => (pv as ChoiceOption)!.Values)
-                .Skip(request.Page * request.PageSize)
+                .IncludeAll()
                 .Take(request.PageSize).AsQueryable()
                 .ToArrayAsync();
 
