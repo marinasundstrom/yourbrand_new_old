@@ -1,8 +1,9 @@
 ﻿@inherits LayoutComponentBase
+@using static Microsoft.AspNetCore.Components.Web.RenderMode
 
-<MudThemeProvider />
-<MudDialogProvider />
-<MudSnackbarProvider />
+<MudThemeProvider @rendermode="InteractiveWebAssembly" />
+<MudDialogProvider @rendermode="InteractiveWebAssembly" />
+<MudSnackbarProvider @rendermode="InteractiveWebAssembly" />
 
 <MudLayout>
     <MudAppBar Elevation="0">

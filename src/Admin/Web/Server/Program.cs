@@ -7,9 +7,12 @@ using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 
+using MudBlazor.Services;
+
 using Serilog;
 
 using YourBrand;
+using YourBrand.Server;
 using YourBrand.Server.Extensions;
 using YourBrand.Server.ProductCategories;
 using YourBrand.Server.Products;
@@ -34,8 +37,14 @@ if (builder.Environment.IsProduction())
         new DefaultAzureCredential());
 }
 
-builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages();
+builder.Services.AddControllers();
+
+builder.Services.AddMudServices();
+
+// Add services to the container.
+builder.Services.AddRazorComponents()
+    .AddInteractiveWebAssemblyComponents()
+    .AddInteractiveServerComponents();
 
 builder.Services.AddCatalogClients(builder.Configuration["yourbrand-catalog-svc-url"]);
 
@@ -70,8 +79,14 @@ else
 
 //app.UseHttpsRedirection();
 
-app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
+
+app.UseAntiforgery();
+
+app.MapRazorComponents<App>()
+    .AddAdditionalAssemblies(typeof(YourBrand.Client.Pages.Counter).Assembly)
+    .AddInteractiveWebAssemblyRenderMode()
+    .AddInteractiveServerRenderMode();
 
 app
     .MapProductsEndpoints()
@@ -83,9 +98,7 @@ app.MapHealthChecks("/healthz", new HealthCheckOptions()
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 });
 
-app.MapRazorPages();
 app.MapControllers();
-app.MapFallbackToFile("index.html");
 
 app.UseOpenTelemetryPrometheusScrapingEndpoint();
 
