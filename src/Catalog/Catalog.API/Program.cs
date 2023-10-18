@@ -29,7 +29,7 @@ builder.Services.AddOutputCache(options =>
     options.AddPolicy(GetProductsExpire20, builder =>
     {
         builder.Expire(TimeSpan.FromSeconds(20));
-        builder.SetVaryByQuery("page", "pageSize", "searchTerm", "categoryPath", "sortBy", "sortDirection");
+        builder.SetVaryByQuery("page", "pageSize", "searchTerm", "categoryPathOrId", "sortBy", "sortDirection");
     });
 });
 

@@ -66,7 +66,7 @@ public static class Endpoints
 
     private static async Task<Ok<PagedResultOfProduct>> GetProducts(int page = 1, int pageSize = 10, string? searchTerm = null, string? sortBy = null, SortDirection? sortDirection = null, CatalogAPI.IProductsClient productsClient = default!, CancellationToken cancellationToken = default!)
     {
-        return TypedResults.Ok(await productsClient.GetProductsAsync(page, pageSize, searchTerm, null, sortBy, sortDirection, cancellationToken));
+        return TypedResults.Ok(await productsClient.GetProductsAsync(null, null, true, true, page, pageSize, searchTerm, null, sortBy, sortDirection, cancellationToken));
     }
 
     private static async Task<Results<Ok<Product>, NotFound>> GetProductById(string id, CatalogAPI.IProductsClient productsClient, CancellationToken cancellationToken)
