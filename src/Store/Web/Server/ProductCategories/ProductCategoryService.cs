@@ -19,7 +19,7 @@ public static class Mapping
 {
     public static ProductCategoryDto ToDto(this CatalogAPI.ProductCategory productCategory)
     {
-        return new(productCategory.Id, productCategory.Name, productCategory.Description, productCategory.Handle, productCategory.Path, null, productCategory.ProductsCount);
+        return new(productCategory.Id, productCategory.Name, productCategory.Description ??  string.Empty, productCategory.Handle, productCategory.Path, null, productCategory.ProductsCount);
     }
 
     public static ProductCategoryTreeNodeDto ToProductCategoryTreeNodeDto(this CatalogAPI.ProductCategoryTreeNode productCategory)

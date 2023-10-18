@@ -48,6 +48,10 @@ public static class Endpoints
             .AddEndpointFilter<ValidationFilter<UpdateProductHandleRequest>>()
             .WithName($"Products_{nameof(UpdateProductHandle)}");
 
+        group.MapPut("/{idOrHandle}/visibility", UpdateProductVisibility)
+            .AddEndpointFilter<ValidationFilter<UpdateProductVisibilityRequest>>()
+            .WithName($"Products_{nameof(UpdateProductVisibility)}");
+
         group.MapPut("/{idOrHandle}/category", UpdateProductCategory)
             .AddEndpointFilter<ValidationFilter<CreateProductCategoryRequest>>()
             .WithName($"Products_{nameof(UpdateProductCategory)}");
@@ -113,6 +117,15 @@ public static class Endpoints
         return result.IsSuccess ? TypedResults.Ok() : TypedResults.NotFound();
     }
 
+    private static async Task<Results<Ok, NotFound, ProblemHttpResult>> UpdateProductVisibility(string idOrHandle, UpdateProductVisibilityRequest request,
+        IMediator mediator, CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(new UpdateProductVisibility(idOrHandle, request.Visibility), cancellationToken);
+
+        return result.IsSuccess ? TypedResults.Ok() : TypedResults.NotFound();
+    }
+
+
     private static async Task<Results<Ok, NotFound, ProblemHttpResult>> UpdateProductCategory(string idOrHandle, UpdateProductCategoryRequest request,
         IMediator mediator, CancellationToken cancellationToken)
     {
@@ -168,6 +181,8 @@ public sealed record UpdateProductHandleRequest(string Handle)
         }
     }
 }
+
+public sealed record UpdateProductVisibilityRequest(ProductVisibility Visibility);
 
 public sealed record UpdateProductCategoryRequest(long ProductCategoryId)
 {

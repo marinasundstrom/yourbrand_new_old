@@ -371,6 +371,32 @@ paths:
           description: ''
         404:
           description: ''
+  /api/products/{idOrHandle}/visibility:
+    put:
+      tags:
+      - Products
+      operationId: Products_UpdateProductVisibility
+      parameters:
+      - name: idOrHandle
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      requestBody:
+        x-name: request
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProductVisibilityRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+        404:
+          description: ''
   /api/products/{idOrHandle}/category:
     put:
       tags:
@@ -2090,6 +2116,12 @@ components:
       properties:
         handle:
           type: string
+    UpdateProductVisibilityRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        visibility:
+          $ref: '#/components/schemas/ProductVisibility'
     UpdateProductCategoryRequest:
       type: object
       additionalProperties: false

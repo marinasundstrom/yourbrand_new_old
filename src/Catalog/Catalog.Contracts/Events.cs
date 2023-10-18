@@ -29,3 +29,16 @@ public sealed record ProductHandleUpdated
 
     public required string Handle { get; init; }
 }
+
+public sealed record ProductVisibilityUpdated
+{
+    public required long ProductId { get; init; }
+
+    public required ProductVisibility Visibility { get; init; }
+}
+
+public enum ProductVisibility
+{
+    Unlisted,
+    Listed
+}

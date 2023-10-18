@@ -81,6 +81,24 @@
             </MudPaper>
         </MudItem>
 
+        <MudItem xs="12" sm="12" md="3">
+            <MudPaper Elevation="2" Class="pa-4">
+                <EditForm Model="@visibilityUpdateViewModel" OnValidSubmit="UpdateVisibility">
+                    <DataAnnotationsValidator />
+
+                    <MudSelect T="ProductVisibility" Label="Visibility" @bind-Value="visibilityUpdateViewModel.Visibility" Variant="Variant.Outlined"
+                        ToStringFunc="x => x.ToString()" For="() => visibilityUpdateViewModel.Visibility">
+                        @foreach (var item in Enum.GetValues<ProductVisibility>())
+                        {
+                            <MudSelectItem T="ProductVisibility" Value="@item" />
+                        }
+                    </MudSelect>
+
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Class="mt-4">Update visibility</MudButton>
+                </EditForm>
+            </MudPaper>
+        </MudItem>
+
     </MudGrid>
 }
 
@@ -94,6 +112,7 @@
     CategoryUpdateViewModel categoryUpdateViewModel;
     PriceUpdateViewModel priceUpdateViewModel;
     HandleUpdateViewModel handleUpdateViewModel;
+    VisibilityUpdateViewModel visibilityUpdateViewModel;
     string image;
 
     [Parameter] public string Id { get; set; }
@@ -119,9 +138,14 @@
             Handle = product.Handle
         };
 
+        visibilityUpdateViewModel = new()
+        {
+            Visibility = product.Visibility
+        };
+
         categoryUpdateViewModel = new CategoryUpdateViewModel()
         {
-            Category = new ProductCategoryParent
+            Category = new ParentProductCategory
             {
                 Id = product.Category.Id,
                 Name = product.Category.Name
@@ -207,6 +231,12 @@
         public string Handle { get; set; }
     }
 
+    class VisibilityUpdateViewModel
+    {
+        [Required]
+        public ProductVisibility Visibility { get; set; }
+    }
+
     private async Task UpdateHandle()
     {
         try
@@ -224,10 +254,27 @@
         }
     }
 
+    private async Task UpdateVisibility()
+    {
+        try
+        {
+            await ProductsClient.UpdateProductVisibilityAsync(Id, new UpdateProductVisibilityRequest()
+            {
+                Visibility = visibilityUpdateViewModel.Visibility
+            });
+
+            Snackbar.Add("Visibility was updated", Severity.Info);
+        }
+        catch
+        {
+            Snackbar.Add("Failed to update product visibility", Severity.Error);
+        }
+    }
+
     class CategoryUpdateViewModel
     {
         [Required]
-        public AdminAPI.ProductCategoryParent Category { get; set; }
+        public AdminAPI.ParentProductCategory Category { get; set; }
     }
 
     private async Task UpdateCategory()
@@ -247,12 +294,12 @@
         }
     }
 
-    private async Task<IEnumerable<ProductCategoryParent>> Search(string value)
+    private async Task<IEnumerable<ParentProductCategory>> Search(string value)
     {
         var result = await ProductCategoriesClient.GetProductsCategoriesAsync(1, 20, value);
         return result.Items
             .Where(x => x.CanAddProducts)
-            .Select(x => new ProductCategoryParent
+            .Select(x => new ParentProductCategory
             {
                 Id = x.Id,
                 Name = x.Name

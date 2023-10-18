@@ -56,6 +56,11 @@ public static class Endpoints
             .WithTags("Products")
             .WithOpenApi();
 
+        productsGroup.MapPut("/visibility", UpdateProductVisibility)
+            .WithName($"Products_{nameof(UpdateProductVisibility)}")
+            .WithTags("Products")
+            .WithOpenApi();
+
         productsGroup.MapPut("/category", UpdateProductCategory)
             .WithName($"Products_{nameof(UpdateProductCategory)}")
             .WithTags("Products")
@@ -110,6 +115,15 @@ public static class Endpoints
     private static async Task<Results<Ok, NotFound>> UpdateProductHandle(string id, UpdateProductHandleRequest request, CatalogAPI.IProductsClient productsClient, CancellationToken cancellationToken)
     {
         await productsClient.UpdateProductHandleAsync(id, request, cancellationToken);
+        return TypedResults.Ok();
+    }
+
+    private static async Task<Results<Ok, NotFound>> UpdateProductVisibility(string id, UpdateProductVisibilityRequest request, CatalogAPI.IProductsClient productsClient, CancellationToken cancellationToken)
+    {
+        await productsClient.UpdateProductVisibilityAsync(id, new UpdateProductVisibilityRequest()
+         {
+            Visibility = request.Visibility
+        });
         return TypedResults.Ok();
     }
 
