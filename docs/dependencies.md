@@ -9,6 +9,9 @@ These are the dependencies that this project, and all of its services have.
 | Database server (SQL)    | ``Azure SQL Server``        | ``yourbrand-sqlserver``    | ``Azure SQL Edge``            |
 | Storage (Blob)           | ``Azure Storage Account``   | ``yourbrandstorage``       | ``Azurite Storage Emulator``  |
 
+## Service discovery
+
+Consul
 
 ## Dependants
 

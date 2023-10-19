@@ -11,6 +11,8 @@ using MudBlazor.Services;
 
 using Serilog;
 
+using Steeltoe.Discovery.Client;
+
 using YourBrand;
 using YourBrand.Server;
 using YourBrand.Server.Extensions;
@@ -18,6 +20,8 @@ using YourBrand.Server.ProductCategories;
 using YourBrand.Server.Products;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDiscoveryClient();
 
 string serviceName = "Admin.Web";
 string serviceVersion = "1.0";

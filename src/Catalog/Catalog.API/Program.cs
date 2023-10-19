@@ -18,9 +18,13 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Azure;
 
+using Steeltoe.Discovery.Client;
+
 using YourBrand;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDiscoveryClient();
 
 string GetProductsExpire20 = nameof(GetProductsExpire20);
 

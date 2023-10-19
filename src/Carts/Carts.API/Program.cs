@@ -12,9 +12,13 @@ using MassTransit;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 
+using Steeltoe.Discovery.Client;
+
 using YourBrand;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDiscoveryClient();
 
 string GetCartsExpire20 = nameof(GetCartsExpire20);
 

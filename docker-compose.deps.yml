@@ -83,6 +83,18 @@ services:
       - "3100:3100"
     command: -config.file=/etc/loki/local-config.yaml
 
+  consul-server:
+    image: hashicorp/consul:latest
+    container_name: consul-server
+    restart: always
+  #  volumes:
+  #   - ./server1.json:/consul/config/server1.json:ro
+  #   - ./certs/:/consul/config/certs/:ro
+    ports:
+      - "8500:8500"
+      - "8600:8600/tcp"
+      - "8600:8600/udp"
+
 volumes:
   prom_data:
   orders_data:
