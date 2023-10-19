@@ -100,6 +100,4 @@ app.MapHealthChecks("/healthz", new HealthCheckOptions()
 
 app.MapControllers();
 
-app.UseOpenTelemetryPrometheusScrapingEndpoint();
-
 app.Run();

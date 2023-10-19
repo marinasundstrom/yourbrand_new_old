@@ -230,8 +230,6 @@ app.MapGet("/api/weatherforecast", async (DateOnly startDate, IWeatherForecastSe
     .WithName("GetWeatherForecast")
     .WithOpenApi();
 
-app.UseOpenTelemetryPrometheusScrapingEndpoint();
-
 app.MapHealthChecks("/healthz", new HealthCheckOptions()
 {
     Predicate = _ => true,
