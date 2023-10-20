@@ -61,7 +61,7 @@ public sealed record GetProducts(string? StoreId = null, string? BrandIdOrHandle
 
             var total = await query.CountAsync(cancellationToken);
 
-            if (request.SortBy is null)
+            if (request.SortBy is null || request.SortDirection is null)
             {
                 query = query.OrderBy(x => x.Name);
             }
