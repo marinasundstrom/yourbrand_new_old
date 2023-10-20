@@ -11,6 +11,7 @@ using BlazorApp.ProductCategories;
 using BlazorApp.Products;
 
 using Carts;
+
 using Catalog;
 
 using HealthChecks.UI.Client;
@@ -36,7 +37,10 @@ string serviceVersion = "1.0";
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDiscoveryClient();
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddDiscoveryClient();
+}
 
 builder.Host.UseSerilog((ctx, cfg) => cfg.ReadFrom.Configuration(builder.Configuration)
                         .Enrich.WithProperty("Application", serviceName)
@@ -81,14 +85,7 @@ builder.Services.AddCors(options =>
         });
 });
 
-builder.Services.AddHttpClient("CatalogAPI", (sp, http) =>
-{
-    http.BaseAddress = new Uri(builder.Configuration["yourbrand-catalog-svc-url"]!);
-});
-
-builder.Services.AddCatalogClients(builder.Configuration["yourbrand-catalog-svc-url"]!);
-
-builder.Services.AddCartsClient(builder.Configuration["yourbrand-carts-svc-url"]!);
+AddClients(builder);
 
 builder.Services
     .AddProductsServices()
@@ -210,10 +207,10 @@ app.MapGroup("/identity").MapIdentityApi<IdentityUser>();
 app.MapGet("/requires-auth", (ClaimsPrincipal user) => $"Hello, {user.Identity?.Name}!").RequireAuthorization();
 
 app.MapGet("/api/weatherforecast", async (DateOnly startDate, IWeatherForecastService weatherForecastService, CancellationToken cancellationToken) =>
-    {
-        var forecasts = await weatherForecastService.GetWeatherForecasts(startDate, cancellationToken);
-        return Results.Ok(forecasts);
-    })
+{
+    var forecasts = await weatherForecastService.GetWeatherForecasts(startDate, cancellationToken);
+    return Results.Ok(forecasts);
+})
     .WithName("GetWeatherForecast")
     .WithOpenApi();
 
@@ -224,3 +221,30 @@ app.MapHealthChecks("/healthz", new HealthCheckOptions()
 });
 
 app.Run();
+
+static void AddClients(WebApplicationBuilder builder)
+{
+    var catalogApiHttpClient = builder.Services.AddHttpClient("CatalogAPI", (sp, http) =>
+    {
+        http.BaseAddress = new Uri(builder.Configuration["yourbrand-catalog-svc-url"]!);
+    });
+
+    if (builder.Environment.IsDevelopment())
+    {
+        catalogApiHttpClient.AddServiceDiscovery();
+    }
+
+    builder.Services.AddCatalogClients(builder.Configuration["yourbrand-catalog-svc-url"]!);
+
+    var cartsApiHttpClient = builder.Services.AddHttpClient("CartsAPI", (sp, http) =>
+    {
+        http.BaseAddress = new Uri(builder.Configuration["yourbrand-carts-svc-url"]!);
+    });
+
+    if (builder.Environment.IsDevelopment())
+    {
+        cartsApiHttpClient.AddServiceDiscovery();
+    }
+
+    builder.Services.AddCartsClient(builder.Configuration["yourbrand-carts-svc-url"]!);
+}

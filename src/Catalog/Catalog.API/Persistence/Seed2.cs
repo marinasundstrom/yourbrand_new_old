@@ -152,8 +152,6 @@ public static class Seed2
             Value = null
         });
 
-        ///*
-
         var variantBlueSmall = new Product("Blue S", "tshirt-blue-small")
         {
             Description = "",

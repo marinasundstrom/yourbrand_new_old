@@ -11,6 +11,7 @@ using MudBlazor.Services;
 
 using Serilog;
 
+using Steeltoe.Common.Http.Discovery;
 using Steeltoe.Discovery.Client;
 
 using YourBrand;
@@ -21,7 +22,10 @@ using YourBrand.Server.Products;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDiscoveryClient();
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddDiscoveryClient();
+}
 
 string serviceName = "Admin.Web";
 string serviceVersion = "1.0";
@@ -50,7 +54,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents()
     .AddInteractiveServerComponents();
 
-builder.Services.AddCatalogClients(builder.Configuration["yourbrand-catalog-svc-url"]);
+AddClients(builder);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
@@ -105,3 +109,18 @@ app.MapHealthChecks("/healthz", new HealthCheckOptions()
 app.MapControllers();
 
 app.Run();
+
+static void AddClients(WebApplicationBuilder builder)
+{
+    var catalogApiHttpClient = builder.Services.AddHttpClient("CatalogAPI", (sp, http) =>
+    {
+        http.BaseAddress = new Uri(builder.Configuration["yourbrand-catalog-svc-url"]!);
+    });
+
+    if (builder.Environment.IsDevelopment())
+    {
+        catalogApiHttpClient.AddServiceDiscovery();
+    }
+
+    builder.Services.AddCatalogClients(builder.Configuration["yourbrand-catalog-svc-url"]!);
+}

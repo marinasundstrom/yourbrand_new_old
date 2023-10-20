@@ -2,9 +2,25 @@
 
 Services are discovered in a process that is called "service discovery". When a service starts up, it is registering with the service discovery service.
 
-Our service discovery service is HashiCorp Consul. And we use Steeltoe simplify this registration process in code.
+Using this convention you can connect to a service:
 
-Consult is running in Docker.
+```
+https://<service-name>
+```
+
+The service name should be the same as the service in Azure.
+
+Azure Container apps has built in Service Discovery support, using the same conventions as Steeltoe, and Consul.
+
+## Load balancing
+
+Load balancing is supported both by Azure Container apps, and through Consul.
+
+## Running locally
+
+Our local service discovery service is HashiCorp Consul. And we use Steeltoe simplify this registration process in code.
+
+Consul is running in Docker.
 
 ## Adding service discovery
 
@@ -31,7 +47,7 @@ Register a client to a service using specified service name, like so:
 ```csharp
 services.AddHttpClient("CatalogAPI", (sp, http) =>
 {
-    http.BaseAddress = new Uri("https://catalog-svc"); //Name in config, otherwise based on project name
+    http.BaseAddress = new Uri("https://yourbrand-catalog-svc"); //Name in config, otherwise based on project name
 });
 
 services.AddHttpClient<IProductsClient>("CatalogAPI")
@@ -47,19 +63,6 @@ dotnet add package Steeltoe.Common.Http"
 
 ## Configuration
 
-In ``appsettings.json``:
-
-```json
-{
-  "Consul": {
-    "Discovery": {  
-      "ServiceName": "catalog-svc",
-      "Register": true
-    }
-  }
-}
-```
-
 ``Register`` default to ``true``, even when not specified.
 
 In ``appsettings.Development.json``:
@@ -67,19 +70,9 @@ In ``appsettings.Development.json``:
 ```json
 {
     "Consul": {
-        "Discovery": {  
-            "PreferIpAddress": true
-        }
-    }
-}
-```
-
-In ``appsettings.Production.json``:
-
-```json
-{
-    "Consul": {
         "Discovery": {
+            "ServiceName": "yourbrand-catalog-svc",
+            "Register": true,
             "Hostname": "localhost",
             "Scheme": "https" 
         }

@@ -18,7 +18,10 @@ using YourBrand;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDiscoveryClient();
+if(builder.Environment.IsDevelopment()) 
+{
+    builder.Services.AddDiscoveryClient();
+}
 
 string GetCartsExpire20 = nameof(GetCartsExpire20);
 

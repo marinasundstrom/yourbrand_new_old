@@ -24,7 +24,10 @@ using YourBrand;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDiscoveryClient();
+if(builder.Environment.IsDevelopment()) 
+{
+    builder.Services.AddDiscoveryClient();
+}
 
 string GetProductsExpire20 = nameof(GetProductsExpire20);
 
@@ -48,8 +51,11 @@ builder.Services.AddValidatorsFromAssemblyContaining(typeof(Program));
 
 builder.Services.AddAzureClients(clientBuilder =>
 {
-    // Add a KeyVault client
-    clientBuilder.AddSecretClient(new Uri($"https://{builder.Configuration["KeyVaultName"]}.vault.azure.net/"));
+    if (builder.Environment.IsProduction())
+    {
+        // Add a KeyVault client
+        clientBuilder.AddSecretClient(new Uri($"https://{builder.Configuration["KeyVaultName"]}.vault.azure.net/"));
+    }
 
     // Add a Storage account client
     if (builder.Environment.IsDevelopment())
