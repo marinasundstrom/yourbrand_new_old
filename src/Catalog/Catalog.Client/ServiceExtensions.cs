@@ -11,11 +11,9 @@ public static class ServiceExtensions
     public static IServiceCollection AddCatalogClients(this IServiceCollection services, string url)
     {
         services.AddHttpClient<IProductsClient>("CatalogAPI")
-            .AddServiceDiscovery()
             .AddTypedClient<IProductsClient>((http, sp) => new CatalogAPI.ProductsClient(http));
 
         services.AddHttpClient<IProductCategoriesClient>("CatalogAPI")
-            .AddServiceDiscovery()
             .AddTypedClient<IProductCategoriesClient>((http, sp) => new CatalogAPI.ProductCategoriesClient(http));
 
         return services;

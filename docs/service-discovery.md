@@ -48,10 +48,10 @@ Register a client to a service using specified service name, like so:
 services.AddHttpClient("CatalogAPI", (sp, http) =>
 {
     http.BaseAddress = new Uri("https://yourbrand-catalog-svc"); //Name in config, otherwise based on project name
-});
+})
+.AddServiceDiscovery();
 
 services.AddHttpClient<IProductsClient>("CatalogAPI")
-    .AddServiceDiscovery()
     .AddTypedClient<IProductsClient>((http, sp) => new CatalogAPI.ProductsClient(http));
 ```
 

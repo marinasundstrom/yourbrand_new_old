@@ -11,7 +11,6 @@ public static class ServiceExtensions
     public static IServiceCollection AddCartsClient(this IServiceCollection services, string url)
     {
         services.AddHttpClient<ICartsClient>("CartsAPI")
-            .AddServiceDiscovery()
             .AddTypedClient<ICartsClient>((http, sp) => new CartsAPI.CartsClient(http));
 
         return services;
