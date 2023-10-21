@@ -42,10 +42,13 @@ builder.Services.AddOutputCache(options =>
 
 if (builder.Environment.IsProduction())
 {
-    builder.Configuration.AddAzureAppConfiguration($"https://{builder.Configuration["AppConfigurationName"]}.azconfig.io");
-
+    builder.Configuration.AddAzureAppConfiguration(options =>
+        options.Connect(
+            new Uri($"https://{builder.Configuration["Azure:AppConfig:Name"]}.azconfig.io"),
+            new DefaultAzureCredential()));
+            
     builder.Configuration.AddAzureKeyVault(
-        new Uri($"https://{builder.Configuration["KeyVaultName"]}.vault.azure.net/"),
+        new Uri($"https://{builder.Configuration["Azure:KeyVault:Name"]}.vault.azure.net/"),
         new DefaultAzureCredential());
 }
 
@@ -56,7 +59,7 @@ builder.Services.AddAzureClients(clientBuilder =>
     if (builder.Environment.IsProduction())
     {
         // Add a KeyVault client
-        clientBuilder.AddSecretClient(new Uri($"https://{builder.Configuration["KeyVaultName"]}.vault.azure.net/"));
+        clientBuilder.AddSecretClient(new Uri($"https://{builder.Configuration["Azure:KeyVault:Name"]}.vault.azure.net/"));
     }
 
     // Add a Storage account client
@@ -67,7 +70,7 @@ builder.Services.AddAzureClients(clientBuilder =>
     }
     else
     {
-        clientBuilder.AddBlobServiceClient(new Uri($"https://{builder.Configuration["StorageName"]}.blob.core.windows.net"));
+        clientBuilder.AddBlobServiceClient(new Uri($"https://{builder.Configuration["Azure:StorageAccount:Name"]}.blob.core.windows.net"));
     }
 
     // Use DefaultAzureCredential by default

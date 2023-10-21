@@ -1,13 +1,7 @@
 # Secrets in Azure KeyVault
 
-The following secrets should be in the KeyVault:
+Here we list secrets stored in ``yourbrand-keyvault``.
 
-* ``yourbrand-catalog-svc-url`` - The URL of the catalog-svc container app 1) : ``https://yourbrand-catalog-svc``
-* ``yourbrand-carts-svc-url`` - The URL of the carts-svc container app 1): ``https://yourbrand-carts-svc``
-* ``yourbrand-catalog-db-connectionstring`` - Connection string with Azure Managed Identity
-* ``yourbrand-carts-db-connectionstring`` - Connection string with Azure Managed Identity
-* ``yourbrand-servicebus-connectionstring`` -  This one ``sb://yourbrand-servicebus.servicebus.windows.net``
+## Note
 
-## Notes
-
-1) Using the URL used by service discovery.
+Some have moved to [App Configuration](/docs/azure/app-configuration.md).

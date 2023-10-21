@@ -24,6 +24,7 @@ Assign yourself as a ``Contributor`` so that you will be able to view and edit t
 
 Then assign the role ``AcrPull`` to allow container apps to pull images from ACR.
 
+
 | Resource                   | Role    |
 |--------                    |----     |
 | ``yourbrand-store-web``    | AcrPull |
@@ -35,11 +36,26 @@ Then assign the role ``AcrPull`` to allow container apps to pull images from ACR
 
 In order for the container apps to be able to pull images, you need to configure each app to pull a certain image from the registry using a managed identity.
 
-You basically do that from the Portal, where you are updating the revision.
+You basically do that from the Portal, setting access when creating a a revision.
 
 This part can be tricky. More on this will be added.
 
+## App Configuration
+
+In ``yourbrand-appconfiguration``:
+
+Then assign the role ``App Configuration Data Reader`` to resources according to this:
+
+| Resource                   | Role                           |
+|--------                    |----                            |
+| ``yourbrand-store-web``    | App Configuration Data Reader  |
+| ``yourbrand-admin-web``    | App Configuration Data Reader  |
+| ``yourbrand-catalog-svc``  | App Configuration Data Reader  |
+| ``yourbrand-carts-svc``    | App Configuration Data Reader  |
+
 ## Key Vault access
+
+In ``yourbrand-keyvault``:
 
 Assign yourself as a ``Contributor`` so that you will be able to view and edit contents in the Azure Portal.
 
@@ -51,6 +67,7 @@ Then assign the role ``Key Vault Secrets User`` to resources according to this:
 | ``yourbrand-admin-web``    | Key Vault Secrets User  |
 | ``yourbrand-catalog-svc``  | Key Vault Secrets User  |
 | ``yourbrand-carts-svc``    | Key Vault Secrets User  |
+
 
 ## Service bus access
 

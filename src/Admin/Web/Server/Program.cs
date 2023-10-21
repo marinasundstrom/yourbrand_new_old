@@ -40,10 +40,13 @@ StaticWebAssetsLoader.UseStaticWebAssets(builder.Environment, builder.Configurat
 
 if (builder.Environment.IsProduction())
 {
-    builder.Configuration.AddAzureAppConfiguration($"https://{builder.Configuration["AppConfigurationName"]}.azconfig.io");
+    builder.Configuration.AddAzureAppConfiguration(options =>
+        options.Connect(
+            new Uri($"https://{builder.Configuration["Azure:AppConfig:Name"]}.azconfig.io"),
+            new DefaultAzureCredential()));
 
     builder.Configuration.AddAzureKeyVault(
-        new Uri($"https://{builder.Configuration["KeyVaultName"]}.vault.azure.net/"),
+        new Uri($"https://{builder.Configuration["Azure:KeyVault:Name"]}.vault.azure.net/"),
         new DefaultAzureCredential());
 }
 
