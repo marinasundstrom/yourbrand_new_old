@@ -1,4 +1,4 @@
-# Developer environment
+# Development environment
 
 ## Tools
 
@@ -16,7 +16,9 @@ Main dependencies that run in Docker.
 
 Observability:
 
-* Zipkin - UI for distribute tracing
+* Zipkin - UI for distributed tracing
 * Grafana - UI for displaying metrics, and logs
 * Prometheus - Collects metrics
 * Loki - Collects logs
+
+Using OpenTelemetry.

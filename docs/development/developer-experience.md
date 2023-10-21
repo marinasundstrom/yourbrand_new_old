@@ -19,7 +19,7 @@ Run the ``install-vscode-extensions.sh`` script to install some useful extension
 
 ## Run dependencies in Docker
 
-To start the database and other [dependencies](dependencies.md), run this:
+To start the database and other [dependencies](services.md), run this:
 
 ```
 docker compose -f docker-compose.deps.yml up -d

@@ -22,7 +22,9 @@ Our local service discovery service is HashiCorp Consul. And we use Steeltoe sim
 
 Consul is running in Docker.
 
-## Adding service discovery
+## Adding service discovery (Development)
+
+This is only for the local development environment. Not required for Azure.
 
 ### Server
 

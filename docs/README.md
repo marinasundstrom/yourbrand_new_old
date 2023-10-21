@@ -2,7 +2,7 @@
 
 ## Development
 
-* [Local development](development/developer-experience.md)
+* [Developer experience](development/developer-experience.md)
 * [Set up Azurite](development/set-up-azurite.md)
 * [Database migrations](development/database-migrations.md)
 
@@ -17,6 +17,5 @@
 
 ## Other
 
-* [Dependencies](dependencies.md)
 * [Observability](observability.md)
 * [Structured data](structured-data.md)
