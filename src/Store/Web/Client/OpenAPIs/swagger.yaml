@@ -233,13 +233,13 @@ paths:
     post:
       operationId: PostIdentityLogin
       parameters:
-      - name: cookieMode
+      - name: useCookies
         in: query
         schema:
           type: boolean
           nullable: true
         x-position: 2
-      - name: persistCookies
+      - name: useSessionCookies
         in: query
         schema:
           type: boolean
@@ -280,7 +280,7 @@ paths:
                 $ref: '#/components/schemas/AccessTokenResponse'
   /identity/confirmEmail:
     get:
-      operationId: MapIdentityApi-/identity/confirmEmail
+      operationId: GetIdentityConfirmEmail
       parameters:
       - name: userId
         in: query
@@ -309,11 +309,31 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ResendEmailRequest'
+              $ref: '#/components/schemas/ResendConfirmationEmailRequest'
         x-position: 1
       responses:
         200:
           description: ''
+  /identity/forgotPassword:
+    post:
+      operationId: PostIdentityForgotPassword
+      requestBody:
+        x-name: resetRequest
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ForgotPasswordRequest'
+        x-position: 1
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpValidationProblemDetails'
   /identity/resetPassword:
     post:
       operationId: PostIdentityResetPassword
@@ -334,20 +354,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HttpValidationProblemDetails'
-  /identity/account/2fa:
-    get:
-      operationId: GetIdentityAccount2fa
-      responses:
-        200:
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TwoFactorResponse'
-        404:
-          description: ''
+  /identity/manage/2fa:
     post:
-      operationId: PostIdentityAccount2fa
+      operationId: PostIdentityManage2fa
       requestBody:
         x-name: tfaRequest
         description: ''
@@ -371,9 +380,9 @@ paths:
                 $ref: '#/components/schemas/HttpValidationProblemDetails'
         404:
           description: ''
-  /identity/account/info:
+  /identity/manage/info:
     get:
-      operationId: GetIdentityAccountInfo
+      operationId: GetIdentityManageInfo
       responses:
         200:
           description: ''
@@ -390,7 +399,7 @@ paths:
         404:
           description: ''
     post:
-      operationId: PostIdentityAccountInfo
+      operationId: PostIdentityManageInfo
       requestBody:
         x-name: infoRequest
         description: ''
@@ -439,7 +448,7 @@ components:
         category:
           nullable: true
           oneOf:
-          - $ref: '#/components/schemas/ProductCategoryDto'
+          - $ref: '#/components/schemas/ProductCategoryParent'
         image:
           type: string
           nullable: true
@@ -454,28 +463,6 @@ components:
           nullable: true
         handle:
           type: string
-    ProductCategoryDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: integer
-          format: int64
-        name:
-          type: string
-        description:
-          type: string
-        handle:
-          type: string
-        path:
-          type: string
-        parent:
-          nullable: true
-          oneOf:
-          - $ref: '#/components/schemas/ProductCategoryParent'
-        productsCount:
-          type: integer
-          format: int64
     ProductCategoryParent:
       type: object
       additionalProperties: false
@@ -536,6 +523,28 @@ components:
           format: int64
         canAddProducts:
           type: boolean
+    ProductCategoryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        handle:
+          type: string
+        path:
+          type: string
+        parent:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/ProductCategoryParent'
+        productsCount:
+          type: integer
+          format: int64
     Cart:
       type: object
       additionalProperties: false
@@ -654,30 +663,28 @@ components:
       type: object
       additionalProperties: false
       properties:
-        username:
+        email:
           type: string
         password:
-          type: string
-        email:
           type: string
     AccessTokenResponse:
       type: object
       additionalProperties: false
       properties:
-        token_type:
+        tokenType:
           type: string
-        access_token:
+        accessToken:
           type: string
-        expires_in:
+        expiresIn:
           type: integer
           format: int64
-        refresh_token:
+        refreshToken:
           type: string
     LoginRequest:
       type: object
       additionalProperties: false
       properties:
-        username:
+        email:
           type: string
         password:
           type: string
@@ -693,7 +700,13 @@ components:
       properties:
         refreshToken:
           type: string
-    ResendEmailRequest:
+    ResendConfirmationEmailRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        email:
+          type: string
+    ForgotPasswordRequest:
       type: object
       additionalProperties: false
       properties:
@@ -707,10 +720,8 @@ components:
           type: string
         resetCode:
           type: string
-          nullable: true
         newPassword:
           type: string
-          nullable: true
     TwoFactorResponse:
       type: object
       additionalProperties: false
@@ -749,10 +760,10 @@ components:
       type: object
       additionalProperties: false
       properties:
-        username:
-          type: string
         email:
           type: string
+        isEmailConfirmed:
+          type: boolean
         claims:
           type: object
           additionalProperties:
@@ -761,9 +772,6 @@ components:
       type: object
       additionalProperties: false
       properties:
-        newUsername:
-          type: string
-          nullable: true
         newEmail:
           type: string
           nullable: true

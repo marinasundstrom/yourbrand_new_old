@@ -6,6 +6,119 @@ info:
 servers:
 - url: https://localhost:5001
 paths:
+  /api/products/{id}/image:
+    post:
+      tags:
+      - Products
+      operationId: Products_UploadProductImage
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        404:
+          description: ''
+  /api/productCategories/{idOrPath}:
+    get:
+      tags:
+      - ProductCategories
+      operationId: ProductCategories_GetProductCategoryById
+      parameters:
+      - name: idOrPath
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductCategory'
+    put:
+      tags:
+      - ProductCategories
+      operationId: ProductCategories_UpdateProductCategoryDetails
+      parameters:
+      - name: idOrPath
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      requestBody:
+        x-name: request
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProductCategoryDetailsRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+        404:
+          description: ''
+    delete:
+      tags:
+      - ProductCategories
+      operationId: ProductCategories_DeleteProductCategory
+      parameters:
+      - name: idOrPath
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      responses:
+        200:
+          description: ''
+        404:
+          description: ''
+  /api/productCategories:
+    post:
+      tags:
+      - ProductCategories
+      operationId: ProductCategories_CreateProductCategory
+      requestBody:
+        x-name: request
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProductCategoryRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductCategory'
+        400:
+          description: ''
   /api/products:
     get:
       tags:
@@ -184,6 +297,32 @@ paths:
           description: ''
         404:
           description: ''
+  /api/products/visibility:
+    put:
+      tags:
+      - Products
+      operationId: Products_UpdateProductVisibility
+      parameters:
+      - name: id
+        in: query
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      requestBody:
+        x-name: request
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProductVisibilityRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+        404:
+          description: ''
   /api/products/category:
     put:
       tags:
@@ -209,119 +348,6 @@ paths:
         200:
           description: ''
         404:
-          description: ''
-  /api/products/{id}/image:
-    post:
-      tags:
-      - Products
-      operationId: Products_UploadProductImage
-      parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
-        x-position: 1
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                file:
-                  type: string
-                  format: binary
-      responses:
-        200:
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: string
-        404:
-          description: ''
-  /api/productCategories/{idOrPath}:
-    get:
-      tags:
-      - ProductCategories
-      operationId: ProductCategories_GetProductCategoryById
-      parameters:
-      - name: idOrPath
-        in: path
-        required: true
-        schema:
-          type: string
-        x-position: 1
-      responses:
-        200:
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProductCategory'
-    put:
-      tags:
-      - ProductCategories
-      operationId: ProductCategories_UpdateProductCategoryDetails
-      parameters:
-      - name: idOrPath
-        in: path
-        required: true
-        schema:
-          type: string
-        x-position: 1
-      requestBody:
-        x-name: request
-        description: ''
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateProductCategoryDetailsRequest'
-        required: true
-        x-position: 2
-      responses:
-        200:
-          description: ''
-        404:
-          description: ''
-    delete:
-      tags:
-      - ProductCategories
-      operationId: ProductCategories_DeleteProductCategory
-      parameters:
-      - name: idOrPath
-        in: path
-        required: true
-        schema:
-          type: string
-        x-position: 1
-      responses:
-        200:
-          description: ''
-        404:
-          description: ''
-  /api/productCategories:
-    post:
-      tags:
-      - ProductCategories
-      operationId: ProductCategories_CreateProductCategory
-      requestBody:
-        x-name: request
-        description: ''
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateProductCategoryRequest'
-        required: true
-        x-position: 1
-      responses:
-        200:
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProductCategory'
-        400:
           description: ''
   /api/ProductCategories/api/productCategories:
     get:
@@ -369,6 +395,75 @@ paths:
                   $ref: '#/components/schemas/WeatherForecast'
 components:
   schemas:
+    ProductCategory:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+          nullable: true
+        parent:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/ParentProductCategory'
+        canAddProducts:
+          type: boolean
+        productsCount:
+          type: integer
+          format: int64
+        handle:
+          type: string
+        path:
+          type: string
+    ParentProductCategory:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+          nullable: true
+        handle:
+          type: string
+        path:
+          type: string
+        parent:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/ParentProductCategory'
+        productsCount:
+          type: integer
+          format: int64
+    CreateProductCategoryRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        parentCategoryId:
+          type: integer
+          format: int64
+        handle:
+          type: string
+    UpdateProductCategoryDetailsRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        description:
+          type: string
     PagedResultOfProduct:
       type: object
       additionalProperties: false
@@ -392,7 +487,11 @@ components:
         category:
           nullable: true
           oneOf:
-          - $ref: '#/components/schemas/ProductCategoryParent'
+          - $ref: '#/components/schemas/ProductCategory2'
+        parent:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/ParentProduct'
         description:
           type: string
         price:
@@ -407,7 +506,19 @@ components:
           nullable: true
         handle:
           type: string
-    ProductCategoryParent:
+        hasVariants:
+          type: boolean
+        visibility:
+          $ref: '#/components/schemas/ProductVisibility'
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductAttribute'
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductOption'
+    ProductCategory2:
       type: object
       additionalProperties: false
       properties:
@@ -426,7 +537,225 @@ components:
         parent:
           nullable: true
           oneOf:
-          - $ref: '#/components/schemas/ProductCategoryParent'
+          - $ref: '#/components/schemas/ParentProductCategory'
+        productsCount:
+          type: integer
+          format: int64
+    ParentProduct:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        category:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/ProductCategory'
+        description:
+          type: string
+        price:
+          type: number
+          format: decimal
+        regularPrice:
+          type: number
+          format: decimal
+          nullable: true
+        image:
+          type: string
+          nullable: true
+        handle:
+          type: string
+    ProductVisibility:
+      type: integer
+      description: ''
+      x-enumNames:
+      - Unlisted
+      - Listed
+      enum:
+      - 0
+      - 1
+    ProductAttribute:
+      type: object
+      additionalProperties: false
+      properties:
+        attribute:
+          $ref: '#/components/schemas/Attribute'
+        value:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/AttributeValue'
+        forVariant:
+          type: boolean
+        isMainAttribute:
+          type: boolean
+    Attribute:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+          nullable: true
+        group:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/AttributeGroup'
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttributeValue'
+    AttributeGroup:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+          nullable: true
+    AttributeValue:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        seq:
+          type: integer
+          format: int32
+          nullable: true
+    ProductOption:
+      type: object
+      additionalProperties: false
+      properties:
+        option:
+          $ref: '#/components/schemas/Option'
+        isInherited:
+          type: boolean
+    Option:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+          nullable: true
+        optionType:
+          $ref: '#/components/schemas/OptionType'
+        group:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/OptionGroup'
+        isRequired:
+          type: boolean
+        sku:
+          type: string
+          nullable: true
+        price:
+          type: number
+          format: decimal
+          nullable: true
+        isSelected:
+          type: boolean
+          nullable: true
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/OptionValue'
+        defaultValue:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/OptionValue'
+        minNumericalValue:
+          type: integer
+          format: int32
+          nullable: true
+        maxNumericalValue:
+          type: integer
+          format: int32
+          nullable: true
+        defaultNumericalValue:
+          type: integer
+          format: int32
+          nullable: true
+        textValueMinLength:
+          type: integer
+          format: int32
+          nullable: true
+        textValueMaxLength:
+          type: integer
+          format: int32
+          nullable: true
+        defaultTextValue:
+          type: string
+          nullable: true
+    OptionType:
+      type: integer
+      description: ''
+      x-enumNames:
+      - YesOrNo
+      - Choice
+      - NumericalValue
+      - TextValue
+      enum:
+      - 0
+      - 1
+      - 2
+      - 3
+    OptionGroup:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+          nullable: true
+        seq:
+          type: integer
+          format: int32
+          nullable: true
+        min:
+          type: integer
+          format: int32
+          nullable: true
+        max:
+          type: integer
+          format: int32
+          nullable: true
+    OptionValue:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        sku:
+          type: string
+          nullable: true
+        price:
+          type: number
+          format: decimal
+          nullable: true
+        seq:
+          type: integer
+          format: int32
+          nullable: true
     SortDirection:
       type: integer
       description: ''
@@ -473,6 +802,12 @@ components:
       properties:
         handle:
           type: string
+    UpdateProductVisibilityRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        visibility:
+          $ref: '#/components/schemas/ProductVisibility'
     UpdateProductCategoryRequest:
       type: object
       additionalProperties: false
@@ -480,52 +815,6 @@ components:
         productCategoryId:
           type: integer
           format: int64
-    ProductCategory:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: integer
-          format: int64
-        name:
-          type: string
-        description:
-          type: string
-          nullable: true
-        parent:
-          nullable: true
-          oneOf:
-          - $ref: '#/components/schemas/ProductCategoryParent'
-        canAddProducts:
-          type: boolean
-        productsCount:
-          type: integer
-          format: int64
-        handle:
-          type: string
-        path:
-          type: string
-    CreateProductCategoryRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        parentCategoryId:
-          type: integer
-          format: int64
-        handle:
-          type: string
-    UpdateProductCategoryDetailsRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        description:
-          type: string
     PagedResultOfProductCategory:
       type: object
       additionalProperties: false

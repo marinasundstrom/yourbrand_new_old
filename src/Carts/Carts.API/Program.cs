@@ -12,9 +12,16 @@ using MassTransit;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 
+using Steeltoe.Discovery.Client;
+
 using YourBrand;
 
 var builder = WebApplication.CreateBuilder(args);
+
+if(builder.Environment.IsDevelopment()) 
+{
+    builder.Services.AddDiscoveryClient();
+}
 
 string GetCartsExpire20 = nameof(GetCartsExpire20);
 
@@ -29,6 +36,8 @@ builder.Services.AddOutputCache(options =>
 
 if (builder.Environment.IsProduction())
 {
+    builder.Configuration.AddAzureAppConfiguration($"https://{builder.Configuration["AppConfigurationName"]}.azconfig.io");
+
     builder.Configuration.AddAzureKeyVault(
         new Uri($"https://{builder.Configuration["KeyVaultName"]}.vault.azure.net/"),
         new DefaultAzureCredential());

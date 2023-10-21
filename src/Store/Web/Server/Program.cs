@@ -10,9 +10,9 @@ using BlazorApp.Extensions;
 using BlazorApp.ProductCategories;
 using BlazorApp.Products;
 
-using CartsAPI;
+using Carts;
 
-using CatalogAPI;
+using Catalog;
 
 using HealthChecks.UI.Client;
 
@@ -25,6 +25,9 @@ using Microsoft.EntityFrameworkCore;
 
 using Serilog;
 
+using Steeltoe.Common.Http.Discovery;
+using Steeltoe.Discovery.Client;
+
 using YourBrand;
 
 string MyAllowSpecificOrigins = nameof(MyAllowSpecificOrigins);
@@ -33,6 +36,11 @@ string serviceName = "Store.Web";
 string serviceVersion = "1.0";
 
 var builder = WebApplication.CreateBuilder(args);
+
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddDiscoveryClient();
+}
 
 builder.Host.UseSerilog((ctx, cfg) => cfg.ReadFrom.Configuration(builder.Configuration)
                         .Enrich.WithProperty("Application", serviceName)
@@ -77,39 +85,17 @@ builder.Services.AddCors(options =>
         });
 });
 
-builder.Services.AddHttpClient("CatalogAPI", (sp, http) =>
-{
-    http.BaseAddress = new Uri(builder.Configuration["yourbrand-catalog-svc-url"]!);
-});
-
-builder.Services.AddHttpClient<IProductsClient>("CatalogAPI")
-.AddTypedClient<IProductsClient>((http, sp) => new CatalogAPI.ProductsClient(http));
-
-builder.Services.AddHttpClient("CatalogAPI", (sp, http) =>
-{
-    http.BaseAddress = new Uri(builder.Configuration["yourbrand-catalog-svc-url"]!);
-});
-
-builder.Services.AddHttpClient<IProductCategoriesClient>("CatalogAPI")
-.AddTypedClient<IProductCategoriesClient>((http, sp) => new CatalogAPI.ProductCategoriesClient(http));
-
-builder.Services.AddHttpClient("CartsAPI", (sp, http) =>
-{
-    http.BaseAddress = new Uri(builder.Configuration["yourbrand-carts-svc-url"]!);
-});
-
-builder.Services.AddHttpClient<ICartsClient>("CartsAPI")
-.AddTypedClient<ICartsClient>((http, sp) => new CartsClient(http));
+AddClients(builder);
 
 builder.Services
     .AddProductsServices()
     .AddProductCategoriesServices()
     .AddCartServices();
 
-//builder.Services.AddCartsClient(builder.Configuration["yourbrand-carts-svc-url"]!);
-
 if (builder.Environment.IsProduction())
 {
+    builder.Configuration.AddAzureAppConfiguration($"https://{builder.Configuration["AppConfigurationName"]}.azconfig.io");
+
     builder.Configuration.AddAzureKeyVault(
         new Uri($"https://{builder.Configuration["KeyVaultName"]}.vault.azure.net/"),
         new DefaultAzureCredential());
@@ -223,14 +209,12 @@ app.MapGroup("/identity").MapIdentityApi<IdentityUser>();
 app.MapGet("/requires-auth", (ClaimsPrincipal user) => $"Hello, {user.Identity?.Name}!").RequireAuthorization();
 
 app.MapGet("/api/weatherforecast", async (DateOnly startDate, IWeatherForecastService weatherForecastService, CancellationToken cancellationToken) =>
-    {
-        var forecasts = await weatherForecastService.GetWeatherForecasts(startDate, cancellationToken);
-        return Results.Ok(forecasts);
-    })
+{
+    var forecasts = await weatherForecastService.GetWeatherForecasts(startDate, cancellationToken);
+    return Results.Ok(forecasts);
+})
     .WithName("GetWeatherForecast")
     .WithOpenApi();
-
-app.UseOpenTelemetryPrometheusScrapingEndpoint();
 
 app.MapHealthChecks("/healthz", new HealthCheckOptions()
 {
@@ -239,3 +223,30 @@ app.MapHealthChecks("/healthz", new HealthCheckOptions()
 });
 
 app.Run();
+
+static void AddClients(WebApplicationBuilder builder)
+{
+    var catalogApiHttpClient = builder.Services.AddHttpClient("CatalogAPI", (sp, http) =>
+    {
+        http.BaseAddress = new Uri(builder.Configuration["yourbrand-catalog-svc-url"]!);
+    });
+
+    if (builder.Environment.IsDevelopment())
+    {
+        catalogApiHttpClient.AddServiceDiscovery();
+    }
+
+    builder.Services.AddCatalogClients(builder.Configuration["yourbrand-catalog-svc-url"]!);
+
+    var cartsApiHttpClient = builder.Services.AddHttpClient("CartsAPI", (sp, http) =>
+    {
+        http.BaseAddress = new Uri(builder.Configuration["yourbrand-carts-svc-url"]!);
+    });
+
+    if (builder.Environment.IsDevelopment())
+    {
+        cartsApiHttpClient.AddServiceDiscovery();
+    }
+
+    builder.Services.AddCartsClient(builder.Configuration["yourbrand-carts-svc-url"]!);
+}

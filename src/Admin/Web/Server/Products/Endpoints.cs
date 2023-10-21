@@ -56,6 +56,11 @@ public static class Endpoints
             .WithTags("Products")
             .WithOpenApi();
 
+        productsGroup.MapPut("/visibility", UpdateProductVisibility)
+            .WithName($"Products_{nameof(UpdateProductVisibility)}")
+            .WithTags("Products")
+            .WithOpenApi();
+
         productsGroup.MapPut("/category", UpdateProductCategory)
             .WithName($"Products_{nameof(UpdateProductCategory)}")
             .WithTags("Products")
@@ -66,7 +71,7 @@ public static class Endpoints
 
     private static async Task<Ok<PagedResultOfProduct>> GetProducts(int page = 1, int pageSize = 10, string? searchTerm = null, string? sortBy = null, SortDirection? sortDirection = null, CatalogAPI.IProductsClient productsClient = default!, CancellationToken cancellationToken = default!)
     {
-        return TypedResults.Ok(await productsClient.GetProductsAsync(page, pageSize, searchTerm, null, sortBy, sortDirection, cancellationToken));
+        return TypedResults.Ok(await productsClient.GetProductsAsync(null, null, true, true, page, pageSize, searchTerm, null, sortBy, sortDirection, cancellationToken));
     }
 
     private static async Task<Results<Ok<Product>, NotFound>> GetProductById(string id, CatalogAPI.IProductsClient productsClient, CancellationToken cancellationToken)
@@ -110,6 +115,15 @@ public static class Endpoints
     private static async Task<Results<Ok, NotFound>> UpdateProductHandle(string id, UpdateProductHandleRequest request, CatalogAPI.IProductsClient productsClient, CancellationToken cancellationToken)
     {
         await productsClient.UpdateProductHandleAsync(id, request, cancellationToken);
+        return TypedResults.Ok();
+    }
+
+    private static async Task<Results<Ok, NotFound>> UpdateProductVisibility(string id, UpdateProductVisibilityRequest request, CatalogAPI.IProductsClient productsClient, CancellationToken cancellationToken)
+    {
+        await productsClient.UpdateProductVisibilityAsync(id, new UpdateProductVisibilityRequest()
+         {
+            Visibility = request.Visibility
+        });
         return TypedResults.Ok();
     }
 

@@ -5,13 +5,26 @@ public sealed class ProductCategory
     private readonly HashSet<Product> _products = new HashSet<Product>();
     private readonly HashSet<ProductCategory> _subCategories = new HashSet<ProductCategory>();
 
+    public ProductCategory() { }
+
+    public ProductCategory(string name)
+    {
+        Name = name;
+    }
+
     public long Id { get; private set; }
+
+    public Store? Store { get; set; }
+
+    public string? StoreId { get; set; }
 
     public string Name { get; set; } = default!;
 
     public string? Description { get; set; }
 
     public ProductCategory? Parent { get; set; }
+
+    public long? ParentId { get; set; }
 
     public bool CanAddProducts { get; set; }
 
@@ -72,4 +85,8 @@ public sealed class ProductCategory
     public string Handle { get; set; } = default!;
 
     public string Path { get; set; } = default!;
+
+    public List<Attribute> Attributes { get; } = new List<Attribute>();
+
+    public List<Option> Options { get; } = new List<Option>();
 }

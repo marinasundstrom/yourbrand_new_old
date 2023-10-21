@@ -1,5 +1,7 @@
 @page "/products/{id}"
 @using AdminAPI
+@using static Microsoft.AspNetCore.Components.Web.RenderMode
+@rendermode renderMode
 @using System.ComponentModel.DataAnnotations
 @inject IProductsClient ProductsClient
 @inject IProductCategoriesClient ProductCategoriesClient
@@ -17,11 +19,17 @@
                       Elevation="25" Class="rounded-lg" />
 
             <div>
-                <InputFile id="fileInput" OnChange="UploadProductImage" hidden accept="*.jpg, *.jpeg, *.png" />
-
-                <MudButton HtmlTag="label" Color="Color.Secondary" StartIcon="@Icons.Filled.CloudUpload" for="fileInput">
-                    Upload image
-                </MudButton>
+                <MudFileUpload T="IBrowserFile" Accept="*.jpg, *.jpeg, *.png" FilesChanged="UploadProductImage">
+                    <ButtonTemplate>
+                        <MudButton HtmlTag="label"
+                                Variant="Variant.Filled"
+                                Color="Color.Primary"
+                                StartIcon="@Icons.Material.Filled.CloudUpload"
+                                for="@context">
+                            Upload image
+                        </MudButton>
+                    </ButtonTemplate>
+                </MudFileUpload>
             </div>
         </MudItem>
 
@@ -73,16 +81,38 @@
             </MudPaper>
         </MudItem>
 
+        <MudItem xs="12" sm="12" md="3">
+            <MudPaper Elevation="2" Class="pa-4">
+                <EditForm Model="@visibilityUpdateViewModel" OnValidSubmit="UpdateVisibility">
+                    <DataAnnotationsValidator />
+
+                    <MudSelect T="ProductVisibility" Label="Visibility" @bind-Value="visibilityUpdateViewModel.Visibility" Variant="Variant.Outlined"
+                        ToStringFunc="x => x.ToString()" For="() => visibilityUpdateViewModel.Visibility">
+                        @foreach (var item in Enum.GetValues<ProductVisibility>())
+                        {
+                            <MudSelectItem T="ProductVisibility" Value="@item" />
+                        }
+                    </MudSelect>
+
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Class="mt-4">Update visibility</MudButton>
+                </EditForm>
+            </MudPaper>
+        </MudItem>
+
     </MudGrid>
 }
 
 @code
 {
+    private static IComponentRenderMode renderMode = 
+        new InteractiveWebAssemblyRenderMode(prerender: false);
+
     bool loaded = false;
     DetailsUpdateViewModel detailsUpdateViewModel;
     CategoryUpdateViewModel categoryUpdateViewModel;
     PriceUpdateViewModel priceUpdateViewModel;
     HandleUpdateViewModel handleUpdateViewModel;
+    VisibilityUpdateViewModel visibilityUpdateViewModel;
     string image;
 
     [Parameter] public string Id { get; set; }
@@ -108,9 +138,14 @@
             Handle = product.Handle
         };
 
+        visibilityUpdateViewModel = new()
+        {
+            Visibility = product.Visibility
+        };
+
         categoryUpdateViewModel = new CategoryUpdateViewModel()
         {
-            Category = new ProductCategoryParent
+            Category = new ParentProductCategory
             {
                 Id = product.Category.Id,
                 Name = product.Category.Name
@@ -176,11 +211,10 @@
         public decimal Price { get; set; }
     }
 
-    private async Task UploadProductImage(InputFileChangeEventArgs e)
+    private async Task UploadProductImage(IBrowserFile file)
     {
         try
         {
-            var file = e.GetMultipleFiles().First();
             image = await ProductsClient.UploadProductImageAsync(Id, new FileParameter(file.OpenReadStream(3 * 1000000), file.Name));
 
             Snackbar.Add("Image was updated", Severity.Info);
@@ -195,6 +229,12 @@
     {
         [Required]
         public string Handle { get; set; }
+    }
+
+    class VisibilityUpdateViewModel
+    {
+        [Required]
+        public ProductVisibility Visibility { get; set; }
     }
 
     private async Task UpdateHandle()
@@ -214,10 +254,27 @@
         }
     }
 
+    private async Task UpdateVisibility()
+    {
+        try
+        {
+            await ProductsClient.UpdateProductVisibilityAsync(Id, new UpdateProductVisibilityRequest()
+            {
+                Visibility = visibilityUpdateViewModel.Visibility
+            });
+
+            Snackbar.Add("Visibility was updated", Severity.Info);
+        }
+        catch
+        {
+            Snackbar.Add("Failed to update product visibility", Severity.Error);
+        }
+    }
+
     class CategoryUpdateViewModel
     {
         [Required]
-        public AdminAPI.ProductCategoryParent Category { get; set; }
+        public AdminAPI.ParentProductCategory Category { get; set; }
     }
 
     private async Task UpdateCategory()
@@ -237,12 +294,12 @@
         }
     }
 
-    private async Task<IEnumerable<ProductCategoryParent>> Search(string value)
+    private async Task<IEnumerable<ParentProductCategory>> Search(string value)
     {
         var result = await ProductCategoriesClient.GetProductsCategoriesAsync(1, 20, value);
         return result.Items
             .Where(x => x.CanAddProducts)
-            .Select(x => new ProductCategoryParent
+            .Select(x => new ParentProductCategory
             {
                 Id = x.Id,
                 Name = x.Name

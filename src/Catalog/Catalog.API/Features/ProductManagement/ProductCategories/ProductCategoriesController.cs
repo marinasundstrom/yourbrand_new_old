@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Catalog.API.Features.ProductManagement.ProductCategories;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/productCategories")]
 public sealed class ProductCategoriesController : Controller
 {
     [HttpGet("{*idOrPath}")]

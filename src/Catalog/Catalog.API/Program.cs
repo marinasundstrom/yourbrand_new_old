@@ -1,9 +1,11 @@
 ﻿using Azure.Identity;
 using Azure.Storage.Blobs;
 
+using Catalog.API.Common;
 using Catalog.API.Extensions;
 using Catalog.API.Features.ProductManagement.ProductCategories;
 using Catalog.API.Features.ProductManagement.Products;
+using Catalog.API.Features.ProductManagement.Products.Variants;
 using Catalog.API.Persistence;
 
 using FluentValidation;
@@ -16,9 +18,16 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Azure;
 
+using Steeltoe.Discovery.Client;
+
 using YourBrand;
 
 var builder = WebApplication.CreateBuilder(args);
+
+if(builder.Environment.IsDevelopment()) 
+{
+    builder.Services.AddDiscoveryClient();
+}
 
 string GetProductsExpire20 = nameof(GetProductsExpire20);
 
@@ -27,12 +36,14 @@ builder.Services.AddOutputCache(options =>
     options.AddPolicy(GetProductsExpire20, builder =>
     {
         builder.Expire(TimeSpan.FromSeconds(20));
-        builder.SetVaryByQuery("page", "pageSize", "searchTerm", "categoryPath", "sortBy", "sortDirection");
+        builder.SetVaryByQuery("page", "pageSize", "searchTerm", "categoryPathOrId", "sortBy", "sortDirection");
     });
 });
 
 if (builder.Environment.IsProduction())
 {
+    builder.Configuration.AddAzureAppConfiguration($"https://{builder.Configuration["AppConfigurationName"]}.azconfig.io");
+
     builder.Configuration.AddAzureKeyVault(
         new Uri($"https://{builder.Configuration["KeyVaultName"]}.vault.azure.net/"),
         new DefaultAzureCredential());
@@ -42,8 +53,11 @@ builder.Services.AddValidatorsFromAssemblyContaining(typeof(Program));
 
 builder.Services.AddAzureClients(clientBuilder =>
 {
-    // Add a KeyVault client
-    clientBuilder.AddSecretClient(new Uri($"https://{builder.Configuration["KeyVaultName"]}.vault.azure.net/"));
+    if (builder.Environment.IsProduction())
+    {
+        // Add a KeyVault client
+        clientBuilder.AddSecretClient(new Uri($"https://{builder.Configuration["KeyVaultName"]}.vault.azure.net/"));
+    }
 
     // Add a Storage account client
     if (builder.Environment.IsDevelopment())
@@ -112,6 +126,10 @@ builder.Services
     .AddHealthChecks()
     .AddDbContextCheck<CatalogContext>();
 
+builder.Services.AddScoped<ProductsService>();
+
+builder.Services.AddScoped<ICurrentUserService>(sp => null!);
+
 var app = builder.Build();
 
 app.MapObservability();
@@ -160,7 +178,7 @@ static async Task SeedData(CatalogContext context, IConfiguration configuration,
 {
     try
     {
-        await Seed.SeedData(context, configuration);
+        await Seed2.SeedData(context, configuration);
     }
     catch (Exception ex)
     {

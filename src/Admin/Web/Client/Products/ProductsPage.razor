@@ -1,5 +1,7 @@
 @page "/products"
 @using AdminAPI
+@using static Microsoft.AspNetCore.Components.Web.RenderMode
+@rendermode renderMode
 @inject IProductsClient ProductsClient
 @inject NavigationManager NavigationManager
 @inject IDialogService DialogService
@@ -43,6 +45,9 @@
 </MudTable>
 
 @code {
+    private static IComponentRenderMode renderMode = 
+        new InteractiveWebAssemblyRenderMode(prerender: false);
+
     private MudTable<Product> table;
 
     private int totalItems;

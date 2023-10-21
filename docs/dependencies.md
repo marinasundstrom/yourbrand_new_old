@@ -9,6 +9,15 @@ These are the dependencies that this project, and all of its services have.
 | Database server (SQL)    | ``Azure SQL Server``        | ``yourbrand-sqlserver``    | ``Azure SQL Edge``            |
 | Storage (Blob)           | ``Azure Storage Account``   | ``yourbrandstorage``       | ``Azurite Storage Emulator``  |
 
+## Service discovery
+
+Azure Container apps support service discovery. 
+
+Locally, in development, we are using Consul.
+
+Both are using the same ``https://<service-name>`` URL conventions.
+
+The service names are the same as the resource names in Azure.
 
 ## Dependants
 

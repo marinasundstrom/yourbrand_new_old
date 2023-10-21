@@ -110,48 +110,81 @@ public static class Mapping
 {
     public static ProductCategory ToDto(this Domain.Entities.ProductCategory productCategory)
     {
-        return new(productCategory.Id, productCategory.Name, productCategory.Description, productCategory.Parent?.ToShortDto(), productCategory.CanAddProducts, productCategory.ProductsCount, productCategory.Handle, productCategory.Path);
+        return new(productCategory.Id, productCategory.Name, productCategory.Description, productCategory.Parent?.ToParentProductCategory(), productCategory.CanAddProducts, productCategory.ProductsCount, productCategory.Handle, productCategory.Path);
     }
 
-    public static ProductCategoryParent ToShortDto(this Domain.Entities.ProductCategory productCategory)
+    public static ParentProductCategory ToParentProductCategory(this Domain.Entities.ProductCategory productCategory)
     {
-        return new(productCategory.Id, productCategory.Name, productCategory.Description, productCategory.Handle, productCategory.Path, productCategory.Parent?.ToShortDto());
+        return new(productCategory.Id, productCategory.Name, productCategory.Description, productCategory.Handle, productCategory.Path, productCategory.Parent?.ToParentProductCategory(), productCategory.ProductsCount);
+    }
+
+    public static ProductCategory2 ToProductCategory2(this Domain.Entities.ProductCategory productCategory)
+    {
+        return new(productCategory.Id, productCategory.Name, productCategory.Description, productCategory.Handle, productCategory.Path, productCategory.Parent?.ToParentProductCategory(), productCategory.ProductsCount);
     }
 
     public static ProductCategoryTreeNodeDto ToProductCategoryTreeNodeDto(this Domain.Entities.ProductCategory productCategory)
     {
-        return new(productCategory.Id, productCategory.Name, productCategory.Handle, productCategory.Path, productCategory.Description, productCategory.Parent?.ToParentDto(), productCategory.SubCategories.Select(x => x.ToProductCategoryTreeNodeDto()), productCategory.ProductsCount, productCategory.CanAddProducts);
+        return new(productCategory.Id, productCategory.Name, productCategory.Handle, productCategory.Path, productCategory.Description, productCategory.Parent?.ToParentProductCategoryTreeNodeDto(), productCategory.SubCategories.Select(x => x.ToProductCategoryTreeNodeDto()), productCategory.ProductsCount, productCategory.CanAddProducts);
     }
 
-    public static ParentProductCategoryDto ToParentDto(this Domain.Entities.ProductCategory productCategory)
+    public static ParentProductCategoryTreeNodeDto ToParentProductCategoryTreeNodeDto(this Domain.Entities.ProductCategory productCategory)
     {
-        return new(productCategory.Id, productCategory.Name, productCategory.Handle, productCategory.Path, productCategory.Parent?.ToParentDto(), productCategory.ProductsCount);
+        return new(productCategory.Id, productCategory.Name, productCategory.Handle, productCategory.Path, productCategory.Parent?.ToParentProductCategoryTreeNodeDto(), productCategory.ProductsCount);
     }
 }
 
-public record class ProductCategoryTreeRootDto(IEnumerable<ProductCategoryTreeNodeDto> Categories, long ProductsCount);
-
-public record class ProductCategoryTreeNodeDto(long Id, string Name, string Handle, string Path, string? Description, ParentProductCategoryDto? Parent, IEnumerable<ProductCategoryTreeNodeDto> SubCategories, long ProductsCount, bool CanAddProducts);
-
-public record class ParentProductCategoryDto(long Id, string Name, string Handle, string Path, ParentProductCategoryDto? Parent, long ProductsCount);
-
 public sealed record ProductCategory(
     long Id,
-     string Name,
-     string? Description,
-     ProductCategoryParent? Parent,
-     bool CanAddProducts,
-     long ProductsCount,
-     string Handle,
+    string Name,
+    string? Description,
+    ParentProductCategory? Parent,
+    bool CanAddProducts,
+    long ProductsCount,
+    string Handle,
     string Path
 );
 
 
-public sealed record ProductCategoryParent(
+public sealed record ParentProductCategory(
     long Id,
     string Name,
     string? Description,
     string Handle,
     string Path,
-    ProductCategoryParent? Parent
+    ParentProductCategory? Parent,
+    long ProductsCount
 );
+
+public sealed record ProductCategory2(
+    long Id,
+    string Name,
+    string? Description,
+    string Handle,
+    string Path,
+    ParentProductCategory? Parent,
+    long ProductsCount
+);
+
+public record class ProductCategoryTreeRootDto(
+    IEnumerable<ProductCategoryTreeNodeDto> Categories, 
+    long ProductsCount);
+
+public record class ProductCategoryTreeNodeDto(
+    long Id, 
+    string Name, 
+    string Handle, 
+    string Path, 
+    string? Description, 
+    ParentProductCategoryTreeNodeDto? Parent, 
+    IEnumerable<ProductCategoryTreeNodeDto> SubCategories, 
+    long ProductsCount, 
+    bool CanAddProducts);
+
+public record class ParentProductCategoryTreeNodeDto(
+    long Id, 
+    string Name, 
+    string Handle, 
+    string Path, 
+    ParentProductCategoryTreeNodeDto? Parent, 
+    long ProductsCount);

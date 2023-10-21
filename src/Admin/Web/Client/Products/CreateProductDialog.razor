@@ -34,7 +34,7 @@
     public string Description { get; set; }
 
     [Required]
-    public AdminAPI.ProductCategoryParent Category { get; set; }
+    public AdminAPI.ParentProductCategory Category { get; set; }
 
     [Required]
     public decimal Price { get; set; }
@@ -58,12 +58,12 @@
 
     void Cancel() => MudDialog.Close(DialogResult.Cancel());
 
-    private async Task<IEnumerable<ProductCategoryParent>> Search(string value)
+    private async Task<IEnumerable<ParentProductCategory>> Search(string value)
     {
         var result = await ProductCategoriesClient.GetProductsCategoriesAsync(1, 20, value);
         return result.Items
             .Where(x => x.CanAddProducts)
-            .Select(x => new ProductCategoryParent
+            .Select(x => new ParentProductCategory
             {
                 Id = x.Id,
                 Name = x.Name

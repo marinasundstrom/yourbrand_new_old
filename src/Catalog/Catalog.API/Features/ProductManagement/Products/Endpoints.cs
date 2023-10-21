@@ -1,3 +1,5 @@
+using Catalog.API.Features.ProductManagement.Attributes;
+using Catalog.API.Features.ProductManagement.Options;
 using Catalog.API.Features.ProductManagement.ProductCategories;
 using Catalog.API.Model;
 
@@ -15,77 +17,59 @@ public static class Endpoints
     {
         string GetProductsExpire20 = nameof(GetProductsExpire20);
 
-        app.MapGet("/api/products", GetProducts)
-            .WithName($"Products_{nameof(GetProducts)}")
+        var group = app.MapGroup("/api/products")
             .WithTags("Products")
-            .WithOpenApi()
             .RequireRateLimiting("fixed")
+            .WithOpenApi();
+
+        group.MapGet("/", GetProducts)
+            .WithName($"Products_{nameof(GetProducts)}")
             .CacheOutput(GetProductsExpire20);
 
-        app.MapGet("/api/products/{idOrHandle}", GetProductById)
-            .WithName($"Products_{nameof(GetProductById)}")
-            .WithTags("Products")
-            .RequireRateLimiting("fixed")
-            .WithOpenApi();
+        group.MapGet("/{idOrHandle}", GetProductById)
+            .WithName($"Products_{nameof(GetProductById)}");
 
-        app.MapPost("/api/products", CreateProduct)
+        group.MapPost("/", CreateProduct)
             .AddEndpointFilter<ValidationFilter<CreateProductRequest>>()
-            .WithName($"Products_{nameof(CreateProduct)}")
-            .WithTags("Products")
-            .RequireRateLimiting("fixed")
-            .WithOpenApi();
+            .WithName($"Products_{nameof(CreateProduct)}");
 
-        app.MapPut("/api/products/{idOrHandle}", UpdateProductDetails)
+        group.MapPut("/{idOrHandle}", UpdateProductDetails)
             .AddEndpointFilter<ValidationFilter<UpdateProductDetailsRequest>>()
-            .WithName($"Products_{nameof(UpdateProductDetails)}")
-            .WithTags("Products")
-            .RequireRateLimiting("fixed")
-            .WithOpenApi();
+            .WithName($"Products_{nameof(UpdateProductDetails)}");
 
-        app.MapPut("/api/products/{idOrHandle}/price", UpdateProductPrice)
-            .WithName($"Products_{nameof(UpdateProductPrice)}")
-            .WithTags("Products")
-            .RequireRateLimiting("fixed")
-            .WithOpenApi();
+        group.MapPut("/{idOrHandle}/price", UpdateProductPrice)
+            .WithName($"Products_{nameof(UpdateProductPrice)}");
 
-        app.MapPost("/api/products/{idOrHandle}/image", UploadProductImage)
+        group.MapPost("/{idOrHandle}/image", UploadProductImage)
             .WithName($"Products_{nameof(UploadProductImage)}")
-            .WithTags("Products")
-            .RequireRateLimiting("fixed")
-            .WithOpenApi()
             .DisableAntiforgery();
 
-        app.MapPut("/api/products/{idOrHandle}/handle", UpdateProductHandle)
+        group.MapPut("/{idOrHandle}/handle", UpdateProductHandle)
             .AddEndpointFilter<ValidationFilter<UpdateProductHandleRequest>>()
-            .WithName($"Products_{nameof(UpdateProductHandle)}")
-            .WithTags("Products")
-            .RequireRateLimiting("fixed")
-            .WithOpenApi();
+            .WithName($"Products_{nameof(UpdateProductHandle)}");
 
-        app.MapPut("/api/products/{idOrHandle}/category", UpdateProductCategory)
+        group.MapPut("/{idOrHandle}/visibility", UpdateProductVisibility)
+            .AddEndpointFilter<ValidationFilter<UpdateProductVisibilityRequest>>()
+            .WithName($"Products_{nameof(UpdateProductVisibility)}");
+
+        group.MapPut("/{idOrHandle}/category", UpdateProductCategory)
             .AddEndpointFilter<ValidationFilter<CreateProductCategoryRequest>>()
-            .WithName($"Products_{nameof(UpdateProductCategory)}")
-            .WithTags("Products")
-            .RequireRateLimiting("fixed")
-            .WithOpenApi();
+            .WithName($"Products_{nameof(UpdateProductCategory)}");
 
-        app.MapDelete("/api/products/{idOrHandle}", DeleteProduct)
-            .WithName($"Products_{nameof(DeleteProduct)}")
-            .WithTags("Products")
-            .RequireRateLimiting("fixed")
-            .WithOpenApi();
+        group.MapDelete("/{idOrHandle}", DeleteProduct)
+            .WithName($"Products_{nameof(DeleteProduct)}");
 
         return app;
     }
 
-    private static async Task<Ok<PagedResult<Product>>> GetProducts(int page = 1, int pageSize = 10, string? searchTerm = null, string? categoryPath = null,
+    private static async Task<Ok<PagedResult<ProductDto>>> GetProducts(string? storeId =  null, string? brandIdOrHandle = null, bool includeUnlisted = false, bool groupProducts = true, int page = 1, int pageSize = 10, string? searchTerm = null, string? categoryPathOrId = null,
         string? sortBy = null, SortDirection? sortDirection = null, IMediator mediator = default!, CancellationToken cancellationToken = default!)
     {
-        var pagedResult = await mediator.Send(new GetProducts(page, pageSize, searchTerm, categoryPath, sortBy, sortDirection), cancellationToken);
+        var pagedResult = await mediator.Send(new GetProducts(storeId, brandIdOrHandle, includeUnlisted, groupProducts, categoryPathOrId, page, pageSize, searchTerm, sortBy, sortDirection), cancellationToken);
         return TypedResults.Ok(pagedResult);
     }
 
-    private static async Task<Results<Ok<Product>, NotFound>> GetProductById(string idOrHandle,
+    private static async Task<Results<Ok<ProductDto>, NotFound>> GetProductById(string idOrHandle,
         IMediator mediator, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new GetProductById(idOrHandle), cancellationToken);
@@ -93,7 +77,7 @@ public static class Endpoints
         return result.IsSuccess ? TypedResults.Ok(result.GetValue()) : TypedResults.NotFound();
     }
 
-    private static async Task<Results<Ok<Product>, BadRequest, ProblemHttpResult>> CreateProduct(CreateProductRequest request,
+    private static async Task<Results<Ok<ProductDto>, BadRequest, ProblemHttpResult>> CreateProduct(CreateProductRequest request,
         IMediator mediator, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new CreateProduct(request.Name, request.Description, request.CategoryId, request.Price, request.Handle), cancellationToken);
@@ -132,6 +116,15 @@ public static class Endpoints
 
         return result.IsSuccess ? TypedResults.Ok() : TypedResults.NotFound();
     }
+
+    private static async Task<Results<Ok, NotFound, ProblemHttpResult>> UpdateProductVisibility(string idOrHandle, UpdateProductVisibilityRequest request,
+        IMediator mediator, CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(new UpdateProductVisibility(idOrHandle, request.Visibility), cancellationToken);
+
+        return result.IsSuccess ? TypedResults.Ok() : TypedResults.NotFound();
+    }
+
 
     private static async Task<Results<Ok, NotFound, ProblemHttpResult>> UpdateProductCategory(string idOrHandle, UpdateProductCategoryRequest request,
         IMediator mediator, CancellationToken cancellationToken)
@@ -189,6 +182,8 @@ public sealed record UpdateProductHandleRequest(string Handle)
     }
 }
 
+public sealed record UpdateProductVisibilityRequest(ProductVisibility Visibility);
+
 public sealed record UpdateProductCategoryRequest(long ProductCategoryId)
 {
     public class UpdateProductCategoryRequestValidator : AbstractValidator<UpdateProductCategoryRequest>
@@ -200,22 +195,34 @@ public sealed record UpdateProductCategoryRequest(long ProductCategoryId)
     }
 }
 
-
-public sealed record Product(
+public sealed record ProductDto(
     long Id,
     string Name,
-    ProductCategoryParent? Category,
+    ProductCategory2? Category,
+    ParentProductDto? Parent,
     string Description,
     decimal Price,
     decimal? RegularPrice,
     string? Image,
-    string Handle
+    string Handle,
+    bool HasVariants,
+    ProductVisibility Visibility,
+    IEnumerable<ProductAttributeDto> Attributes,
+    IEnumerable<ProductOptionDto> Options
 );
 
-public static class Mapping
-{
-    public static Product ToDto(this Domain.Entities.Product product)
-    {
-        return new(product.Id, product.Name, product.Category.ToShortDto(), product.Description, product.Price, product.RegularPrice, product.Image, product.Handle);
-    }
-}
+public record class ParentProductDto(
+    long Id,
+    string Name,
+    ProductCategory? Category,
+    string Description,
+    decimal Price,
+    decimal? RegularPrice,
+    string? Image,
+    string Handle);
+
+public record class ProductAttributeDto(
+    AttributeDto Attribute, AttributeValueDto? Value, bool ForVariant, bool IsMainAttribute);
+
+public record class ProductOptionDto(
+    OptionDto Option, bool IsInherited);

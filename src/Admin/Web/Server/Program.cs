@@ -7,14 +7,25 @@ using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 
+using MudBlazor.Services;
+
 using Serilog;
 
+using Steeltoe.Common.Http.Discovery;
+using Steeltoe.Discovery.Client;
+
 using YourBrand;
+using YourBrand.Server;
 using YourBrand.Server.Extensions;
 using YourBrand.Server.ProductCategories;
 using YourBrand.Server.Products;
 
 var builder = WebApplication.CreateBuilder(args);
+
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddDiscoveryClient();
+}
 
 string serviceName = "Admin.Web";
 string serviceVersion = "1.0";
@@ -29,15 +40,23 @@ StaticWebAssetsLoader.UseStaticWebAssets(builder.Environment, builder.Configurat
 
 if (builder.Environment.IsProduction())
 {
+    builder.Configuration.AddAzureAppConfiguration($"https://{builder.Configuration["AppConfigurationName"]}.azconfig.io");
+
     builder.Configuration.AddAzureKeyVault(
         new Uri($"https://{builder.Configuration["KeyVaultName"]}.vault.azure.net/"),
         new DefaultAzureCredential());
 }
 
-builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages();
+builder.Services.AddControllers();
 
-builder.Services.AddCatalogClients(builder.Configuration["yourbrand-catalog-svc-url"]);
+builder.Services.AddMudServices();
+
+// Add services to the container.
+builder.Services.AddRazorComponents()
+    .AddInteractiveWebAssemblyComponents()
+    .AddInteractiveServerComponents();
+
+AddClients(builder);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
@@ -70,8 +89,14 @@ else
 
 //app.UseHttpsRedirection();
 
-app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
+
+app.UseAntiforgery();
+
+app.MapRazorComponents<App>()
+    .AddAdditionalAssemblies(typeof(YourBrand.Client.Pages.Counter).Assembly)
+    .AddInteractiveWebAssemblyRenderMode()
+    .AddInteractiveServerRenderMode();
 
 app
     .MapProductsEndpoints()
@@ -83,10 +108,21 @@ app.MapHealthChecks("/healthz", new HealthCheckOptions()
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 });
 
-app.MapRazorPages();
 app.MapControllers();
-app.MapFallbackToFile("index.html");
-
-app.UseOpenTelemetryPrometheusScrapingEndpoint();
 
 app.Run();
+
+static void AddClients(WebApplicationBuilder builder)
+{
+    var catalogApiHttpClient = builder.Services.AddHttpClient("CatalogAPI", (sp, http) =>
+    {
+        http.BaseAddress = new Uri(builder.Configuration["yourbrand-catalog-svc-url"]!);
+    });
+
+    if (builder.Environment.IsDevelopment())
+    {
+        catalogApiHttpClient.AddServiceDiscovery();
+    }
+
+    builder.Services.AddCatalogClients(builder.Configuration["yourbrand-catalog-svc-url"]!);
+}

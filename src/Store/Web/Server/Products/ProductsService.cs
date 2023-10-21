@@ -8,7 +8,7 @@ public sealed class ProductsService(IProductsClient productsClient) : IProductsS
 {
     public async Task<PagedResult<Product>> GetProducts(int? page = 1, int? pageSize = 10, string? searchTerm = null, string? categoryPath = null, CancellationToken cancellationToken = default)
     {
-        var results = await productsClient.GetProductsAsync(page, pageSize, searchTerm, categoryPath, null, null, cancellationToken);
+        var results = await productsClient.GetProductsAsync(null, null, false, true, page, pageSize, searchTerm, categoryPath, null, null, cancellationToken);
         return new PagedResult<Product>(results.Items.Select(product => product.Map()), results.Total);
     }
 
@@ -22,5 +22,5 @@ public sealed class ProductsService(IProductsClient productsClient) : IProductsS
 public static class Mapper
 {
     public static Product Map(this CatalogAPI.Product product)
-        => new(product.Id!, product.Name!, product?.Category.ToParentDto2(), product.Image!, product.Description!, product.Price, product.RegularPrice, product.Handle);
+        => new(product.Id!, product.Name!, product.Category?.ToParentDto3(), product.Image!, product.Description!, product.Price, product.RegularPrice, product.Handle);
 }
