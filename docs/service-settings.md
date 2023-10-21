@@ -25,9 +25,9 @@ Settings can be visualized as an hierarchy:
 
 ### Keys and names
 
-| Key (used in-app to retrieve)    | Key in Azure KeyVault & App Configuration  |
-|----------------------------------|--------------------------------------------|
-| ``yourbrand:catalog-svc:url``    | ``yourbrand--catalog-svc--url``            |
+| Key used in-app and by  App Configuration     | Key in Azure KeyVault                      |
+|-----------------------------------------------|--------------------------------------------|
+| ``yourbrand:catalog-svc:url``                 | ``yourbrand--catalog-svc--url``            |
 
 
 Double dash ``--`` corresponds to a new level in the hierarchy. In in-app configuration the ``:`` is used instead.
