@@ -19,7 +19,7 @@ services:
       - 8080:8080
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "yourbrand-catalog-svc-url=http://host.docker.internal:8082"
+      - "yourbrand__catalog-svc__url=http://host.docker.internal:8082"
       - RABBITMQ_HOST=host.docker.internal
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
@@ -41,7 +41,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__CatalogDb=Server=host.docker.internal,1433;User Id=sa;Password=P@ssw0rd;Encrypt=false;Database=yourbrand-catalog-db
       - RABBITMQ_HOST=host.docker.internal
-      - "yourbrand-storage-connectionstring=DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://host.docker.internal:10000/devstoreaccount1;QueueEndpoint=http://host.docker.internal:10001/devstoreaccount1;TableEndpoint=http://host.docker.internal:10002/devstoreaccount1;"
+      - "Azure__StorageAccount__ConnectionString=DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://host.docker.internal:10000/devstoreaccount1;QueueEndpoint=http://host.docker.internal:10001/devstoreaccount1;TableEndpoint=http://host.docker.internal:10002/devstoreaccount1;"
       - "CdnBaseUrl=http://host.docker.internal:10000/devstoreaccount1"
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
@@ -83,7 +83,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - RABBITMQ_HOST=host.docker.internal
-      - "yourbrand-catalog-svc-url=http://host.docker.internal:8082"
+      - "yourbrand__catalog-svc__url=http://host.docker.internal:8082"
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
     depends_on:
