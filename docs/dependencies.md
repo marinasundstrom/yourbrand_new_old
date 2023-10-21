@@ -11,13 +11,15 @@ These are the dependencies that this project, and all of its services have.
 
 ## Service discovery
 
+In order to using full URLs we use service discovery to automatically register services by their name.
+
+Then we use this convention to connect to a specified service: ``http://<service-name>``.
+
+The service names are the same as the resource names in Azure.
+
 Azure Container apps support service discovery. 
 
 Locally, in development, we are using Consul.
-
-Both are using the same ``https://<service-name>`` URL conventions.
-
-The service names are the same as the resource names in Azure.
 
 ## Dependants
 
@@ -32,6 +34,8 @@ At the moment, only running locally.
 ## Settings and Secrets
 
 Azure KeyVault is used to store secrets in the cloud.
+
+App settings are stored in Azure App Configuration.
 
 Locally, settings are injected into service as environment variables. When running a service as is, then they are defined in the ``Properties/launchSettings.json`` of each project.
 

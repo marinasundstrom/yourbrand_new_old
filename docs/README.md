@@ -2,7 +2,7 @@
 
 ## Development
 
-* [Local development](development/local-development.md)
+* [Local development](development/developer-experience.md)
 * [Set up Azurite](development/set-up-azurite.md)
 * [Database migrations](development/database-migrations.md)
 
