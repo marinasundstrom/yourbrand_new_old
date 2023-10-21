@@ -2,9 +2,9 @@
 
 This project uses System-assigned managed identities and roles to authorize resources and users to access other resources within Azure.
 
-You also need to add yourself as a member for certain resources in order to view, and update their data.
+You also need to add yourself as a member in certain resources in order to access them. This is role-based.
 
-Some resources might have more permissions than they need. This will be reviewed and changed in the future.
+In this document, some resources might have more permissions than they need. This will be reviewed and changed in the future.
 
 In this document the words "service" and "resource" are being used interchangeably - meaning the same.
 
