@@ -35,7 +35,7 @@ More on that [here](set-up-azurite.md).
 
 You can start individual services using these commands:
 
-```
+```sh
 dotnet run --project src/Store/Web/Server
 dotnet run --project src/Admin/Web/Server
 dotnet run --project src/Catalog/Catalog.API
@@ -57,38 +57,15 @@ The terminals are configured in the ``.vscode/settings.json`` file.
 
 Each services has a Swagger UI endpoint at ``/swagger``.
 
-## Developing the Store Web
+## Seeding data (Dev)
 
-### Developing Store Web against services running locally
+### Databases
 
-For when you need to make changes to other services as well.
-
-```
-dotnet run --launch-profile "Development (Local Catalog API)"
-```
-
-Or simply:
-
-```
-dotnet run
+```sh
+dotnet run --project src/Carts/Carts.API --seed
+dotnet run --project src/Catalog/Catalog.API --seed
 ```
 
-Requires the project ``Catalog.API`` to be started. It is dependant on the database to run.
+### Blob Storage
 
-### Developing Store Web locally against services running in Docker
-
-For when you make changes just to Store Web.
-
-```
-dotnet run --launch-profile "Development (Catalog API in Docker)"
-```
-
-Requires Docker Compose file ``docker-compose.debug.yml`` to run.
-
-### Developing Store Web locally against services running in the cloud
-
-For when you need to do something to Store Web that requires data from the cloud.
-
-```
-dotnet run --launch-profile "Development (Remote Catalog API)"
-```
+To seed product images, follow [this guide](/docs/seed/blobs/README.md).
