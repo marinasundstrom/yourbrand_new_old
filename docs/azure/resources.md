@@ -4,7 +4,11 @@
 
 A container registry.
 
-Enable Admin User, for listing images in the portal. 
+Enable Admin User, for listing images in the portal.
+
+## App Configuration
+
+Named: ``yourbrand-appconfiguration``
 
 ## KeyVault
 

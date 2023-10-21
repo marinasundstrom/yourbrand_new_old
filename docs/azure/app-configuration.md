@@ -1,6 +1,6 @@
 # App Configuration
 
-The following secrets should be in the app configuration in ``yourbrand-appconfiguration``:
+The following settings should be in ``yourbrand-appconfiguration``:
 
 * ``yourbrand-catalog-svc-url`` - The URL of the catalog-svc container app 1) : ``https://yourbrand-catalog-svc``
 * ``yourbrand-carts-svc-url`` - The URL of the carts-svc container app 1): ``https://yourbrand-carts-svc``
