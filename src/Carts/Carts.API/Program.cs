@@ -53,7 +53,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddObservability("Carts.API", "1.0", builder.Configuration);
 
 builder.Services.AddSqlServer<CartsContext>(
-    builder.Configuration.GetValue<string>("yourbrand-carts-db-connectionstring")
+    builder.Configuration.GetValue<string>("yourbrand:carts-svc:db:connectionstring")
     ?? builder.Configuration.GetConnectionString("CartsDb"),
     c => c.EnableRetryOnFailure());
 
@@ -69,7 +69,7 @@ builder.Services.AddMassTransit(x =>
     {
         x.UsingAzureServiceBus((context, cfg) =>
         {
-            cfg.Host(builder.Configuration["yourbrand-servicebus-connectionstring"]);
+            cfg.Host($"sb://{builder.Configuration["Azure:ServiceBus:Namespace"]}.servicebus.windows.net");
 
             cfg.ConfigureEndpoints(context);
         });

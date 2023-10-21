@@ -65,7 +65,7 @@ builder.Services.AddAzureClients(clientBuilder =>
     // Add a Storage account client
     if (builder.Environment.IsDevelopment())
     {
-        clientBuilder.AddBlobServiceClient(builder.Configuration["yourbrand-storage-connectionstring"])
+        clientBuilder.AddBlobServiceClient(builder.Configuration["Azure:StorageAccount:ConnectionString"])
                         .WithVersion(BlobClientOptions.ServiceVersion.V2019_07_07);
     }
     else
@@ -87,7 +87,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddObservability("Catalog.API", "1.0", builder.Configuration);
 
 builder.Services.AddSqlServer<CatalogContext>(
-    builder.Configuration.GetValue<string>("yourbrand-catalog-db-connectionstring")
+    builder.Configuration.GetValue<string>("yourbrand:catalog-svc:db:connectionstring")
     ?? builder.Configuration.GetConnectionString("CatalogDb"),
     c => c.EnableRetryOnFailure());
 
@@ -103,7 +103,7 @@ builder.Services.AddMassTransit(x =>
     {
         x.UsingAzureServiceBus((context, cfg) =>
         {
-            cfg.Host(builder.Configuration["yourbrand-servicebus-connectionstring"]);
+            cfg.Host($"sb://{builder.Configuration["Azure:ServiceBus:Namespace"]}.servicebus.windows.net");
 
             cfg.ConfigureEndpoints(context);
         });

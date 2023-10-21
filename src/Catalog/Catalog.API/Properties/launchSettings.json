@@ -16,8 +16,8 @@
       "applicationUrl": "https://localhost:7134;http://localhost:5243",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ConnectionStrings__CatalogDb": "Server=localhost,1433;User Id=sa;Password=P@ssw0rd;Encrypt=false;Database=yourbrand-catalog-db",
-        "yourbrand-storage-connectionstring": "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://localhost:10000/devstoreaccount1;QueueEndpoint=http://localhost:10001/devstoreaccount1;TableEndpoint=http://localhost:10002/devstoreaccount1;",
+        "yourbrand__catalog-svc__db__connectionstring": "Server=localhost,1433;User Id=sa;Password=P@ssw0rd;Encrypt=false;Database=yourbrand-catalog-db",
+        "Azure__StorageAccount__ConnectionString": "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://localhost:10000/devstoreaccount1;QueueEndpoint=http://localhost:10001/devstoreaccount1;TableEndpoint=http://localhost:10002/devstoreaccount1;",
         "CdnBaseUrl": "http://localhost:10000/devstoreaccount1"
       },
       "dotnetRunMessages": true

@@ -23,7 +23,7 @@
       "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "yourbrand-catalog-svc-url": "https://yourbrand-catalog-svc"
+        "yourbrand__catalog-svc__url": "https://yourbrand-catalog-svc"
       },
       "dotnetRunMessages": "true"
     }
