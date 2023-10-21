@@ -1,4 +1,4 @@
-# Local development
+# Developer experience
 
 The entire project can be run locally either fully in Docker, or with some services running separately during development.
 
