@@ -21,9 +21,9 @@ These are the dependencies that this project, and all of its services have.
 
 ## Service discovery
 
-In order to using full URLs we use service discovery to automatically register services by their name.
+We use service discovery to automatically register services by their name.
 
-Then we use this convention to connect to a specified service: ``http://<service-name>``.
+Then we use this convention to connect to a specific service: ``http://<service-name>``.
 
 The service names are the same as the resource names in Azure.
 
