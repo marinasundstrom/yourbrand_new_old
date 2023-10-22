@@ -12,6 +12,13 @@ The service name should be the same as the service in Azure.
 
 Azure Container apps has built in Service Discovery support, using the same conventions as Steeltoe, and Consul.
 
+## Participants
+
+These services explicitly register with service discovery.
+
+* ``yourbrand-catalog-svc``
+* ``yourbrand-carts-svc``
+
 ## Load balancing
 
 Load balancing is supported both by Azure Container apps, and through Consul.
@@ -25,6 +32,8 @@ Consul is running in Docker.
 ## Adding service discovery (Development)
 
 This is only for the local development environment. Not required for Azure.
+
+Consul UI: ``http://localhost:8500/ui``
 
 ### Server
 
