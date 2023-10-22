@@ -1,4 +1,4 @@
-# Run in Docker
+# Running in Docker
 
 ## Production mode
 

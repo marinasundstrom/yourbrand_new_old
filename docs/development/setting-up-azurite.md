@@ -1,4 +1,4 @@
-# Set up Azurite Storage Emulator
+# Setting up Azurite Storage Emulator
 
 To publicly expose Blobs via their URLs you have to change Azurite's configuration.
 

@@ -38,7 +38,7 @@ docker compose -f docker-compose.deps.yml up -d
 
 To upload and serve blobs (product images) you need to configure Azurite.
 
-More on that [here](set-up-azurite.md).
+More on that [here](setting-up-azurite.md).
 
 ## Run individual services from CLI
 

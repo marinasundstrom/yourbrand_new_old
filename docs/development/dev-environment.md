@@ -11,6 +11,7 @@
 Main dependencies that run in Docker.
 
 * Azure SQL Edge (Server) - SQL database
+* Azurite Storage Emulator - Blob storage
 * RabbitMQ - Message broker
 * Consul - Allows for service discovery
 

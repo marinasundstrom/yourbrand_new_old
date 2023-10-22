@@ -27,6 +27,6 @@ Read the [docs](docs/development/getting-started.md) to get started.
 
 This project is automatically deployed to Azure using GitHub Actions on each commit.
 
-More on how to set up the Azure environment is found [here](docs/azure/set-up-environment.md).
+More on how to set up the Azure environment is found [here](docs/azure/README.md).
 
 And on how to [configure GitHub Action](docs/github/actions.md).
