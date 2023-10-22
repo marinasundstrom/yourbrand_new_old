@@ -2,6 +2,8 @@
 
 ## Production mode
 
+This will run the app in production mode, which requires access and permissions to Azure resources.
+
 ```
 docker compose up
 ```
@@ -14,26 +16,22 @@ docker compose up -d
 
 ## Development mode
 
+You can run everything, including dev dependencies, just by running this command:
+
 ```
 docker compose -f docker-compose.debug.yml up
 ```
 
-To rebuild the images of all services:
+To (re)build the images of all services:
 
 ```
-docker compose -f docker-compose.debug.yml up --build
+docker compose -f docker-compose.debug.yml build
 ```
 
-To rebuild the image of a specific service:
+To rebuild the image of a specific service that is running:
 
 ```
 docker compose -f docker-compose.debug.yml up --build <service name>
-```
-
-Just build:
-
-```
-docker compose -f docker-compose.yml build store-web 
 ```
 
 ## Run just the dependencies
@@ -43,3 +41,13 @@ This starts the local dependencies mentioned [here](services.md).
 ```
 docker compose -f docker-compose.deps.yml up
 ```
+
+## Service DNS
+
+Inside Docker you may use ``host.docker.internal:<port>`` or ``<service-name>:<port>`` to address a service.
+
+While from the outside you use ``localhost:<port>``.
+
+## Issue with service discovery
+
+For ``docker-compose.debug.yml`` we have disabled service discovery, since it doesn't work with containerized services. It will register the internal port, and not the external. 
