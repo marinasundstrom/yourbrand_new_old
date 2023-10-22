@@ -19,9 +19,9 @@ Learning in the process.
 
 Porting stuff from [eShop](https://github.com/marinasundstrom/eShop) whenever possible, but make it better.
 
-## Local development
+## Development
 
-Read the [docs](docs/development/getting-started.md) to get started.
+Start [here](docs/development/getting-started.md).
 
 ## Deployment to Azure
 
