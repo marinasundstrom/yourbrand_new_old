@@ -14,10 +14,10 @@ Azure Container apps has built in Service Discovery support, using the same conv
 
 ## Participants
 
-These services explicitly register with service discovery.
+These services explicitly register with service discovery:
 
-* ``yourbrand-catalog-svc``
-* ``yourbrand-carts-svc``
+* ``Catalog``
+* ``Carts``
 
 ## Load balancing
 

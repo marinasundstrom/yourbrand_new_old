@@ -21,7 +21,7 @@ Porting stuff from [eShop](https://github.com/marinasundstrom/eShop) whenever po
 
 ## Development
 
-Start [here](docs/development/getting-started.md).
+Here is a [guide](docs/development/getting-started.md) to get started developing.
 
 ## Deployment to Azure
 

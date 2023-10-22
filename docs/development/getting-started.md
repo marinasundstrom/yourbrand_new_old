@@ -2,7 +2,7 @@
 
 The entire project can be run on your local computer.
 
-Everything has been pre-configured to work with a local SQL database as well as other dependencies running in Docker.
+Everything has been pre-configured to work with SQL databases, as well as other dependencies, running in Docker.
 
 ## Prerequisites
 
@@ -10,7 +10,7 @@ The following software has to be present on your development machine in order to
 
 * .NET SDK 8
 * Docker desktop
-* VS Code
+* VS Code (or Visual Studio, or Rider)
 
 ## VS Code
 
@@ -20,15 +20,15 @@ In order to run in VS code you need the following extensions:
 * C# Dev Kit - for the best dev experience (Solution Explorer, Test Explorer, debugging)
 * C# IntelliCode
 
-Install the extensions manually or by running ``install-vscode-extensions.sh``.
+Install the extensions manually, or by running ``install-vscode-extensions.sh``.
 
-This is a "nice to have" that will be installed by the script:
+This is a "nice to have" that will be installed by running the script:
 
 **Restore Terminals** will make it easier for you to start up all services locally by automatically creating a terminal window for each of them.
 
 ## Run dependencies in Docker
 
-To start the database and other [dependencies](services.md), run this:
+To start the database and other [dependencies](/docs/services.md), run this:
 
 ```
 docker compose -f docker-compose.deps.yml up -d
