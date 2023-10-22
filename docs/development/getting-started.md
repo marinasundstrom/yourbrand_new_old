@@ -1,6 +1,6 @@
-# Developer experience
+# Getting started
 
-The entire project can be run locally either fully in Docker, or with some services running separately during development.
+The entire project can be run on your local computer.
 
 Everything has been pre-configured to work with a local SQL database as well as other dependencies running in Docker.
 
@@ -10,10 +10,19 @@ The following software has to be present on your development machine in order to
 
 * .NET SDK 8
 * Docker desktop
+* VS Code
 
-## VS Code extensions
+## VS Code
 
-Run the ``install-vscode-extensions.sh`` script to install some useful extensions, like _Restore Terminals_.
+In order to run in VS code you need the following extensions:
+
+* C# language kit
+* C# Dev Kit - for the best dev experience (Solution Explorer, Test Explorer, debugging)
+* C# IntelliCode
+
+Install the extensions manually or by running ``install-vscode-extensions.sh``.
+
+This is a "nice to have" that will be installed by the script:
 
 **Restore Terminals** will make it easier for you to start up all services locally by automatically creating a terminal window for each of them.
 
@@ -42,7 +51,7 @@ dotnet run --project src/Catalog/Catalog.API
 dotnet run --project src/Carts/Carts.API
 ```
 
-### VS Code
+### Restore Terminal in VS Code
 
 You can use the [Restore Terminal](https://marketplace.visualstudio.com/items?itemName=EthanSK.restore-terminals) VS Code extension to restore Terminal windows with these commands.
 
@@ -50,14 +59,16 @@ The terminals are configured in the ``.vscode/settings.json`` file.
 
 ## Service hosts
 
+The service will run at these endpoints:
+
 * Store Web: https://localhost:7188/
 * Admin Web: https://localhost:5001/
 * Catalog https://localhost:7134/
 * Carts: https://localhost:7154/
 
-Each services has a Swagger UI endpoint at ``/swagger``.
+Each service has a Swagger UI endpoint at ``/swagger``.
 
-## Seeding data (Dev)
+## Seeding data
 
 ### Databases
 

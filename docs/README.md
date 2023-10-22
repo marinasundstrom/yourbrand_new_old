@@ -2,7 +2,7 @@
 
 ## Development
 
-* [Developer experience](development/developer-experience.md)
+* [Developer experience](development/getting-started.md)
 * [Set up Azurite](development/set-up-azurite.md)
 * [Database migrations](development/database-migrations.md)
 
