@@ -87,8 +87,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddObservability("Catalog.API", "1.0", builder.Configuration);
 
 builder.Services.AddSqlServer<CatalogContext>(
-    builder.Configuration.GetValue<string>("yourbrand:catalog-svc:db:connectionstring")
-    ?? builder.Configuration.GetConnectionString("CatalogDb"),
+    builder.Configuration.GetValue<string>("yourbrand:catalog-svc:db:connectionstring"),
     c => c.EnableRetryOnFailure());
 
 builder.Services.AddMediatR(c => c.RegisterServicesFromAssemblyContaining<Program>());

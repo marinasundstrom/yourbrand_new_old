@@ -53,8 +53,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddObservability("Carts.API", "1.0", builder.Configuration);
 
 builder.Services.AddSqlServer<CartsContext>(
-    builder.Configuration.GetValue<string>("yourbrand:carts-svc:db:connectionstring")
-    ?? builder.Configuration.GetConnectionString("CartsDb"),
+    builder.Configuration.GetValue<string>("yourbrand:carts-svc:db:connectionstring"),
     c => c.EnableRetryOnFailure());
 
 builder.Services.AddMediatR(x => x.RegisterServicesFromAssemblyContaining<Program>());

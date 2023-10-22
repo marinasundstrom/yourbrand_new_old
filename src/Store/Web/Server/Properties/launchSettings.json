@@ -15,9 +15,7 @@
       "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
       "applicationUrl": "https://localhost:7188;http://localhost:5153",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "yourbrand__catalog-svc__url": "https://yourbrand-catalog-svc",
-        "yourbrand__carts-svc__url": "https://yourbrand-carts-svc"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true
     },
@@ -27,9 +25,7 @@
       "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
       "applicationUrl": "https://localhost:7188;http://localhost:5153",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "yourbrand__catalog-svc__url": "http://localhost:8082",
-        "yourbrand__carts-svc__url": "http://localhost:8003"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true
     },
@@ -39,9 +35,7 @@
       "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
       "applicationUrl": "https://localhost:7188;http://localhost:5153",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "yourbrand__catalog-svc__url": "https://yourbrand-catalog-svc.kindgrass-70ab37e8.swedencentral.azurecontainerapps.io",
-        "yourbrand__carts-svc__url": ""
+        "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true
     },
