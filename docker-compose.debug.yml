@@ -17,16 +17,11 @@ services:
         - configuration=Debug
     ports:
       - 8090:8080
+    env_file: ./dev-variables.env
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "yourbrand__catalog-svc__url=http://host.docker.internal:8082"
       - "yourbrand__carts-svc__url=http://host.docker.internal:8083"
-      - RABBITMQ_HOST=host.docker.internal
-      - Consul__Discovery__Enabled=false
-      - Consul__Host=host.docker.internal
-      # - Consul__Scheme=http
-      # - Consul__Discovery__Scheme=http
-      # - Consul__Discovery__Hostname=host.docker.internal
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
     depends_on:
@@ -43,17 +38,12 @@ services:
         - configuration=Debug
     ports:
       - 8082:8080
+    env_file: ./dev-variables.env
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - yourbrand__catalog-svc__db__connectionstring=Server=host.docker.internal,1433;User Id=sa;Password=P@ssw0rd;Encrypt=false;Database=yourbrand-catalog-db
       - "Azure__StorageAccount__ConnectionString=DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://host.docker.internal:10000/devstoreaccount1;QueueEndpoint=http://host.docker.internal:10001/devstoreaccount1;TableEndpoint=http://host.docker.internal:10002/devstoreaccount1;"
       - "CdnBaseUrl=http://host.docker.internal:10000/devstoreaccount1"
-      - RABBITMQ_HOST=host.docker.internal
-      - Consul__Discovery__Enabled=false
-      - Consul__Host=host.docker.internal
-      # - Consul__Scheme=http
-      # - Consul__Discovery__Scheme=http
-      # - Consul__Discovery__Hostname=host.docker.internal
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
     depends_on:
@@ -72,15 +62,10 @@ services:
         - configuration=Debug
     ports:
       - 8083:8080
+    env_file: ./dev-variables.env
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - yourbrand__carts-svc__db__connectionstring=Server=host.docker.internal,1433;User Id=sa;Password=P@ssw0rd;Encrypt=false;Database=yourbrand-carts-db
-      - RABBITMQ_HOST=host.docker.internal
-      - Consul__Discovery__Enabled=false
-      - Consul__Host=host.docker.internal
-      # - Consul__Scheme=http
-      # - Consul__Discovery__Scheme=http
-      # - Consul__Discovery__Hostname=host.docker.internal
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
     depends_on:
@@ -98,15 +83,10 @@ services:
         - configuration=Debug
     ports:
       - 8084:8080
+    env_file: ./dev-variables.env
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - RABBITMQ_HOST=host.docker.internal
       - "yourbrand__catalog-svc__url=http://host.docker.internal:8082"
-      - Consul__Discovery__Enabled=false
-      - Consul__Host=host.docker.internal
-      # - Consul__Scheme=http
-      # - Consul__Discovery__Scheme=http
-      # - Consul__Discovery__Hostname=host.docker.internal
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
     depends_on:
