@@ -21,7 +21,7 @@ public sealed record CreateProduct(string Name, string Description, long Categor
 
             var connectionString = catalogContext.Database.GetConnectionString()!;
 
-            string cdnBaseUrl = connectionString.Contains("localhost")
+            string cdnBaseUrl = (connectionString.Contains("localhost") || connectionString.Contains("mssql"))
                 ? configuration["CdnBaseUrl"]!
                 : "https://yourbrandstorage.blob.core.windows.net";
 

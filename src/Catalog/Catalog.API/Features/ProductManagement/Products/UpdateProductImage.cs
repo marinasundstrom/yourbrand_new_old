@@ -37,7 +37,7 @@ public sealed record UpdateProductImage(string IdOrHandle, Stream Stream, string
 
             var connectionString = catalogContext.Database.GetConnectionString()!;
 
-            string cdnBaseUrl = connectionString.Contains("localhost")
+            string cdnBaseUrl = (connectionString.Contains("localhost") || connectionString.Contains("mssql"))
                 ? configuration["CdnBaseUrl"]!
                 : "https://yourbrandstorage.blob.core.windows.net";
 

@@ -20,7 +20,7 @@ public static class Seed2
 
         var connectionString = context.Database.GetConnectionString()!;
 
-        cdnBaseUrl = connectionString.Contains("localhost")
+        cdnBaseUrl = (connectionString.Contains("localhost") || connectionString.Contains("mssql"))
             ? configuration["CdnBaseUrl"]!
             : "https://yourbrandstorage.blob.core.windows.net";
 
