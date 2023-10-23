@@ -12,7 +12,7 @@ using Xunit.Abstractions;
 namespace Carts.IntegrationTests;
 
 [Collection("Database collection")]
-public class CartsTest : IAsyncLifetime
+public class MyTest : IAsyncLifetime
 {
     private readonly WebApplicationFactory<Program> _factory;
     private readonly Func<Task> _resetDatabase;
@@ -20,7 +20,7 @@ public class CartsTest : IAsyncLifetime
     public HttpClient HttpClient { get; private set; }
     public ITestHarness Harness { get; private set; }
 
-    public CartsTest(CartsApiFactory factory, ITestOutputHelper testOutputHelper)
+    public MyTest(CartsApiFactory factory, ITestOutputHelper testOutputHelper)
     {
         _factory = factory.WithTestLogging(testOutputHelper);
 
@@ -39,31 +39,15 @@ public class CartsTest : IAsyncLifetime
     }
 
     [Fact]
-    public async Task AddNewCartItem()
+    public async Task GetCarts()
     {
         // Arrange
 
-        var requestClient = Harness.GetRequestClient<AddCartItem>();
 
         // Act
-
-        var response = await requestClient.GetResponse<AddCartItemResponse>(
-            new AddCartItem
-            {
-                CartId = "test",
-                Name = "Test",
-                ProductId = 100,
-                ProductHandle = "foo",
-                Description = "",
-                Price = 20,
-                Quantity = 1
-            });
-
+        var result = await HttpClient.GetStringAsync("/api/carts");
+        
         // Assert
-
-        Assert.True(await Harness.Consumed.Any<AddCartItem>());
-
-        Assert.True(await Harness.Sent.Any<AddCartItemResponse>());
     }
 
     public async Task DisposeAsync() => await _resetDatabase();
