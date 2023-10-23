@@ -13,6 +13,8 @@ on:
     - main
     paths:
     - "src/Carts/Carts.API/**"
+    - "src/Carts/Carts.UnitTests/**"
+    - "src/Carts/Carts.IntegrationTests/**"
   
 jobs:
   build-and-deploy:
