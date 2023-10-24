@@ -1,12 +1,24 @@
-// For format details, see https://aka.ms/devcontainer.json. For config options, see the
-// README at: https://github.com/devcontainers/templates/tree/main/src/dotnet
 {
-    "name": "C# (.NET)",
-    // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-    "image": "mcr.microsoft.com/devcontainers/dotnet:8.0.0",
-    // Features to add to the dev container. More info: https://containers.dev/features.
-    // "features": {},
-    // Configure tool-specific properties.
+    "name": "YourBrand Codespace",
+    "image": "mcr.microsoft.com/dotnet/sdk:8.0",
+    "features": {
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+        "ghcr.io/devcontainers/features/github-cli:1": {
+            "version": "2"
+        },
+        "ghcr.io/devcontainers/features/powershell:1": {
+            "version": "latest"
+        },
+        "ghcr.io/azure/azure-dev/azd:0": {
+            "version": "latest"
+        },
+        "ghcr.io/devcontainers/features/common-utils:2": {},
+        "ghcr.io/devcontainers/features/dotnet:2": {
+            "version": "none",
+            "dotnetRuntimeVersions": "7.0",
+            "aspNetCoreRuntimeVersions": "7.0"
+        }
+    },
     "customizations": {
         // Configure properties specific to VS Code.
         "vscode": {
@@ -19,30 +31,48 @@
                 "streetsidesoftware.code-spell-checker",
                 "jtlowe.vscode-icon-theme",
                 "EthanSK.restore-terminals",
-                "ms-dotnettools.csharp",
+                "ms-vscode.vscode-node-azure-pack",
+                "github.vscode-github-actions",
+                "GitHub.copilot",
+                "GitHub.vscode-github-actions",
+                "ms-dotnettools.vscode-dotnet-runtime",
                 "ms-dotnettools.csdevkit",
+                "ms-dotnetools.csharp",
                 "ms-dotnettools.vscodeintellicode-csharp"
             ]
         }
     },
-    // Use 'portsAttributes' to set default properties for specific forwarded ports. 
-    // More info: https://containers.dev/implementors/json_reference/#port-attributes
+    "forwardPorts": [
+        7188,
+        5001,
+        7134,
+        7154
+    ],
+    "postCreateCommand": "dotnet restore",
+    "hostRequirements": {
+        "memory": "8gb",
+        "cpus": 4
+    },
+    "remoteEnv": {
+        "DOTNET_MULTILEVEL_LOOKUP": "0",
+        "TARGET": "net8.0"
+    },
     "portsAttributes": {
-        "5000": {
-            "label": "Hello Remote World",
+        "7188": {
+            "label": "Store API",
             "onAutoForward": "notify"
         },
         "5001": {
-            "protocol": "https"
+            "label": "Admin Web",
+            "onAutoForward": "notify"
         },
-        "7188": {
-            "protocol": "https"
+        "7134": {
+            "label": "Catalog API",
+            "onAutoForward": "notify"
+        },
+        "7154": {
+            "label": "Carts API",
+            "onAutoForward": "notify"
         }
     }
-    // Use 'forwardPorts' to make a list of ports inside the container available locally.
-    // "forwardPorts": [5000, 5001],
-    // Use 'postCreateCommand' to run commands after the container is created.
-    // "postCreateCommand": "dotnet restore",
-    // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-    // "remoteUser": "root"
 }
