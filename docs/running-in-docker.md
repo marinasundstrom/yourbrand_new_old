@@ -50,6 +50,8 @@ While from the outside you use ``localhost:<port>``.
 
 ## Issue with service discovery
 
-For ``docker-compose.debug.yml`` we have disabled service discovery, since it doesn't work with containerized services. Consul will register the internal port (8080), and not the external. 
+<strike>For ``docker-compose.debug.yml`` we have disabled service discovery, since it doesn't work with containerized services. Consul will register the internal port (8080), and not the external.</strike>
+
+Services are registered with assigned hostname and port.
 
 We pass the service URLs as configuration through environment variables.
