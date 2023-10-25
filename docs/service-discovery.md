@@ -56,7 +56,7 @@ builder.Services.AddDiscoveryClient();
 Register a client to a service using specified service name, like so:
 
 ```csharp
-services.AddHttpClient("CatalogAPI", (sp, http) =>
+services.AddHttpClient("CatalogAPI", static (sp, http) =>
 {
     http.BaseAddress = new Uri("https://yourbrand-catalog-svc"); //Name in config, otherwise based on project name
 })

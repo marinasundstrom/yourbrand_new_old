@@ -21,7 +21,7 @@ public sealed class CartService(MassTransitCartsClient cartsClient) : ICartServi
 
     public async Task AddCartItem(string name, string? image, long? productId, string? productHandle, string description, decimal price, decimal? regularPrice, int quantity)
     {
-
+        throw new NotImplementedException();
     }
 
     public Task UpdateCartItemQuantity(string cartItemId, int quantity)

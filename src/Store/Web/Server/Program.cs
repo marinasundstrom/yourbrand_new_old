@@ -23,6 +23,8 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
+using Microsoft.Extensions.Http.Resilience;
+
 using Serilog;
 
 using Steeltoe.Common.Http.Discovery;
@@ -229,10 +231,13 @@ app.Run();
 
 static void AddClients(WebApplicationBuilder builder)
 {
-    var catalogApiHttpClient = builder.Services.AddHttpClient("CatalogAPI", (sp, http) =>
+    var catalogApiHttpClient = builder.Services.AddHttpClient("CatalogAPI", static (sp, http) =>
     {
-        http.BaseAddress = new Uri(builder.Configuration["yourbrand:catalog-svc:url"]!);
+        var configuration = sp.GetRequiredService<IConfiguration>();
+        http.BaseAddress = new Uri(configuration["yourbrand:catalog-svc:url"]!);
     });
+
+    catalogApiHttpClient.AddStandardResilienceHandler();
 
     if (builder.Environment.IsDevelopment())
     {
@@ -241,10 +246,13 @@ static void AddClients(WebApplicationBuilder builder)
 
     builder.Services.AddCatalogClients(builder.Configuration["yourbrand:catalog-svc:url"]!);
 
-    var cartsApiHttpClient = builder.Services.AddHttpClient("CartsAPI", (sp, http) =>
+    var cartsApiHttpClient = builder.Services.AddHttpClient("CartsAPI", static (sp, http) =>
     {
-        http.BaseAddress = new Uri(builder.Configuration["yourbrand:carts-svc:url"]!);
+        var configuration = sp.GetRequiredService<IConfiguration>();
+        http.BaseAddress = new Uri(configuration["yourbrand:carts-svc:url"]!);
     });
+    
+    cartsApiHttpClient.AddStandardResilienceHandler();
 
     if (builder.Environment.IsDevelopment())
     {

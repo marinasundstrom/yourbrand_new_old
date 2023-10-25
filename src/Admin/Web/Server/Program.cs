@@ -20,6 +20,8 @@ using YourBrand.Server.Extensions;
 using YourBrand.Server.ProductCategories;
 using YourBrand.Server.Products;
 
+using Microsoft.Extensions.Http.Resilience;
+
 var builder = WebApplication.CreateBuilder(args);
 
 if (builder.Environment.IsDevelopment())
@@ -117,10 +119,13 @@ app.Run();
 
 static void AddClients(WebApplicationBuilder builder)
 {
-    var catalogApiHttpClient = builder.Services.AddHttpClient("CatalogAPI", (sp, http) =>
+    var catalogApiHttpClient = builder.Services.AddHttpClient("CatalogAPI", static (sp, http) =>
     {
-        http.BaseAddress = new Uri(builder.Configuration["yourbrand:catalog-svc:url"]!);
+        var configuration = sp.GetRequiredService<IConfiguration>();
+        http.BaseAddress = new Uri(configuration["yourbrand:catalog-svc:url"]!);
     });
+
+    catalogApiHttpClient.AddStandardResilienceHandler();
 
     if (builder.Environment.IsDevelopment())
     {

@@ -7,9 +7,7 @@ using Client.Products;
 
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-
-using Polly;
-using Polly.Extensions.Http;
+using Microsoft.Extensions.Http.Resilience;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
@@ -19,7 +17,7 @@ builder.Services
 builder.Services
     .AddHttpClient("WebAPI", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
     .AddHttpMessageHandler<CookieHandler>()
-    .AddPolicyHandler(GetRetryPolicy());
+    .AddStandardResilienceHandler();
 
 builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
     .CreateClient("WebAPI"));
@@ -34,12 +32,3 @@ builder.Services
     .AddCartServices();
 
 await builder.Build().RunAsync();
-
-static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
-{
-    return HttpPolicyExtensions
-        .HandleTransientHttpError()
-        .OrResult(msg => msg.StatusCode == System.Net.HttpStatusCode.NotFound)
-        .WaitAndRetryAsync(6, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2,
-                                                                    retryAttempt)));
-}
