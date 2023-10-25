@@ -34,7 +34,7 @@ public sealed record GetProducts(string? StoreId = null, string? BrandIdOrHandle
                     : query.Where(pv => pv.Brand!.Handle == request.BrandIdOrHandle);
             }
 
-             if (!request.IncludeUnlisted)
+            if (!request.IncludeUnlisted)
             {
                 query = query.Where(x => x.Visibility == Domain.Enums.ProductVisibility.Listed);
             }
@@ -43,9 +43,9 @@ public sealed record GetProducts(string? StoreId = null, string? BrandIdOrHandle
             {
                 bool isProductCategoryId = long.TryParse(request.ProductCategoryIdOrPath, out var categoryId);
 
-                query = isProductCategoryId 
+                query = isProductCategoryId
                             ? query.Where(x => x.Category!.Id == categoryId)
-                            : query.Where(x => 
+                            : query.Where(x =>
                                 x.Category!.Path.StartsWith(request.ProductCategoryIdOrPath));
             }
 

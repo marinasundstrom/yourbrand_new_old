@@ -28,7 +28,7 @@ public class CartsTest : IAsyncLifetime
     }
 
     public async Task InitializeAsync()
-    { 
+    {
         HttpClient = _factory.CreateClient(new WebApplicationFactoryClientOptions
         {
             AllowAutoRedirect = false

@@ -1,5 +1,6 @@
 {
     "dotnet.defaultSolution": "YourBrand.sln",
+    "editor.formatOnSave": true,
     "restoreTerminals.terminals": [
         {
             "splitTerminals": [

@@ -62,7 +62,7 @@ public static class Endpoints
         return app;
     }
 
-    private static async Task<Ok<PagedResult<ProductDto>>> GetProducts(string? storeId =  null, string? brandIdOrHandle = null, bool includeUnlisted = false, bool groupProducts = true, int page = 1, int pageSize = 10, string? searchTerm = null, string? categoryPathOrId = null,
+    private static async Task<Ok<PagedResult<ProductDto>>> GetProducts(string? storeId = null, string? brandIdOrHandle = null, bool includeUnlisted = false, bool groupProducts = true, int page = 1, int pageSize = 10, string? searchTerm = null, string? categoryPathOrId = null,
         string? sortBy = null, SortDirection? sortDirection = null, IMediator mediator = default!, CancellationToken cancellationToken = default!)
     {
         var pagedResult = await mediator.Send(new GetProducts(storeId, brandIdOrHandle, includeUnlisted, groupProducts, categoryPathOrId, page, pageSize, searchTerm, sortBy, sortDirection), cancellationToken);

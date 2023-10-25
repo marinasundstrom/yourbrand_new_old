@@ -121,7 +121,7 @@ public static class Endpoints
     private static async Task<Results<Ok, NotFound>> UpdateProductVisibility(string id, UpdateProductVisibilityRequest request, CatalogAPI.IProductsClient productsClient, CancellationToken cancellationToken)
     {
         await productsClient.UpdateProductVisibilityAsync(id, new UpdateProductVisibilityRequest()
-         {
+        {
             Visibility = request.Visibility
         });
         return TypedResults.Ok();

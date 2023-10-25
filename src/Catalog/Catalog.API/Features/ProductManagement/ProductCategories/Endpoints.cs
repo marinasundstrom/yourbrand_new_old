@@ -167,24 +167,24 @@ public sealed record ProductCategory2(
 );
 
 public record class ProductCategoryTreeRootDto(
-    IEnumerable<ProductCategoryTreeNodeDto> Categories, 
+    IEnumerable<ProductCategoryTreeNodeDto> Categories,
     long ProductsCount);
 
 public record class ProductCategoryTreeNodeDto(
-    long Id, 
-    string Name, 
-    string Handle, 
-    string Path, 
-    string? Description, 
-    ParentProductCategoryTreeNodeDto? Parent, 
-    IEnumerable<ProductCategoryTreeNodeDto> SubCategories, 
-    long ProductsCount, 
+    long Id,
+    string Name,
+    string Handle,
+    string Path,
+    string? Description,
+    ParentProductCategoryTreeNodeDto? Parent,
+    IEnumerable<ProductCategoryTreeNodeDto> SubCategories,
+    long ProductsCount,
     bool CanAddProducts);
 
 public record class ParentProductCategoryTreeNodeDto(
-    long Id, 
-    string Name, 
-    string Handle, 
-    string Path, 
-    ParentProductCategoryTreeNodeDto? Parent, 
+    long Id,
+    string Name,
+    string Handle,
+    string Path,
+    ParentProductCategoryTreeNodeDto? Parent,
     long ProductsCount);

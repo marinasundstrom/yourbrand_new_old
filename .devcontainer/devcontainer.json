@@ -23,6 +23,7 @@
         // Configure properties specific to VS Code.
         "vscode": {
             "settings": {
+                "editor.formatOnSave": true,
                 "workbench.iconTheme": "vscode-icon-theme",
                 "workbench.colorTheme": "Visual Studio Dark",
                 "workbench.preferredDarkColorTheme": "Visual Studio Dark"

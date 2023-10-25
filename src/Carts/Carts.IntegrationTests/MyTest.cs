@@ -28,7 +28,7 @@ public class MyTest : IAsyncLifetime
     }
 
     public async Task InitializeAsync()
-    { 
+    {
         HttpClient = _factory.CreateClient(new WebApplicationFactoryClientOptions
         {
             AllowAutoRedirect = false
@@ -46,7 +46,7 @@ public class MyTest : IAsyncLifetime
 
         // Act
         var result = await HttpClient.GetStringAsync("/api/carts");
-        
+
         // Assert
     }
 

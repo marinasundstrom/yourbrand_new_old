@@ -85,7 +85,8 @@ public class CartsApiFactory
 
         builder.UseEnvironment("Development");
 
-        builder.ConfigureTestServices(services => {
+        builder.ConfigureTestServices(services =>
+        {
 
         });
     }
@@ -106,7 +107,7 @@ public class CartsApiFactory
         });
     }
 
-    public async Task ResetDatabaseAsync() 
+    public async Task ResetDatabaseAsync()
     {
         await _respawner.ResetAsync(_dbConnection);
     }

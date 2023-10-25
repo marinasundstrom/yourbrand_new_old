@@ -18,7 +18,7 @@ using YourBrand;
 
 var builder = WebApplication.CreateBuilder(args);
 
-if(builder.Environment.IsDevelopment()) 
+if (builder.Environment.IsDevelopment())
 {
     builder.Services.AddDiscoveryClient();
 }
@@ -40,7 +40,7 @@ if (builder.Environment.IsProduction())
         options.Connect(
             new Uri($"https://{builder.Configuration["Azure:AppConfig:Name"]}.azconfig.io"),
             new DefaultAzureCredential()));
-            
+
     builder.Configuration.AddAzureKeyVault(
         new Uri($"https://{builder.Configuration["Azure:KeyVault:Name"]}.vault.azure.net/"),
         new DefaultAzureCredential());

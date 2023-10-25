@@ -100,7 +100,7 @@ if (builder.Environment.IsProduction())
         options.Connect(
             new Uri($"https://{builder.Configuration["Azure:AppConfig:Name"]}.azconfig.io"),
             new DefaultAzureCredential()));
-            
+
     builder.Configuration.AddAzureKeyVault(
         new Uri($"https://{builder.Configuration["Azure:KeyVault:Name"]}.vault.azure.net/"),
         new DefaultAzureCredential());
@@ -251,7 +251,7 @@ static void AddClients(WebApplicationBuilder builder)
         var configuration = sp.GetRequiredService<IConfiguration>();
         http.BaseAddress = new Uri(configuration["yourbrand:carts-svc:url"]!);
     });
-    
+
     cartsApiHttpClient.AddStandardResilienceHandler();
 
     if (builder.Environment.IsDevelopment())
