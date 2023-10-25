@@ -3,7 +3,7 @@
 ## Tools
 
 * .NET 8 SDK
-* VS Code
+* VS Code ([About the environment](/docs/development/vs-code.md))
 * Docker Desktop
 
 ## Docker
