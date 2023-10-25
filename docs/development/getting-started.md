@@ -14,6 +14,8 @@ The following software has to be present on your development machine in order to
 
 ## VS Code
 
+To ensure code style, "Auto-format on save" has been enabled by default for this repo.
+
 In order to run in VS code you need the following extensions:
 
 * C# language kit
