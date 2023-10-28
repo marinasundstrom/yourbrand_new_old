@@ -3,6 +3,7 @@ using Azure.Storage.Blobs;
 
 using Catalog.API.Common;
 using Catalog.API.Extensions;
+using Catalog.API.Features;
 using Catalog.API.Features.ProductManagement.ProductCategories;
 using Catalog.API.Features.ProductManagement.Products;
 using Catalog.API.Features.ProductManagement.Products.Variants;
@@ -148,9 +149,7 @@ app.UseHttpsRedirection();
 
 app.MapControllers();
 
-app
-    .MapProductsEndpoints()
-    .MapProductCategoriesEndpoints();
+app.MapFeaturesEndpoints();
 
 app.MapHealthChecks("/healthz", new HealthCheckOptions()
 {

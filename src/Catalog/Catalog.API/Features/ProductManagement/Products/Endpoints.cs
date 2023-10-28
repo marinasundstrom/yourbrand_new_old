@@ -1,6 +1,8 @@
 using Catalog.API.Features.ProductManagement.Attributes;
 using Catalog.API.Features.ProductManagement.Options;
 using Catalog.API.Features.ProductManagement.ProductCategories;
+using Catalog.API.Features.ProductManagement.Products.Attributes;
+using Catalog.API.Features.ProductManagement.Products.Options;
 using Catalog.API.Model;
 
 using FluentValidation;
@@ -11,11 +13,16 @@ using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Catalog.API.Features.ProductManagement.Products;
 
-public static class Endpoints
+public static partial class Endpoints
 {
     public static IEndpointRouteBuilder MapProductsEndpoints(this IEndpointRouteBuilder app)
     {
         string GetProductsExpire20 = nameof(GetProductsExpire20);
+
+        MapProductVariantsEndpoints(app);
+
+        app.MapProductAttributesEndpoints()
+            .MapProductOptionsEndpoints();
 
         var group = app.MapGroup("/api/products")
             .WithTags("Products")
