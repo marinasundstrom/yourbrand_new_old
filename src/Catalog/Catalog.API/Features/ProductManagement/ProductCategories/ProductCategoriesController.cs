@@ -10,7 +10,7 @@ namespace Catalog.API.Features.ProductManagement.ProductCategories;
 
 [ApiController]
 [ApiVersion("1")]
-[Route("v{version:apiVersion}/[controller]")]
+[Route("v{version:apiVersion}/productCategories")]
 public sealed class ProductCategoriesController : Controller
 {
     [HttpGet("{*idOrPath}")]
