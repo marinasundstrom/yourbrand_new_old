@@ -12,34 +12,24 @@ public static class Endpoints
     {
         string GetProductsExpire20 = nameof(GetProductsExpire20);
 
-        var productsGroup = app.MapGroup("/api/ProductCategories");
+        var productsGroup = app.MapGroup("/api/ProductCategories")
+            .WithTags("ProductCategories")
+            .WithOpenApi();
 
         productsGroup.MapGet("/api/productCategories/{*path}", GetProductsCategories)
-            .WithName($"ProductCategories_{nameof(GetProductsCategories)}")
-            .WithTags("ProductCategories")
-            .WithOpenApi();
-        //.CacheOutput(GetProductsExpire20);
+            .WithName($"ProductCategories_{nameof(GetProductsCategories)}");
 
         app.MapGet("/api/productCategories/{idOrPath}", GetProductCategoryById)
-            .WithName($"ProductCategories_{nameof(GetProductCategoryById)}")
-            .WithTags("ProductCategories")
-            .WithOpenApi();
+            .WithName($"ProductCategories_{nameof(GetProductCategoryById)}");
 
         app.MapPost("/api/productCategories", CreateProductCategory)
-            .WithName($"ProductCategories_{nameof(CreateProductCategory)}")
-            .WithTags("ProductCategories")
-            .WithOpenApi();
+            .WithName($"ProductCategories_{nameof(CreateProductCategory)}");
 
         app.MapPut("/api/productCategories/{idOrPath}", UpdateProductCategoryDetails)
-            .WithName($"ProductCategories_{nameof(UpdateProductCategoryDetails)}")
-            .WithTags("ProductCategories")
-            .WithOpenApi();
+            .WithName($"ProductCategories_{nameof(UpdateProductCategoryDetails)}");
 
         app.MapDelete("/api/productCategories/{idOrPath}", DeleteProductCategory)
-            .WithName($"ProductCategories_{nameof(DeleteProductCategory)}")
-            .WithTags("ProductCategories")
-            .WithOpenApi();
-
+            .WithName($"ProductCategories_{nameof(DeleteProductCategory)}");
 
         return app;
     }

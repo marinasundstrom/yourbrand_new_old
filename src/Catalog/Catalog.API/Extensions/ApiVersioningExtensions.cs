@@ -1,4 +1,5 @@
 using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
 namespace Catalog.API.Extensions;
 
@@ -18,7 +19,8 @@ public static class ApiVersioningExtensions
             option.GroupNameFormat = "VVV";
             option.SubstituteApiVersionInUrl = true;
         })
-        .EnableApiVersionBinding();
+        .EnableApiVersionBinding()
+        .AddMvc();
 
         return services;
     }
