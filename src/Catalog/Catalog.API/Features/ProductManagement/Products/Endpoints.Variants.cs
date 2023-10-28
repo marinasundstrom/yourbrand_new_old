@@ -7,6 +7,8 @@ using MediatR;
 
 using Microsoft.AspNetCore.Http.HttpResults;
 
+using Asp.Versioning.Builder;
+
 namespace Catalog.API.Features.ProductManagement.Products;
 
 public static partial class Endpoints
@@ -15,9 +17,12 @@ public static partial class Endpoints
     {
         string GetProductVariantsExpire20 = nameof(GetProductVariantsExpire20);
 
-        var group = app.MapGroup("/api/products")
+        var versionedApi = app.NewVersionedApi("Products");
+
+        var group = versionedApi.MapGroup("/v{version:apiVersion}/products")
             .WithTags("Products")
             .RequireRateLimiting("fixed")
+            .HasApiVersion(1, 0)
             .WithOpenApi();
 
         group.MapGet("{idOrHandle}/variants", GetVariants)

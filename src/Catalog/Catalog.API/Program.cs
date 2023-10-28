@@ -83,7 +83,9 @@ builder.Services.AddAzureClients(clientBuilder =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers();
 
-builder.Services.AddOpenApi();
+builder.Services
+    .AddOpenApi()
+    .AddApiVersioningServices();
 
 builder.Services.AddObservability("Catalog.API", "1.0", builder.Configuration);
 

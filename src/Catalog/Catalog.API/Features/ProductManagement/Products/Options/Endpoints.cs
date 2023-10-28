@@ -9,6 +9,7 @@ using Catalog.API.Features.ProductManagement.Products.Options.Groups;
 using Catalog.API.Model;
 using Microsoft.AspNetCore.Http.HttpResults;
 
+using Asp.Versioning.Builder;
 
 namespace Catalog.API.Features.ProductManagement.Products.Options;
 
@@ -16,9 +17,12 @@ public static class Endpoints
 {
     public static IEndpointRouteBuilder MapProductOptionsEndpoints(this IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("/api/products/{id}/options")
+        var versionedApi = app.NewVersionedApi("Products");
+
+        var group = versionedApi.MapGroup("/v{version:apiVersion}/products/{id}/options")
             .WithTags("Products")
             .RequireRateLimiting("fixed")
+            .HasApiVersion(1, 0)
             .WithOpenApi();
 
 

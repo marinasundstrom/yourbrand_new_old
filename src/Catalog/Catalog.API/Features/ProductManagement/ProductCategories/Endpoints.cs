@@ -4,6 +4,8 @@ using MediatR;
 
 using Microsoft.AspNetCore.Http.HttpResults;
 
+using Asp.Versioning.Builder;
+
 namespace Catalog.API.Features.ProductManagement.ProductCategories;
 
 public static class Endpoints
@@ -12,37 +14,39 @@ public static class Endpoints
     {
         string GetProductCategoriesExpire20 = nameof(GetProductCategoriesExpire20);
 
-        app.MapGet("/api/productCategories", GetProductCategories)
-            .WithName($"ProductCategories_{nameof(GetProductCategories)}")
+        var versionedApi = app.NewVersionedApi("ProductCategories");
+
+        var group = versionedApi.MapGroup("/v{version:apiVersion}/productCategories")
             .WithTags("ProductCategories")
-            .WithOpenApi()
-            .CacheOutput(GetProductCategoriesExpire20);
+            .RequireRateLimiting("fixed")
+            .HasApiVersion(1, 0)
+            .WithOpenApi();
 
         /*
 
-        app.MapGet("/api/productCategories/{idOrPath}", GetProductCategoryById)
+        app.MapGet("/{idOrPath}", GetProductCategoryById)
             .WithName($"ProductCategories_{nameof(GetProductCategoryById)}")
             .WithTags("ProductCategories")
             .WithOpenApi();
 
         */
 
-        app.MapGet("/api/productCategories/tree", GetProductCategoryTree)
+        group.MapGet("tree", GetProductCategoryTree)
             .WithName($"ProductCategories_{nameof(GetProductCategoryTree)}")
             .WithTags("ProductCategories")
             .WithOpenApi();
 
-        app.MapPost("/api/productCategories", CreateProductCategory)
+        group.MapPost("/", CreateProductCategory)
             .WithName($"ProductCategories_{nameof(CreateProductCategory)}")
             .WithTags("ProductCategories")
             .WithOpenApi();
 
-        app.MapPut("/api/productCategories/{idOrPath}", UpdateProductCategoryDetails)
+        group.MapPut("{idOrPath}", UpdateProductCategoryDetails)
             .WithName($"ProductCategories_{nameof(UpdateProductCategoryDetails)}")
             .WithTags("ProductCategories")
             .WithOpenApi();
 
-        app.MapDelete("/api/productCategories/{idOrPath}", DeleteProductCategory)
+        group.MapDelete("{idOrPath}", DeleteProductCategory)
             .WithName($"ProductCategories_{nameof(DeleteProductCategory)}")
             .WithTags("ProductCategories")
             .WithOpenApi();

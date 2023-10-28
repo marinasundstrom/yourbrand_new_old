@@ -5,15 +5,20 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Catalog.API.Model;
 
+using Asp.Versioning.Builder;
+
 namespace Catalog.API.Features.ProductManagement.Options;
 
 public static class Endpoints
 {
     public static IEndpointRouteBuilder MapOptionsEndpoints(this IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("/api/options")
+        var versionedApi = app.NewVersionedApi("Options");
+
+        var group = versionedApi.MapGroup("/v{version:apiVersion}/options")
             .WithTags("Attributes")
             .RequireRateLimiting("fixed")
+            .HasApiVersion(1, 0)
             .WithOpenApi();
 
         group.MapGet("/", GetOptionValues)

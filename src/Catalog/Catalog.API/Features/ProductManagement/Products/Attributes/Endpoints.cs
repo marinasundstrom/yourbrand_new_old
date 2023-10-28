@@ -6,15 +6,20 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Catalog.API.Features.ProductManagement.Products.Attributes;
 using Catalog.API.Model;
 
+using Asp.Versioning.Builder;
+
 namespace Catalog.API.Features.ProductManagement.Products.Attributes;
 
 public static class Endpoints
 {
     public static IEndpointRouteBuilder MapProductAttributesEndpoints(this IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("/api/products/{productId}/attributes")
+        var versionedApi = app.NewVersionedApi("Products");
+
+        var group = versionedApi.MapGroup("/v{version:apiVersion}/products/{productId}/attributes")
             .WithTags("Products")
             .RequireRateLimiting("fixed")
+            .HasApiVersion(1, 0)
             .WithOpenApi();
 
         group.MapGet("/", GetProductAttributes)

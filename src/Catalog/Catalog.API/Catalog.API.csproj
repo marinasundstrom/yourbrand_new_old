@@ -23,22 +23,26 @@
     <PackageReference Include="Azure.Identity" Version="1.9.0" />
     <PackageReference Include="Azure.Storage.Blobs" Version="12.17.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0-rc.2.*" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.AzureAppConfiguration" Version="6.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.AzureAppConfiguration"
+      Version="6.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0-rc.2.*">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0-rc.2.*" />
     <PackageReference Include="Microsoft.Extensions.Azure" Version="1.6.3" />
-    <PackageReference Include="NSwag.AspNetCore" Version="13.18.2" />	
+    <PackageReference Include="NSwag.AspNetCore" Version="13.18.2" />
     <PackageReference Include="MassTransit" Version="8.0.16" />
     <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.16" />
     <PackageReference Include="MassTransit.Azure.ServiceBus.Core" Version="8.0.16" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
     <PackageReference Include="MediatR" Version="12.1.1" />
-		<PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="8.0.0-rc.2.*" />
-		<PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="7.1.0" />
-		<PackageReference Include="Steeltoe.Discovery.Consul" Version="3.2.4" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore"
+      Version="8.0.0-rc.2.*" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="7.1.0" />
+    <PackageReference Include="Steeltoe.Discovery.Consul" Version="3.2.4" />
+    <PackageReference Include="Asp.Versioning.Http" Version="7.1.0" />
+    <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="7.1.0" />
   </ItemGroup>
 
   <ItemGroup>

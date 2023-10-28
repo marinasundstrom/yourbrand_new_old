@@ -4,6 +4,7 @@ using MediatR;
 using Catalog.API.Features.Stores.Commands;
 using Catalog.API.Features.Stores.Queries;
 using Catalog.API.Model;
+using Asp.Versioning.Builder;
 
 namespace Catalog.API.Features.Stores;
 
@@ -11,9 +12,12 @@ public static class Endpoints
 {
     public static IEndpointRouteBuilder MapStoresEndpoints(this IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("/api/stores")
+        var versionedApi = app.NewVersionedApi("Stores");
+
+        var group = versionedApi.MapGroup("/v{version:apiVersion}/stores")
             .WithTags("Stores")
             .RequireRateLimiting("fixed")
+            .HasApiVersion(1, 0)
             .WithOpenApi();
 
         group.MapGet("/", GetStores)

@@ -5,15 +5,20 @@ using Catalog.API.Features.Brands.Commands;
 using Catalog.API.Features.Brands.Queries;
 using Catalog.API.Model;
 
+using Asp.Versioning.Builder;
+
 namespace Catalog.API.Features.Brands;
 
 public static class Endpoints
 {
     public static IEndpointRouteBuilder MapBrandsEndpoints(this IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("/api/brands")
+        var versionedApi = app.NewVersionedApi("Brands");
+
+        var group = versionedApi.MapGroup("/v{version:apiVersion}/brands")
             .WithTags("Brands")
             .RequireRateLimiting("fixed")
+            .HasApiVersion(1, 0)
             .WithOpenApi();
 
         group.MapGet("/", GetBrands)

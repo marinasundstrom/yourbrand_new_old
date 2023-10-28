@@ -3,15 +3,20 @@ using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using Catalog.API.Model;
 
+using Asp.Versioning.Builder;
+
 namespace Catalog.API.Features.Currencies;
 
 public static class Endpoints
 {
     public static IEndpointRouteBuilder MapCurrenciesEndpoints(this IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("/api/currencies")
+        var versionedApi = app.NewVersionedApi("Currencies");
+
+        var group = versionedApi.MapGroup("/v{version:apiVersion}/currencies")
             .WithTags("Currencies")
             .RequireRateLimiting("fixed")
+            .HasApiVersion(1, 0)
             .WithOpenApi();
 
         group.MapGet("/", GetCurrencies)

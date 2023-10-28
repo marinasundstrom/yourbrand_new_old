@@ -2,12 +2,15 @@ using Catalog.API.Persistence;
 
 using MediatR;
 
+using Asp.Versioning;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace Catalog.API.Features.ProductManagement.ProductCategories;
 
 [ApiController]
-[Route("api/productCategories")]
+[ApiVersion("1")]
+[Route("v{version:apiVersion}/[controller]")]
 public sealed class ProductCategoriesController : Controller
 {
     [HttpGet("{*idOrPath}")]
