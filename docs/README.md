@@ -15,6 +15,8 @@
 * [Logging](logging.md)
 * [Observability](observability.md)
 * [Health checks](health-checks.md)
+* [Open API](open-api.md)
+* [API Versioning](api-versioning.md)
 * [Running in Docker](running-in-docker.md)
 
 ## Hosting and CI/CD
