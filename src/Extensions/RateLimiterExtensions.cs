@@ -11,14 +11,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace YourBrand.Extensions;
 
-public static class RateLimiterConstants
-{
-    public const string FixedRateLimiter = "fixed";
-}
-
 public static class RateLimiterExtensions
 {
-    public static IServiceCollection AddRateLimiter(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddRateLimiterForIPAddress(this IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<MyRateLimitOptions>(
         configuration.GetSection(MyRateLimitOptions.MyRateLimit));

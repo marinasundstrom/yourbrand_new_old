@@ -7,8 +7,6 @@ public static class Endpoints
 {
     public static IEndpointRouteBuilder MapProductsEndpoints(this IEndpointRouteBuilder app)
     {
-        string GetProductsExpire20 = nameof(GetProductsExpire20);
-
         var versionedApi = app.NewVersionedApi("Products");
 
         var productsGroup = versionedApi.MapGroup("/api/v{version:apiVersion}/products")
@@ -19,7 +17,7 @@ public static class Endpoints
 
         productsGroup.MapGet("/", GetProducts)
             .WithName($"Products_{nameof(GetProducts)}")
-            .CacheOutput(GetProductsExpire20);
+            .CacheOutput(OutputCachePolicyNames.GetProductsExpire20);
 
         productsGroup.MapGet("/{id}", GetProductById)
             .WithName($"Products_{nameof(GetProductById)}");

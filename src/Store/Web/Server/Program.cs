@@ -48,25 +48,11 @@ builder.Host.UseSerilog((ctx, cfg) => cfg.ReadFrom.Configuration(builder.Configu
                         .Enrich.WithProperty("Application", serviceName)
                         .Enrich.WithProperty("Environment", ctx.HostingEnvironment.EnvironmentName));
 
-string GetProductsExpire20 = nameof(GetProductsExpire20);
-
-builder.Services.AddRateLimiter(options =>
-{
-    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
-
-    options.AddPolicy("fixed", httpContext =>
-        RateLimitPartition.GetFixedWindowLimiter(
-        partitionKey: httpContext.Connection.RemoteIpAddress?.ToString(),
-        factory: _ => new FixedWindowRateLimiterOptions
-        {
-            PermitLimit = 10,
-            Window = TimeSpan.FromSeconds(10)
-        }));
-});
+builder.Services.AddRateLimiterForIPAddress(builder.Configuration);
 
 builder.Services.AddOutputCache(options =>
 {
-    options.AddPolicy(GetProductsExpire20, builder =>
+    options.AddPolicy(OutputCachePolicyNames.GetProductsExpire20, builder =>
     {
         builder.Expire(TimeSpan.FromSeconds(20));
         builder.SetVaryByQuery("page", "pageSize", "searchTerm");

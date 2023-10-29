@@ -21,7 +21,6 @@ public static class Endpoints
 
         var group = versionedApi.MapGroup("/v{version:apiVersion}/attributes")
             .WithTags("Attributes")
-            .RequireRateLimiting("fixed")
             .HasApiVersion(1, 0)
             .WithOpenApi();
 

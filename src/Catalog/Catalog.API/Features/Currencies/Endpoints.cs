@@ -15,7 +15,6 @@ public static class Endpoints
 
         var group = versionedApi.MapGroup("/v{version:apiVersion}/currencies")
             .WithTags("Currencies")
-            .RequireRateLimiting("fixed")
             .HasApiVersion(1, 0)
             .WithOpenApi();
 

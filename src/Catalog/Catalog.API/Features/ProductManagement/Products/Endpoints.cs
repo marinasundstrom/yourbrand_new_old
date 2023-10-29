@@ -12,6 +12,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 using Asp.Versioning.Builder;
+using YourBrand.Extensions;
 
 namespace Catalog.API.Features.ProductManagement.Products;
 
@@ -30,7 +31,7 @@ public static partial class Endpoints
 
         var group = versionedApi.MapGroup("/v{version:apiVersion}/products")
             .WithTags("Products")
-            .RequireRateLimiting("fixed")
+            .RequireRateLimiting(RateLimiterPolicyNames.FixedRateLimiter)
             .HasApiVersion(1, 0)
             .WithOpenApi();
 
