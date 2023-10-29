@@ -17,7 +17,7 @@ using Steeltoe.Discovery.Client;
 
 using YourBrand;
 using YourBrand.Server;
-using YourBrand.Server.Extensions;
+using YourBrand.Extensions;
 using YourBrand.Server.ProductCategories;
 using YourBrand.Server.Products;
 
@@ -62,8 +62,9 @@ builder.Services.AddRazorComponents()
 
 AddClients(builder);
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddOpenApi();
+builder.Services
+    .AddOpenApi(serviceName)
+    .AddApiVersioningServices();
 
 builder.Services.AddObservability(serviceName, serviceVersion, builder.Configuration);
 

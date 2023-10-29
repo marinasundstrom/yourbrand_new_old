@@ -13,29 +13,25 @@ public static class Endpoints
     {
         string GetCartsExpire20 = nameof(GetCartsExpire20);
 
-        app.MapGet("/api/cart", GetCart)
-            .WithName($"Cart_{nameof(GetCart)}")
-            .WithTags("Cart")
-            .RequireCors()
-            .WithOpenApi();
+        var versionedApi = app.NewVersionedApi("Cart");
 
-        app.MapPost("/api/cart/items", AddCartItem)
-            .WithName($"Cart_{nameof(AddCartItem)}")
+        var cartGroup = versionedApi.MapGroup("/api/v{version:apiVersion}/cart")
             .WithTags("Cart")
-            .RequireCors()
-            .WithOpenApi();
+            .HasApiVersion(1, 0)
+            .WithOpenApi()
+            .RequireCors();
 
-        app.MapPut("/api/cart/items/{cartItemId}/quantity", UpdateCartItemQuantity)
-            .WithName($"Cart_{nameof(UpdateCartItemQuantity)}")
-            .WithTags("Cart")
-            .RequireCors()
-            .WithOpenApi();
+        cartGroup.MapGet("/", GetCart)
+            .WithName($"Cart_{nameof(GetCart)}");
 
-        app.MapDelete("/api/cart/items/{cartItemId}", RemoveCartItem)
-            .WithName($"Cart_{nameof(RemoveCartItem)}")
-            .WithTags("Cart")
-            .RequireCors()
-            .WithOpenApi();
+        cartGroup.MapPost("/items", AddCartItem)
+            .WithName($"Cart_{nameof(AddCartItem)}");
+
+        cartGroup.MapPut("/items/{cartItemId}/quantity", UpdateCartItemQuantity)
+            .WithName($"Cart_{nameof(UpdateCartItemQuantity)}");
+
+        cartGroup.MapDelete("/items/{cartItemId}", RemoveCartItem)
+            .WithName($"Cart_{nameof(RemoveCartItem)}");
 
         return app;
     }

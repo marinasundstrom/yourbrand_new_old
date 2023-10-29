@@ -1,33 +1,36 @@
-﻿using Asp.Versioning;
+using Asp.Versioning;
 using NSwag;
 using NSwag.AspNetCore;
 using NSwag.Generation.Processors.Security;
 using NJsonSchema.Generation;
+using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Catalog.API.Extensions;
+namespace YourBrand.Extensions;
 
 public static class OpenApiExtensions
 {
-    public static IServiceCollection AddOpenApi(this IServiceCollection services)
+    public static IServiceCollection AddOpenApi(this IServiceCollection services, string documentTitle)
     {
         services.AddEndpointsApiExplorer();
 
-        var apiVersionDescriptions = new[] {
-            (ApiVersion: new ApiVersion(1, 0), foo: 1),
-            (ApiVersion: new ApiVersion(2, 0), foo: 1)
-        };
+        IEnumerable<ApiVersion> apiVersionDescriptions = [
+            new (1, 0),
+            new (2, 0)
+        ];
 
-        foreach (var description in apiVersionDescriptions)
+        foreach (var apiVersion in apiVersionDescriptions)
         {
             services.AddOpenApiDocument(config =>
             {
-                config.DocumentName = $"v{GetApiVersion(description)}";
+                config.DocumentName = $"v{GetApiVersion(apiVersion)}";
                 config.PostProcess = document =>
                 {
-                    document.Info.Title = "Catalog API";
-                    document.Info.Version = $"v{GetApiVersion(description)}";
+                    document.Info.Title = documentTitle;
+                    document.Info.Version = $"v{GetApiVersion(apiVersion)}";
                 };
-                config.ApiGroupNames = new[] { GetApiVersion(description) };
+                config.ApiGroupNames = new[] { GetApiVersion(apiVersion) };
 
                 config.DefaultReferenceTypeNullHandling = NJsonSchema.Generation.ReferenceTypeNullHandling.NotNull;
 
@@ -45,9 +48,8 @@ public static class OpenApiExtensions
             });
         }
 
-        static string GetApiVersion((ApiVersion ApiVersion, int foo) description)
+        static string GetApiVersion(ApiVersion apiVersion)
         {
-            var apiVersion = description.ApiVersion;
             return (apiVersion.MinorVersion == 0
                 ? apiVersion.MajorVersion.ToString()
                 : apiVersion.ToString())!;

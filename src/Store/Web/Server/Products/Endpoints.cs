@@ -9,19 +9,20 @@ public static class Endpoints
     {
         string GetProductsExpire20 = nameof(GetProductsExpire20);
 
-        app.MapGet("/api/products", GetProducts)
-            .WithName($"Products_{nameof(GetProducts)}")
-            .WithTags("Products")
-            .CacheOutput(GetProductsExpire20)
-            .RequireCors()
-            .WithOpenApi();
+        var versionedApi = app.NewVersionedApi("Products");
 
-        app.MapGet("/api/products/{id}", GetProductById)
-            .WithName($"Products_{nameof(GetProductById)}")
+        var productsGroup = versionedApi.MapGroup("/api/v{version:apiVersion}/products")
             .WithTags("Products")
-            .CacheOutput(GetProductsExpire20)
-            .RequireCors()
-            .WithOpenApi();
+            .HasApiVersion(1, 0)
+            .WithOpenApi()
+            .RequireCors();
+
+        productsGroup.MapGet("/", GetProducts)
+            .WithName($"Products_{nameof(GetProducts)}")
+            .CacheOutput(GetProductsExpire20);
+
+        productsGroup.MapGet("/{id}", GetProductById)
+            .WithName($"Products_{nameof(GetProductById)}");
 
         return app;
     }

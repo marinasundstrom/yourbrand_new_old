@@ -2,10 +2,8 @@
 using Azure.Storage.Blobs;
 
 using Catalog.API.Common;
-using Catalog.API.Extensions;
+using YourBrand.Extensions;
 using Catalog.API.Features;
-using Catalog.API.Features.ProductManagement.ProductCategories;
-using Catalog.API.Features.ProductManagement.Products;
 using Catalog.API.Features.ProductManagement.Products.Variants;
 using Catalog.API.Persistence;
 
@@ -22,6 +20,8 @@ using Microsoft.Extensions.Azure;
 using Steeltoe.Discovery.Client;
 
 using YourBrand;
+
+string ServiceName = "Catalog.API";
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -84,7 +84,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers();
 
 builder.Services
-    .AddOpenApi()
+    .AddOpenApi(ServiceName)
     .AddApiVersioningServices();
 
 builder.Services.AddObservability("Catalog.API", "1.0", builder.Configuration);

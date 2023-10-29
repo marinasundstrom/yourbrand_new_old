@@ -1,428 +1,198 @@
 x-generator: NSwag v13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))
 openapi: 3.0.0
 info:
-  title: Store API
-  version: 1.0.0
+  title: Store.Web
+  version: v1
 servers:
-- url: https://localhost:7188
+  - url: https://localhost:7188
 paths:
-  /api/products:
+  /api/v1/products:
     get:
       tags:
-      - Products
+        - Products
+        - Products
       operationId: Products_GetProducts
       parameters:
-      - name: page
-        in: query
-        schema:
-          type: integer
-          format: int32
-          nullable: true
-        x-position: 1
-      - name: pageSize
-        in: query
-        schema:
-          type: integer
-          format: int32
-          nullable: true
-        x-position: 2
-      - name: searchTerm
-        in: query
-        schema:
-          type: string
-        x-position: 3
-      - name: categoryPath
-        in: query
-        schema:
-          type: string
-        x-position: 4
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+            nullable: true
+          x-position: 1
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            format: int32
+            nullable: true
+          x-position: 2
+        - name: searchTerm
+          in: query
+          schema:
+            type: string
+          x-position: 3
+        - name: categoryPath
+          in: query
+          schema:
+            type: string
+          x-position: 4
       responses:
         200:
-          description: ''
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PagedResultOfProduct'
+                $ref: "#/components/schemas/PagedResultOfProduct"
         404:
-          description: ''
-  /api/products/{id}:
+          description: ""
+  /api/v1/products/{id}:
     get:
       tags:
-      - Products
+        - Products
+        - Products
       operationId: Products_GetProductById
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
-        x-position: 1
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          x-position: 1
       responses:
         200:
-          description: ''
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Product'
+                $ref: "#/components/schemas/Product"
         404:
-          description: ''
-  /api/ProductCategories:
+          description: ""
+  /api/v1/productCategories:
     get:
       tags:
-      - ProductCategories
+        - ProductCategories
+        - ProductCategories
       operationId: ProductCategories_GetProductCategories
       responses:
         200:
-          description: ''
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProductCategoryTreeRootDto'
+                $ref: "#/components/schemas/ProductCategoryTreeRoot"
         404:
-          description: ''
-  /api/ProductCategories/{id}:
+          description: ""
+  /api/v1/productCategories/{id}:
     get:
       tags:
-      - ProductCategories
+        - ProductCategories
+        - ProductCategories
       operationId: ProductCategories_GetProductCategoryById
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
-        x-position: 1
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          x-position: 1
       responses:
         200:
-          description: ''
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProductCategoryDto'
+                $ref: "#/components/schemas/ProductCategory"
         404:
-          description: ''
-  /api/cart:
+          description: ""
+  /api/v1/cart:
     get:
       tags:
-      - Cart
+        - Cart
+        - Cart
       operationId: Cart_GetCart
       responses:
         200:
-          description: ''
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Cart'
+                $ref: "#/components/schemas/Cart"
         404:
-          description: ''
-  /api/cart/items:
+          description: ""
+  /api/v1/cart/items:
     post:
       tags:
-      - Cart
+        - Cart
+        - Cart
       operationId: Cart_AddCartItem
       requestBody:
         x-name: request
-        description: ''
+        description: ""
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AddCartItemRequest'
+              $ref: "#/components/schemas/AddCartItemRequest"
         required: true
         x-position: 1
       responses:
         200:
-          description: ''
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CartItem'
+                $ref: "#/components/schemas/CartItem"
         404:
-          description: ''
-  /api/cart/items/{cartItemId}/quantity:
+          description: ""
+  /api/v1/cart/items/{cartItemId}/quantity:
     put:
       tags:
-      - Cart
+        - Cart
+        - Cart
       operationId: Cart_UpdateCartItemQuantity
       parameters:
-      - name: cartItemId
-        in: path
-        required: true
-        schema:
-          type: string
-        x-position: 1
+        - name: cartItemId
+          in: path
+          required: true
+          schema:
+            type: string
+          x-position: 1
       requestBody:
         x-name: request
-        description: ''
+        description: ""
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateCartItemQuantityRequest'
+              $ref: "#/components/schemas/UpdateCartItemQuantityRequest"
         required: true
         x-position: 2
       responses:
         200:
-          description: ''
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CartItem'
+                $ref: "#/components/schemas/CartItem"
         404:
-          description: ''
-  /api/cart/items/{cartItemId}:
+          description: ""
+  /api/v1/cart/items/{cartItemId}:
     delete:
       tags:
-      - Cart
+        - Cart
+        - Cart
       operationId: Cart_RemoveCartItem
       parameters:
-      - name: cartItemId
-        in: path
-        required: true
-        schema:
-          type: string
-        x-position: 1
+        - name: cartItemId
+          in: path
+          required: true
+          schema:
+            type: string
+          x-position: 1
       responses:
         200:
-          description: ''
+          description: ""
         404:
-          description: ''
-  /requires-auth:
-    get:
-      operationId: GetRequiresAuth
-      responses:
-        200:
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: string
-  /api/weatherforecast:
-    get:
-      operationId: GetWeatherForecast
-      parameters:
-      - name: startDate
-        in: query
-        required: true
-        schema:
-          type: string
-          format: date
-        x-position: 1
-      responses:
-        200:
-          description: ''
-  /identity/register:
-    post:
-      operationId: PostIdentityRegister
-      requestBody:
-        x-name: registration
-        description: ''
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/RegisterRequest'
-        x-position: 1
-      responses:
-        200:
-          description: ''
-        400:
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HttpValidationProblemDetails'
-  /identity/login:
-    post:
-      operationId: PostIdentityLogin
-      parameters:
-      - name: useCookies
-        in: query
-        schema:
-          type: boolean
-          nullable: true
-        x-position: 2
-      - name: useSessionCookies
-        in: query
-        schema:
-          type: boolean
-          nullable: true
-        x-position: 3
-      requestBody:
-        x-name: login
-        description: ''
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/LoginRequest'
-        x-position: 1
-      responses:
-        200:
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AccessTokenResponse'
-  /identity/refresh:
-    post:
-      operationId: PostIdentityRefresh
-      requestBody:
-        x-name: refreshRequest
-        description: ''
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/RefreshRequest'
-        x-position: 1
-      responses:
-        200:
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AccessTokenResponse'
-  /identity/confirmEmail:
-    get:
-      operationId: GetIdentityConfirmEmail
-      parameters:
-      - name: userId
-        in: query
-        schema:
-          type: string
-        x-position: 1
-      - name: code
-        in: query
-        schema:
-          type: string
-        x-position: 2
-      - name: changedEmail
-        in: query
-        schema:
-          type: string
-        x-position: 3
-      responses:
-        200:
-          description: ''
-  /identity/resendConfirmationEmail:
-    post:
-      operationId: PostIdentityResendConfirmationEmail
-      requestBody:
-        x-name: resendRequest
-        description: ''
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ResendConfirmationEmailRequest'
-        x-position: 1
-      responses:
-        200:
-          description: ''
-  /identity/forgotPassword:
-    post:
-      operationId: PostIdentityForgotPassword
-      requestBody:
-        x-name: resetRequest
-        description: ''
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ForgotPasswordRequest'
-        x-position: 1
-      responses:
-        200:
-          description: ''
-        400:
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HttpValidationProblemDetails'
-  /identity/resetPassword:
-    post:
-      operationId: PostIdentityResetPassword
-      requestBody:
-        x-name: resetRequest
-        description: ''
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ResetPasswordRequest'
-        x-position: 1
-      responses:
-        200:
-          description: ''
-        400:
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HttpValidationProblemDetails'
-  /identity/manage/2fa:
-    post:
-      operationId: PostIdentityManage2fa
-      requestBody:
-        x-name: tfaRequest
-        description: ''
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TwoFactorRequest'
-        x-position: 1
-      responses:
-        200:
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TwoFactorResponse'
-        400:
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HttpValidationProblemDetails'
-        404:
-          description: ''
-  /identity/manage/info:
-    get:
-      operationId: GetIdentityManageInfo
-      responses:
-        200:
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/InfoResponse'
-        400:
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HttpValidationProblemDetails'
-        404:
-          description: ''
-    post:
-      operationId: PostIdentityManageInfo
-      requestBody:
-        x-name: infoRequest
-        description: ''
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/InfoRequest'
-        x-position: 1
-      responses:
-        200:
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/InfoResponse'
-        400:
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HttpValidationProblemDetails'
-        404:
-          description: ''
+          description: ""
 components:
   schemas:
     PagedResultOfProduct:
@@ -432,7 +202,7 @@ components:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/Product'
+            $ref: "#/components/schemas/Product"
         total:
           type: integer
           format: int32
@@ -448,7 +218,7 @@ components:
         category:
           nullable: true
           oneOf:
-          - $ref: '#/components/schemas/ProductCategoryParent'
+            - $ref: "#/components/schemas/ProductCategoryParent"
         image:
           type: string
           nullable: true
@@ -479,22 +249,22 @@ components:
         parent:
           nullable: true
           oneOf:
-          - $ref: '#/components/schemas/ProductCategoryParent'
+            - $ref: "#/components/schemas/ProductCategoryParent"
         productsCount:
           type: integer
           format: int64
-    ProductCategoryTreeRootDto:
+    ProductCategoryTreeRoot:
       type: object
       additionalProperties: false
       properties:
         categories:
           type: array
           items:
-            $ref: '#/components/schemas/ProductCategoryTreeNodeDto'
+            $ref: "#/components/schemas/ProductCategoryTreeNode"
         productsCount:
           type: integer
           format: int64
-    ProductCategoryTreeNodeDto:
+    ProductCategoryTreeNode:
       type: object
       additionalProperties: false
       properties:
@@ -513,17 +283,17 @@ components:
         parent:
           nullable: true
           oneOf:
-          - $ref: '#/components/schemas/ProductCategoryParent'
+            - $ref: "#/components/schemas/ProductCategoryParent"
         subCategories:
           type: array
           items:
-            $ref: '#/components/schemas/ProductCategoryTreeNodeDto'
+            $ref: "#/components/schemas/ProductCategoryTreeNode"
         productsCount:
           type: integer
           format: int64
         canAddProducts:
           type: boolean
-    ProductCategoryDto:
+    ProductCategory:
       type: object
       additionalProperties: false
       properties:
@@ -541,7 +311,7 @@ components:
         parent:
           nullable: true
           oneOf:
-          - $ref: '#/components/schemas/ProductCategoryParent'
+            - $ref: "#/components/schemas/ProductCategoryParent"
         productsCount:
           type: integer
           format: int64
@@ -556,7 +326,7 @@ components:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/CartItem'
+            $ref: "#/components/schemas/CartItem"
     CartItem:
       type: object
       additionalProperties: false
@@ -625,159 +395,9 @@ components:
         quantity:
           type: integer
           format: int32
-    HttpValidationProblemDetails:
-      allOf:
-      - $ref: '#/components/schemas/ProblemDetails'
-      - type: object
-        additionalProperties:
-          nullable: true
-        properties:
-          errors:
-            type: object
-            additionalProperties:
-              type: array
-              items:
-                type: string
-    ProblemDetails:
-      type: object
-      additionalProperties:
-        nullable: true
-      properties:
-        type:
-          type: string
-          nullable: true
-        title:
-          type: string
-          nullable: true
-        status:
-          type: integer
-          format: int32
-          nullable: true
-        detail:
-          type: string
-          nullable: true
-        instance:
-          type: string
-          nullable: true
-    RegisterRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        email:
-          type: string
-        password:
-          type: string
-    AccessTokenResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        tokenType:
-          type: string
-        accessToken:
-          type: string
-        expiresIn:
-          type: integer
-          format: int64
-        refreshToken:
-          type: string
-    LoginRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        email:
-          type: string
-        password:
-          type: string
-        twoFactorCode:
-          type: string
-          nullable: true
-        twoFactorRecoveryCode:
-          type: string
-          nullable: true
-    RefreshRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        refreshToken:
-          type: string
-    ResendConfirmationEmailRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        email:
-          type: string
-    ForgotPasswordRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        email:
-          type: string
-    ResetPasswordRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        email:
-          type: string
-        resetCode:
-          type: string
-        newPassword:
-          type: string
-    TwoFactorResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        sharedKey:
-          type: string
-        recoveryCodesLeft:
-          type: integer
-          format: int32
-        recoveryCodes:
-          type: array
-          nullable: true
-          items:
-            type: string
-        isTwoFactorEnabled:
-          type: boolean
-        isMachineRemembered:
-          type: boolean
-    TwoFactorRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        enable:
-          type: boolean
-          nullable: true
-        twoFactorCode:
-          type: string
-          nullable: true
-        resetSharedKey:
-          type: boolean
-        resetRecoveryCodes:
-          type: boolean
-        forgetMachine:
-          type: boolean
-    InfoResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        email:
-          type: string
-        isEmailConfirmed:
-          type: boolean
-        claims:
-          type: object
-          additionalProperties:
-            type: string
-    InfoRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        newEmail:
-          type: string
-          nullable: true
-        newPassword:
-          type: string
-          nullable: true
-        oldPassword:
-          type: string
-          nullable: true
+  securitySchemes:
+    JWT:
+      type: apiKey
+      description: "Type into the textbox: Bearer {your JWT token}."
+      name: Authorization
+      in: header

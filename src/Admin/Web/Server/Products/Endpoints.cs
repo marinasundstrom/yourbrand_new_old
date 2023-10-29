@@ -12,59 +12,43 @@ public static class Endpoints
     {
         string GetProductsExpire20 = nameof(GetProductsExpire20);
 
-        var productsGroup = app.MapGroup("/api/products");
+        var versionedApi = app.NewVersionedApi("Products");
+
+        var productsGroup = versionedApi.MapGroup("/api/v{version:apiVersion}/products")
+            .WithTags("Products")
+            .HasApiVersion(1, 0)
+            .WithOpenApi();
 
         productsGroup.MapGet("/", GetProducts)
-            .WithName($"Products_{nameof(GetProducts)}")
-            .WithTags("Products")
-            .WithOpenApi();
-        //.CacheOutput(GetProductsExpire20);
+            .WithName($"Products_{nameof(GetProducts)}");
 
         productsGroup.MapGet("/{id}", GetProductById)
-            .WithName($"Products_{nameof(GetProductById)}")
-            .WithTags("Products")
-            .WithOpenApi();
+            .WithName($"Products_{nameof(GetProductById)}");
 
         productsGroup.MapPost("/", CreateProduct)
-            .WithName($"Products_{nameof(CreateProduct)}")
-            .WithTags("Products")
-            .WithOpenApi();
+            .WithName($"Products_{nameof(CreateProduct)}");
 
         productsGroup.MapPut("/{id}", UpdateProductDetails)
-            .WithName($"Products_{nameof(UpdateProductDetails)}")
-            .WithTags("Products")
-            .WithOpenApi();
+            .WithName($"Products_{nameof(UpdateProductDetails)}");
 
         productsGroup.MapPut("/price", UpdateProductPrice)
-            .WithName($"Products_{nameof(UpdateProductPrice)}")
-            .WithTags("Products")
-            .WithOpenApi();
+            .WithName($"Products_{nameof(UpdateProductPrice)}");
 
         productsGroup.MapDelete("/{id}", DeleteProduct)
-            .WithName($"Products_{nameof(DeleteProduct)}")
-            .WithTags("Products")
-            .WithOpenApi();
+            .WithName($"Products_{nameof(DeleteProduct)}");
 
-        app.MapPost("/api/products/{id}/image", UploadProductImage)
+        productsGroup.MapPost("/{id}/image", UploadProductImage)
             .WithName($"Products_{nameof(UploadProductImage)}")
-            .WithTags("Products")
-            .WithOpenApi()
             .DisableAntiforgery();
 
         productsGroup.MapPut("/handle", UpdateProductHandle)
-            .WithName($"Products_{nameof(UpdateProductHandle)}")
-            .WithTags("Products")
-            .WithOpenApi();
+            .WithName($"Products_{nameof(UpdateProductHandle)}");
 
         productsGroup.MapPut("/visibility", UpdateProductVisibility)
-            .WithName($"Products_{nameof(UpdateProductVisibility)}")
-            .WithTags("Products")
-            .WithOpenApi();
+            .WithName($"Products_{nameof(UpdateProductVisibility)}");
 
         productsGroup.MapPut("/category", UpdateProductCategory)
-            .WithName($"Products_{nameof(UpdateProductCategory)}")
-            .WithTags("Products")
-            .WithOpenApi();
+            .WithName($"Products_{nameof(UpdateProductCategory)}");
 
         return app;
     }

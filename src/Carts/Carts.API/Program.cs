@@ -1,7 +1,5 @@
 ﻿using Azure.Identity;
-
-using Carts.API;
-using Carts.API.Extensions;
+using YourBrand.Extensions;
 using Carts.API.Features.CartsManagement;
 using Carts.API.Persistence;
 
@@ -15,6 +13,8 @@ using Microsoft.EntityFrameworkCore;
 using Steeltoe.Discovery.Client;
 
 using YourBrand;
+
+string ServiceName = "Carts.API";
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,7 +48,9 @@ if (builder.Environment.IsProduction())
 
 // Add services to the container.
 
-builder.Services.AddOpenApi();
+builder.Services
+    .AddOpenApi(ServiceName)
+    .AddApiVersioningServices();
 
 builder.Services.AddObservability("Carts.API", "1.0", builder.Configuration);
 

@@ -17,7 +17,7 @@ public sealed class ProductCategoryService(StoreWeb.IProductCategoriesClient pro
 
 public static class Mapping
 {
-    public static ProductCategoryDto ToDto(this StoreWeb.ProductCategoryDto productCategory)
+    public static ProductCategoryDto ToDto(this StoreWeb.ProductCategory productCategory)
     {
         return new(productCategory.Id, productCategory.Name, productCategory.Description, productCategory.Handle, productCategory.Path, null, productCategory.ProductsCount);
     }
@@ -27,7 +27,7 @@ public static class Mapping
         return new(productCategory.Id, productCategory.Name, productCategory.Handle, productCategory.Path, productCategory.Parent?.ToParentDto(), productCategory.ProductsCount);
     }
 
-    public static ProductCategoryTreeNodeDto ToProductCategoryTreeNodeDto(this StoreWeb.ProductCategoryTreeNodeDto productCategory)
+    public static ProductCategoryTreeNodeDto ToProductCategoryTreeNodeDto(this StoreWeb.ProductCategoryTreeNode productCategory)
     {
         return new(productCategory.Id, productCategory.Name, productCategory.Handle, productCategory.Path, productCategory.Description, productCategory.Parent?.ToParentDto(), productCategory.SubCategories.Select(x => x.ToProductCategoryTreeNodeDto()), productCategory.ProductsCount, productCategory.CanAddProducts);
     }

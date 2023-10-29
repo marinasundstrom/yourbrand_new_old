@@ -7,17 +7,19 @@ public static class Endpoints
 {
     public static IEndpointRouteBuilder MapProductCategoriesEndpoints(this IEndpointRouteBuilder app)
     {
-        app.MapGet("/api/ProductCategories", GetProductCategories)
-            .WithName($"ProductCategories_{nameof(GetProductCategories)}")
-            .WithTags("ProductCategories")
-            .RequireCors()
-            .WithOpenApi();
+        var versionedApi = app.NewVersionedApi("ProductCategories");
 
-        app.MapGet("/api/ProductCategories/{id}", GetProductCategoryById)
-            .WithName($"ProductCategories_{nameof(GetProductCategoryById)}")
+        var productsGroup = versionedApi.MapGroup("/api/v{version:apiVersion}/productCategories")
             .WithTags("ProductCategories")
-            .RequireCors()
-            .WithOpenApi();
+            .HasApiVersion(1, 0)
+            .WithOpenApi()
+            .RequireCors();
+
+        productsGroup.MapGet("/", GetProductCategories)
+            .WithName($"ProductCategories_{nameof(GetProductCategories)}");
+
+        productsGroup.MapGet("{id}", GetProductCategoryById)
+            .WithName($"ProductCategories_{nameof(GetProductCategoryById)}");
 
         return app;
     }

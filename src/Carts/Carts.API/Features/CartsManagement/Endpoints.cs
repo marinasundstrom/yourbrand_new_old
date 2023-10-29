@@ -13,41 +13,34 @@ public static class Endpoints
     {
         string GetCartsExpire20 = nameof(GetCartsExpire20);
 
-        app.MapGet("/api/carts", GetCarts)
-            .WithName($"Carts_{nameof(GetCarts)}")
+        var versionedApi = app.NewVersionedApi("Carts");
+
+        var group = versionedApi.MapGroup("/v{version:apiVersion}/carts")
             .WithTags("Carts")
-            .WithOpenApi()
+            .HasApiVersion(1, 0)
+            .WithOpenApi();
+
+        group.MapGet("/", GetCarts)
+            .WithName($"Carts_{nameof(GetCarts)}")
             .CacheOutput(GetCartsExpire20);
 
-        app.MapGet("/api/carts/{id}", GetCartById)
-            .WithName($"Carts_{nameof(GetCartById)}")
-            .WithTags("Carts")
-            .WithOpenApi();
+        group.MapGet("/{id}", GetCartById)
+            .WithName($"Carts_{nameof(GetCartById)}");
 
-        app.MapPost("/api/carts", CreateCart)
-            .WithName($"Carts_{nameof(CreateCart)}")
-            .WithTags("Carts")
-            .WithOpenApi();
+        group.MapPost("/", CreateCart)
+            .WithName($"Carts_{nameof(CreateCart)}");
 
-        app.MapPost("/api/carts/{id}/items", AddCartItem)
-            .WithName($"Carts_{nameof(AddCartItem)}")
-            .WithTags("Carts")
-            .WithOpenApi();
+        group.MapPost("{id}/items", AddCartItem)
+            .WithName($"Carts_{nameof(AddCartItem)}");
 
-        app.MapGet("/api/carts/{cartId}/items/{id}", GetCartItemById)
-            .WithName($"Carts_{nameof(GetCartItemById)}")
-            .WithTags("Carts")
-            .WithOpenApi();
+        group.MapGet("{cartId}/items/{id}", GetCartItemById)
+            .WithName($"Carts_{nameof(GetCartItemById)}");
 
-        app.MapPut("/api/carts/{cartId}/items/{id}/quantity", UpdateCartItemQuantity)
-            .WithName($"Carts_{nameof(UpdateCartItemQuantity)}")
-            .WithTags("Carts")
-            .WithOpenApi();
+        group.MapPut("{cartId}/items/{id}/quantity", UpdateCartItemQuantity)
+            .WithName($"Carts_{nameof(UpdateCartItemQuantity)}");
 
-        app.MapDelete("/api/carts/{cartId}/items/{id}", RemoveCartItem)
-            .WithName($"Carts_{nameof(RemoveCartItem)}")
-            .WithTags("Carts")
-            .WithOpenApi();
+        group.MapDelete("{cartId}/items/{id}", RemoveCartItem)
+            .WithName($"Carts_{nameof(RemoveCartItem)}");
 
         return app;
     }

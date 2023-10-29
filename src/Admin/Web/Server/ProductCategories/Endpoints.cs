@@ -12,23 +12,26 @@ public static class Endpoints
     {
         string GetProductsExpire20 = nameof(GetProductsExpire20);
 
-        var productsGroup = app.MapGroup("/api/ProductCategories")
+        var versionedApi = app.NewVersionedApi("ProductCategories");
+
+        var productsGroup = versionedApi.MapGroup("/api/v{version:apiVersion}/productCategories")
             .WithTags("ProductCategories")
+            .HasApiVersion(1, 0)
             .WithOpenApi();
 
-        productsGroup.MapGet("/api/productCategories/{*path}", GetProductsCategories)
+        productsGroup.MapGet("{*path}", GetProductsCategories)
             .WithName($"ProductCategories_{nameof(GetProductsCategories)}");
 
-        app.MapGet("/api/productCategories/{idOrPath}", GetProductCategoryById)
+        productsGroup.MapGet("{idOrPath}", GetProductCategoryById)
             .WithName($"ProductCategories_{nameof(GetProductCategoryById)}");
 
-        app.MapPost("/api/productCategories", CreateProductCategory)
+        productsGroup.MapPost("/", CreateProductCategory)
             .WithName($"ProductCategories_{nameof(CreateProductCategory)}");
 
-        app.MapPut("/api/productCategories/{idOrPath}", UpdateProductCategoryDetails)
+        productsGroup.MapPut("{idOrPath}", UpdateProductCategoryDetails)
             .WithName($"ProductCategories_{nameof(UpdateProductCategoryDetails)}");
 
-        app.MapDelete("/api/productCategories/{idOrPath}", DeleteProductCategory)
+        productsGroup.MapDelete("{idOrPath}", DeleteProductCategory)
             .WithName($"ProductCategories_{nameof(DeleteProductCategory)}");
 
         return app;

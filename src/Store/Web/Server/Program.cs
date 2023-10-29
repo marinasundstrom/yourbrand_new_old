@@ -6,7 +6,7 @@ using Azure.Identity;
 using BlazorApp;
 using BlazorApp.Cart;
 using BlazorApp.Data;
-using BlazorApp.Extensions;
+using YourBrand.Extensions;
 using BlazorApp.ProductCategories;
 using BlazorApp.Products;
 
@@ -106,7 +106,9 @@ if (builder.Environment.IsProduction())
         new DefaultAzureCredential());
 }
 
-builder.Services.AddOpenApi();
+builder.Services
+    .AddOpenApi(serviceName)
+    .AddApiVersioningServices();
 
 builder.Services.AddObservability(serviceName, serviceVersion, builder.Configuration);
 
