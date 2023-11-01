@@ -119,18 +119,14 @@ app.Run();
 
 static void AddClients(WebApplicationBuilder builder)
 {
-    var catalogApiHttpClient = builder.Services.AddHttpClient("CatalogAPI", static (sp, http) =>
+    var catalogApiHttpClient = builder.Services.AddCatalogClients(new Uri(builder.Configuration["yourbrand:catalog-svc:url"]!),
+    clientBuilder =>
     {
-        var configuration = sp.GetRequiredService<IConfiguration>();
-        http.BaseAddress = new Uri(configuration["yourbrand:catalog-svc:url"]!);
+        clientBuilder.AddStandardResilienceHandler();
+
+        if (builder.Environment.IsDevelopment())
+        {
+            clientBuilder.AddServiceDiscovery();
+        }
     });
-
-    catalogApiHttpClient.AddStandardResilienceHandler();
-
-    if (builder.Environment.IsDevelopment())
-    {
-        catalogApiHttpClient.AddServiceDiscovery();
-    }
-
-    builder.Services.AddCatalogClients(builder.Configuration["yourbrand:catalog-svc:url"]!);
 }

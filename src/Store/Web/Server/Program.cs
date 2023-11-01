@@ -219,33 +219,25 @@ app.Run();
 
 static void AddClients(WebApplicationBuilder builder)
 {
-    var catalogApiHttpClient = builder.Services.AddHttpClient("CatalogAPI", static (sp, http) =>
+    var catalogApiHttpClient = builder.Services.AddCatalogClients(new Uri(builder.Configuration["yourbrand:catalog-svc:url"]!),
+    clientBuilder =>
     {
-        var configuration = sp.GetRequiredService<IConfiguration>();
-        http.BaseAddress = new Uri(configuration["yourbrand:catalog-svc:url"]!);
+        clientBuilder.AddStandardResilienceHandler();
+
+        if (builder.Environment.IsDevelopment())
+        {
+            clientBuilder.AddServiceDiscovery();
+        }
     });
 
-    catalogApiHttpClient.AddStandardResilienceHandler();
-
-    if (builder.Environment.IsDevelopment())
+    var cartsApiHttpClient = builder.Services.AddCartsClient(new Uri(builder.Configuration["yourbrand:carts-svc:url"]!),
+    clientBuilder =>
     {
-        catalogApiHttpClient.AddServiceDiscovery();
-    }
+        clientBuilder.AddStandardResilienceHandler();
 
-    builder.Services.AddCatalogClients(builder.Configuration["yourbrand:catalog-svc:url"]!);
-
-    var cartsApiHttpClient = builder.Services.AddHttpClient("CartsAPI", static (sp, http) =>
-    {
-        var configuration = sp.GetRequiredService<IConfiguration>();
-        http.BaseAddress = new Uri(configuration["yourbrand:carts-svc:url"]!);
+        if (builder.Environment.IsDevelopment())
+        {
+            clientBuilder.AddServiceDiscovery();
+        }
     });
-
-    cartsApiHttpClient.AddStandardResilienceHandler();
-
-    if (builder.Environment.IsDevelopment())
-    {
-        cartsApiHttpClient.AddServiceDiscovery();
-    }
-
-    builder.Services.AddCartsClient(builder.Configuration["yourbrand:carts-svc:url"]!);
 }
