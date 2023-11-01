@@ -33,8 +33,10 @@
 
 ## Testing
 
-* [Unit tests](testing/unit-tests.md)
-* [Integration tests](testing/integration-tests.md)
+* [Unit testing](testing/unit-testing.md)
+* [Integration testing](testing/integration-testing.md)
+* [System testing](testing/system-testing.md)
+* [E2E testing](testing/e2e-testing.md)
 
 ## Other
 

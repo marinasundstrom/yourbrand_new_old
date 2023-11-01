@@ -1,4 +1,10 @@
-# Integration tests
+# Integration testing
+
+Integration testing are about testing a service as a whole together with production-level dependencies (database, service bus, caching) - you are testing the integration of these components.
+
+These tests can be run at certain times in a QA environment.
+
+## This solution
 
 Each project has its own integration tests.
 
