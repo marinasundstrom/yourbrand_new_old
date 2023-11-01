@@ -28,6 +28,14 @@ This is a "nice to have" that will be installed by running the script:
 
 **Restore Terminals** will make it easier for you to start up all services locally by automatically creating a terminal window for each of them.
 
+## DevContainer
+
+If you don't want to, or can't, install any SDKs on your machine.
+
+As an alternative to doing development in a local VS Code instance, you can run this container environment on your machine, or in a DevContainer in the cloud, using a service provider such as GitHub Codespaces.
+
+Read more [here](/docs/development/devcontainer.md).
+
 ## Run dependencies in Docker
 
 To start the database and other [dependencies](/docs/services.md), run this:

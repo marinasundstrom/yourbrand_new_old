@@ -21,11 +21,3 @@ The extension have to be installed either manually, or by running the ``install-
 This extension make it easier for you to start up all services locally by automatically creating a terminal window for each of them.
 
 These terminal windows are also configured in the settings file.
-
-## DevContainer
-
-You can also create and run a Dev Container environment.
-
-The settings above will apply also there.
-
-Added are the default theming an icon set.
