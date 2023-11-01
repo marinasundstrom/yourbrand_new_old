@@ -1,10 +1,10 @@
 namespace BlazorApp.ProductCategories;
 
-public sealed class ProductCategoryService(CatalogAPI.IProductCategoriesClient productCategoriesClient) : IProductCategoryService
+public sealed class ProductCategoryService(StoreFrontAPI.IProductCategoriesClient productCategoriesClient) : IProductCategoryService
 {
     public async Task<ProductCategoryTreeRootDto> GetProductCategories(CancellationToken cancellationToken = default)
     {
-        var treeRoot = await productCategoriesClient.GetProductCategoryTreeAsync(cancellationToken);
+        var treeRoot = await productCategoriesClient.GetProductCategoriesAsync(cancellationToken);
         return new ProductCategoryTreeRootDto(treeRoot.Categories.Select(x => x.ToProductCategoryTreeNodeDto()), treeRoot.ProductsCount);
     }
 
@@ -17,27 +17,22 @@ public sealed class ProductCategoryService(CatalogAPI.IProductCategoriesClient p
 
 public static class Mapping
 {
-    public static ProductCategoryDto ToDto(this CatalogAPI.ProductCategory productCategory)
+    public static ProductCategoryDto ToDto(this StoreFrontAPI.ProductCategory productCategory)
     {
         return new(productCategory.Id, productCategory.Name, productCategory.Description ?? string.Empty, productCategory.Handle, productCategory.Path, null, productCategory.ProductsCount);
     }
 
-    public static ProductCategoryTreeNodeDto ToProductCategoryTreeNodeDto(this CatalogAPI.ProductCategoryTreeNode productCategory)
+    public static ProductCategoryTreeNodeDto ToProductCategoryTreeNodeDto(this StoreFrontAPI.ProductCategoryTreeNode productCategory)
     {
-        return new(productCategory.Id, productCategory.Name, productCategory.Handle, productCategory.Path, productCategory.Description, productCategory.Parent?.ToParentDto(), productCategory.SubCategories.Select(x => x.ToProductCategoryTreeNodeDto()), productCategory.ProductsCount, productCategory.CanAddProducts);
+        return new(productCategory.Id, productCategory.Name, productCategory.Handle, productCategory.Path, productCategory.Description, productCategory.Parent?.ToParentDto2(), productCategory.SubCategories.Select(x => x.ToProductCategoryTreeNodeDto()), productCategory.ProductsCount, productCategory.CanAddProducts);
     }
 
-    public static ProductCategoryParent ToParentDto(this CatalogAPI.ParentProductCategoryTreeNode productCategory)
-    {
-        return new(productCategory.Id, productCategory.Name, productCategory.Handle, productCategory.Path, productCategory.Parent?.ToParentDto(), productCategory.ProductsCount);
-    }
-
-    public static ProductCategoryParent ToParentDto2(this CatalogAPI.ParentProductCategory productCategory)
+    public static ProductCategoryParent ToParentDto2(this StoreFrontAPI.ProductCategoryParent productCategory)
     {
         return new(productCategory.Id, productCategory.Name, productCategory.Handle, productCategory.Path, productCategory.Parent?.ToParentDto2(), productCategory.ProductsCount);
     }
 
-    public static ProductCategoryParent ToParentDto3(this CatalogAPI.ProductCategory2 productCategory)
+    public static ProductCategoryParent ToParentDto3(this StoreFrontAPI.ProductCategory productCategory)
     {
         return new(productCategory.Id, productCategory.Name, productCategory.Handle, productCategory.Path, productCategory.Parent?.ToParentDto2(), productCategory.ProductsCount);
     }

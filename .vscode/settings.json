@@ -35,6 +35,17 @@
         {
             "splitTerminals": [
                 {
+                    "name": "StoreFront service",
+                    "commands": [
+                        "dotnet run --project src/StoreFront/StoreFront.API"
+                    ],
+                    "shouldRunCommands": false
+                }
+            ]
+        },
+        {
+            "splitTerminals": [
+                {
                     "name": "Catalog service",
                     "commands": [
                         "dotnet run --project src/Catalog/Catalog.API"

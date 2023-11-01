@@ -46,12 +46,13 @@ In ``yourbrand-appconfiguration``:
 
 Then assign the role ``App Configuration Data Reader`` to resources according to this:
 
-| Resource                   | Role                           |
-|--------                    |----                            |
-| ``yourbrand-store-web``    | App Configuration Data Reader  |
-| ``yourbrand-admin-web``    | App Configuration Data Reader  |
-| ``yourbrand-catalog-svc``  | App Configuration Data Reader  |
-| ``yourbrand-carts-svc``    | App Configuration Data Reader  |
+| Resource                        | Role                           |
+|--------                         |----                            |
+| ``yourbrand-store-web``         | App Configuration Data Reader  |
+| ``yourbrand-admin-web``         | App Configuration Data Reader  |
+| ``yourbrand-catalog-svc``       | App Configuration Data Reader  |
+| ``yourbrand-carts-svc``         | App Configuration Data Reader  |
+| ``yourbrand-storefront-svc``    | App Configuration Data Reader  |
 
 ## Key Vault access
 
@@ -61,13 +62,13 @@ Assign yourself as a ``Contributor`` so that you will be able to view and edit c
 
 Then assign the role ``Key Vault Secrets User`` to resources according to this:
 
-| Resource                   | Role                    |
-|--------                    |----                     |
-| ``yourbrand-store-web``    | Key Vault Secrets User  |
-| ``yourbrand-admin-web``    | Key Vault Secrets User  |
-| ``yourbrand-catalog-svc``  | Key Vault Secrets User  |
-| ``yourbrand-carts-svc``    | Key Vault Secrets User  |
-
+| Resource                        | Role                    |
+|--------                         |----                     |
+| ``yourbrand-store-web``         | Key Vault Secrets User  |
+| ``yourbrand-admin-web``         | Key Vault Secrets User  |
+| ``yourbrand-catalog-svc``       | Key Vault Secrets User  |
+| ``yourbrand-carts-svc``         | Key Vault Secrets User  |
+| ``yourbrand-storefront-svc``    | Key Vault Secrets User  |
 
 ## Service bus access
 
@@ -75,12 +76,13 @@ To allow container apps to use ``yourbrand-servicebus``.
 
 Then assign the role ``Azure Service Bus Data Owner`` to resources according to this:
 
-| Resource                   | Role                          |
-|--------                    |----                           |
-| ``yourbrand-store-web``    | Azure Service Bus Data Owner  |
-| ``yourbrand-admin-web``    | Azure Service Bus Data Owner  |
-| ``yourbrand-catalog-svc``  | Azure Service Bus Data Owner  |
-| ``yourbrand-carts-svc``    | Azure Service Bus Data Owner  |
+| Resource                        | Role                          |
+|--------                         |----                           |
+| ``yourbrand-store-web``         | Azure Service Bus Data Owner  |
+| ``yourbrand-admin-web``         | Azure Service Bus Data Owner  |
+| ``yourbrand-catalog-svc``       | Azure Service Bus Data Owner  |
+| ``yourbrand-carts-svc``         | Azure Service Bus Data Owner  |
+| ``yourbrand-storefront-svc``    | Azure Service Bus Data Owner  |
 
 These permissions are required so that the container apps can set up topics and subscriptions.
 
@@ -98,10 +100,11 @@ Remember the passwords that you set, since it has to be added as a Secret in Git
 
 Assign these role ``Contributor`` to the following Container apps:
 
-| Resource                   | Role          |
-|--------                    |----           |
-| ``yourbrand-catalog-svc``  | Contributor   |
-| ``yourbrand-carts-svc``    | Contributor   |
+| Resource                        | Role          |
+|--------                         |----           |
+| ``yourbrand-catalog-svc``       | Contributor   |
+| ``yourbrand-carts-svc``         | Contributor   |
+| ``yourbrand-storefront-svc``    | Contributor   |
 
 _This list might change as more  container apps and databases are added._
 
@@ -125,6 +128,14 @@ And, in ``yourbrand-carts-db`` run this to create user for ``yourbrand-carts-svc
 CREATE USER [yourbrand-carts-svc] FROM EXTERNAL PROVIDER
 ALTER ROLE db_datareader ADD MEMBER [yourbrand-carts-svc]
 ALTER ROLE db_datawriter ADD MEMBER [yourbrand-carts-svc]
+```
+
+And, in ``yourbrand-storefront-db`` run this to create user for ``yourbrand-storefront-svc``:
+
+```sql
+CREATE USER [yourbrand-storefront-svc] FROM EXTERNAL PROVIDER
+ALTER ROLE db_datareader ADD MEMBER [yourbrand-storefront-svc]
+ALTER ROLE db_datawriter ADD MEMBER [yourbrand-storefront-svc]
 ```
 
 ## Storage Account access

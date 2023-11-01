@@ -10,9 +10,7 @@ using YourBrand.Extensions;
 using BlazorApp.ProductCategories;
 using BlazorApp.Products;
 
-using Carts;
-
-using Catalog;
+using StoreFront;
 
 using HealthChecks.UI.Client;
 
@@ -219,18 +217,7 @@ app.Run();
 
 static void AddClients(WebApplicationBuilder builder)
 {
-    var catalogApiHttpClient = builder.Services.AddCatalogClients(new Uri(builder.Configuration["yourbrand:catalog-svc:url"]!),
-    clientBuilder =>
-    {
-        clientBuilder.AddStandardResilienceHandler();
-
-        if (builder.Environment.IsDevelopment())
-        {
-            clientBuilder.AddServiceDiscovery();
-        }
-    });
-
-    var cartsApiHttpClient = builder.Services.AddCartsClient(new Uri(builder.Configuration["yourbrand:carts-svc:url"]!),
+    var storefrontHttpClient = builder.Services.AddStoreFrontClients(new Uri(builder.Configuration["yourbrand:storefront-svc:url"]!),
     clientBuilder =>
     {
         clientBuilder.AddStandardResilienceHandler();

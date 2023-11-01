@@ -39,3 +39,12 @@ services:
       dockerfile: src/Admin/Web/Server/Dockerfile
     ports:
       - 8084:8080
+
+  storefront-svc:
+    image: storefront-svc
+    container_name: storefront-svc
+    build:
+      context: .
+      dockerfile: src/StoreFront/StoreFront.API/Dockerfile
+    ports:
+      - 8085:8080

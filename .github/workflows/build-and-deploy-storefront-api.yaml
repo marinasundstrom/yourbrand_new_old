@@ -1,0 +1,65 @@
+name: Build and deploy StoreFront.API
+
+env:
+  DOTNET_VERSION: '8.0.x' # set this to the .NET Core version to use
+  SERVICE_DIR: 'src/StoreFront/StoreFront.API'
+  UNITTESTS_DIR: 'src/StoreFront/StoreFront.UnitTests'
+  CONTAINERAPP_NAME: 'yourbrand-storefront-svc'
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+    - main
+    paths:
+    - "src/StoreFront/StoreFront.API/**"
+    - "src/StoreFront/StoreFront.UnitTests/**"
+    - "src/StoreFront/StoreFront.IntegrationTests/**"
+  
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: 'Checkout GitHub Action'
+      uses: actions/checkout@main
+      with:
+        lfs: true
+
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: Install dependencies
+      run: dotnet restore "${{ env.SERVICE_DIR }}"
+
+    - name: Build
+      run: dotnet build "${{ env.SERVICE_DIR }}"
+
+    - name: Test with the dotnet CLI
+      run: dotnet test "${{ env.UNITTESTS_DIR }}"
+
+    - name: 'Login via Azure CLI'
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+    - name: Build and deploy Container App
+      uses: azure/container-apps-deploy-action@v1
+      with:
+        appSourcePath: ${{ github.workspace }}
+        dockerfilePath: ${{ env.SERVICE_DIR }}/Dockerfile
+        registryUrl: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+        registryUsername: ${{ secrets.REGISTRY_USERNAME }}
+        registryPassword: ${{ secrets.REGISTRY_PASSWORD }}
+        containerAppName: ${{ env.CONTAINERAPP_NAME }}
+        resourceGroup: ${{ secrets.RESOURCE_GROUP }}
+        location: 'Sweden Central'
+        targetPort: 8080
+    
+    - name: Run EF migrations
+      run: | 
+        dotnet tool install --global dotnet-ef --version 8.0.0-rc.2.*
+        dotnet tool restore
+        dotnet ef database update -p '${{ env.SERVICE_DIR }}' --connection '${{ secrets.STOREFRONTDBCONNECTION }}'
