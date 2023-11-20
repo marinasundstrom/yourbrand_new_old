@@ -60,6 +60,6 @@ jobs:
     
     - name: Run EF migrations
       run: | 
-        dotnet tool install --global dotnet-ef --version 8.0.0-rc.2.*
+        dotnet tool install --global dotnet-ef --version 8.0.0
         dotnet tool restore
         dotnet ef database update -p '${{ env.SERVICE_DIR }}' --connection '${{ secrets.CATALOGDBCONNECTION }}'

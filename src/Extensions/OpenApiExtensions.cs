@@ -32,7 +32,8 @@ public static class OpenApiExtensions
                 };
                 config.ApiGroupNames = new[] { GetApiVersion(apiVersion) };
 
-                config.DefaultReferenceTypeNullHandling = NJsonSchema.Generation.ReferenceTypeNullHandling.NotNull;
+                config.SchemaSettings.DefaultReferenceTypeNullHandling = ReferenceTypeNullHandling.NotNull;
+                config.SchemaSettings.SchemaNameGenerator = new CustomSchemaNameGenerator();
 
                 config.AddSecurity("JWT", new OpenApiSecurityScheme
                 {
@@ -43,8 +44,6 @@ public static class OpenApiExtensions
                 });
 
                 config.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
-
-                config.SchemaNameGenerator = new CustomSchemaNameGenerator();
             });
         }
 
@@ -61,7 +60,7 @@ public static class OpenApiExtensions
     public static WebApplication UseOpenApi(this WebApplication app)
     {
         app.UseOpenApi(p => p.Path = "/swagger/{documentName}/swagger.yaml");
-        app.UseSwaggerUi3(options =>
+        app.UseSwaggerUi(options =>
         {
             var descriptions = app.DescribeApiVersions();
 

@@ -22,8 +22,8 @@ public static class Endpoints
         productsGroup.MapGet("{*path}", GetProductsCategories)
             .WithName($"ProductCategories_{nameof(GetProductsCategories)}");
 
-        productsGroup.MapGet("{idOrPath}", GetProductCategoryById)
-            .WithName($"ProductCategories_{nameof(GetProductCategoryById)}");
+        //productsGroup.MapGet("{idOrPath}", GetProductCategoryById)
+        //    .WithName($"ProductCategories_{nameof(GetProductCategoryById)}");
 
         productsGroup.MapPost("/", CreateProductCategory)
             .WithName($"ProductCategories_{nameof(CreateProductCategory)}");
