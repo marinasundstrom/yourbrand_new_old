@@ -3,8 +3,6 @@ using CatalogAPI;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
-using StoreFront.API.Features.ProductCategories;
-
 namespace StoreFront.API.Features.Products;
 
 public static class Endpoints
@@ -45,11 +43,3 @@ public static class Endpoints
 }
 
 public sealed record PagedResult<T>(IEnumerable<T> Items, int Total);
-
-public sealed record Product(long Id, string Name, ProductCategoryParent? Category, string? Image, string Description, decimal Price, decimal? RegularPrice, string Handle);
-
-public static class Mapper
-{
-    public static Product Map(this CatalogAPI.Product product)
-        => new(product.Id!, product.Name!, product.Category?.ToParentDto3(), product.Image!, product.Description!, product.Price, product.RegularPrice, product.Handle);
-}
