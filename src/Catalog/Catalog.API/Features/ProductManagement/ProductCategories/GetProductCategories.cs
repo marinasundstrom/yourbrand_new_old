@@ -17,7 +17,8 @@ public sealed record GetProductCategories(int Page = 1, int PageSize = 10, strin
 
             if (!string.IsNullOrEmpty(request.SearchTerm))
             {
-                query = query.Where(x => x.Name.ToLower().Contains(request.SearchTerm.ToLower()!) || x.Description.ToLower().Contains(request.SearchTerm.ToLower()!));
+                var t = $"%{request.SearchTerm}%";
+                query = query.Where(x => EF.Functions.Like(x.Name, t) || EF.Functions.Like(x.Description, t));
             }
 
             var total = await query.CountAsync(cancellationToken);
