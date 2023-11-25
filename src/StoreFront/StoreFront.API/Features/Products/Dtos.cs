@@ -3,13 +3,13 @@
 using StoreFront.API.Features.ProductCategories;
 
 
-public sealed record Product(long Id, string Name, ProductCategoryParent? Category, string? Image, string Description, decimal Price, decimal? RegularPrice, string Handle, IEnumerable<ProductAttribute> Attributes, IEnumerable<ProductOption> Options);
+public sealed record Product(long Id, string Name, ProductCategoryParent? Category, string? Image, string Description, decimal Price, decimal? RegularPrice, string Handle, bool HasVariants, IEnumerable<ProductAttribute> Attributes, IEnumerable<ProductOption> Options);
 
 public sealed record ProductAttribute(Attribute Attribute, AttributeValue? Value, bool ForVariant, bool IsMainAttribute);
 
 public sealed record Attribute(string Id, string Name, string? Description, AttributeGroup? Group, ICollection<AttributeValue> Values);
 
-public sealed record AttributeGroup(string Name, string? Description);
+public sealed record AttributeGroup(string Id, string Name, string? Description);
 
 public sealed record AttributeValue(string Id, string Name, int? Seq);
 
@@ -37,13 +37,13 @@ public sealed record OptionValue(string Id, string Name, string? Sku, decimal? P
 public static class Mapper
 {
     public static Product Map(this CatalogAPI.Product product)
-        => new(product.Id!, product.Name!, product.Category?.ToParentDto3(), product.Image!, product.Description!, product.Price, product.RegularPrice, product.Handle, product.Attributes.Select(x => x.Map()), product.Options.Select(x => x.Map()));
+        => new(product.Id!, product.Name!, product.Category?.ToParentDto3(), product.Image!, product.Description!, product.Price, product.RegularPrice, product.Handle, product.HasVariants, product.Attributes.Select(x => x.Map()), product.Options.Select(x => x.Map()));
 
     public static ProductAttribute Map(this CatalogAPI.ProductAttribute attribute) => new(attribute.Attribute.Map(), attribute.Value?.Map(), attribute.ForVariant, attribute.IsMainAttribute);
 
     public static Attribute Map(this CatalogAPI.Attribute attribute) => new(attribute.Id, attribute.Name, attribute.Description, attribute.Group?.Map(), attribute.Values.Select(x => x.Map()).ToList());
 
-    public static AttributeGroup Map(this CatalogAPI.AttributeGroup group) => new(group.Name, group.Description);
+    public static AttributeGroup Map(this CatalogAPI.AttributeGroup group) => new(group.Id, group.Name, group.Description);
 
     public static AttributeValue Map(this CatalogAPI.AttributeValue value) => new(value.Id, value.Name, value.Seq);
 

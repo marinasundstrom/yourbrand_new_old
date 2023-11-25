@@ -2,13 +2,13 @@
 
 using BlazorApp.ProductCategories;
 
-public sealed record Product(long Id, string Name, ProductCategoryParent? Category, string? Image, string Description, decimal Price, decimal? RegularPrice, string Handle, IEnumerable<ProductAttribute> Attributes, IEnumerable<ProductOption> Options);
+public sealed record Product(long Id, string Name, ProductCategoryParent? Category, string? Image, string Description, decimal Price, decimal? RegularPrice, string Handle, bool HasVariants, IEnumerable<ProductAttribute> Attributes, IEnumerable<ProductOption> Options);
 
 public sealed record ProductAttribute(Attribute Attribute, AttributeValue? Value, bool ForVariant, bool IsMainAttribute);
 
 public sealed record Attribute(string Id, string Name, string? Description, AttributeGroup? Group, ICollection<AttributeValue> Values);
 
-public sealed record AttributeGroup(string Name, string? Description);
+public sealed record AttributeGroup(string Id, string Name, string? Description);
 
 public sealed record AttributeValue(string Id, string Name, int? Seq);
 

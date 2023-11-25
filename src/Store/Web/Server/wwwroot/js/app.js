@@ -1,15 +1,15 @@
 window.scrollToTop = () => {
-    window.scrollTo({ top: 0, left: 0,  behavior: 'smooth'});
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 };
 
 function initScrollToTop() {
     var scrollToTop = document.querySelector("#scrollToTop");
-    
-    if(!scrollToTop) return;
+
+    if (!scrollToTop) return;
 
     scrollToTop.addEventListener("click", ev => {
         ev.preventDefault();
-        
+
         window.scrollToTop();
     });
 }
@@ -26,15 +26,15 @@ function updateCartDisplay() {
     cartDisplay = cartDisplay || document.querySelector("#cartDisplay");
 
     let mql = window.matchMedia("(max-width: 992px)");
-    if(mql.matches) {
+    if (mql.matches) {
         const cartDisplay0 = mobileNav.querySelector("#cartDisplay");
-        if(!cartDisplay0) {
+        if (!cartDisplay0) {
             mobileNav.innerHTML = "<!--!-->";
             mobileNav.appendChild(cartDisplay);
         }
     } else {
         const cartDisplay0 = fullNav.querySelector("#cartDisplay");
-        if(!cartDisplay0) {
+        if (!cartDisplay0) {
             fullNav.innerHTML = "<!--!-->";
             fullNav.appendChild(cartDisplay);
         }
@@ -54,18 +54,21 @@ const navbarOffCanvas = document.querySelector("#offcanvasNavbar");
 function hideNavbarOffcanvas() {
 
     const offcanvas = bootstrap.Offcanvas.getInstance(navbarOffCanvas);
-    if(!offcanvas)
-    {
+    if (!offcanvas) {
         return;
     }
     offcanvas.hide();
 }
 
 const navbarLinks = document.querySelectorAll("#offcanvasNavbar .nav-link")
-for(let navbarLink of navbarLinks) {
+for (let navbarLink of navbarLinks) {
     navbarLink.addEventListener("click", hideNavbarOffcanvas)
 }
 
 Blazor.addEventListener('enhancedload', () => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
 });
+
+window.ChangeUrl = function (url) {
+    history.pushState(null, '', url);
+}

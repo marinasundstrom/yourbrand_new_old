@@ -1,6 +1,7 @@
 namespace BlazorApp.Products;
 using StoreWeb;
 using BlazorApp.ProductCategories;
+using System.Collections.Generic;
 
 public sealed class ProductsService(IProductsClient productsClient) : IProductsService
 {
@@ -10,24 +11,41 @@ public sealed class ProductsService(IProductsClient productsClient) : IProductsS
         return new PagedResult<Product>(results.Items.Select(product => product.Map()), results.Total);
     }
 
-    public async Task<Product> GetProductById(string productId, CancellationToken cancellationToken = default)
+    public async Task<Product> GetProductById(string productIdOrHandle, CancellationToken cancellationToken = default)
     {
-        var product = await productsClient.GetProductByIdAsync(productId, cancellationToken);
+        var product = await productsClient.GetProductByIdAsync(productIdOrHandle, cancellationToken);
         return product.Map();
     }
-}
 
+    public async Task<IEnumerable<Product>> FindProductVariantByAttributes2(string productIdOrHandle, Dictionary<string, string> selectedAttributeValues, CancellationToken cancellationToken = default)
+    {
+        var results = await productsClient.FindProductVariantByAttributes2Async(productIdOrHandle, selectedAttributeValues, cancellationToken);
+        return results.Select(x => x.Map());
+    }
+
+    public async Task<IEnumerable<Product>> FindProductVariantByAttributes(string productIdOrHandle, Dictionary<string, string> selectedAttributeValues, CancellationToken cancellationToken = default)
+    {
+        var results = await productsClient.FindProductVariantByAttributesAsync(productIdOrHandle, selectedAttributeValues, cancellationToken);
+        return results.Select(x => x.Map());
+    }
+
+    public async Task<PagedResult<Product>> GetProductVariants(string productIdOrHandle, int page = 10, int pageSize = 10, string? searchString = null, CancellationToken cancellationToken = default)
+    {
+        var results = await productsClient.GetProductVariantsAsync(productIdOrHandle, page, pageSize, searchString, cancellationToken);
+        return new PagedResult<Product>(results.Items.Select(product => product.Map()), results.Total);
+    }
+}
 
 public static class Mapper
 {
     public static Product Map(this StoreWeb.Product product)
-        => new(product.Id!, product.Name!, product.Category?.ToParentDto(), product.Image!, product.Description!, product.Price, product.RegularPrice, product.Handle, product.Attributes.Select(x => x.Map()), product.Options.Select(x => x.Map()));
+        => new(product.Id!, product.Name!, product.Category?.ToParentDto(), product.Image!, product.Description!, product.Price, product.RegularPrice, product.Handle, product.HasVariants, product.Attributes.Select(x => x.Map()), product.Options.Select(x => x.Map()));
 
     public static ProductAttribute Map(this StoreWeb.ProductAttribute attribute) => new(attribute.Attribute.Map(), attribute.Value?.Map(), attribute.ForVariant, attribute.IsMainAttribute);
 
     public static Attribute Map(this StoreWeb.Attribute attribute) => new(attribute.Id, attribute.Name, attribute.Description, attribute.Group?.Map(), attribute.Values.Select(x => x.Map()).ToList());
 
-    public static AttributeGroup Map(this StoreWeb.AttributeGroup group) => new(group.Name, group.Description);
+    public static AttributeGroup Map(this StoreWeb.AttributeGroup group) => new(group.Id, group.Name, group.Description);
 
     public static AttributeValue Map(this StoreWeb.AttributeValue value) => new(value.Id, value.Name, value.Seq);
 
