@@ -34,7 +34,6 @@ public enum OptionType
 
 public sealed record OptionValue(string Id, string Name, string? Sku, decimal? Price, int? Seq);
 
-
 public static class Mapper
 {
     public static Product Map(this CatalogAPI.Product product)
