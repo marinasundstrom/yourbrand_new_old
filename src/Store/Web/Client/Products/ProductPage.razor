@@ -80,12 +80,14 @@ else
                 <div class="d-flex">
             @foreach (var v in productViewModel.Variants)
                     {
-                        <div @key="@v.Id">
-                            <div class="card mt-1 me-2 @(v.Id == productViewModel.Variant.Id ? "shadow" : null)"
-                                @onclick="async () => await SelectVariant(v!)">
-                                @if ((v?.Image ?? productViewModel.Image) is not null)
+                        var v2 = v;
+
+                        <div @key="@v.Id" class="mt-1 me-3 @(v2.Id==productViewModel.Variant.Id ? "shadow" : "shadow-sm" )">
+                            <div href="@($"/products/{productViewModel.Product.Handle}/{productViewModel.Variant!.Handle}")"
+                                @onclick="async () => await SelectVariant(v2!)" @onclick:preventDefault>
+                                @if ((v2?.Image ?? productViewModel.Image) is not null)
                                 {
-                                    <img src="@(v?.Image ?? productViewModel.Image)" width="100" height="100%" alt="@v!.Name" />
+                                    <img src="@(v2?.Image ?? productViewModel.Image)" width="100" height="100%" alt="@v2!.Name" />
                                 }
                                 else
                                 {
@@ -267,9 +269,9 @@ else
 
         //InvokeAsync(StateHasChanged);
 
-        await UpdateUrl();
+        //await UpdateUrl();
 
-        //_ = ProductViewed();
+        _ = ProductViewed();
     }
 
     async Task SelectVariant(Product v)

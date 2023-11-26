@@ -1,5 +1,6 @@
 @page "/products/{id}"
 @using AdminAPI
+@attribute [StreamRendering(false)]
 @using static Microsoft.AspNetCore.Components.Web.RenderMode
 @rendermode renderMode
 @using System.ComponentModel.DataAnnotations
@@ -7,10 +8,11 @@
 @inject IProductCategoriesClient ProductCategoriesClient
 @inject ISnackbar Snackbar
 @inject NavigationManager NavigationManager
+@implements IDisposable
 
 @if (loaded)
 {
-    <MudBreadcrumbs Items="_items"></MudBreadcrumbs>
+    <MudBreadcrumbs Items="_items" Class="ps-0"></MudBreadcrumbs>
 
     <PageTitle>@detailsUpdateViewModel.Name</PageTitle>
 
@@ -82,7 +84,28 @@
 
     protected override async Task OnInitializedAsync()
     {
+        NavigationManager.LocationChanged += OnLocationChanged;
+
+        await LoadAsync();
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+    }
+
+    protected async void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        await LoadAsync();
+
+        await InvokeAsync(StateHasChanged);
+    }
+
+    async Task LoadAsync()
+    {
         product = await ProductsClient.GetProductByIdAsync(Id);
+
+        _items.Clear();
 
         _items.Add(new BreadcrumbItem("Products", href: "/products"));
 
