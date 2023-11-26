@@ -50,6 +50,9 @@ public static class Endpoints
         productsGroup.MapPut("/category", UpdateProductCategory)
             .WithName($"Products_{nameof(UpdateProductCategory)}");
 
+        productsGroup.MapGet("/{id}/variants", GetProductVariants)
+            .WithName($"Products_{nameof(GetProductVariants)}");
+
         return app;
     }
 
@@ -115,5 +118,10 @@ public static class Endpoints
     {
         await productsClient.UpdateProductCategoryAsync(id, request, cancellationToken);
         return TypedResults.Ok();
+    }
+
+    private static async Task<Results<Ok<PagedResultOfProduct>, NotFound>> GetProductVariants(string id, int page = 1, int pageSize = 10, string? searchTerm = null, string? sortBy = null, SortDirection? sortDirection = null, CatalogAPI.IProductsClient productsClient = default!, CancellationToken cancellationToken = default!)
+    {
+        return TypedResults.Ok(await productsClient.GetVariantsAsync(id, page, pageSize, searchTerm, sortBy, sortDirection, cancellationToken));
     }
 }

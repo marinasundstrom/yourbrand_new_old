@@ -6,105 +6,144 @@
 @inject IProductsClient ProductsClient
 @inject IProductCategoriesClient ProductCategoriesClient
 @inject ISnackbar Snackbar
+@inject NavigationManager NavigationManager
 
 @if (loaded)
 {
-    <PageTitle>@detailsUpdateViewModel.Name</PageTitle>
+            <PageTitle>@detailsUpdateViewModel.Name</PageTitle>
 
-    <MudText Typo="Typo.h3" GutterBottom="true">@detailsUpdateViewModel.Name</MudText>
+            <MudText Typo="Typo.h3" GutterBottom="true">@detailsUpdateViewModel.Name</MudText>
 
-    <MudGrid>
-        <MudItem xs="12" sm="6" md="4">
-            <MudImage Src="@image" ObjectFit="ObjectFit.Cover" Height="200" Width="200" Alt="@detailsUpdateViewModel.Name"
-                      Elevation="25" Class="rounded-lg" />
+            <MudGrid>
+                <MudItem xs="12" sm="6" md="4">
+                    <MudImage Src="@image" ObjectFit="ObjectFit.Cover" Height="200" Width="200" Alt="@detailsUpdateViewModel.Name"
+                              Elevation="25" Class="rounded-lg" />
 
-            <div>
-                <MudFileUpload T="IBrowserFile" Accept="*.jpg, *.jpeg, *.png" FilesChanged="UploadProductImage">
-                    <ButtonTemplate>
-                        <MudButton HtmlTag="label"
-                                Variant="Variant.Filled"
-                                Color="Color.Primary"
-                                StartIcon="@Icons.Material.Filled.CloudUpload"
-                                for="@context">
-                            Upload image
-                        </MudButton>
-                    </ButtonTemplate>
-                </MudFileUpload>
-            </div>
-        </MudItem>
+                    <div>
+                        <MudFileUpload T="IBrowserFile" Accept="*.jpg, *.jpeg, *.png" FilesChanged="UploadProductImage">
+                            <ButtonTemplate>
+                                <MudButton HtmlTag="label"
+                                        Variant="Variant.Filled"
+                                        Color="Color.Primary"
+                                        StartIcon="@Icons.Material.Filled.CloudUpload"
+                                        for="@context">
+                                    Upload image
+                                </MudButton>
+                            </ButtonTemplate>
+                        </MudFileUpload>
+                    </div>
+                </MudItem>
 
-        <MudItem xs="12" sm="12" md="6">
-            <MudPaper Elevation="2" Class="pa-4">
-                <EditForm Model="@detailsUpdateViewModel" OnValidSubmit="UpdateDetails">
-                    <DataAnnotationsValidator />
+                <MudItem xs="12" sm="12" md="6">
+                    <MudPaper Elevation="2" Class="pa-4">
+                        <EditForm Model="@detailsUpdateViewModel" OnValidSubmit="UpdateDetails">
+                            <DataAnnotationsValidator />
 
-                    <MudTextField Label="Name" @bind-Value="detailsUpdateViewModel.ShadowName" Variant="Variant.Outlined" For="() => detailsUpdateViewModel.ShadowName"></MudTextField>
-                    <MudTextField Label="Description" Lines="5" @bind-Value="detailsUpdateViewModel.Description" Variant="Variant.Outlined" For="() => detailsUpdateViewModel.Description" Class="mt-4"></MudTextField>
+                            <MudTextField Label="Name" @bind-Value="detailsUpdateViewModel.ShadowName" Variant="Variant.Outlined" For="() => detailsUpdateViewModel.ShadowName"></MudTextField>
+                            <MudTextField Label="Description" Lines="5" @bind-Value="detailsUpdateViewModel.Description" Variant="Variant.Outlined" For="() => detailsUpdateViewModel.Description" Class="mt-4"></MudTextField>
 
-                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Class="mt-4">Update details</MudButton>
-                </EditForm>
-            </MudPaper>
-        </MudItem>
+                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Class="mt-4">Update details</MudButton>
+                        </EditForm>
+                    </MudPaper>
+                </MudItem>
 
-        <MudItem xs="12" sm="12" md="3">
-            <MudPaper Elevation="2" Class="pa-4">
-                <EditForm Model="@categoryUpdateViewModel" OnValidSubmit="UpdateCategory">
-                    <DataAnnotationsValidator />
+                <MudItem xs="12" sm="12" md="3">
+                    <MudPaper Elevation="2" Class="pa-4">
+                        <EditForm Model="@categoryUpdateViewModel" OnValidSubmit="UpdateCategory">
+                            <DataAnnotationsValidator />
 
-                    <MudAutocomplete Label="Category" SearchFunc="Search" @bind-Value="categoryUpdateViewModel.Category" ToStringFunc="x => x.Name" Variant="Variant.Outlined" For="() => categoryUpdateViewModel.Category" />
+                            <MudAutocomplete Label="Category" SearchFunc="Search" @bind-Value="categoryUpdateViewModel.Category" ToStringFunc="x => x.Name" Variant="Variant.Outlined" For="() => categoryUpdateViewModel.Category" />
 
-                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Class="mt-4">Update category</MudButton>
-                </EditForm>
-            </MudPaper>
-        </MudItem>
+                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Class="mt-4">Update category</MudButton>
+                        </EditForm>
+                    </MudPaper>
+                </MudItem>
 
 
-        <MudItem xs="12" sm="12" md="3">
-            <MudPaper Elevation="2" Class="pa-4">
-                <EditForm Model="@priceUpdateViewModel" OnValidSubmit="UpdatePrice">
-                    <DataAnnotationsValidator />
+                <MudItem xs="12" sm="12" md="3">
+                    <MudPaper Elevation="2" Class="pa-4">
+                        <EditForm Model="@priceUpdateViewModel" OnValidSubmit="UpdatePrice">
+                            <DataAnnotationsValidator />
 
-                    <MudNumericField Label="Price" @bind-Value="priceUpdateViewModel.Price" Variant="Variant.Outlined" For="() => priceUpdateViewModel.Price" Adornment="Adornment.End" AdornmentText="sek"></MudNumericField>
-                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Class="mt-4">Update price</MudButton>
-                </EditForm>
-            </MudPaper>
-        </MudItem>
+                            <MudNumericField Label="Price" @bind-Value="priceUpdateViewModel.Price" Variant="Variant.Outlined" For="() => priceUpdateViewModel.Price" Adornment="Adornment.End" AdornmentText="sek"></MudNumericField>
+                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Class="mt-4">Update price</MudButton>
+                        </EditForm>
+                    </MudPaper>
+                </MudItem>
 
-        <MudItem xs="12" sm="12" md="3">
-            <MudPaper Elevation="2" Class="pa-4">
-                <EditForm Model="@handleUpdateViewModel" OnValidSubmit="UpdateHandle">
-                    <DataAnnotationsValidator />
+                <MudItem xs="12" sm="12" md="3">
+                    <MudPaper Elevation="2" Class="pa-4">
+                        <EditForm Model="@handleUpdateViewModel" OnValidSubmit="UpdateHandle">
+                            <DataAnnotationsValidator />
 
-                    <MudTextField Label="Handle" @bind-Value="handleUpdateViewModel.Handle" Variant="Variant.Outlined" For="() => handleUpdateViewModel.Handle"></MudTextField>
-                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Class="mt-4">Update handle</MudButton>
-                </EditForm>
-            </MudPaper>
-        </MudItem>
+                            <MudTextField Label="Handle" @bind-Value="handleUpdateViewModel.Handle" Variant="Variant.Outlined" For="() => handleUpdateViewModel.Handle"></MudTextField>
+                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Class="mt-4">Update handle</MudButton>
+                        </EditForm>
+                    </MudPaper>
+                </MudItem>
 
-        <MudItem xs="12" sm="12" md="3">
-            <MudPaper Elevation="2" Class="pa-4">
-                <EditForm Model="@visibilityUpdateViewModel" OnValidSubmit="UpdateVisibility">
-                    <DataAnnotationsValidator />
+                <MudItem xs="12" sm="12" md="3">
+                    <MudPaper Elevation="2" Class="pa-4">
+                        <EditForm Model="@visibilityUpdateViewModel" OnValidSubmit="UpdateVisibility">
+                            <DataAnnotationsValidator />
 
-                    <MudSelect T="ProductVisibility" Label="Visibility" @bind-Value="visibilityUpdateViewModel.Visibility" Variant="Variant.Outlined"
-                        ToStringFunc="x => x.ToString()" For="() => visibilityUpdateViewModel.Visibility">
-                        @foreach (var item in Enum.GetValues<ProductVisibility>())
-                        {
-                            <MudSelectItem T="ProductVisibility" Value="@item" />
-                        }
-                    </MudSelect>
+                            <MudSelect T="ProductVisibility" Label="Visibility" @bind-Value="visibilityUpdateViewModel.Visibility" Variant="Variant.Outlined"
+                                ToStringFunc="x => x.ToString()" For="() => visibilityUpdateViewModel.Visibility">
+                            @foreach (var item in Enum.GetValues<ProductVisibility>())
+                            {
+                                <MudSelectItem T="ProductVisibility" Value="@item" />
+                            }
+                            </MudSelect>
 
-                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Class="mt-4">Update visibility</MudButton>
-                </EditForm>
-            </MudPaper>
-        </MudItem>
+                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Class="mt-4">Update visibility</MudButton>
+                        </EditForm>
+                    </MudPaper>
+                </MudItem>
 
-    </MudGrid>
+                <MudItem xs="12" sm="12" md="12">
+                    <MudPaper Elevation="2" Class="pa-4">
+                        <MudTable T="Product" ServerData="@(new Func<TableState, Task<TableData<Product>>>(ServerReload))"
+                                Dense="true" Elevation="0" Hover="true" @ref="table" OnRowClick="@OnItemClicked">
+                            <ToolBarContent>
+                                <MudSpacer />
+                                <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Immediate="true" Placeholder="Search" Adornment="Adornment.Start"
+                                            AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                            </ToolBarContent>
+                            <HeaderContent>
+                                <MudTh><MudTableSortLabel SortLabel="Name" T="Product">Name</MudTableSortLabel></MudTh>
+                                    @foreach (var attr in product.Attributes.OrderBy(x => x.Attribute.Id))
+                                    {
+                                        <MudTh>@attr.Attribute.Name</MudTh>
+                                    }
+                                <MudTh><MudTableSortLabel SortLabel="Price" T="Product">Price</MudTableSortLabel></MudTh>
+                            </HeaderContent>
+                            <RowTemplate>
+                                <MudTd DataLabel="Name">@context.Name</MudTd>
+                                @foreach (var attr in context.Attributes.OrderBy(x => x.Attribute.Id))
+                                {
+                                    <MudTd DataLabel="@attr.Value?.Name">@attr.Value?.Name</MudTd>
+                                }                                
+                                <MudTd DataLabel="Price">@context.Price sek</MudTd>
+                                </RowTemplate>
+                            <NoRecordsContent>
+                                <MudText>No matching records found</MudText>
+                            </NoRecordsContent>
+                            <LoadingContent>
+                                <MudText>Loading...</MudText>
+                            </LoadingContent>
+                            <PagerContent>
+                                <MudTablePager />
+                            </PagerContent>
+                        </MudTable>
+                    </MudPaper>
+                </MudItem>
+
+            </MudGrid>
 }
 
 @code
 {
-    private static IComponentRenderMode renderMode = 
+    private static IComponentRenderMode renderMode =
         new InteractiveWebAssemblyRenderMode(prerender: false);
 
     bool loaded = false;
@@ -114,43 +153,44 @@
     HandleUpdateViewModel handleUpdateViewModel;
     VisibilityUpdateViewModel visibilityUpdateViewModel;
     string image;
+    Product product;
 
     [Parameter] public string Id { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        var product = await ProductsClient.GetProductByIdAsync(Id);
+        product = await ProductsClient.GetProductByIdAsync(Id);
 
         detailsUpdateViewModel = new()
-        {
-            Name = product.Name,
-            ShadowName = product.Name,
-            Description = product.Description
-        };
+            {
+                Name = product.Name,
+                ShadowName = product.Name,
+                Description = product.Description
+            };
 
         priceUpdateViewModel = new()
-        {
-            Price = product.Price
-        };
+            {
+                Price = product.Price
+            };
 
         handleUpdateViewModel = new()
-        {
-            Handle = product.Handle
-        };
+            {
+                Handle = product.Handle
+            };
 
         visibilityUpdateViewModel = new()
-        {
-            Visibility = product.Visibility
-        };
+            {
+                Visibility = product.Visibility
+            };
 
         categoryUpdateViewModel = new CategoryUpdateViewModel()
-        {
-            Category = new ParentProductCategory
             {
-                Id = product.Category.Id,
-                Name = product.Category.Name
-            }
-        };
+                Category = new ParentProductCategory
+                {
+                    Id = product.Category.Id,
+                    Name = product.Category.Name
+                }
+            };
 
         image = product.Image;
 
@@ -162,10 +202,10 @@
         try
         {
             await ProductsClient.UpdateProductDetailsAsync(Id, new UpdateProductDetailsRequest()
-            {
-                Name = detailsUpdateViewModel.ShadowName,
-                Description = detailsUpdateViewModel.Description,
-            });
+                {
+                    Name = detailsUpdateViewModel.ShadowName,
+                    Description = detailsUpdateViewModel.Description,
+                });
 
             detailsUpdateViewModel.Name = detailsUpdateViewModel.ShadowName;
 
@@ -182,9 +222,9 @@
         try
         {
             await ProductsClient.UpdateProductPriceAsync(Id, new UpdateProductPriceRequest()
-            {
-                Price = priceUpdateViewModel.Price
-            });
+                {
+                    Price = priceUpdateViewModel.Price
+                });
 
             Snackbar.Add("Price was updated", Severity.Info);
         }
@@ -242,9 +282,9 @@
         try
         {
             await ProductsClient.UpdateProductHandleAsync(Id, new UpdateProductHandleRequest()
-            {
-                Handle = handleUpdateViewModel.Handle
-            });
+                {
+                    Handle = handleUpdateViewModel.Handle
+                });
 
             Snackbar.Add("Handle was updated", Severity.Info);
         }
@@ -259,9 +299,9 @@
         try
         {
             await ProductsClient.UpdateProductVisibilityAsync(Id, new UpdateProductVisibilityRequest()
-            {
-                Visibility = visibilityUpdateViewModel.Visibility
-            });
+                {
+                    Visibility = visibilityUpdateViewModel.Visibility
+                });
 
             Snackbar.Add("Visibility was updated", Severity.Info);
         }
@@ -282,9 +322,9 @@
         try
         {
             await ProductsClient.UpdateProductCategoryAsync(Id, new UpdateProductCategoryRequest()
-            {
-                ProductCategoryId = categoryUpdateViewModel.Category.Id
-            }); ;
+                {
+                    ProductCategoryId = categoryUpdateViewModel.Category.Id
+                }); ;
 
             Snackbar.Add("Category was updated", Severity.Info);
         }
@@ -300,9 +340,33 @@
         return result.Items
             .Where(x => x.CanAddProducts)
             .Select(x => new ParentProductCategory
-            {
-                Id = x.Id,
-                Name = x.Name
-            });
+                {
+                    Id = x.Id,
+                    Name = x.Name
+                });
+    }
+
+    private MudTable<Product> table;
+
+    private string searchString = null;
+
+    /// <summary>
+    /// Here we simulate getting the paged, filtered and ordered data from the server
+    /// </summary>
+    private async Task<TableData<Product>> ServerReload(TableState state)
+    {
+        var result = await ProductsClient.GetProductVariantsAsync(Id, state.Page + 1, state.PageSize, searchString, state.SortLabel, state.SortDirection == MudBlazor.SortDirection.None ? null : (state.SortDirection == MudBlazor.SortDirection.Descending ? AdminAPI.SortDirection.Desc : AdminAPI.SortDirection.Asc));
+        return new TableData<Product>() { TotalItems = result.Total, Items = result.Items };
+    }
+
+    private void OnSearch(string text)
+    {
+        searchString = text;
+        table.ReloadServerData();
+    }
+
+    private void OnItemClicked(TableRowClickEventArgs<Product> args)
+    {
+        NavigationManager.NavigateTo($"/products/{args.Item.Id}");
     }
 }
