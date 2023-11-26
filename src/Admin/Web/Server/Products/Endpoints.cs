@@ -53,6 +53,24 @@ public static class Endpoints
         productsGroup.MapGet("/{id}/variants", GetProductVariants)
             .WithName($"Products_{nameof(GetProductVariants)}");
 
+        productsGroup.MapPost("/{id}", CreateProductVariant)
+            .WithName($"Products_{nameof(CreateProductVariant)}");
+
+        productsGroup.MapDelete("/{id}/{variantId}", DeleteProductVariant)
+            .WithName($"Products_{nameof(DeleteProductVariant)}");
+
+        productsGroup.MapGet("/{id}/attributes", GetProductAttributes)
+            .WithName($"Products_{nameof(GetProductAttributes)}");
+
+        productsGroup.MapPost("/{id}/attributes", AddProductAttribute)
+            .WithName($"Products_{nameof(AddProductAttribute)}");
+
+        productsGroup.MapPut("/{id}/attributes/{attributeId}", UpdateProductAttribute)
+            .WithName($"Products_{nameof(UpdateProductAttribute)}");
+
+        productsGroup.MapDelete("/{id}/attributes/{attributeId}", DeleteProductAttribute)
+            .WithName($"Products_{nameof(DeleteProductAttribute)}");
+
         return app;
     }
 
@@ -123,5 +141,41 @@ public static class Endpoints
     private static async Task<Results<Ok<PagedResultOfProduct>, NotFound>> GetProductVariants(string id, int page = 1, int pageSize = 10, string? searchTerm = null, string? sortBy = null, SortDirection? sortDirection = null, CatalogAPI.IProductsClient productsClient = default!, CancellationToken cancellationToken = default!)
     {
         return TypedResults.Ok(await productsClient.GetVariantsAsync(id, page, pageSize, searchTerm, sortBy, sortDirection, cancellationToken));
+    }
+
+    private static async Task<Results<Ok<Product>, BadRequest>> CreateProductVariant(long id, CreateProductVariantData request, CatalogAPI.IProductsClient productsClient, CancellationToken cancellationToken)
+    {
+        var product = await productsClient.CreateVariantAsync(id, request, cancellationToken);
+        return TypedResults.Ok(product);
+    }
+
+    private static async Task<Results<Ok, NotFound>> DeleteProductVariant(long id, long variantId, CatalogAPI.IProductsClient productsClient, CancellationToken cancellationToken)
+    {
+        await productsClient.DeleteVariantAsync(id, variantId, cancellationToken);
+        return TypedResults.Ok();
+    }
+
+    private static async Task<Results<Ok<ICollection<ProductAttribute>>, BadRequest>> GetProductAttributes(long id, CatalogAPI.IProductsClient productsClient, CancellationToken cancellationToken = default!)
+    {
+        return TypedResults.Ok(await productsClient.GetProductAttributesAsync(id, cancellationToken));
+    }
+
+    private static async Task<Results<Ok<ProductAttribute>, BadRequest>> AddProductAttribute(long id, AddProductAttribute request, CatalogAPI.IProductsClient productsClient, CancellationToken cancellationToken)
+    {
+        var productAttribute = await productsClient.AddProductAttributeAsync(id, request, cancellationToken);
+        return TypedResults.Ok(productAttribute);
+    }
+
+    private static async Task<Results<Ok, NotFound>> UpdateProductAttribute(long id, string attributeId, UpdateProductAttribute request, CatalogAPI.IProductsClient productsClient, CancellationToken cancellationToken)
+    {
+        await productsClient.UpdateProductAttributeAsync(id, attributeId, request, cancellationToken);
+        return TypedResults.Ok();
+    }
+
+
+    private static async Task<Results<Ok, NotFound>> DeleteProductAttribute(long id, string attributeId, CatalogAPI.IProductsClient productsClient, CancellationToken cancellationToken)
+    {
+        await productsClient.DeleteProductAttributeAsync(id, attributeId, cancellationToken);
+        return TypedResults.Ok();
     }
 }

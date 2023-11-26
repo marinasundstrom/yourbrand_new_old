@@ -52,7 +52,7 @@ public static partial class Endpoints
         return app;
     }
 
-    public static async Task<Results<Ok<PagedResult<ProductDto>>, BadRequest>> GetVariants(string idOrHandle, int page = 0, int pageSize = 10, string? searchString = null, string? sortBy = null, SortDirection? sortDirection = null, IMediator mediator = default, CancellationToken cancellationToken = default)
+    public static async Task<Results<Ok<PagedResult<ProductDto>>, BadRequest>> GetVariants(string idOrHandle, int page = 1, int pageSize = 10, string? searchString = null, string? sortBy = null, SortDirection? sortDirection = null, IMediator mediator = default, CancellationToken cancellationToken = default)
     {
         return TypedResults.Ok(await mediator.Send(new GetProductVariants(idOrHandle, page, pageSize, searchString, sortBy, sortDirection)));
     }

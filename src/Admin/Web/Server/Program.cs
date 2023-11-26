@@ -20,6 +20,9 @@ using YourBrand.Server;
 using YourBrand.Extensions;
 using YourBrand.Server.ProductCategories;
 using YourBrand.Server.Products;
+using YourBrand.Server.ProductOptions;
+using YourBrand.Server.Options;
+using YourBrand.Server.Attributes;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -105,7 +108,10 @@ app.MapRazorComponents<App>()
 
 app
     .MapProductsEndpoints()
-    .MapProductCategoriesEndpoints();
+    .MapProductCategoriesEndpoints()
+    .MapProductOptionsEndpoints()
+    .MapAttributesEndpoints()
+    .MapOptionsEndpoints();
 
 app.MapHealthChecks("/healthz", new HealthCheckOptions()
 {

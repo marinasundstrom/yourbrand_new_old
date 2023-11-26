@@ -33,4 +33,10 @@ builder.Services.AddHttpClient<AdminAPI.IProductsClient>("WebAPI")
 builder.Services.AddHttpClient<AdminAPI.IProductCategoriesClient>("WebAPI")
         .AddTypedClient<AdminAPI.IProductCategoriesClient>((http, sp) => new AdminAPI.ProductCategoriesClient(http));
 
+builder.Services.AddHttpClient<AdminAPI.IAttributesClient>("WebAPI")
+        .AddTypedClient<AdminAPI.IAttributesClient>((http, sp) => new AdminAPI.AttributesClient(http));
+
+builder.Services.AddHttpClient<AdminAPI.IOptionsClient>("WebAPI")
+        .AddTypedClient<AdminAPI.IOptionsClient>((http, sp) => new AdminAPI.OptionsClient(http));
+
 await builder.Build().RunAsync();

@@ -1,7 +1,7 @@
-x-generator: NSwag v13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v10.0.0.0))
+x-generator: NSwag v14.0.0.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))
 openapi: 3.0.0
 info:
-  title: Catalog API
+  title: Catalog.API
   version: v1
 servers:
   - url: https://localhost:7134
@@ -18,29 +18,34 @@ paths:
           schema:
             type: integer
             format: int32
+            default: 1
           x-position: 1
         - name: pageSize
           in: query
           schema:
             type: integer
             format: int32
+            default: 10
           x-position: 2
         - name: searchString
           in: query
           schema:
             type: string
+            nullable: true
           x-position: 3
         - name: sortBy
           in: query
           schema:
             type: string
+            nullable: true
           x-position: 4
         - name: sortDirection
           in: query
           schema:
-            nullable: true
             oneOf:
-              - $ref: "#/components/schemas/SortDirection"
+              - nullable: true
+                oneOf:
+                  - $ref: "#/components/schemas/SortDirection"
           x-position: 5
       responses:
         200:
@@ -56,7 +61,6 @@ paths:
       operationId: Brands_CreateBrand
       requestBody:
         x-name: dto
-        description: ""
         content:
           application/json:
             schema:
@@ -106,7 +110,6 @@ paths:
           x-position: 1
       requestBody:
         x-name: dto
-        description: ""
         content:
           application/json:
             schema:
@@ -144,29 +147,34 @@ paths:
           schema:
             type: integer
             format: int32
+            default: 1
           x-position: 1
         - name: pageSize
           in: query
           schema:
             type: integer
             format: int32
+            default: 10
           x-position: 2
         - name: searchString
           in: query
           schema:
             type: string
+            nullable: true
           x-position: 3
         - name: sortBy
           in: query
           schema:
             type: string
+            nullable: true
           x-position: 4
         - name: sortDirection
           in: query
           schema:
-            nullable: true
             oneOf:
-              - $ref: "#/components/schemas/SortDirection"
+              - nullable: true
+                oneOf:
+                  - $ref: "#/components/schemas/SortDirection"
           x-position: 5
       responses:
         200:
@@ -193,29 +201,34 @@ paths:
           schema:
             type: integer
             format: int32
+            default: 0
           x-position: 2
         - name: pageSize
           in: query
           schema:
             type: integer
             format: int32
+            default: 10
           x-position: 3
         - name: searchString
           in: query
           schema:
             type: string
+            nullable: true
           x-position: 4
         - name: sortBy
           in: query
           schema:
             type: string
+            nullable: true
           x-position: 5
         - name: sortDirection
           in: query
           schema:
-            nullable: true
             oneOf:
-              - $ref: "#/components/schemas/SortDirection"
+              - nullable: true
+                oneOf:
+                  - $ref: "#/components/schemas/SortDirection"
           x-position: 6
       responses:
         200:
@@ -295,13 +308,13 @@ paths:
           x-position: 1
       requestBody:
         x-name: selectedAttributeValues
-        description: ""
         content:
           application/json:
             schema:
               type: object
               additionalProperties:
                 type: string
+                nullable: true
         required: true
         x-position: 2
       responses:
@@ -328,13 +341,13 @@ paths:
           x-position: 1
       requestBody:
         x-name: selectedAttributeValues
-        description: ""
         content:
           application/json:
             schema:
               type: object
               additionalProperties:
                 type: string
+                nullable: true
         required: true
         x-position: 2
       responses:
@@ -364,7 +377,6 @@ paths:
           x-position: 1
       requestBody:
         x-name: data
-        description: ""
         content:
           application/json:
             schema:
@@ -401,7 +413,6 @@ paths:
           x-position: 2
       requestBody:
         x-name: data
-        description: ""
         content:
           application/json:
             schema:
@@ -492,7 +503,6 @@ paths:
           x-position: 1
       requestBody:
         x-name: data
-        description: ""
         content:
           application/json:
             schema:
@@ -528,7 +538,6 @@ paths:
           x-position: 2
       requestBody:
         x-name: data
-        description: ""
         content:
           application/json:
             schema:
@@ -582,6 +591,7 @@ paths:
           in: query
           schema:
             type: string
+            nullable: true
           x-position: 2
       responses:
         200:
@@ -609,7 +619,6 @@ paths:
           x-position: 1
       requestBody:
         x-name: data
-        description: ""
         content:
           application/json:
             schema:
@@ -647,7 +656,6 @@ paths:
           x-position: 2
       requestBody:
         x-name: data
-        description: ""
         content:
           application/json:
             schema:
@@ -709,7 +717,6 @@ paths:
           x-position: 2
       requestBody:
         x-name: data
-        description: ""
         content:
           application/json:
             schema:
@@ -796,7 +803,6 @@ paths:
           x-position: 1
       requestBody:
         x-name: data
-        description: ""
         content:
           application/json:
             schema:
@@ -834,7 +840,6 @@ paths:
           x-position: 2
       requestBody:
         x-name: data
-        description: ""
         content:
           application/json:
             schema:
@@ -885,55 +890,65 @@ paths:
           in: query
           schema:
             type: string
+            nullable: true
           x-position: 1
         - name: brandIdOrHandle
           in: query
           schema:
             type: string
+            nullable: true
           x-position: 2
         - name: includeUnlisted
           in: query
           schema:
             type: boolean
+            default: false
           x-position: 3
         - name: groupProducts
           in: query
           schema:
             type: boolean
+            default: true
           x-position: 4
         - name: page
           in: query
           schema:
             type: integer
             format: int32
+            default: 1
           x-position: 5
         - name: pageSize
           in: query
           schema:
             type: integer
             format: int32
+            default: 10
           x-position: 6
         - name: searchTerm
           in: query
           schema:
             type: string
+            nullable: true
           x-position: 7
         - name: categoryPathOrId
           in: query
           schema:
             type: string
+            nullable: true
           x-position: 8
         - name: sortBy
           in: query
           schema:
             type: string
+            nullable: true
           x-position: 9
         - name: sortDirection
           in: query
           schema:
-            nullable: true
             oneOf:
-              - $ref: "#/components/schemas/SortDirection"
+              - nullable: true
+                oneOf:
+                  - $ref: "#/components/schemas/SortDirection"
           x-position: 10
       responses:
         200:
@@ -949,7 +964,6 @@ paths:
       operationId: Products_CreateProduct
       requestBody:
         x-name: request
-        description: ""
         content:
           application/json:
             schema:
@@ -1001,7 +1015,6 @@ paths:
           x-position: 1
       requestBody:
         x-name: request
-        description: ""
         content:
           application/json:
             schema:
@@ -1045,7 +1058,6 @@ paths:
           x-position: 1
       requestBody:
         x-name: request
-        description: ""
         content:
           application/json:
             schema:
@@ -1103,7 +1115,6 @@ paths:
           x-position: 1
       requestBody:
         x-name: request
-        description: ""
         content:
           application/json:
             schema:
@@ -1130,7 +1141,6 @@ paths:
           x-position: 1
       requestBody:
         x-name: request
-        description: ""
         content:
           application/json:
             schema:
@@ -1157,7 +1167,6 @@ paths:
           x-position: 1
       requestBody:
         x-name: request
-        description: ""
         content:
           application/json:
             schema:
@@ -1181,17 +1190,20 @@ paths:
           schema:
             type: integer
             format: int32
+            default: 1
           x-position: 1
         - name: pageSize
           in: query
           schema:
             type: integer
             format: int32
+            default: 10
           x-position: 2
         - name: searchTerm
           in: query
           schema:
             type: string
+            nullable: true
           x-position: 3
       responses:
         200:
@@ -1207,7 +1219,6 @@ paths:
       operationId: ProductCategories_CreateProductCategory
       requestBody:
         x-name: request
-        description: ""
         content:
           application/json:
             schema:
@@ -1253,7 +1264,6 @@ paths:
           x-position: 1
       requestBody:
         x-name: request
-        description: ""
         content:
           application/json:
             schema:
@@ -1282,6 +1292,30 @@ paths:
           description: ""
         404:
           description: ""
+    get:
+      tags:
+        - ProductCategories
+      operationId: ProductCategories_GetProductCategoryById
+      parameters:
+        - name: idOrPath
+          in: path
+          required: true
+          schema:
+            type: string
+          x-position: 1
+      responses:
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductCategory"
   /v1/attributes:
     get:
       tags:
@@ -1295,6 +1329,7 @@ paths:
           explode: true
           schema:
             type: array
+            nullable: true
             items:
               type: string
           x-position: 1
@@ -1303,29 +1338,34 @@ paths:
           schema:
             type: integer
             format: int32
+            default: 0
           x-position: 2
         - name: pageSize
           in: query
           schema:
             type: integer
             format: int32
+            default: 10
           x-position: 3
         - name: searchString
           in: query
           schema:
             type: string
+            nullable: true
           x-position: 4
         - name: sortBy
           in: query
           schema:
             type: string
+            nullable: true
           x-position: 5
         - name: sortDirection
           in: query
           schema:
-            nullable: true
             oneOf:
-              - $ref: "#/components/schemas/SortDirection"
+              - nullable: true
+                oneOf:
+                  - $ref: "#/components/schemas/SortDirection"
           x-position: 6
       responses:
         200:
@@ -1343,7 +1383,6 @@ paths:
       operationId: Attributes_CreateAttribute
       requestBody:
         x-name: dto
-        description: ""
         content:
           application/json:
             schema:
@@ -1393,7 +1432,6 @@ paths:
           x-position: 1
       requestBody:
         x-name: dto
-        description: ""
         content:
           application/json:
             schema:
@@ -1433,7 +1471,6 @@ paths:
           x-position: 1
       requestBody:
         x-name: data
-        description: ""
         content:
           application/json:
             schema:
@@ -1497,7 +1534,6 @@ paths:
       operationId: Attributes_CreateAttributeGroup
       requestBody:
         x-name: data
-        description: ""
         content:
           application/json:
             schema:
@@ -1528,7 +1564,6 @@ paths:
           x-position: 1
       requestBody:
         x-name: data
-        description: ""
         content:
           application/json:
             schema:
@@ -1565,7 +1600,7 @@ paths:
     get:
       tags:
         - Options
-        - Attributes
+        - Options
       operationId: Options_GetOptions
       parameters:
         - name: id
@@ -1582,14 +1617,14 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/OptionValue"
+                  $ref: "#/components/schemas/Option"
         400:
           description: ""
   /v1/options/{id}/values:
     get:
       tags:
         - Options
-        - Attributes
+        - Options
       operationId: Options_GetOptionValues
       parameters:
         - name: id
@@ -1621,29 +1656,34 @@ paths:
           schema:
             type: integer
             format: int32
+            default: 1
           x-position: 1
         - name: pageSize
           in: query
           schema:
             type: integer
             format: int32
+            default: 10
           x-position: 2
         - name: searchString
           in: query
           schema:
             type: string
+            nullable: true
           x-position: 3
         - name: sortBy
           in: query
           schema:
             type: string
+            nullable: true
           x-position: 4
         - name: sortDirection
           in: query
           schema:
-            nullable: true
             oneOf:
-              - $ref: "#/components/schemas/SortDirection"
+              - nullable: true
+                oneOf:
+                  - $ref: "#/components/schemas/SortDirection"
           x-position: 5
       responses:
         200:
@@ -1659,7 +1699,6 @@ paths:
       operationId: Stores_CreateStore
       requestBody:
         x-name: dto
-        description: ""
         content:
           application/json:
             schema:
@@ -1708,7 +1747,6 @@ paths:
           x-position: 1
       requestBody:
         x-name: dto
-        description: ""
         content:
           application/json:
             schema:
@@ -1733,31 +1771,6 @@ paths:
       responses:
         200:
           description: ""
-  /v1/ProductCategories/{idOrPath}:
-    get:
-      tags:
-        - ProductCategories
-      operationId: ProductCategories_GetProductCategoryById
-      parameters:
-        - name: idOrPath
-          in: path
-          required: true
-          schema:
-            type: string
-          x-position: 1
-      responses:
-        default:
-          description: ""
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ProblemDetails"
-        200:
-          description: ""
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ProductCategory"
 components:
   schemas:
     PagedResultOfBrand:

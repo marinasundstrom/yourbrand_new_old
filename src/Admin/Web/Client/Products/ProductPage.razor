@@ -12,60 +12,60 @@
 {
     <MudBreadcrumbs Items="_items"></MudBreadcrumbs>
 
-            <PageTitle>@detailsUpdateViewModel.Name</PageTitle>
+    <PageTitle>@detailsUpdateViewModel.Name</PageTitle>
 
-            <MudText Typo="Typo.h3" GutterBottom="true">@detailsUpdateViewModel.Name</MudText>
+    <MudText Typo="Typo.h3" GutterBottom="true">@detailsUpdateViewModel.Name</MudText>
 
-            <MudGrid>
-                <MudItem xs="12" sm="6" md="4">
-                    <ImageUpdateView Model="imageUpdateViewModel" />
-                </MudItem>
+    <MudGrid>
+        <MudItem xs="12" sm="6" md="4">
+            <ImageUpdateView Model="imageUpdateViewModel" />
+        </MudItem>
 
-                <MudItem xs="12" sm="12" md="6">
-                    <MudPaper Elevation="2" Class="pa-4">
-                        <DetailsUpdateView Model="@detailsUpdateViewModel" />
-                    </MudPaper>
-                </MudItem>
+        <MudItem xs="12" sm="12" md="6">
+            <MudPaper Elevation="2" Class="pa-4">
+                <DetailsUpdateView Model="@detailsUpdateViewModel" />
+            </MudPaper>
+        </MudItem>
 
-                @if(product.Parent is null) 
-                {
-                    <MudItem xs="12" sm="12" md="3">
-                        <MudPaper Elevation="2" Class="pa-4">
-                            <CategoryUpdateView Model="categoryUpdateViewModel" />
-                        </MudPaper>
-                    </MudItem>
-                }
+        @if (product.Parent is null)
+        {
+            <MudItem xs="12" sm="12" md="3">
+                <MudPaper Elevation="2" Class="pa-4">
+                    <CategoryUpdateView Model="categoryUpdateViewModel" />
+                </MudPaper>
+            </MudItem>
+        }
 
-                <MudItem xs="12" sm="12" md="3">
-                    <MudPaper Elevation="2" Class="pa-4">
-                        <PriceUpdateView Model="priceUpdateViewModel" />
-                    </MudPaper>
-                </MudItem>
+        <MudItem xs="12" sm="12" md="3">
+            <MudPaper Elevation="2" Class="pa-4">
+                <PriceUpdateView Model="priceUpdateViewModel" />
+            </MudPaper>
+        </MudItem>
 
-                <MudItem xs="12" sm="12" md="3">
-                    <MudPaper Elevation="2" Class="pa-4">
-                        <HandleUpdateView Model="handleUpdateViewModel" />
-                    </MudPaper>
-                </MudItem>
+        <MudItem xs="12" sm="12" md="3">
+            <MudPaper Elevation="2" Class="pa-4">
+                <HandleUpdateView Model="handleUpdateViewModel" />
+            </MudPaper>
+        </MudItem>
 
-                <MudItem xs="12" sm="12" md="3">
-                    <MudPaper Elevation="2" Class="pa-4">
-                        <VisibilityUpdateView Model="visibilityUpdateViewModel" />
-                    </MudPaper>
-                </MudItem>
+        <MudItem xs="12" sm="12" md="3">
+            <MudPaper Elevation="2" Class="pa-4">
+                <VisibilityUpdateView Model="visibilityUpdateViewModel" />
+            </MudPaper>
+        </MudItem>
 
-                @if(product.Parent is null) 
-                {
-                    <VariantView ProductId="product.Id" Product="product" />
-                }
+        @if (product.Parent is null)
+        {
+            <VariantView ProductId="product.Id" Product="product" />
+        }
 
-            </MudGrid>
+    </MudGrid>
 }
 
 @code
 {
     private static IComponentRenderMode renderMode =
-        new InteractiveWebAssemblyRenderMode(prerender: false);
+    new InteractiveWebAssemblyRenderMode(prerender: false);
 
     bool loaded = false;
     Product product;
@@ -86,46 +86,49 @@
 
         _items.Add(new BreadcrumbItem("Products", href: "/products"));
 
-        if(product.Parent is null) 
+        if (product.Parent is null)
         {
             _items.Add(new BreadcrumbItem(product.Name, href: null, disabled: true));
         }
-        else 
+        else
         {
             _items.Add(new BreadcrumbItem(product.Parent.Name, href: $"/products/{product.Parent.Id}"));
-            _items.Add(new BreadcrumbItem(product.Name, href: null, disabled: true));        
+            _items.Add(new BreadcrumbItem(product.Name, href: null, disabled: true));
         }
 
         imageUpdateViewModel = ImageUpdateViewModel.Create(
-            product,
-            ProductsClient,
-            Snackbar);
+        product,
+        ProductsClient,
+        Snackbar);
 
         detailsUpdateViewModel = DetailsUpdateViewModel.Create(
-            product,
-            ProductsClient,
-            Snackbar);
+        product,
+        ProductsClient,
+        Snackbar);
 
         priceUpdateViewModel = PriceUpdateViewModel.Create(
-            product,
-            ProductsClient,
-            Snackbar);
+        product,
+        ProductsClient,
+        Snackbar);
 
         handleUpdateViewModel = HandleUpdateViewModel.Create(
-            product,
-            ProductsClient,
-            Snackbar);
+        product,
+        ProductsClient,
+        Snackbar);
 
         visibilityUpdateViewModel = VisibilityUpdateViewModel.Create(
-            product,
-            ProductsClient,
-            Snackbar);
+        product,
+        ProductsClient,
+        Snackbar);
 
-        categoryUpdateViewModel = CategoryUpdateViewModel.Create(
+        if (product.Parent is null)
+        {
+            categoryUpdateViewModel = CategoryUpdateViewModel.Create(
             product,
             ProductsClient,
             ProductCategoriesClient,
             Snackbar);
+        }
 
         loaded = true;
     }

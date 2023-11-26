@@ -1,6 +1,7 @@
 @using AdminAPI
 @inject NavigationManager NavigationManager
 @inject IProductsClient ProductsClient
+@inject IDialogService DialogService
 
 <MudItem xs="12" sm="12" md="12">
     <MudPaper Elevation="2" Class="pa-4">
@@ -8,7 +9,7 @@
             Elevation="0" Hover="true" @ref="table" OnRowClick="@OnItemClicked">
             <ToolBarContent>
                 <MudText Typo="Typo.h6">Variants</MudText>
-                <MudIconButton Icon="@Icons.Material.Filled.Add" OnClick="@(() => {})" />
+                <MudIconButton Icon="@Icons.Material.Filled.Add" OnClick="OpenCreateVariantDialog" />
                 <MudSpacer />
                 <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Immediate="true" Placeholder="Search"
                     Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium"
@@ -80,5 +81,19 @@
     private void OnItemClicked(TableRowClickEventArgs<Product> args)
     {
         NavigationManager.NavigateTo($"/products/{args.Item.Id}");
+    }
+
+    private async Task OpenCreateVariantDialog()
+    {
+        var param = new DialogParameters();
+        param.Add(nameof(CreateProductVariantDialog.ProductId), ProductId);
+        var dialog = await DialogService.ShowAsync<CreateProductVariantDialog>("Create variant", param);
+        var result = await dialog.Result;
+        if (result.Canceled)
+        {
+            return;
+        }
+
+        await table.ReloadServerData();
     }
 }

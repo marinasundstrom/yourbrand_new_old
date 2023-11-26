@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.API.Features.ProductManagement.Products;
 
-public sealed record GetProducts(string? StoreId = null, string? BrandIdOrHandle = null, bool IncludeUnlisted = false, bool GroupProducts = true, string? ProductCategoryIdOrPath = null, int Page = 10, int PageSize = 10, string? SearchTerm = null, string? SortBy = null, API.SortDirection? SortDirection = null) : IRequest<PagedResult<ProductDto>>
+public sealed record GetProducts(string? StoreId = null, string? BrandIdOrHandle = null, bool IncludeUnlisted = false, bool GroupProducts = true, string? ProductCategoryIdOrPath = null, int Page = 1, int PageSize = 10, string? SearchTerm = null, string? SortBy = null, API.SortDirection? SortDirection = null) : IRequest<PagedResult<ProductDto>>
 {
     public sealed class Handler(CatalogContext catalogContext = default!) : IRequestHandler<GetProducts, PagedResult<ProductDto>>
     {

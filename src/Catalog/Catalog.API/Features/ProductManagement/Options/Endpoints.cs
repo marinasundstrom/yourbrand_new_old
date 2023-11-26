@@ -16,15 +16,17 @@ public static class Endpoints
         var versionedApi = app.NewVersionedApi("Options");
 
         var group = versionedApi.MapGroup("/v{version:apiVersion}/options")
-            .WithTags("Attributes")
+            .WithTags("Options")
             .HasApiVersion(1, 0)
             .WithOpenApi();
 
         group.MapGet("/", GetOptionValues)
-            .WithName($"Options_{nameof(GetOptions)}");
+            .WithName($"Options_{nameof(GetOptions)}")
+            .Produces<IEnumerable<OptionDto>>();
 
         group.MapGet("/{id}/values", GetOptionValues)
-            .WithName($"Options_{nameof(GetOptionValues)}");
+            .WithName($"Options_{nameof(GetOptionValues)}")
+            .Produces<IEnumerable<OptionValueDto>>();
 
         return app;
     }

@@ -45,7 +45,7 @@ public record CreateProductVariant(long ProductId, CreateProductVariantData Data
             {
                 Name = request.Data.Name,
                 Handle = request.Data.Handle,
-                Description = request.Data.Description,
+                Description = request.Data.Description ?? string.Empty,
                 Price = request.Data.Price
             };
 

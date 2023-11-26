@@ -140,6 +140,36 @@ paths:
           description: ""
         404:
           description: ""
+    post:
+      tags:
+        - Products
+        - Products
+      operationId: Products_CreateProductVariant
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          x-position: 1
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateProductVariantData"
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        400:
+          description: ""
   /api/v1/products/price:
     put:
       tags:
@@ -331,6 +361,144 @@ paths:
                 $ref: "#/components/schemas/PagedResultOfProduct"
         404:
           description: ""
+  /api/v1/products/{id}/{variantId}:
+    delete:
+      tags:
+        - Products
+        - Products
+      operationId: Products_DeleteProductVariant
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          x-position: 1
+        - name: variantId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          x-position: 2
+      responses:
+        200:
+          description: ""
+        404:
+          description: ""
+  /api/v1/products/{id}/attributes:
+    get:
+      tags:
+        - Products
+        - Products
+      operationId: Products_GetProductAttributes
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          x-position: 1
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ProductAttribute"
+        400:
+          description: ""
+    post:
+      tags:
+        - Products
+        - Products
+      operationId: Products_AddProductAttribute
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          x-position: 1
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddProductAttribute"
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductAttribute"
+        400:
+          description: ""
+  /api/v1/products/{id}/attributes/{attributeId}:
+    put:
+      tags:
+        - Products
+        - Products
+      operationId: Products_UpdateProductAttribute
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          x-position: 1
+        - name: attributeId
+          in: path
+          required: true
+          schema:
+            type: string
+          x-position: 2
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateProductAttribute"
+        required: true
+        x-position: 3
+      responses:
+        200:
+          description: ""
+        404:
+          description: ""
+    delete:
+      tags:
+        - Products
+        - Products
+      operationId: Products_DeleteProductAttribute
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          x-position: 1
+        - name: attributeId
+          in: path
+          required: true
+          schema:
+            type: string
+          x-position: 2
+      responses:
+        200:
+          description: ""
+        404:
+          description: ""
   /api/v1/productCategories:
     get:
       tags:
@@ -430,6 +598,308 @@ paths:
           description: ""
         404:
           description: ""
+  /api/v1/products/{id}/options:
+    get:
+      tags:
+        - Products
+        - Products
+      operationId: ProductOptions_GetProductOptions
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          x-position: 1
+        - name: variantId
+          in: query
+          schema:
+            type: string
+            nullable: true
+          x-position: 2
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ProductOption"
+        400:
+          description: ""
+    post:
+      tags:
+        - Products
+        - Products
+      operationId: Products_CreateProductOption
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          x-position: 1
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateProductOptionData"
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Option"
+        400:
+          description: ""
+  /api/v1/products/{id}/options/{optionId}:
+    put:
+      tags:
+        - Products
+        - Products
+      operationId: Products_UpdateProductOption
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          x-position: 1
+        - name: optionId
+          in: path
+          required: true
+          schema:
+            type: string
+          x-position: 2
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateProductOptionData"
+        required: true
+        x-position: 3
+      responses:
+        200:
+          description: ""
+        404:
+          description: ""
+    delete:
+      tags:
+        - Products
+        - Products
+      operationId: Products_DeleteProductOption
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          x-position: 1
+        - name: optionId
+          in: path
+          required: true
+          schema:
+            type: string
+          x-position: 2
+      responses:
+        200:
+          description: ""
+        404:
+          description: ""
+  /api/v1/attributes:
+    get:
+      tags:
+        - Attributes
+        - Attributes
+      operationId: Attributes_GetAttributes
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: 1
+          x-position: 1
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: 10
+          x-position: 2
+        - name: searchTerm
+          in: query
+          schema:
+            type: string
+            nullable: true
+          x-position: 3
+        - name: sortBy
+          in: query
+          schema:
+            type: string
+            nullable: true
+          x-position: 4
+        - name: sortDirection
+          in: query
+          schema:
+            oneOf:
+              - nullable: true
+                oneOf:
+                  - $ref: "#/components/schemas/SortDirection"
+          x-position: 5
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PagedResultOfAttribute"
+    post:
+      tags:
+        - Attributes
+        - Attributes
+      operationId: Attributes_CreateAttribute
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateAttribute"
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Attribute"
+        400:
+          description: ""
+  /api/v1/attributes/{id}:
+    get:
+      tags:
+        - Attributes
+        - Attributes
+      operationId: Attributes_GetAttributeById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          x-position: 1
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Attribute"
+    put:
+      tags:
+        - Attributes
+        - Attributes
+      operationId: Attributes_UpdateAttribute
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          x-position: 1
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateAttribute"
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ""
+        404:
+          description: ""
+    delete:
+      tags:
+        - Attributes
+        - Attributes
+      operationId: Attributes_DeleteAttribute
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          x-position: 1
+      responses:
+        200:
+          description: ""
+        404:
+          description: ""
+  /api/v1/options:
+    get:
+      tags:
+        - ProductCategories
+        - Options
+      operationId: Options_GetOptions
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+          x-position: 1
+        - name: sortDirection
+          in: query
+          schema:
+            oneOf:
+              - nullable: true
+                oneOf:
+                  - $ref: "#/components/schemas/SortDirection"
+          x-position: 2
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Option"
+  /api/v1/options/{id}:
+    get:
+      tags:
+        - ProductCategories
+        - Options
+      operationId: Options_GetOptionValues
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          x-position: 1
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/OptionValue"
   /WeatherForecast:
     get:
       tags:
@@ -845,6 +1315,53 @@ components:
         productCategoryId:
           type: integer
           format: int64
+    CreateProductVariantData:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        handle:
+          type: string
+        description:
+          type: string
+          nullable: true
+        id:
+          type: string
+          nullable: true
+        price:
+          type: number
+          format: decimal
+        regularPrice:
+          type: number
+          format: decimal
+          nullable: true
+        attributes:
+          type: array
+          items:
+            $ref: "#/components/schemas/CreateProductVariantAttributeData"
+    CreateProductVariantAttributeData:
+      type: object
+      additionalProperties: false
+      properties:
+        attributeId:
+          type: string
+        valueId:
+          type: string
+    AddProductAttribute:
+      type: object
+      additionalProperties: false
+      properties:
+        attributeId:
+          type: string
+        valueId:
+          type: string
+    UpdateProductAttribute:
+      type: object
+      additionalProperties: false
+      properties:
+        valueId:
+          type: string
     PagedResultOfProductCategory:
       type: object
       additionalProperties: false
@@ -876,6 +1393,203 @@ components:
         name:
           type: string
         description:
+          type: string
+    CreateProductOptionData:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+          nullable: true
+        optionType:
+          $ref: "#/components/schemas/OptionType"
+        group:
+          nullable: true
+          oneOf:
+            - $ref: "#/components/schemas/OptionGroup"
+        isSelected:
+          type: boolean
+          nullable: true
+        sku:
+          type: string
+          nullable: true
+        price:
+          type: number
+          format: decimal
+          nullable: true
+        groupId:
+          type: string
+          nullable: true
+        values:
+          type: array
+          items:
+            $ref: "#/components/schemas/CreateProductOptionValueData"
+        defaultOptionValueId:
+          type: string
+          nullable: true
+        minNumericalValue:
+          type: integer
+          format: int32
+          nullable: true
+        maxNumericalValue:
+          type: integer
+          format: int32
+          nullable: true
+        defaultNumericalValue:
+          type: integer
+          format: int32
+          nullable: true
+        textValueMinLength:
+          type: integer
+          format: int32
+          nullable: true
+        textValueMaxLength:
+          type: integer
+          format: int32
+          nullable: true
+        defaultTextValue:
+          type: string
+          nullable: true
+    CreateProductOptionValueData:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        sku:
+          type: string
+          nullable: true
+        price:
+          type: number
+          format: decimal
+          nullable: true
+    UpdateProductOptionData:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+          nullable: true
+        isSelected:
+          type: boolean
+          nullable: true
+        sku:
+          type: string
+          nullable: true
+        price:
+          type: number
+          format: decimal
+          nullable: true
+        groupId:
+          type: string
+          nullable: true
+        values:
+          type: array
+          items:
+            $ref: "#/components/schemas/UpdateProductOptionValueData"
+        defaultOptionValueId:
+          type: string
+          nullable: true
+        minNumericalValue:
+          type: integer
+          format: int32
+          nullable: true
+        maxNumericalValue:
+          type: integer
+          format: int32
+          nullable: true
+        defaultNumericalValue:
+          type: integer
+          format: int32
+          nullable: true
+        textValueMinLength:
+          type: integer
+          format: int32
+          nullable: true
+        textValueMaxLength:
+          type: integer
+          format: int32
+          nullable: true
+        defaultTextValue:
+          type: string
+          nullable: true
+    UpdateProductOptionValueData:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          nullable: true
+        name:
+          type: string
+        sku:
+          type: string
+          nullable: true
+        price:
+          type: number
+          format: decimal
+          nullable: true
+    PagedResultOfAttribute:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Attribute"
+        total:
+          type: integer
+          format: int32
+    CreateAttribute:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+          nullable: true
+        groupId:
+          type: string
+          nullable: true
+        values:
+          type: array
+          items:
+            $ref: "#/components/schemas/CreateProductAttributeValueData"
+    CreateProductAttributeValueData:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+    UpdateAttribute:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+          nullable: true
+        groupId:
+          type: string
+          nullable: true
+        values:
+          type: array
+          items:
+            $ref: "#/components/schemas/UpdateProductAttributeValueData"
+    UpdateProductAttributeValueData:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          nullable: true
+        name:
           type: string
     WeatherForecast:
       type: object
