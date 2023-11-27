@@ -82,12 +82,12 @@ else
                     {
                         var v2 = v;
 
-                        <div @key="@v.Id" class="mt-1 me-3 @(v2.Id==productViewModel.Variant.Id ? "shadow" : "shadow-sm" )">
-                            <div href="@($"/products/{productViewModel.Product.Handle}/{productViewModel.Variant!.Handle}")"
+                        <div @key="@v.Id" class="mt-1 me-3 @(v2.Id == productViewModel.Variant.Id ? "shadow" : "shadow-sm" )">
+                            <div href="@($"/products/{productViewModel.Product.Handle}/{v2?.Handle}")"
                                 @onclick="async () => await SelectVariant(v2!)" @onclick:preventDefault>
-                                @if ((v2?.Image ?? productViewModel.Image) is not null)
+                                @if ((v2?.Image ?? productViewModel.Product.Image) is not null)
                                 {
-                                    <img src="@(v2?.Image ?? productViewModel.Image)" width="100" height="100%" alt="@v2!.Name" />
+                                    <img src="@(v2?.Image ?? productViewModel.Product.Image)" width="100" height="100%" alt="@v2!.Name" />
                                 }
                                 else
                                 {
