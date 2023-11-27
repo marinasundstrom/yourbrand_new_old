@@ -3,50 +3,48 @@
 @inject IProductsClient ProductsClient
 @inject IDialogService DialogService
 
-<MudItem xs="12" sm="12" md="12">
-    <MudPaper Elevation="2" Class="pa-4">
-        <MudTable T="Product" ServerData="@(new Func<TableState, Task<TableData<Product>>>(ServerReload))" Dense="true"
-            Elevation="0" Hover="true" @ref="table" OnRowClick="@OnItemClicked">
-            <ToolBarContent>
-                <MudText Typo="Typo.h6">Variants</MudText>
-                <MudIconButton Icon="@Icons.Material.Filled.Add" OnClick="OpenCreateVariantDialog" />
-                <MudSpacer />
-                <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Immediate="true" Placeholder="Search"
-                    Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium"
-                    Class="mt-0"></MudTextField>
-            </ToolBarContent>
-            <HeaderContent>
-                <MudTh>
-                    <MudTableSortLabel SortLabel="Name" T="Product">Name</MudTableSortLabel>
-                </MudTh>
-                @foreach (var attr in Product.Attributes.OrderBy(x => x.Attribute.Id))
-                {
-                    <MudTh>@attr.Attribute.Name</MudTh>
-                }
-                <MudTh>
-                    <MudTableSortLabel SortLabel="Price" T="Product">Price</MudTableSortLabel>
-                </MudTh>
-            </HeaderContent>
-            <RowTemplate>
-                <MudTd DataLabel="Name">@context.Name</MudTd>
-                @foreach (var attr in context.Attributes.OrderBy(x => x.Attribute.Id))
-                {
-                    <MudTd DataLabel="@attr.Value?.Name">@attr.Value?.Name</MudTd>
-                }
-                <MudTd DataLabel="Price">@context.Price sek</MudTd>
-            </RowTemplate>
-            <NoRecordsContent>
-                <MudText>No matching records found</MudText>
-            </NoRecordsContent>
-            <LoadingContent>
-                <MudText>Loading...</MudText>
-            </LoadingContent>
-            <PagerContent>
-                <MudTablePager />
-            </PagerContent>
-        </MudTable>
-    </MudPaper>
-</MudItem>
+<MudPaper Elevation="2" Class="pa-4">
+    <MudTable T="Product" ServerData="@(new Func<TableState, Task<TableData<Product>>>(ServerReload))" Dense="true"
+        Elevation="0" Hover="true" @ref="table" OnRowClick="@OnItemClicked">
+        <ToolBarContent>
+            <MudText Typo="Typo.h6">Variants</MudText>
+            <MudIconButton Icon="@Icons.Material.Filled.Add" OnClick="OpenCreateVariantDialog" />
+            <MudSpacer />
+            <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Immediate="true" Placeholder="Search"
+                Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium"
+                Class="mt-0"></MudTextField>
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh>
+                <MudTableSortLabel SortLabel="Name" T="Product">Name</MudTableSortLabel>
+            </MudTh>
+            @foreach (var attr in Product.Attributes.OrderBy(x => x.Attribute.Id))
+            {
+                <MudTh>@attr.Attribute.Name</MudTh>
+            }
+            <MudTh>
+                <MudTableSortLabel SortLabel="Price" T="Product">Price</MudTableSortLabel>
+            </MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Name">@context.Name</MudTd>
+            @foreach (var attr in context.Attributes.OrderBy(x => x.Attribute.Id))
+            {
+                <MudTd DataLabel="@attr.Value?.Name">@attr.Value?.Name</MudTd>
+            }
+            <MudTd DataLabel="Price">@context.Price sek</MudTd>
+        </RowTemplate>
+        <NoRecordsContent>
+            <MudText>No matching records found</MudText>
+        </NoRecordsContent>
+        <LoadingContent>
+            <MudText>Loading...</MudText>
+        </LoadingContent>
+        <PagerContent>
+            <MudTablePager />
+        </PagerContent>
+    </MudTable>
+</MudPaper>
 
 @code
 {

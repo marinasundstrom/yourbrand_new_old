@@ -56,9 +56,15 @@
             </MudPaper>
         </MudItem>
 
+        <MudItem xs="12" sm="12" md="12">
+            <ProductAttributesView @key="product.Id" ProductId="product.Id" HasVariants="product.HasVariants" />
+        </MudItem>
+
         @if (product.Parent is null)
         {
-            <VariantView ProductId="product.Id" Product="product" />
+            <MudItem xs="12" sm="12" md="12">
+                <VariantView @key="product.Id" ProductId="product.Id" Product="product" />
+            </MudItem>
         }
 
     </MudGrid>

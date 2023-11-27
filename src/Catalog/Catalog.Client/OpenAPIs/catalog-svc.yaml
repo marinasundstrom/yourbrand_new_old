@@ -201,7 +201,7 @@ paths:
           schema:
             type: integer
             format: int32
-            default: 0
+            default: 1
           x-position: 2
         - name: pageSize
           in: query
@@ -1338,7 +1338,7 @@ paths:
           schema:
             type: integer
             format: int32
-            default: 0
+            default: 1
           x-position: 2
         - name: pageSize
           in: query
@@ -2262,6 +2262,10 @@ components:
       properties:
         valueId:
           type: string
+        forVariant:
+          type: boolean
+        isMainAttribute:
+          type: boolean
     CreateProductOptionData:
       type: object
       additionalProperties: false

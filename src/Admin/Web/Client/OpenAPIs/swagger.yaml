@@ -861,14 +861,6 @@ paths:
           schema:
             type: string
           x-position: 1
-        - name: sortDirection
-          in: query
-          schema:
-            oneOf:
-              - nullable: true
-                oneOf:
-                  - $ref: "#/components/schemas/SortDirection"
-          x-position: 2
       responses:
         200:
           description: ""
@@ -1362,6 +1354,10 @@ components:
       properties:
         valueId:
           type: string
+        forVariant:
+          type: boolean
+        isMainAttribute:
+          type: boolean
     PagedResultOfProductCategory:
       type: object
       additionalProperties: false

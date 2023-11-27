@@ -51,7 +51,9 @@ public record CreateProductVariant(long ProductId, CreateProductVariantData Data
 
             foreach (var value in request.Data.Attributes)
             {
-                var attribute = _context.Attributes.First(x => x.Id == value.AttributeId);
+                var attribute = _context.Attributes
+                    .Include(x => x.Values)
+                    .First(x => x.Id == value.AttributeId);
 
                 var value2 = attribute.Values.First(x => x.Id == value.ValueId);
 
