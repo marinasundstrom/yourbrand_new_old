@@ -1,3 +1,4 @@
+using Catalog.API.Domain.Entities;
 using Catalog.API.Persistence;
 
 using MediatR;
@@ -19,8 +20,11 @@ public record AddProductAttribute(long ProductId, string AttributeId, string Val
 
         public async Task<ProductAttributeDto> Handle(AddProductAttribute request, CancellationToken cancellationToken)
         {
-            var item = await _context.Products
-                .FirstAsync(attribute => attribute.Id == request.ProductId, cancellationToken);
+            var product = await _context.Products
+                .Include(x => x.ParentProduct)
+                .ThenInclude(x => x!.ProductAttributes)
+                .ThenInclude(x => x.Attribute)
+                .FirstAsync(product => product.Id == request.ProductId, cancellationToken);
 
             var attribute = await _context.Attributes
                 .Include(x => x.Values)
@@ -29,14 +33,21 @@ public record AddProductAttribute(long ProductId, string AttributeId, string Val
             var value = attribute!.Values
                 .First();
 
+            ProductAttribute? parentProductAttribute = null;
+            if (product.ParentProduct is not null)
+            {
+                parentProductAttribute = product.ParentProduct.ProductAttributes.FirstOrDefault(x => x.AttributeId == attribute.Id);
+            }
+
             Domain.Entities.ProductAttribute productAttribute = new()
             {
-                ProductId = item.Id,
+                ProductId = product.Id,
                 AttributeId = attribute.Id,
-                Value = value!
+                Value = value!,
+                ForVariant = parentProductAttribute?.ForVariant ?? false
             };
 
-            item.AddProductAttribute(productAttribute);
+            product.AddProductAttribute(productAttribute);
 
             await _context.SaveChangesAsync(cancellationToken);
 
