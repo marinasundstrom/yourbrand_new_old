@@ -69,6 +69,6 @@ Blazor.addEventListener('enhancedload', () => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
 });
 
-window.ChangeUrl = function (url) {
+window.changeUrl = function (url) {
     history.pushState(null, '', url);
 }

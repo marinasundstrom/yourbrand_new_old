@@ -271,7 +271,7 @@ else
 
         //InvokeAsync(StateHasChanged);
 
-        //await UpdateUrl();
+        await UpdateUrl();
 
         _ = ProductViewed();
     }
@@ -317,7 +317,7 @@ else
         }
         */
 
-        JSRuntime.InvokeVoidAsync("ChangeUrl", sb.ToString());
+        JSRuntime.InvokeVoidAsync("changeUrl", sb.ToString());
     }
 
     private Task PersistItems()
