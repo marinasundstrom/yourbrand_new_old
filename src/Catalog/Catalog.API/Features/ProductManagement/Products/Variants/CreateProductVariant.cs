@@ -12,11 +12,13 @@ public record CreateProductVariant(long ProductId, CreateProductVariantData Data
     {
         private readonly CatalogContext _context;
         private readonly ProductsService _itemVariantsService;
+        private readonly IConfiguration _configuration;
 
-        public Handler(CatalogContext context, ProductsService itemVariantsService)
+        public Handler(CatalogContext context, ProductsService itemVariantsService, IConfiguration configuration)
         {
             _context = context;
             _itemVariantsService = itemVariantsService;
+            _configuration = configuration;
         }
 
         public async Task<ProductDto> Handle(CreateProductVariant request, CancellationToken cancellationToken)
@@ -27,6 +29,13 @@ public record CreateProductVariant(long ProductId, CreateProductVariantData Data
             if (match is not null)
             {
                 throw new VariantAlreadyExistsException("Variant with the same options already exists.");
+            }
+
+            var handleInUse = await _context.Products.AnyAsync(product => product.Handle == request.Data.Handle, cancellationToken);
+
+            if (handleInUse)
+            {
+                return Result.Failure<ProductDto>(Errors.HandleAlreadyTaken);
             }
 
             var item = await _context.Products
@@ -41,12 +50,19 @@ public record CreateProductVariant(long ProductId, CreateProductVariantData Data
                     .ThenInclude(o => o.Value)
                 .FirstAsync(x => x.Id == request.ProductId);
 
+            var connectionString = _context.Database.GetConnectionString()!;
+
+            string cdnBaseUrl = (connectionString.Contains("localhost") || connectionString.Contains("mssql"))
+                ? _configuration["CdnBaseUrl"]!
+                : "https://yourbrandstorage.blob.core.windows.net";
+
             var variant = new Domain.Entities.Product()
             {
                 Name = request.Data.Name,
                 Handle = request.Data.Handle,
                 Description = request.Data.Description ?? string.Empty,
-                Price = request.Data.Price
+                Price = request.Data.Price,
+                Image = $"{cdnBaseUrl}/images/products/placeholder.jpeg",
             };
 
             foreach (var value in request.Data.Attributes)

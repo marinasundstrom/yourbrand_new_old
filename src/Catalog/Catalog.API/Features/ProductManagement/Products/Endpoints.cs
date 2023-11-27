@@ -93,7 +93,7 @@ public static partial class Endpoints
     private static async Task<Results<Ok<ProductDto>, BadRequest, ProblemHttpResult>> CreateProduct(CreateProductRequest request,
         IMediator mediator, CancellationToken cancellationToken)
     {
-        var result = await mediator.Send(new CreateProduct(request.Name, request.Description, request.CategoryId, request.Price, request.Handle), cancellationToken);
+        var result = await mediator.Send(new CreateProduct(request.Name, request.Description, request.CategoryId, request.IsGroupedProduct, request.Price, request.Handle), cancellationToken);
 
         return result.IsSuccess ? TypedResults.Ok(result.GetValue()) : TypedResults.BadRequest();
     }
@@ -156,7 +156,7 @@ public static partial class Endpoints
     }
 }
 
-public sealed record CreateProductRequest(string Name, string Description, long CategoryId, decimal Price, string Handle)
+public sealed record CreateProductRequest(string Name, string Description, long CategoryId, bool IsGroupedProduct, decimal Price, string Handle)
 {
     public class CreateProductRequestValidator : AbstractValidator<CreateProductRequest>
     {

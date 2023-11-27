@@ -16,19 +16,17 @@
                     @bind-Value="Attribute" SearchFuncWithCancel="SearchAttribute" ShowProgressIndicator="true"
                     ToStringFunc="(x) => x.Name" Required />
 
-                @*
+                @if (!IsVariant)
+                {
+                    <MudCheckBox Label="For variant" @bind-Checked="ForVariant" />
 
-                <MudCheckBox Label="For variant" @bind-Checked="ForVariant" />
-
-                <MudCheckBox Label="Is Main Attribute" @bind-Checked="IsMainAttribute" />
-
-                *@
+                    <MudCheckBox Label="Is Main Attribute" @bind-Checked="IsMainAttribute" />
+                }
 
                 <MudAutocomplete T="AttributeValue" Class="mb-6" Variant="Variant.Outlined" Label="Value"
                     @bind-Value="Value"
                     SearchFuncWithCancel="@(async (string value, CancellationToken ct) => await SearchAttributeValue(Attribute.Id, value, ct))"
                     ShowProgressIndicator="true" ToStringFunc="(x) => x.Name" Required />
-
             </MudContainer>
 
         </DialogContent>
@@ -46,6 +44,8 @@
     [CascadingParameter] MudDialogInstance Modal { get; set; } = default!;
 
     [Parameter] public long ProductId { get; set; } = default!;
+
+    [Parameter] public bool IsVariant { get; set; } = default!;
 
     [Required] public AdminAPI.Attribute Attribute { get; set; } = default!;
 
@@ -65,7 +65,9 @@
         AddProductAttribute data = new()
             {
                 AttributeId = Attribute.Id,
-                ValueId = Value.Id
+                ValueId = Value.Id,
+                ForVariant = ForVariant,
+                IsMainAttribute = IsMainAttribute
             };
 
         try

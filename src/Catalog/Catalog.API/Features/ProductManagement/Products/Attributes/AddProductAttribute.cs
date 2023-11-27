@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.API.Features.ProductManagement.Products.Attributes;
 
-public record AddProductAttribute(long ProductId, string AttributeId, string ValueId) : IRequest<ProductAttributeDto>
+public record AddProductAttribute(long ProductId, string AttributeId, string ValueId, bool ForVariant, bool IsMainAttribute) : IRequest<ProductAttributeDto>
 {
     public class Handler : IRequestHandler<AddProductAttribute, ProductAttributeDto>
     {
@@ -44,7 +44,8 @@ public record AddProductAttribute(long ProductId, string AttributeId, string Val
                 ProductId = product.Id,
                 AttributeId = attribute.Id,
                 Value = value!,
-                ForVariant = parentProductAttribute?.ForVariant ?? false
+                ForVariant = parentProductAttribute?.ForVariant ?? false || request.ForVariant,
+                IsMainAttribute = request.IsMainAttribute
             };
 
             product.AddProductAttribute(productAttribute);

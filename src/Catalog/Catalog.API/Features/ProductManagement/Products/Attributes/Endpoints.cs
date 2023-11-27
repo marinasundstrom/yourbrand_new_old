@@ -43,7 +43,7 @@ public static class Endpoints
 
     public static async Task<ProductAttributeDto> AddProductAttribute(long productId, AddProductAttributeDto data, IMediator mediator, CancellationToken cancellationToken)
     {
-        return await mediator.Send(new AddProductAttribute(productId, data.AttributeId, data.ValueId), cancellationToken);
+        return await mediator.Send(new AddProductAttribute(productId, data.AttributeId, data.ValueId, data.ForVariant, data.IsMainAttribute), cancellationToken);
     }
 
     public static async Task<ProductAttributeDto> UpdateProductAttribute(long productId, string attributeId, UpdateProductAttributeDto data, IMediator mediator, CancellationToken cancellationToken)
@@ -65,6 +65,6 @@ public static class Endpoints
     */
 }
 
-public sealed record AddProductAttributeDto(string AttributeId, string ValueId);
+public sealed record AddProductAttributeDto(string AttributeId, string ValueId, bool ForVariant, bool IsMainAttribute);
 
 public sealed record UpdateProductAttributeDto(string ValueId, bool ForVariant, bool IsMainAttribute);

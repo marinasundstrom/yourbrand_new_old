@@ -2256,6 +2256,10 @@ components:
           type: string
         valueId:
           type: string
+        forVariant:
+          type: boolean
+        isMainAttribute:
+          type: boolean
     UpdateProductAttribute:
       type: object
       additionalProperties: false
@@ -2450,6 +2454,8 @@ components:
         categoryId:
           type: integer
           format: int64
+        isGroupedProduct:
+          type: boolean
         price:
           type: number
           format: decimal

@@ -130,7 +130,7 @@ public class ProductViewModel
             var selectedAttr = attributes.FirstOrDefault(x => x.Id == attr?.Attribute?.Id);
             if (selectedAttr is not null)
             {
-                selectedAttr.SelectedValueId = selectedAttr.Values.FirstOrDefault(x => x.Id == attr.Value.Id)?.Id;
+                selectedAttr.SelectedValueId = selectedAttr.Values.FirstOrDefault(x => x.Id == attr.Value?.Id)?.Id;
             }
         }
 
