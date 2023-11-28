@@ -1,3 +1,5 @@
+@using ToastUI
+
 <EditForm Model="@Model" OnValidSubmit="Model.UpdateDetails">
     <DataAnnotationsValidator />
 
@@ -21,6 +23,9 @@
     {
         <MudTextField Label="Description" Lines="5" @bind-Value="Model.Description" Variant="Variant.Outlined"
             For="() => Model.Description" Class="mt-4"></MudTextField>
+
+        @* <Editor @ref="editorRef" @bind-Value="empty" Options="@options" Change="MarkdownChanged" /> *@
+
     }
 
     <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Class="mt-4">Update details</MudButton>
@@ -28,6 +33,31 @@
 
 @code
 {
+    Editor editorRef = default!;
+    EditorOptions options;
+    string empty = string.Empty;
+
     [Parameter]
     public DetailsUpdateViewModel Model { get; set; }
+
+    /*
+    protected override void OnInitialized()
+    {
+    empty = Model.Description;
+
+    options = new()
+    {
+    InitialValue = Model.Description,
+    PreviewStyle = PreviewStyle.Tab,
+    InitialEditType = EditorType.WYSIWYG,
+    Language = "en-US",
+    Theme = Theme.Auto
+    };
+    }
+
+    async Task MarkdownChanged()
+    {
+    Model.Description = await editorRef.GetMarkdown();
+    }
+    */
 }
