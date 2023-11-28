@@ -34,11 +34,11 @@ public static partial class Endpoints
         group.MapDelete("{id}/variants{variantId}", DeleteVariant)
             .WithName($"Products_{nameof(DeleteVariant)}");
 
-        group.MapPost("{idOrHandle}/variants/find", FindVariantByAttributeValues)
+        group.MapPost("{idOrHandle}/variants/findVariant", FindVariantByAttributeValues)
             .WithName($"Products_{nameof(FindVariantByAttributeValues)}");
 
-        group.MapPost("{idOrHandle}/variants/find2", FindVariantByAttributeValues2)
-            .WithName($"Products_{nameof(FindVariantByAttributeValues2)}");
+        group.MapPost("{idOrHandle}/variants/find2", FindsVariantsByAttributeValues)
+            .WithName($"Products_{nameof(FindsVariantsByAttributeValues)}");
 
         group.MapPost("{id}/variants", CreateVariant)
             .WithName($"Products_{nameof(CreateVariant)}");
@@ -73,7 +73,7 @@ public static partial class Endpoints
         return TypedResults.Ok(await mediator.Send(new FindProductVariant(idOrHandle, selectedAttributeValues), cancellationToken));
     }
 
-    public static async Task<Results<Ok<IEnumerable<ProductDto>>, BadRequest>> FindVariantByAttributeValues2(string idOrHandle, Dictionary<string, string?> selectedAttributeValues, IMediator mediator, CancellationToken cancellationToken)
+    public static async Task<Results<Ok<IEnumerable<ProductDto>>, BadRequest>> FindsVariantsByAttributeValues(string idOrHandle, Dictionary<string, string?> selectedAttributeValues, IMediator mediator, CancellationToken cancellationToken)
     {
         return TypedResults.Ok(await mediator.Send(new FindProductVariants(idOrHandle, selectedAttributeValues), cancellationToken));
     }

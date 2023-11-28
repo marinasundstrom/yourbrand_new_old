@@ -22,11 +22,11 @@ public static class Endpoints
         productsGroup.MapGet("/{productIdOrHandle}", GetProductById)
             .WithName($"Products_{nameof(GetProductById)}");
 
-        productsGroup.MapPost("/{productIdOrHandle}/findProductVariants", FindProductVariantByAttributes)
+        productsGroup.MapPost("/{productIdOrHandle}/findVariant", FindProductVariantByAttributes)
             .WithName($"Products_{nameof(FindProductVariantByAttributes)}");
 
-        productsGroup.MapPost("/{productIdOrHandle}/findProductVariants2", FindProductVariantByAttributes2)
-            .WithName($"Products_{nameof(FindProductVariantByAttributes2)}");
+        productsGroup.MapPost("/{productIdOrHandle}/find", FindProductVariantsByAttributes)
+            .WithName($"Products_{nameof(FindProductVariantsByAttributes)}");
 
         productsGroup.MapGet("/{productIdOrHandle}/variants", GetProductVariants)
             .WithName($"Products_{nameof(GetProductVariants)}");
@@ -46,15 +46,15 @@ public static class Endpoints
         return product is not null ? TypedResults.Ok(product) : TypedResults.NotFound();
     }
 
-    private static async Task<Results<Ok<IEnumerable<Product>>, NotFound>> FindProductVariantByAttributes2(string productIdOrHandle, Dictionary<string, string> selectedAttributeValues, IProductsService productsService = default!, CancellationToken cancellationToken = default)
+    private static async Task<Results<Ok<Product>, NotFound>> FindProductVariantByAttributes(string productIdOrHandle, Dictionary<string, string> selectedAttributeValues, IProductsService productsService = default!, CancellationToken cancellationToken = default)
     {
-        var products = await productsService.FindProductVariantByAttributes2(productIdOrHandle, selectedAttributeValues, cancellationToken);
-        return products is not null ? TypedResults.Ok(products) : TypedResults.NotFound();
+        var product = await productsService.FindProductVariantByAttributes(productIdOrHandle, selectedAttributeValues, cancellationToken);
+        return product is not null ? TypedResults.Ok(product) : TypedResults.NotFound();
     }
 
-    private static async Task<Results<Ok<IEnumerable<Product>>, NotFound>> FindProductVariantByAttributes(string productIdOrHandle, Dictionary<string, string> selectedAttributeValues, IProductsService productsService = default!, CancellationToken cancellationToken = default)
+    private static async Task<Results<Ok<IEnumerable<Product>>, NotFound>> FindProductVariantsByAttributes(string productIdOrHandle, Dictionary<string, string> selectedAttributeValues, IProductsService productsService = default!, CancellationToken cancellationToken = default)
     {
-        var products = await productsService.FindProductVariantByAttributes2(productIdOrHandle, selectedAttributeValues, cancellationToken);
+        var products = await productsService.FindProductVariantsByAttributes(productIdOrHandle, selectedAttributeValues, cancellationToken);
         return products is not null ? TypedResults.Ok(products) : TypedResults.NotFound();
     }
 

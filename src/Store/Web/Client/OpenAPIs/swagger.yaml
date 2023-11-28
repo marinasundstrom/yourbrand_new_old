@@ -72,7 +72,7 @@ paths:
                 $ref: "#/components/schemas/Product"
         404:
           description: ""
-  /api/v1/products/{productIdOrHandle}/findProductVariants:
+  /api/v1/products/{productIdOrHandle}/findVariant:
     post:
       tags:
         - Products
@@ -101,17 +101,15 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Product"
+                $ref: "#/components/schemas/Product"
         404:
           description: ""
-  /api/v1/products/{productIdOrHandle}/findProductVariants2:
+  /api/v1/products/{productIdOrHandle}/find:
     post:
       tags:
         - Products
         - Products
-      operationId: Products_FindProductVariantByAttributes2
+      operationId: Products_FindProductVariantsByAttributes
       parameters:
         - name: productIdOrHandle
           in: path

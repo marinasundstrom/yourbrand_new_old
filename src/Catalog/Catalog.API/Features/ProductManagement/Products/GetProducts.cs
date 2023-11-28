@@ -18,7 +18,8 @@ public sealed record GetProducts(string? StoreId = null, string? BrandIdOrHandle
                         .IncludeAll()
                         .AsSplitQuery()
                         .AsNoTracking()
-                        .AsQueryable();
+                        .AsQueryable()
+                        .TagWith(nameof(GetProducts));
 
             if (request.StoreId is not null)
             {

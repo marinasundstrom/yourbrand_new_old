@@ -293,7 +293,7 @@ paths:
           description: ""
         400:
           description: ""
-  /v1/products/{idOrHandle}/variants/find:
+  /v1/products/{idOrHandle}/variants/findVariant:
     post:
       tags:
         - Products
@@ -331,7 +331,7 @@ paths:
       tags:
         - Products
         - Products
-      operationId: Products_FindVariantByAttributeValues2
+      operationId: Products_FindsVariantsByAttributeValues
       parameters:
         - name: idOrHandle
           in: path

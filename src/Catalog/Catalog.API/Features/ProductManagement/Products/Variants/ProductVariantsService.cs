@@ -22,7 +22,8 @@ public class ProductsService
             .AsSplitQuery()
             .AsNoTracking()
             .IncludeAll()
-            .AsQueryable();
+            .AsQueryable()
+            .TagWith(nameof(FindVariantCore));
 
         query = isProductId ?
             query.Where(pv => pv.ParentProduct!.Id == productId)

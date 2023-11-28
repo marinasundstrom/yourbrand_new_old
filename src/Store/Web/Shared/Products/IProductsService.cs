@@ -7,9 +7,9 @@ public interface IProductsService
 
     Task<Product> GetProductById(string productIdOrHandle, CancellationToken cancellationToken = default);
 
-    Task<IEnumerable<Product>> FindProductVariantByAttributes2(string productIdOrHandle, Dictionary<string, string> selectedAttributeValues, CancellationToken cancellationToken = default);
+    Task<Product> FindProductVariantByAttributes(string productIdOrHandle, Dictionary<string, string?> selectedAttributeValues, CancellationToken cancellationToken = default);
 
-    Task<IEnumerable<Product>> FindProductVariantByAttributes(string productIdOrHandle, Dictionary<string, string> selectedAttributeValues, CancellationToken cancellationToken = default);
+    Task<IEnumerable<Product>> FindProductVariantsByAttributes(string productIdOrHandle, Dictionary<string, string?> selectedAttributeValues, CancellationToken cancellationToken = default);
 
     Task<PagedResult<Product>> GetProductVariants(string productIdOrHandle, int page = 1, int pageSize = 10, string? searchString = null, CancellationToken cancellationToken = default);
 }

@@ -91,7 +91,7 @@ builder.Services.AddObservability("Catalog.API", "1.0", builder.Configuration);
 
 builder.Services.AddSqlServer<CatalogContext>(
     builder.Configuration.GetValue<string>("yourbrand:catalog-svc:db:connectionstring"),
-    c => c.EnableRetryOnFailure());
+    c => c.UseAzureSqlDefaults());
 
 builder.Services.AddMediatR(c => c.RegisterServicesFromAssemblyContaining<Program>());
 

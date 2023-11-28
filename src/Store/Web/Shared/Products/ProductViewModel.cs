@@ -59,23 +59,23 @@ public class ProductViewModel
 
         if (hasVariants)
         {
-            Product? product;
+            Product? variant;
 
             if (variantId is not null)
             {
-                product = await productsService.GetProductById(variantId);
+                variant = await productsService.GetProductById(variantId);
             }
             else
             {
-                var variants = (await productsService.GetProductVariants(Id, 1, 20, null)).Items;
-                product = await productsService.GetProductById(variants.First().Id.ToString());
+                var variants = (await productsService.GetProductVariants(Id, 1, 1, null)).Items;
+                variant = await productsService.GetProductById(variants.First().Id.ToString());
             }
 
             AttributeGroups.ForEach(x => x.Attributes.ForEach(x => x.SelectedValueId = null));
 
             var attrs = AttributeGroups.SelectMany(x => x.Attributes);
 
-            foreach (var attr in product.Attributes.Where(x => x.ForVariant))
+            foreach (var attr in variant.Attributes.Where(x => x.ForVariant))
             {
                 var x = attrs.FirstOrDefault(x => x.Id == attr.Attribute.Id);
                 if (x is not null)
@@ -92,9 +92,9 @@ public class ProductViewModel
                 .ToDictionary(x => x.Id, x => x.SelectedValueId);
 
             Variants.AddRange(
-                await productsService.FindProductVariantByAttributes2(Id, selectedAttributeValues));
+                await productsService.FindProductVariantsByAttributes(Id, selectedAttributeValues));
 
-            await SelectVariant(product);
+            await SelectVariant(variant);
         }
 
         Updated?.Invoke(this, EventArgs.Empty);
@@ -146,7 +146,7 @@ public class ProductViewModel
             .Where(x => x.SelectedValueId is not null)
             .ToDictionary(x => x.Id, x => x.SelectedValueId);
 
-        var products = await productsService.FindProductVariantByAttributes2(Id, selectedAttributeValues.ToDictionary(x => x.Key, x => x.Value!));
+        var products = await productsService.FindProductVariantsByAttributes(Id, selectedAttributeValues.ToDictionary(x => x.Key, x => x.Value!));
 
         Variants.Clear();
         Variants.AddRange(products);
@@ -156,8 +156,7 @@ public class ProductViewModel
            .Where(x => x.ForVariant)
            .Where(x => x.SelectedValueId is not null);
 
-        var variants = await productsService.FindProductVariantByAttributes(Id, selectedAttributes.ToDictionary(x => x.Id, x => x.SelectedValueId!));
-        variant = variants.SingleOrDefault();
+        variant = await productsService.FindProductVariantByAttributes(Id, selectedAttributes.ToDictionary(x => x.Id, x => x.SelectedValueId!));
 
         await Load();
     }
