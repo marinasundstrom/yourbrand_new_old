@@ -17,10 +17,10 @@ public sealed class ProductsService(IProductsClient productsClient) : IProductsS
         return product.Map();
     }
 
-    public async Task<Product> FindProductVariantByAttributes(string productIdOrHandle, Dictionary<string, string> selectedAttributeValues, CancellationToken cancellationToken = default)
+    public async Task<Product?> FindProductVariantByAttributes(string productIdOrHandle, Dictionary<string, string> selectedAttributeValues, CancellationToken cancellationToken = default)
     {
         var result = await productsClient.FindProductVariantByAttributesAsync(productIdOrHandle, selectedAttributeValues, cancellationToken);
-        return result.Map();
+        return result?.Map();
     }
 
     public async Task<IEnumerable<Product>> FindProductVariantsByAttributes(string productIdOrHandle, Dictionary<string, string> selectedAttributeValues, CancellationToken cancellationToken = default)

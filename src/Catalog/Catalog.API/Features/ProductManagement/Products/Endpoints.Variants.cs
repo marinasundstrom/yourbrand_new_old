@@ -68,7 +68,7 @@ public static partial class Endpoints
         return TypedResults.Ok(await mediator.Send(new GetProductVariant(idOrHandle, variantIdOrHandle), cancellationToken));
     }
 
-    public static async Task<Results<Ok<ProductDto>, BadRequest>> FindVariantByAttributeValues(string idOrHandle, Dictionary<string, string?> selectedAttributeValues, IMediator mediator, CancellationToken cancellationToken)
+    public static async Task<Results<Ok<ProductDto?>, BadRequest>> FindVariantByAttributeValues(string idOrHandle, Dictionary<string, string?> selectedAttributeValues, IMediator mediator, CancellationToken cancellationToken)
     {
         return TypedResults.Ok(await mediator.Send(new FindProductVariant(idOrHandle, selectedAttributeValues), cancellationToken));
     }
