@@ -8,6 +8,8 @@ using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 using Asp.Versioning.Builder;
+using Catalog.API.Domain.Entities;
+using Catalog.API.Features.ProductManagement.Attributes;
 
 namespace Catalog.API.Features.ProductManagement.Products;
 
@@ -39,6 +41,9 @@ public static partial class Endpoints
 
         group.MapPost("{idOrHandle}/variants/find2", FindsVariantsByAttributeValues)
             .WithName($"Products_{nameof(FindsVariantsByAttributeValues)}");
+
+        group.MapPost("{idOrHandle}/attributes/{attributeId}/availableValuesForVariant", GetAvailableVariantAttributeValues)
+            .WithName($"Products_{nameof(GetAvailableVariantAttributeValues)}");
 
         group.MapPost("{id}/variants", CreateVariant)
             .WithName($"Products_{nameof(CreateVariant)}");
@@ -78,9 +83,9 @@ public static partial class Endpoints
         return TypedResults.Ok(await mediator.Send(new FindProductVariants(idOrHandle, selectedAttributeValues), cancellationToken));
     }
 
-    public static async Task<Results<Ok<IEnumerable<ProductVariantAttributeDto>>, BadRequest>> GetVariantAttributes(long id, long variantId, IMediator mediator, CancellationToken cancellationToken)
+    public static async Task<Results<Ok<IEnumerable<AttributeValueDto>>, BadRequest>> GetAvailableVariantAttributeValues(string idOrHandle, string attributeId, Dictionary<string, string?> selectedAttributeValues, IMediator mediator, CancellationToken cancellationToken)
     {
-        return TypedResults.Ok(await mediator.Send(new GetProductVariantAttributes(id, variantId), cancellationToken));
+        return TypedResults.Ok(await mediator.Send(new GetAvailableAttributeValues(idOrHandle, attributeId, selectedAttributeValues), cancellationToken));
     }
 
     public static async Task<Results<Ok<ProductDto>, ProblemHttpResult>> CreateVariant(long id, CreateProductVariantData data, IMediator mediator, CancellationToken cancellationToken)

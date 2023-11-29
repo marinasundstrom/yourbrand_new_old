@@ -26,22 +26,7 @@ public record GetProductVariant(string ProductIdOrHandle, string ProductVariantI
             var query = _context.Products
                 .AsSplitQuery()
                 .AsNoTracking()
-                .Include(x => x.Category)
-                .Include(pv => pv.Variants)
-                .Include(pv => pv.ProductAttributes)
-                .ThenInclude(pv => pv.Attribute)
-                .ThenInclude(o => o.Values)
-                .Include(pv => pv.ProductAttributes)
-                .ThenInclude(pv => pv.Value)
-                .Include(pv => pv.ProductOptions)
-                    .ThenInclude(pv => pv.Option)
-                    .ThenInclude(pv => pv.Group)
-                .Include(pv => pv.ProductOptions)
-                    .ThenInclude(pv => pv.Option)
-                    .ThenInclude(pv => (pv as ChoiceOption)!.DefaultValue)
-                .Include(pv => pv.ProductOptions)
-                    .ThenInclude(pv => pv.Option)
-                    .ThenInclude(pv => (pv as ChoiceOption)!.Values)
+                .IncludeAll()
                 .AsQueryable();
 
             query = isProductId ?

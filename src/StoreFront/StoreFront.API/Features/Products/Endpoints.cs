@@ -33,6 +33,9 @@ public static class Endpoints
         productsGroup.MapGet("/{productIdOrHandle}/variants", GetProductVariants)
             .WithName($"Products_{nameof(GetProductVariants)}");
 
+        productsGroup.MapPost("/{productIdOrHandle}/attributes/{attributeId}/availableValuesForVariant", GetAvailableVariantAttributeValues)
+            .WithName($"Products_{nameof(GetAvailableVariantAttributeValues)}");
+
         return app;
     }
 
@@ -68,6 +71,13 @@ public static class Endpoints
         return results is not null ? TypedResults.Ok(
                 new PagedResult<Product>(results.Items.Select(x => x.Map()), results.Total)
         ) : TypedResults.NotFound();
+    }
+
+    public static async Task<Results<Ok<IEnumerable<AttributeValue>>, BadRequest>> GetAvailableVariantAttributeValues(string productIdOrHandle, string attributeId, Dictionary<string, string?> selectedAttributeValues, IProductsClient productsClient = default!, CancellationToken cancellationToken = default!)
+    {
+        var results = await productsClient.GetAvailableVariantAttributeValuesAsync(productIdOrHandle, attributeId, selectedAttributeValues, cancellationToken);
+        return results is not null ? TypedResults.Ok(results.Select(x => x.Map())) : TypedResults.BadRequest();
+
     }
 }
 

@@ -4,7 +4,7 @@ info:
   title: Store.Web
   version: v1
 servers:
-  - url: https://localhost:7188
+  - url: http://localhost:5153
 paths:
   /api/v1/products:
     get:
@@ -179,6 +179,47 @@ paths:
               schema:
                 $ref: "#/components/schemas/PagedResultOfProduct"
         404:
+          description: ""
+  ? /api/v1/products/{productIdOrHandle}/attributes/{attributeId}/availableValuesForVariant
+  : post:
+      tags:
+        - Products
+        - Products
+      operationId: Products_GetAvailableVariantAttributeValues
+      parameters:
+        - name: productIdOrHandle
+          in: path
+          required: true
+          schema:
+            type: string
+          x-position: 1
+        - name: attributeId
+          in: path
+          required: true
+          schema:
+            type: string
+          x-position: 2
+      requestBody:
+        x-name: selectedAttributeValues
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: string
+                nullable: true
+        required: true
+        x-position: 3
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AttributeValue"
+        400:
           description: ""
   /api/v1/productCategories:
     get:

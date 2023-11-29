@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.API.Features.ProductManagement.Products.Variants;
 
-public record GetAvailableAttributeValues(long ProductId, string AttributeId, IDictionary<string, string?> SelectedAttributeValues) : IRequest<IEnumerable<AttributeValueDto>>
+public record GetAvailableAttributeValues(string ProductIdOrHandle, string AttributeId, IDictionary<string, string?> SelectedAttributeValues) : IRequest<IEnumerable<AttributeValueDto>>
 {
     public class Handler : IRequestHandler<GetAvailableAttributeValues, IEnumerable<AttributeValueDto>>
     {
@@ -21,16 +21,23 @@ public record GetAvailableAttributeValues(long ProductId, string AttributeId, ID
 
         public async Task<IEnumerable<AttributeValueDto>> Handle(GetAvailableAttributeValues request, CancellationToken cancellationToken)
         {
-            IEnumerable<Product> variants = await _context.Products
+            bool isProductId = long.TryParse(request.ProductIdOrHandle, out var productId);
+
+            var query = _context.Products
                 .AsSplitQuery()
                 .AsNoTracking()
-                .Include(pv => pv.ParentProduct)
                 .Include(pv => pv.ProductAttributes)
                 .ThenInclude(pv => pv.Attribute)
+                .ThenInclude(pv => pv.Values)
                 .Include(pv => pv.ProductAttributes)
                 .ThenInclude(pv => pv.Value)
-                .Where(pv => pv.ParentProduct!.Id == request.ProductId)
-                .ToArrayAsync();
+                .AsQueryable();
+
+            query = isProductId ?
+                query.Where(pv => pv.ParentProduct!.Id == productId)
+                : query.Where(pv => pv.ParentProduct!.Handle == request.ProductIdOrHandle);
+
+            IEnumerable<Product> variants = await query.ToArrayAsync(cancellationToken);
 
             foreach (var selectedAttribute in request.SelectedAttributeValues)
             {
@@ -42,10 +49,9 @@ public record GetAvailableAttributeValues(long ProductId, string AttributeId, ID
 
             var values = variants
                 .SelectMany(x => x.ProductAttributes)
-                .DistinctBy(x => x.Attribute)
                 .Where(x => x.Attribute.Id == request.AttributeId)
                 .Select(x => x.Value)
-                .Where(x => x is not null);
+                .DistinctBy(x => x.Id);
 
             return values.Select(x => new AttributeValueDto(x!.Id, x.Name, x.Seq));
         }

@@ -12,6 +12,8 @@ public interface IProductsService
     Task<IEnumerable<Product>> FindProductVariantsByAttributes(string productIdOrHandle, Dictionary<string, string?> selectedAttributeValues, CancellationToken cancellationToken = default);
 
     Task<PagedResult<Product>> GetProductVariants(string productIdOrHandle, int page = 1, int pageSize = 10, string? searchString = null, CancellationToken cancellationToken = default);
+
+    Task<IEnumerable<AttributeValue>> GetAvailableProductVariantAttributes(string productIdOrHandle, string attributeId, Dictionary<string, string?> selectedAttributeValues, CancellationToken cancellationToken = default);
 }
 
 public sealed record PagedResult<T>(IEnumerable<T> Items, int Total);
