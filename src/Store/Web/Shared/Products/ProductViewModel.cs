@@ -134,6 +134,11 @@ public class ProductViewModel
             }
         }
 
+        foreach (var attr in AttributeGroups.SelectMany(x => x.Attributes))
+        {
+            await UpdateAttr(attr);
+        }
+
         Updated?.Invoke(this, EventArgs.Empty);
     }
 
@@ -158,7 +163,35 @@ public class ProductViewModel
 
         variant = await productsService.FindProductVariantByAttributes(Id, selectedAttributes.ToDictionary(x => x.Id, x => x.SelectedValueId!));
 
+        foreach (var attr in AttributeGroups.SelectMany(x => x.Attributes))
+        {
+            await UpdateAttr(attr);
+        }
+
         await Load();
+    }
+
+    private async Task UpdateAttr(AttributeVM attribute)
+    {
+        foreach (var value in attribute.Values)
+        {
+            value.Disabled = true;
+        }
+
+        var selectedAttributeValues = AttributeGroups
+            .SelectMany(x => x.Attributes)
+            .Where(x => x.ForVariant)
+            .Where(x => !x.IsMainAttribute)
+            .Where(x => x.SelectedValueId is not null)
+            .ToDictionary(x => x.Id, x => x.SelectedValueId);
+
+        var results = await productsService.GetAvailableProductVariantAttributes(Id, attribute.Id, selectedAttributeValues.Where(x => x.Key != attribute.Id).ToDictionary(x => x.Key, x => x.Value));
+
+        foreach (var result in results)
+        {
+            var value = attribute.Values.FirstOrDefault(x => x.Id == result.Id);
+            value!.Disabled = false;
+        }
     }
 
     private void CreateOptionsVM()

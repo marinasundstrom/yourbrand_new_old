@@ -1,6 +1,6 @@
 @page "/products/{id}"
 @page "/products/{id}/{variantId}"
-@attribute [StreamRendering(true)]
+@attribute [StreamRendering(false)]
 @rendermode RenderMode.InteractiveWebAssembly
 @implements IDisposable
 @using BlazorApp.Products
@@ -15,173 +15,173 @@
 
 @if (productViewModel is null)
 {
-    <em>Loading...</em>
+        <em>Loading...</em>
 }
 else
 {
-    <AppPageTitle>@productViewModel.Name</AppPageTitle>
+        <AppPageTitle>@productViewModel.Name</AppPageTitle>
 
-    <HeadContent>
-        <meta name="description" content="@productViewModel.Description" data-dynamic="1" />
-        <meta property="og:url" content="@NavigationManager.Uri" data-dynamic="1" />
-        <meta property="og:type" content="website" data-dynamic="1" />
-        <meta property="og:title" content="@productViewModel.Name" data-dynamic="1" />
-        <meta property="og:description" content="@productViewModel.Description" data-dynamic="1" />
-        <meta property="og:image" content="@productViewModel.Image" data-dynamic="1" />
-        <meta property="product:condition" content="new" data-dynamic="1" />
-        <meta property="product:availability" content="in stock" data-dynamic="1" />
-        <meta property="product:price:amount" content="@productViewModel.Price.ToString(CultureInfo.InvariantCulture)"
-            data-dynamic="1" />
-        <meta property="product:price:currency" content="@currency" data-dynamic="1" />
-        <meta property="product:retailer_item_id" content="@productViewModel.Id" data-dynamic="1" />
-    </HeadContent>
+        <HeadContent>
+            <meta name="description" content="@productViewModel.Description" data-dynamic="1" />
+            <meta property="og:url" content="@NavigationManager.Uri" data-dynamic="1" />
+            <meta property="og:type" content="website" data-dynamic="1" />
+            <meta property="og:title" content="@productViewModel.Name" data-dynamic="1" />
+            <meta property="og:description" content="@productViewModel.Description" data-dynamic="1" />
+            <meta property="og:image" content="@productViewModel.Image" data-dynamic="1" />
+            <meta property="product:condition" content="new" data-dynamic="1" />
+            <meta property="product:availability" content="in stock" data-dynamic="1" />
+            <meta property="product:price:amount" content="@productViewModel.Price.ToString(CultureInfo.InvariantCulture)"
+                data-dynamic="1" />
+            <meta property="product:price:currency" content="@currency" data-dynamic="1" />
+            <meta property="product:retailer_item_id" content="@productViewModel.Id" data-dynamic="1" />
+        </HeadContent>
 
-    <article itemscope itemtype="http://schema.org/Product" class="row gx-5 pt-md-4">
-        <div class="col-md-4 mb-4">
-            <img class="bd-placeholder-img card-img-top img-border-rounded shadow" itemprop="image"
-                style="object-fit: cover; aspect-ratio: 1 / 1;" src="@productViewModel.Image" />
-        </div>
+        <article itemscope itemtype="http://schema.org/Product" class="row gx-5 pt-md-4">
+            <div class="col-md-4 mb-4">
+                <img class="bd-placeholder-img card-img-top img-border-rounded shadow" itemprop="image"
+                    style="object-fit: cover; aspect-ratio: 1 / 1;" src="@productViewModel.Image" />
+            </div>
 
-        <div class="col-md-8 mb-4">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
+            <div class="col-md-8 mb-4">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
                     @foreach (var category in IterateCategories(productViewModel!.Product!.Category!))
                     {
-                        <li class="breadcrumb-item"><a class="text-decoration-none text-reset muted"
-                                href="/categories/@category.Path">@category.Name</a></li>
+                                <li class="breadcrumb-item"><a class="text-decoration-none text-reset muted"
+                                        href="/categories/@category.Path">@category.Name</a></li>
                     }
-                </ol>
-            </nav>
+                    </ol>
+                </nav>
 
-            <h1 itemprop="name">@productViewModel.Name</h1>
+                <h1 itemprop="name">@productViewModel.Name</h1>
 
-            <div class="mb-4" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-                <meta itemprop="priceCurrency" content="@currency">
-                <h5 class="price2" itemprop="price" content="@productViewModel.Price"
-                    style="display: inline-block; font-weight: 500; color: #ca0000; line-height: 0;">
+                <div class="mb-4" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                    <meta itemprop="priceCurrency" content="@currency">
+                    <h5 class="price2" itemprop="price" content="@productViewModel.Price"
+                        style="display: inline-block; font-weight: 500; color: #ca0000; line-height: 0;">
                     @(((decimal)productViewModel.Price).FormatCurrency(currency))</h5>
                 @if (productViewModel.RegularPrice is not null)
                 {
-                    <h5 class="price2 text-muted"
-                        style="display: inline-block; text-decoration: line-through; color: gray !important; margin-left: 10px; line-height: 0;">
+                            <h5 class="price2 text-muted"
+                                style="display: inline-block; text-decoration: line-through; color: gray !important; margin-left: 10px; line-height: 0;">
                         @(((decimal?)productViewModel.RegularPrice)?.FormatCurrency(currency))</h5>
                 }
-            </div>
+                </div>
 
-            <p itemprop="description">@productViewModel.Description</p>
+                <p itemprop="description">@productViewModel.Description</p>
 
-            <Client.Products.CartButton Product="productInfo" />
+                <Client.Products.CartButton Product="productInfo" />
 
             @if (productViewModel.Variants is not null && productViewModel.Variants.Any())
             {
-                <h4 class="mt-4">@(productViewModel.Variants.First().Attributes.FirstOrDefault(x =>
+                        <h4 class="mt-4">@(productViewModel.Variants.First().Attributes.FirstOrDefault(x =>
             x.IsMainAttribute)?.Attribute?.Name ?? "Variants")</h4>
 
-                <div class="d-flex">
+                        <div class="d-flex">
             @foreach (var v in productViewModel.Variants)
                     {
                         var v2 = v;
 
-                        <div @key="@v.Id" class="mt-1 me-3 @(v2.Id == productViewModel.Variant.Id ? "shadow" : "shadow-sm" )"
-                            style="height: 150px; width: 150px; cursor: pointer; i" @onclick="async () => await SelectVariant(v2!)">
+                                    <div @key="@v.Id" class="mt-1 me-3 @(v2.Id == productViewModel.Variant.Id ? "shadow" : "shadow-sm" )"
+                                        style="height: 150px; width: 150px; cursor: pointer; i" @onclick="async () => await SelectVariant(v2!)">
                             @* <div href="@($"/products/{productViewModel.Product.Handle}/{v2?.Handle}")"
                 @onclick="async () => await SelectVariant(v2!)" @onclick:preventDefault> *@
                             @if ((v2?.Image ?? productViewModel.Product.Image) is not null)
                             {
-                                <img src="@(v2?.Image ?? productViewModel.Product.Image)" height="100%" width="100%"
-                                    style="object-fit: contain;" alt="@v2!.Name" />
+                                                <img src="@(v2?.Image ?? productViewModel.Product.Image)" height="100%" width="100%"
+                                                    style="object-fit: contain;" alt="@v2!.Name" />
                             }
                             else
                             {
-                                <svg class="rounded-lg" width="100" height="100%" xmlns="http://www.w3.org/2000/svg" role="img"
-                                    aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                                    <title>Placeholder</title>
-                                    <rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef"
-                                        dy=".3em">Thumbnail</text>
-                                </svg>
+                                                <svg class="rounded-lg" width="100" height="100%" xmlns="http://www.w3.org/2000/svg" role="img"
+                                                    aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                                    <title>Placeholder</title>
+                                                    <rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef"
+                                                        dy=".3em">Thumbnail</text>
+                                                </svg>
                             }
                             @* </div> *@
-                        </div>
+                                    </div>
                     }
-                </div>
+                        </div>
             }
 
-            <div>
+                <div>
                 @if (productViewModel.AttributeGroups.Any())
                 {
-                    <div class="form">
+                            <div class="form">
                         @foreach (var attributeGroup in productViewModel.AttributeGroups)
                         {
-                            <div @key="@attributeGroup.Id">
-                                <h4 class="mt-4">@(attributeGroup.Name ?? "Attributes")</h4>
+                                        <div @key="@attributeGroup.Id">
+                                            <h4 class="mt-4">@(attributeGroup.Name ?? "Attributes")</h4>
 
                                 @foreach (var itemAttribute in attributeGroup.Attributes)
                                 {
-                                    <div class="form-floating mb-3 mt-3" @key="@itemAttribute.Id">
+                                                    <div class="form-floating mb-3 mt-3" @key="@itemAttribute.Id">
 
-                                        <InputSelect TValue="string?" Value="@itemAttribute.SelectedValueId"
-                                            @onfocus="OnVariantActivated" ValueExpression="() => itemAttribute.SelectedValueId"
-                                            ValueChanged="async (v) => { itemAttribute.SelectedValueId = v; await UpdateVariant(); }"
-                                            class="form-select" aria-label="@itemAttribute.Name" placeholder="Choose option">
+                                                        <InputSelect TValue="string?" Value="@itemAttribute.SelectedValueId"
+                                                            @onfocus="OnVariantActivated" ValueExpression="() => itemAttribute.SelectedValueId"
+                                                            ValueChanged="async (v) => { itemAttribute.SelectedValueId = v; await UpdateVariant(); }"
+                                                            class="form-select" aria-label="@itemAttribute.Name" placeholder="Choose option">
                                             @* <option selected>None</option> *@
                                             @foreach (var value in itemAttribute.Values!)
                                             {
-                                                <option value="@value.Id">
+                                                                    <option value="@value.Id" disabled="@value.Disabled">
                                                     @value.Name
-                                                </option>
+                                                                    </option>
                                             }
-                                        </InputSelect>
-                                        <label for="exampleInputEmail1">
+                                                        </InputSelect>
+                                                        <label for="exampleInputEmail1">
                                             @itemAttribute.Name
-                                        </label>
-                                    </div>
+                                                        </label>
+                                                    </div>
                                 }
-                            </div>
+                                        </div>
                         }
-                    </div>
+                            </div>
                 }
-            </div>
+                </div>
 
-            <div class="accordion mt-5" id="accordionExample">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingOne">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                            Specification
-                        </button>
-                    </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">
-                        <div class="accordion-body">
-                            <strong>This is the first item's accordion body.</strong> It is shown by default, until the
-                            collapse plugin adds the appropriate classes that we use to style each element. These classes
-                            control the overall appearance, as well as the showing and hiding via CSS transitions. You can
-                            modify any of this with custom CSS or overriding our default variables. It's also worth noting
-                            that just about any HTML can go within the <code>.accordion-body</code>, though the transition
-                            does limit overflow.
+                <div class="accordion mt-5" id="accordionExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                Specification
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">
+                            <div class="accordion-body">
+                                <strong>This is the first item's accordion body.</strong> It is shown by default, until the
+                                collapse plugin adds the appropriate classes that we use to style each element. These classes
+                                control the overall appearance, as well as the showing and hiding via CSS transitions. You can
+                                modify any of this with custom CSS or overriding our default variables. It's also worth noting
+                                that just about any HTML can go within the <code>.accordion-body</code>, though the transition
+                                does limit overflow.
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingTwo">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            Reviews
-                        </button>
-                    </h2>
-                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">
-                        <div class="accordion-body">
-                            <strong>This is the second item's accordion body.</strong> It is hidden by default, until the
-                            collapse plugin adds the appropriate classes that we use to style each element. These classes
-                            control the overall appearance, as well as the showing and hiding via CSS transitions. You can
-                            modify any of this with custom CSS or overriding our default variables. It's also worth noting
-                            that just about any HTML can go within the <code>.accordion-body</code>, though the transition
-                            does limit overflow.
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Reviews
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">
+                            <div class="accordion-body">
+                                <strong>This is the second item's accordion body.</strong> It is hidden by default, until the
+                                collapse plugin adds the appropriate classes that we use to style each element. These classes
+                                control the overall appearance, as well as the showing and hiding via CSS transitions. You can
+                                modify any of this with custom CSS or overriding our default variables. It's also worth noting
+                                that just about any HTML can go within the <code>.accordion-body</code>, though the transition
+                                does limit overflow.
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </article>
+        </article>
 }
 
 @code
