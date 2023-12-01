@@ -35,7 +35,7 @@ public sealed class ProductsService(IProductsClient productsClient) : IProductsS
         return new PagedResult<Product>(results.Items.Select(product => product.Map()), results.Total);
     }
 
-    public async Task<IEnumerable<AttributeValue>> GetAvailableProductVariantAttributes(string productIdOrHandle, string attributeId, Dictionary<string, string?> selectedAttributeValues, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<AttributeValue>> GetAvailableProductVariantAttributesValues(string productIdOrHandle, string attributeId, Dictionary<string, string?> selectedAttributeValues, CancellationToken cancellationToken = default)
     {
         var results = await productsClient.GetAvailableVariantAttributeValuesAsync(productIdOrHandle, attributeId, selectedAttributeValues, cancellationToken);
         return results.Select(x => x.Map());

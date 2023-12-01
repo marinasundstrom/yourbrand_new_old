@@ -131,7 +131,7 @@ builder.Services
     .AddHealthChecks()
     .AddDbContextCheck<CatalogContext>();
 
-builder.Services.AddScoped<ProductsService>();
+builder.Services.AddScoped<ProductVariantsService>();
 
 builder.Services.AddScoped<ICurrentUserService>(sp => null!);
 

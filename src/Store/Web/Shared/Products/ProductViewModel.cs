@@ -185,7 +185,7 @@ public class ProductViewModel
             .Where(x => x.SelectedValueId is not null)
             .ToDictionary(x => x.Id, x => x.SelectedValueId);
 
-        var results = await productsService.GetAvailableProductVariantAttributes(Id, attribute.Id, selectedAttributeValues.Where(x => x.Key != attribute.Id).ToDictionary(x => x.Key, x => x.Value));
+        var results = await productsService.GetAvailableProductVariantAttributesValues(Id, attribute.Id, selectedAttributeValues.Where(x => x.Key != attribute.Id).ToDictionary(x => x.Key, x => x.Value));
 
         foreach (var result in results)
         {

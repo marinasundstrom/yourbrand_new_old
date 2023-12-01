@@ -71,7 +71,7 @@ public static class Endpoints
 
     public static async Task<Results<Ok<IEnumerable<AttributeValue>>, BadRequest>> GetAvailableVariantAttributeValues(string productIdOrHandle, string attributeId, Dictionary<string, string?> selectedAttributeValues, IProductsService productsService = default!, CancellationToken cancellationToken = default!)
     {
-        var results = await productsService.GetAvailableProductVariantAttributes(productIdOrHandle, attributeId, selectedAttributeValues, cancellationToken);
+        var results = await productsService.GetAvailableProductVariantAttributesValues(productIdOrHandle, attributeId, selectedAttributeValues, cancellationToken);
         return results is not null ? TypedResults.Ok(results) : TypedResults.BadRequest();
     }
 }

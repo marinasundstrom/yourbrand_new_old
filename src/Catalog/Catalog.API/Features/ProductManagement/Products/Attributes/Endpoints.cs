@@ -55,14 +55,6 @@ public static class Endpoints
     {
         await mediator.Send(new DeleteProductAttribute(productId, attributeId));
     }
-
-    /*
-    [HttpPost("{productId}/Attributes/{attributeId}/GetAvailableValues")]
-    public async Task<ActionResult<IEnumerable<Features.Attributes.AttributeValueDto>>> GetAvailableAttributeValues(long productId, string attributeId, Dictionary<string, string?> selectedAttributes)
-    {
-        return Ok(await _mediator.Send(new GetAvailableAttributeValues(productId, attributeId, selectedAttributes)));
-    }
-    */
 }
 
 public sealed record AddProductAttributeDto(string AttributeId, string ValueId, bool ForVariant, bool IsMainAttribute);
