@@ -2,7 +2,7 @@
     <DataAnnotationsValidator />
 
     <MudAutocomplete Label="Category" SearchFunc="Model.Search" @bind-Value="Model.Category" ToStringFunc="x => x.Name"
-        Variant="Variant.Outlined" For="() => Model.Category" />
+        Strict="false" Variant="Variant.Outlined" For="() => Model.Category" />
 
     <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Class="mt-4">Update category</MudButton>
 </EditForm>

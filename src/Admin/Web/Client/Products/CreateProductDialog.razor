@@ -10,12 +10,15 @@
     <MudDialog>
         <DialogContent>
             <div class="d-flex flex-column py-1">
-                <MudTextField Label="Name" @bind-Value="Name" Variant="Variant.Outlined" For="() => Name" Class="mb-4">
-                </MudTextField>
+                <MudTextField Label="Name" @bind-Value="Name" Variant="Variant.Outlined" For="() => Name"
+                    Class="mb-4" />
+
                 <MudTextField Label="Description" Lines="5" @bind-Value="Description" Variant="Variant.Outlined"
                     For="() => Description" Class="mb-4"></MudTextField>
+
                 <MudAutocomplete Label="Category" SearchFunc="Search" @bind-Value="Category" ToStringFunc="x => x.Name"
-                    Variant="Variant.Outlined" For="() => Category" Class="mb-4" />
+                    Variant="Variant.Outlined" For="() => Category" Class="mb-4" Strict="false" />
+
                 <MudCheckBox Label="Is grouped product" Lines="5" @bind-Checked="IsGroupedProduct"
                     Variant="Variant.Outlined" For="() => IsGroupedProduct" Class="mb-4"></MudCheckBox>
 

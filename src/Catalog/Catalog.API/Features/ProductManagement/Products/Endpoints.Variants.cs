@@ -46,10 +46,12 @@ public static partial class Endpoints
             .WithName($"Products_{nameof(GetAvailableVariantAttributeValues)}");
 
         group.MapPost("{id}/variants", CreateVariant)
-            .WithName($"Products_{nameof(CreateVariant)}");
+            .WithName($"Products_{nameof(CreateVariant)}")
+            .ProducesProblem(StatusCodes.Status400BadRequest);
 
         group.MapPut("{id}/variants/{variantId}", UpdateVariant)
-            .WithName($"Products_{nameof(UpdateVariant)}");
+            .WithName($"Products_{nameof(UpdateVariant)}")
+            .ProducesProblem(StatusCodes.Status400BadRequest);
 
         group.MapPost("{id}/variants/{variantId}/uploadImage", UploadVariantImage)
             .WithName($"Products_{nameof(UploadVariantImage)}");

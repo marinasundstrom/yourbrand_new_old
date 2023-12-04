@@ -140,36 +140,6 @@ paths:
           description: ""
         404:
           description: ""
-    post:
-      tags:
-        - Products
-        - Products
-      operationId: Products_CreateProductVariant
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
-          x-position: 1
-      requestBody:
-        x-name: request
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/CreateProductVariantData"
-        required: true
-        x-position: 2
-      responses:
-        200:
-          description: ""
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Product"
-        400:
-          description: ""
   /api/v1/products/price:
     put:
       tags:
@@ -361,6 +331,40 @@ paths:
                 $ref: "#/components/schemas/PagedResultOfProduct"
         404:
           description: ""
+    post:
+      tags:
+        - Products
+        - Products
+      operationId: Products_CreateProductVariant
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          x-position: 1
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateProductVariantData"
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        400:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
   /api/v1/products/{id}/{variantId}:
     delete:
       tags:
@@ -1309,6 +1313,27 @@ components:
         productCategoryId:
           type: integer
           format: int64
+    ProblemDetails:
+      type: object
+      additionalProperties:
+        nullable: true
+      properties:
+        type:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        status:
+          type: integer
+          format: int32
+          nullable: true
+        detail:
+          type: string
+          nullable: true
+        instance:
+          type: string
+          nullable: true
     CreateProductVariantData:
       type: object
       additionalProperties: false

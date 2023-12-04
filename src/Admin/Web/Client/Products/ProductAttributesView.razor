@@ -92,7 +92,7 @@
                     <MudItem xs="12">
                         <MudAutocomplete T="AttributeValue" @bind-Value="context.Value"
                             SearchFuncWithCancel="@SearchAttributeValue" ShowProgressIndicator="true"
-                            ToStringFunc="(x) => x.Name" Required />
+                            ToStringFunc="(x) => x.Name" Strict="false" Required />
                     </MudItem>
                 </MudGrid>
             </MudTd>

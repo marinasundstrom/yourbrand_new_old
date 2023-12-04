@@ -1,3 +1,5 @@
+using System.Net;
+
 using CatalogAPI;
 
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -53,8 +55,9 @@ public static class Endpoints
         productsGroup.MapGet("/{id}/variants", GetProductVariants)
             .WithName($"Products_{nameof(GetProductVariants)}");
 
-        productsGroup.MapPost("/{id}", CreateProductVariant)
-            .WithName($"Products_{nameof(CreateProductVariant)}");
+        productsGroup.MapPost("/{id}/variants", CreateProductVariant)
+            .WithName($"Products_{nameof(CreateProductVariant)}")
+            .ProducesProblem(StatusCodes.Status400BadRequest);
 
         productsGroup.MapDelete("/{id}/{variantId}", DeleteProductVariant)
             .WithName($"Products_{nameof(DeleteProductVariant)}");
@@ -143,10 +146,21 @@ public static class Endpoints
         return TypedResults.Ok(await productsClient.GetVariantsAsync(id, page, pageSize, searchTerm, sortBy, sortDirection, cancellationToken));
     }
 
-    private static async Task<Results<Ok<Product>, BadRequest>> CreateProductVariant(long id, CreateProductVariantData request, CatalogAPI.IProductsClient productsClient, CancellationToken cancellationToken)
+    private static async Task<Results<Ok<Product>, ProblemHttpResult>> CreateProductVariant(long id, CreateProductVariantData request, CatalogAPI.IProductsClient productsClient, CancellationToken cancellationToken)
     {
-        var product = await productsClient.CreateVariantAsync(id, request, cancellationToken);
-        return TypedResults.Ok(product);
+        try
+        {
+            var product = await productsClient.CreateVariantAsync(id, request, cancellationToken);
+            return TypedResults.Ok(product);
+        }
+        catch (ApiException<CatalogAPI.ProblemDetails> exc)
+        {
+            Console.WriteLine("Foo" + exc);
+
+            var details = exc.Result;
+
+            return TypedResults.Problem(details.Detail, details.Instance, details.Status, details.Title, details.Type);
+        }
     }
 
     private static async Task<Results<Ok, NotFound>> DeleteProductVariant(long id, long variantId, CatalogAPI.IProductsClient productsClient, CancellationToken cancellationToken)
