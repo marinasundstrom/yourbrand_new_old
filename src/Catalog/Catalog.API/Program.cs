@@ -20,6 +20,7 @@ using Microsoft.Extensions.Azure;
 using Steeltoe.Discovery.Client;
 
 using YourBrand;
+using Catalog.API.Features.ProductManagement.Products;
 
 string ServiceName = "Catalog.API";
 
@@ -86,6 +87,8 @@ builder.Services.AddControllers();
 builder.Services
     .AddOpenApi(ServiceName)
     .AddApiVersioningServices();
+
+builder.Services.AddProductsServices();
 
 builder.Services.AddObservability("Catalog.API", "1.0", builder.Configuration);
 

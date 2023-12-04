@@ -140,7 +140,7 @@ paths:
           description: ""
         404:
           description: ""
-  /api/v1/products/price:
+  /api/v1/products/{id}/price:
     put:
       tags:
         - Products
@@ -148,7 +148,7 @@ paths:
       operationId: Products_UpdateProductPrice
       parameters:
         - name: id
-          in: query
+          in: path
           required: true
           schema:
             type: string
@@ -197,7 +197,7 @@ paths:
                 type: string
         404:
           description: ""
-  /api/v1/products/handle:
+  /api/v1/products/{id}/handle:
     put:
       tags:
         - Products
@@ -205,7 +205,7 @@ paths:
       operationId: Products_UpdateProductHandle
       parameters:
         - name: id
-          in: query
+          in: path
           required: true
           schema:
             type: string
@@ -223,7 +223,7 @@ paths:
           description: ""
         404:
           description: ""
-  /api/v1/products/visibility:
+  /api/v1/products/{id}/visibility:
     put:
       tags:
         - Products
@@ -231,7 +231,7 @@ paths:
       operationId: Products_UpdateProductVisibility
       parameters:
         - name: id
-          in: query
+          in: path
           required: true
           schema:
             type: string
@@ -249,7 +249,7 @@ paths:
           description: ""
         404:
           description: ""
-  /api/v1/products/category:
+  /api/v1/products/{id}/category:
     put:
       tags:
         - Products
@@ -257,7 +257,7 @@ paths:
       operationId: Products_UpdateProductCategory
       parameters:
         - name: id
-          in: query
+          in: path
           required: true
           schema:
             type: string
@@ -365,7 +365,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ProblemDetails"
-  /api/v1/products/{id}/{variantId}:
+  /api/v1/products/{id}/variants/{variantId}:
     delete:
       tags:
         - Products
@@ -502,6 +502,30 @@ paths:
         200:
           description: ""
         404:
+          description: ""
+  /api/v1/products/import:
+    delete:
+      tags:
+        - Products
+        - Products
+      operationId: Products_ImportProducts
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductImportResult"
+        400:
           description: ""
   /api/v1/productCategories:
     get:
@@ -1389,6 +1413,14 @@ components:
           type: boolean
         isMainAttribute:
           type: boolean
+    ProductImportResult:
+      type: object
+      additionalProperties: false
+      properties:
+        diagnostics:
+          type: array
+          items:
+            type: string
     PagedResultOfProductCategory:
       type: object
       additionalProperties: false

@@ -1231,6 +1231,30 @@ paths:
           description: ""
         404:
           description: ""
+  /v1/products/import:
+    post:
+      tags:
+        - Products
+        - Products
+      operationId: Products_ImportProducts
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductImportResult"
+        404:
+          description: ""
   /v1/productCategories:
     get:
       tags:
@@ -2569,6 +2593,14 @@ components:
         productCategoryId:
           type: integer
           format: int64
+    ProductImportResult:
+      type: object
+      additionalProperties: false
+      properties:
+        diagnostics:
+          type: array
+          items:
+            type: string
     PagedResultOfProductCategory:
       type: object
       additionalProperties: false

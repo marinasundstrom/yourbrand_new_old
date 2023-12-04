@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Http.HttpResults;
 
 using Asp.Versioning.Builder;
 using YourBrand.Extensions;
+using Catalog.API.Features.ProductManagement.Import;
+using OpenTelemetry.Trace;
 
 namespace Catalog.API.Features.ProductManagement.Products;
 
@@ -71,6 +73,11 @@ public static partial class Endpoints
 
         group.MapDelete("/{idOrHandle}", DeleteProduct)
             .WithName($"Products_{nameof(DeleteProduct)}");
+
+        group.MapPost("/import", ImportProducts)
+            .WithName($"Products_{nameof(ImportProducts)}")
+            .Produces<ProductImportResult>(StatusCodes.Status200OK)
+            .DisableAntiforgery();
 
         return app;
     }
@@ -153,6 +160,14 @@ public static partial class Endpoints
         var result = await mediator.Send(new DeleteProduct(idOrHandle), cancellationToken);
 
         return result.IsSuccess ? TypedResults.Ok() : TypedResults.NotFound();
+    }
+
+    private static async Task<Results<Ok<ProductImportResult>, NotFound>> ImportProducts(IFormFile file,
+   IMediator mediator, CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(new ImportProducts(file.OpenReadStream()), cancellationToken);
+
+        return result.IsSuccess ? TypedResults.Ok(result.GetValue()) : TypedResults.NotFound();
     }
 }
 

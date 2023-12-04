@@ -33,7 +33,7 @@ public static class Endpoints
         productsGroup.MapPut("/{id}", UpdateProductDetails)
             .WithName($"Products_{nameof(UpdateProductDetails)}");
 
-        productsGroup.MapPut("/price", UpdateProductPrice)
+        productsGroup.MapPut("/{id}/price", UpdateProductPrice)
             .WithName($"Products_{nameof(UpdateProductPrice)}");
 
         productsGroup.MapDelete("/{id}", DeleteProduct)
@@ -43,13 +43,13 @@ public static class Endpoints
             .WithName($"Products_{nameof(UploadProductImage)}")
             .DisableAntiforgery();
 
-        productsGroup.MapPut("/handle", UpdateProductHandle)
+        productsGroup.MapPut("/{id}/handle", UpdateProductHandle)
             .WithName($"Products_{nameof(UpdateProductHandle)}");
 
-        productsGroup.MapPut("/visibility", UpdateProductVisibility)
+        productsGroup.MapPut("/{id}/visibility", UpdateProductVisibility)
             .WithName($"Products_{nameof(UpdateProductVisibility)}");
 
-        productsGroup.MapPut("/category", UpdateProductCategory)
+        productsGroup.MapPut("/{id}/category", UpdateProductCategory)
             .WithName($"Products_{nameof(UpdateProductCategory)}");
 
         productsGroup.MapGet("/{id}/variants", GetProductVariants)
@@ -59,7 +59,7 @@ public static class Endpoints
             .WithName($"Products_{nameof(CreateProductVariant)}")
             .ProducesProblem(StatusCodes.Status400BadRequest);
 
-        productsGroup.MapDelete("/{id}/{variantId}", DeleteProductVariant)
+        productsGroup.MapDelete("/{id}/variants/{variantId}", DeleteProductVariant)
             .WithName($"Products_{nameof(DeleteProductVariant)}");
 
         productsGroup.MapGet("/{id}/attributes", GetProductAttributes)
@@ -74,7 +74,20 @@ public static class Endpoints
         productsGroup.MapDelete("/{id}/attributes/{attributeId}", DeleteProductAttribute)
             .WithName($"Products_{nameof(DeleteProductAttribute)}");
 
+        productsGroup.MapDelete("/import", ImportProducts)
+            .WithName($"Products_{nameof(ImportProducts)}")
+            .Produces<ProductImportResult>(StatusCodes.Status200OK)
+            .DisableAntiforgery();
+
         return app;
+    }
+
+    private static async Task<Results<Ok<ProductImportResult>, BadRequest>> ImportProducts(IFormFile file, CatalogAPI.IProductsClient productsClient = default!, CancellationToken cancellationToken = default!)
+    {
+        var result = await productsClient.ImportProductsAsync(
+            new FileParameter(file.OpenReadStream(), file.FileName, file.ContentType), cancellationToken);
+
+        return TypedResults.Ok(result);
     }
 
     private static async Task<Ok<PagedResultOfProduct>> GetProducts(int page = 1, int pageSize = 10, string? searchTerm = null, string? sortBy = null, SortDirection? sortDirection = null, CatalogAPI.IProductsClient productsClient = default!, CancellationToken cancellationToken = default!)
