@@ -20,11 +20,11 @@ public record UpdateProductOptionGroup(long ProductId, string OptionGroupId, Upd
 
         public async Task<OptionGroupDto> Handle(UpdateProductOptionGroup request, CancellationToken cancellationToken)
         {
-            var item = await _context.Products
+            var product = await _context.Products
             .Include(x => x.OptionGroups)
             .FirstAsync(x => x.Id == request.ProductId);
 
-            var optionGroup = item.OptionGroups
+            var optionGroup = product.OptionGroups
                 .First(x => x.Id == request.OptionGroupId);
 
             optionGroup.Name = request.Data.Name;

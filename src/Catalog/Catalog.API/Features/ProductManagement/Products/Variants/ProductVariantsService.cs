@@ -14,7 +14,7 @@ public class ProductVariantsService
         _context = context;
     }
 
-    public async Task<IEnumerable<Product>> FindVariants(string productIdOrHandle, string? itemVariantIdOrHandle, IDictionary<string, string?> selectedAttributeValues, CancellationToken cancellationToken)
+    public async Task<IEnumerable<Product>> FindVariants(string productIdOrHandle, string? productVariantIdOrHandle, IDictionary<string, string?> selectedAttributeValues, CancellationToken cancellationToken)
     {
         bool isProductId = long.TryParse(productIdOrHandle, out var productId);
 
@@ -29,13 +29,13 @@ public class ProductVariantsService
             query.Where(pv => pv.ParentProduct!.Id == productId)
             : query.Where(pv => pv.ParentProduct!.Handle == productIdOrHandle);
 
-        if (itemVariantIdOrHandle is not null)
+        if (productVariantIdOrHandle is not null)
         {
-            bool isItemVariantId = long.TryParse(itemVariantIdOrHandle, out var itemVariantId);
+            bool isProductVariantId = long.TryParse(productVariantIdOrHandle, out var itemVariantId);
 
-            query = isItemVariantId ?
+            query = isProductVariantId ?
                 query.Where(pv => pv.Id == itemVariantId)
-                : query.Where(pv => pv.Handle == itemVariantIdOrHandle);
+                : query.Where(pv => pv.Handle == productVariantIdOrHandle);
         }
 
         IEnumerable<Product> variants = await query

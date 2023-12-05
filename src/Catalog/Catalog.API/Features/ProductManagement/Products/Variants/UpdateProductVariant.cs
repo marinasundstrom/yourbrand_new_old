@@ -29,7 +29,7 @@ public record UpdateProductVariant(long ProductId, long ProductVariantId, Update
                 throw new VariantAlreadyExistsException("Variant with the same options already exists.");
             }
 
-            var item = await _context.Products
+            var product = await _context.Products
                 .AsSplitQuery()
                 .Include(pv => pv.ParentProduct)
                     .ThenInclude(pv => pv!.Category)
@@ -41,7 +41,7 @@ public record UpdateProductVariant(long ProductId, long ProductVariantId, Update
                     .ThenInclude(o => o.Value)
                 .FirstAsync(x => x.Id == request.ProductId);
 
-            var variant = item.Variants.First(x => x.Id == request.ProductVariantId);
+            var variant = product.Variants.First(x => x.Id == request.ProductVariantId);
 
             variant.Name = request.Data.Name;
             variant.Description = request.Data.Description;

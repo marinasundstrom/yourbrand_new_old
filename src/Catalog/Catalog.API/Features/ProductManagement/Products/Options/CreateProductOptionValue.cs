@@ -21,7 +21,7 @@ public record CreateProductOptionValue(long ProductId, string OptionId, CreatePr
 
         public async Task<OptionValueDto> Handle(CreateProductOptionValue request, CancellationToken cancellationToken)
         {
-            var item = await _context.Products
+            var product = await _context.Products
             .FirstAsync(x => x.Id == request.ProductId);
 
             var option = await _context.Options

@@ -19,14 +19,14 @@ public record DeleteProductAttribute(long ProductId, string AttributeId) : IRequ
 
         public async Task Handle(DeleteProductAttribute request, CancellationToken cancellationToken)
         {
-            var item = await _context.Products
+            var product = await _context.Products
                 .Include(x => x.ProductAttributes)
                 .FirstAsync(x => x.Id == request.ProductId);
 
-            var attribute = item.ProductAttributes
+            var attribute = product.ProductAttributes
                 .First(x => x.AttributeId == request.AttributeId);
 
-            item.RemoveProductAttribute(attribute);
+            product.RemoveProductAttribute(attribute);
             _context.ProductAttributes.Remove(attribute);
 
             await _context.SaveChangesAsync();

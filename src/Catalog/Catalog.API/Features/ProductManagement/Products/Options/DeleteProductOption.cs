@@ -19,24 +19,24 @@ public record DeleteProductOption(long ProductId, string OptionId) : IRequest
 
         public async Task Handle(DeleteProductOption request, CancellationToken cancellationToken)
         {
-            var item = await _context.Products
+            var product = await _context.Products
                 .Include(x => x.Options)
                 .FirstAsync(x => x.Id == request.ProductId);
 
-            var option = item.Options
+            var option = product.Options
                 .First(x => x.Id == request.OptionId);
 
-            item.RemoveOption(option);
+            product.RemoveOption(option);
             _context.Options.Remove(option);
 
-            if (item.HasVariants)
+            if (product.HasVariants)
             {
                 var variants = await _context.Products
-                    .Where(x => x.ParentProductId == item.Id)
+                    .Where(x => x.ParentProductId == product.Id)
                     .Include(x => x.ProductOptions.Where(z => z.OptionId == option.Id))
                     .ToArrayAsync(cancellationToken);
 
-                foreach (var variant in item.Variants)
+                foreach (var variant in product.Variants)
                 {
                     var option1 = variant.ProductOptions.FirstOrDefault(x => x.OptionId == option.Id);
                     if (option1 is not null)

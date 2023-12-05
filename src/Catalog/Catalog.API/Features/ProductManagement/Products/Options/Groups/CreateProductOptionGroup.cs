@@ -21,7 +21,7 @@ public record CreateProductOptionGroup(long ProductId, CreateProductOptionGroupD
 
         public async Task<OptionGroupDto> Handle(CreateProductOptionGroup request, CancellationToken cancellationToken)
         {
-            var item = await _context.Products
+            var product = await _context.Products
                 .FirstAsync(x => x.Id == request.ProductId);
 
             var group = new OptionGroup(Guid.NewGuid().ToString())
@@ -32,7 +32,7 @@ public record CreateProductOptionGroup(long ProductId, CreateProductOptionGroupD
                 Max = request.Data.Max
             };
 
-            item.AddOptionGroup(group);
+            product.AddOptionGroup(group);
 
             await _context.SaveChangesAsync();
 

@@ -21,7 +21,7 @@ public record CreateProductOption(long ProductId, CreateProductOptionData Data) 
 
         public async Task<OptionDto> Handle(CreateProductOption request, CancellationToken cancellationToken)
         {
-            var item = await _context.Products
+            var product = await _context.Products
                 .FirstAsync(x => x.Id == request.ProductId);
 
             var group = await _context.OptionGroups
@@ -82,16 +82,16 @@ public record CreateProductOption(long ProductId, CreateProductOptionData Data) 
             option.Description = request.Data.Description;
             option.Group = group;
 
-            item.AddOption(option);
+            product.AddOption(option);
 
-            if (item.HasVariants)
+            if (product.HasVariants)
             {
                 var variants = await _context.Products
-                    .Where(x => x.ParentProductId == item.Id)
+                    .Where(x => x.ParentProductId == product.Id)
                     .Include(x => x.Options)
                     .ToArrayAsync(cancellationToken);
 
-                foreach (var variant in item.Variants)
+                foreach (var variant in product.Variants)
                 {
                     variant.AddProductOption(new ProductOption()
                     {

@@ -38,7 +38,7 @@ public record CreateProductVariant(long ProductId, CreateProductVariantData Data
                 return Result.Failure<ProductDto>(Errors.HandleAlreadyTaken);
             }
 
-            var item = await _context.Products
+            var product = await _context.Products
                 .AsSplitQuery()
                 .Include(pv => pv.ParentProduct)
                     .ThenInclude(pv => pv!.Category)
@@ -63,6 +63,7 @@ public record CreateProductVariant(long ProductId, CreateProductVariantData Data
                 Description = request.Data.Description ?? string.Empty,
                 Price = request.Data.Price,
                 Image = $"{cdnBaseUrl}/images/products/placeholder.jpeg",
+                CategoryId = product.ParentProductId
             };
 
             foreach (var value in request.Data.Attributes)
@@ -80,7 +81,7 @@ public record CreateProductVariant(long ProductId, CreateProductVariantData Data
                 });
             }
 
-            item.AddVariant(variant);
+            product.AddVariant(variant);
 
             await _context.SaveChangesAsync();
 

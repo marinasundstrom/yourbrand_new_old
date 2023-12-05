@@ -21,7 +21,7 @@ public record UpdateProductOption(long ProductId, string OptionId, UpdateProduct
 
         public async Task<OptionDto> Handle(UpdateProductOption request, CancellationToken cancellationToken)
         {
-            var item = await _context.Products
+            var product = await _context.Products
             .AsNoTracking()
             .FirstAsync(x => x.Id == request.ProductId);
 

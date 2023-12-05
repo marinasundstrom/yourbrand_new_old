@@ -33,13 +33,13 @@ public record GetProductVariant(string ProductIdOrHandle, string ProductVariantI
                 query.Where(pv => pv.ParentProduct!.Id == productId)
                 : query.Where(pv => pv.ParentProduct!.Handle == request.ProductIdOrHandle);
 
-            var itemVariant = isProductVariantId ?
+            var productVariant = isProductVariantId ?
                 await query.FirstOrDefaultAsync(pv => pv!.Handle == request.ProductVariantIdOrHandle, cancellationToken)
                 : await query.FirstOrDefaultAsync(pv => pv!.Id == productVariantId, cancellationToken);
 
-            if (itemVariant is null) return null;
+            if (productVariant is null) return null;
 
-            return itemVariant.ToDto();
+            return productVariant.ToDto();
         }
 
         private static string? GetImageUrl(string? name)
