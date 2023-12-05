@@ -29,6 +29,22 @@
             </MudPaper>
         </MudItem>
 
+        <MudItem xs="12" sm="12" md="12">
+            <MudExpansionPanels MultiExpansion="true">
+                <MudExpansionPanel MaxHeight="350">
+                    <TitleContent>
+                        <div class="d-flex justify-start flex-grow-1 gap-1">
+                            <MudText Typo="Typo.h6" Class="mt-2">Description</MudText>
+                            <MudIconButton Icon="@Icons.Material.Filled.Add" OnClick="() => {}" />
+                        </div>
+                        <MudSpacer />
+                    </TitleContent>
+
+                    @* <Editor @ref="editorRef" @bind-Value="empty" Options="@options" Change="MarkdownChanged" /> *@
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudItem>
+
         @if (product.Parent is null)
         {
             <MudItem xs="12" sm="12" md="3">

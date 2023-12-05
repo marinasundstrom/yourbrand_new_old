@@ -13,29 +13,21 @@ public class CategoryUpdateViewModel(IProductsClient productsClient, IProductCat
         return new(productsClient, productCategoriesClient, snackbar)
         {
             ProductId = product.Id,
-            Category = new ParentProductCategory
-            {
-                Id = product.Category.Id,
-                Name = product.Category.Name
-            }
+            Category = new ProductCategory(product.Category.Id!, product.Category.Name, true)
         };
     }
 
     [Required]
-    public ParentProductCategory Category { get; set; }
+    public ProductCategory Category { get; set; }
 
     public long ProductId { get; private set; }
 
-    public async Task<IEnumerable<ParentProductCategory>> Search(string value)
+    public async Task<IEnumerable<ProductCategory>> Search(string value)
     {
         var result = await productCategoriesClient.GetProductsCategoriesAsync(1, 20, value);
         return result.Items
             .Where(x => x.CanAddProducts)
-            .Select(x => new ParentProductCategory
-            {
-                Id = x.Id,
-                Name = x.Name
-            });
+            .Select(x => new ProductCategory(x.Id!, x.Name, x.CanAddProducts));
     }
 
     public async Task UpdateCategory()
@@ -54,4 +46,6 @@ public class CategoryUpdateViewModel(IProductsClient productsClient, IProductCat
             snackbar.Add("Category to update product handle", Severity.Error);
         }
     }
+
+    public record ProductCategory(long Id, string Name, bool CanAddProducts);
 }
