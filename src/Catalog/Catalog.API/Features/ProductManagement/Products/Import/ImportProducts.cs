@@ -128,7 +128,7 @@ public sealed record ImportProducts(Stream Stream) : IRequest<Result<ProductImpo
                 {
                     string? path = null;
 
-                    if (fileName is not null)
+                    if (!string.IsNullOrEmpty(fileName))
                     {
                         var mimeType = GetMimeTypeForFileExtension(fileName);
                         path = await _productImageUploader.UploadProductImage(fileName, stream!, mimeType);

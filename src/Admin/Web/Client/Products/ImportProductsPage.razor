@@ -41,6 +41,18 @@
     </MudPaper>
 }
 
+<MudPaper Class="mt-4 pa-4"  Elevation="25">
+    <MudText Typo="Typo.h5" Class="mb-4">Sample: products.csv</MudText>
+
+<pre>
+StoreIdOrHandle,Sku,Name,Handle,Description,Brand,CategoryId,CategoryName,ParentSku,Image,Price,RegularPrice,Listed
+siko,rullebor,Rullebör,rullebor,En rymlig skottkärra,,10002,Testgrupp,,wheelbarrow.jpg,10,,true
+siko,skruv-120pack,Skruv 120-pack,skruv-120pack,Fina skruvar för gipsskrivor,,10002,Testgrupp,,screw.jpeg,84.80,,true
+</pre>
+
+    <MudText Typo="Typo.body1" Class="mb-4 mt-4">If you leave the image out, a placeholder will be used instead.</MudText>
+</MudPaper>
+
 @code 
 {
     private static string DefaultDragClass = "relative rounded-lg border-2 border-dashed pa-4 mt-4 mud-width-full mud-height-full z-10";
