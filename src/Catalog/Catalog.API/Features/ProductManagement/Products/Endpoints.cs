@@ -63,6 +63,10 @@ public static partial class Endpoints
             .AddEndpointFilter<ValidationFilter<UpdateProductHandleRequest>>()
             .WithName($"Products_{nameof(UpdateProductHandle)}");
 
+        group.MapPut("/{idOrHandle}/sku", UpdateProductSku)
+            .AddEndpointFilter<ValidationFilter<UpdateProductSkuRequest>>()
+            .WithName($"Products_{nameof(UpdateProductSku)}");
+
         group.MapPut("/{idOrHandle}/visibility", UpdateProductVisibility)
             .AddEndpointFilter<ValidationFilter<UpdateProductVisibilityRequest>>()
             .WithName($"Products_{nameof(UpdateProductVisibility)}");
@@ -133,6 +137,14 @@ public static partial class Endpoints
         IMediator mediator, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new UpdateProductHandle(idOrHandle, request.Handle), cancellationToken);
+
+        return result.IsSuccess ? TypedResults.Ok() : TypedResults.NotFound();
+    }
+
+    private static async Task<Results<Ok, NotFound, ProblemHttpResult>> UpdateProductSku(string idOrHandle, UpdateProductSkuRequest request,
+        IMediator mediator, CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(new UpdateProductSku(idOrHandle, request.Sku), cancellationToken);
 
         return result.IsSuccess ? TypedResults.Ok() : TypedResults.NotFound();
     }
@@ -233,6 +245,7 @@ public sealed record ProductDto(
     decimal? RegularPrice,
     string? Image,
     string Handle,
+    string? Sku,
     bool HasVariants,
     ProductVisibility Visibility,
     IEnumerable<ProductAttributeDto> Attributes,
@@ -254,3 +267,14 @@ public record class ProductAttributeDto(
 
 public record class ProductOptionDto(
     OptionDto Option, bool IsInherited);
+
+public sealed record UpdateProductSkuRequest(string Sku)
+{
+    public class UpdateProductSkuRequestValidator : AbstractValidator<UpdateProductSkuRequest>
+    {
+        public UpdateProductSkuRequestValidator()
+        {
+            RuleFor(p => p.Sku).MaximumLength(60).NotEmpty();
+        }
+    }
+}

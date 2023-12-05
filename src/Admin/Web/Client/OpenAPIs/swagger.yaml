@@ -223,6 +223,32 @@ paths:
           description: ""
         404:
           description: ""
+  /api/v1/products/{id}/sku:
+    put:
+      tags:
+        - Products
+        - Products
+      operationId: Products_UpdateProductSku
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          x-position: 1
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateProductSkuRequest"
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ""
+        404:
+          description: ""
   /api/v1/products/{id}/visibility:
     put:
       tags:
@@ -978,6 +1004,9 @@ components:
           nullable: true
         handle:
           type: string
+        sku:
+          type: string
+          nullable: true
         hasVariants:
           type: boolean
         visibility:
@@ -1323,6 +1352,12 @@ components:
       additionalProperties: false
       properties:
         handle:
+          type: string
+    UpdateProductSkuRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        sku:
           type: string
     UpdateProductVisibilityRequest:
       type: object

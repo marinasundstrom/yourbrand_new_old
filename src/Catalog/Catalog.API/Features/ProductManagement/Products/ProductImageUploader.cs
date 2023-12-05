@@ -10,8 +10,8 @@ namespace Catalog.API.Features.ProductManagement.Products;
 public interface IProductImageUploader
 {
     Task<string> GetPlaceholderImageUrl();
-    Task<bool> TryDeleteProductImage(string fileName);
-    Task<string> UploadProductImage(string fileName, Stream stream, string contentType);
+    Task<bool> TryDeleteProductImage(long productId, string fileName);
+    Task<string> UploadProductImage(long productId, string fileName, Stream stream, string contentType);
 }
 
 public class ProductImageUploader(BlobServiceClient blobServiceClient, CatalogContext context, IConfiguration configuration)
@@ -37,22 +37,22 @@ public class ProductImageUploader(BlobServiceClient blobServiceClient, CatalogCo
         return Task.FromResult(placeholderImageFileName);
     }
 
-    public async Task<bool> TryDeleteProductImage(string fileName)
+    public async Task<bool> TryDeleteProductImage(long productId, string fileName)
     {
         var blobContainerClient = blobServiceClient.GetBlobContainerClient("images");
         await blobContainerClient.CreateIfNotExistsAsync();
 
-        BlobClient blobClient = blobContainerClient.GetBlobClient($"products/{fileName}");
+        BlobClient blobClient = blobContainerClient.GetBlobClient($"products/{productId}/{fileName}");
 
         return await blobClient.DeleteIfExistsAsync();
     }
 
-    public async Task<string> UploadProductImage(string fileName, Stream stream, string contentType)
+    public async Task<string> UploadProductImage(long productId, string fileName, Stream stream, string contentType)
     {
         var blobContainerClient = blobServiceClient.GetBlobContainerClient("images");
         await blobContainerClient.CreateIfNotExistsAsync();
 
-        BlobClient blobClient = blobContainerClient.GetBlobClient($"products/{fileName}");
+        BlobClient blobClient = blobContainerClient.GetBlobClient($"products/{productId}/{fileName}");
 
         await blobClient.UploadAsync(stream, new BlobHttpHeaders { ContentType = contentType });
 
@@ -62,6 +62,6 @@ public class ProductImageUploader(BlobServiceClient blobServiceClient, CatalogCo
             ? configuration["CdnBaseUrl"]!
             : "https://yourbrandstorage.blob.core.windows.net";
 
-        return $"{cdnBaseUrl}/images/products/{fileName}";
+        return $"{cdnBaseUrl}/images/products/{productId}/{fileName}";
     }
 }

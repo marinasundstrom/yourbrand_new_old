@@ -46,6 +46,9 @@ public static class Endpoints
         productsGroup.MapPut("/{id}/handle", UpdateProductHandle)
             .WithName($"Products_{nameof(UpdateProductHandle)}");
 
+        productsGroup.MapPut("/{id}/sku", UpdateProductSku)
+            .WithName($"Products_{nameof(UpdateProductSku)}");
+
         productsGroup.MapPut("/{id}/visibility", UpdateProductVisibility)
             .WithName($"Products_{nameof(UpdateProductVisibility)}");
 
@@ -136,6 +139,12 @@ public static class Endpoints
     private static async Task<Results<Ok, NotFound>> UpdateProductHandle(string id, UpdateProductHandleRequest request, CatalogAPI.IProductsClient productsClient, CancellationToken cancellationToken)
     {
         await productsClient.UpdateProductHandleAsync(id, request, cancellationToken);
+        return TypedResults.Ok();
+    }
+
+    private static async Task<Results<Ok, NotFound>> UpdateProductSku(string id, UpdateProductSkuRequest request, CatalogAPI.IProductsClient productsClient, CancellationToken cancellationToken)
+    {
+        await productsClient.UpdateProductSkuAsync(id, request, cancellationToken);
         return TypedResults.Ok();
     }
 

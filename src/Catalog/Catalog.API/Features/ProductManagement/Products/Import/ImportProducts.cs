@@ -109,7 +109,7 @@ public sealed record ImportProducts(Stream Stream) : IRequest<Result<ProductImpo
 
                 var fileName = product.Image;
 
-                await _productImageUploader.TryDeleteProductImage(fileName);
+                await _productImageUploader.TryDeleteProductImage(product.Id, fileName);
 
                 Stream? stream = null;
 
@@ -131,7 +131,7 @@ public sealed record ImportProducts(Stream Stream) : IRequest<Result<ProductImpo
                     if (!string.IsNullOrEmpty(fileName))
                     {
                         var mimeType = GetMimeTypeForFileExtension(fileName);
-                        path = await _productImageUploader.UploadProductImage(fileName, stream!, mimeType);
+                        path = await _productImageUploader.UploadProductImage(product.Id, fileName, stream!, mimeType);
                     }
                     else
                     {

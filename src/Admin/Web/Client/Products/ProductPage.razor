@@ -56,6 +56,12 @@
             </MudPaper>
         </MudItem>
 
+        <MudItem xs="12" sm="12" md="3">
+            <MudPaper Elevation="2" Class="pa-4">
+                <SkuUpdateView Model="skuUpdateViewModel" />
+            </MudPaper>
+        </MudItem>
+
         <MudItem xs="12" sm="12" md="12">
             <ProductAttributesView @key="product.Id" ProductId="product.Id" HasVariants="product.HasVariants" />
         </MudItem>
@@ -83,6 +89,7 @@
     PriceUpdateViewModel priceUpdateViewModel;
     HandleUpdateViewModel handleUpdateViewModel;
     VisibilityUpdateViewModel visibilityUpdateViewModel;
+    SkuUpdateViewModel skuUpdateViewModel;
 
     private List<BreadcrumbItem> _items = new List<BreadcrumbItem>();
 
@@ -146,6 +153,11 @@
         Snackbar);
 
         visibilityUpdateViewModel = VisibilityUpdateViewModel.Create(
+        product,
+        ProductsClient,
+        Snackbar);
+
+        skuUpdateViewModel = SkuUpdateViewModel.Create(
         product,
         ProductsClient,
         Snackbar);
