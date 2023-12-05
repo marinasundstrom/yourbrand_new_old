@@ -1,5 +1,5 @@
 @page "/products"
-@using AdminAPI
+@using CatalogAPI
 @using static Microsoft.AspNetCore.Components.Web.RenderMode
 @rendermode renderMode
 @inject IProductsClient ProductsClient
@@ -71,9 +71,10 @@
     /// </summary>
     private async Task<TableData<Product>> ServerReload(TableState state)
     {
-        var result = await ProductsClient.GetProductsAsync(state.Page + 1, state.PageSize, searchString, state.SortLabel,
+        var result = await ProductsClient.GetProductsAsync(null, null, false, true, state.Page + 1, state.PageSize,
+        searchString, null, state.SortLabel,
         state.SortDirection == MudBlazor.SortDirection.None ? null : (state.SortDirection == MudBlazor.SortDirection.Descending
-        ? AdminAPI.SortDirection.Desc : AdminAPI.SortDirection.Asc));
+        ? CatalogAPI.SortDirection.Desc : CatalogAPI.SortDirection.Asc));
         return new TableData<Product>() { TotalItems = result.Total, Items = result.Items };
     }
 
@@ -95,7 +96,7 @@
 
         if (!result.Canceled)
         {
-            var product = (AdminAPI.Product)result.Data;
+            var product = (CatalogAPI.Product)result.Data;
             NavigationManager.NavigateTo($"/products/{product.Id}");
         }
     }

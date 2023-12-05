@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-using AdminAPI;
+using CatalogAPI;
 
 using MudBlazor;
 
@@ -24,7 +24,7 @@ public class CategoryUpdateViewModel(IProductsClient productsClient, IProductCat
 
     public async Task<IEnumerable<ProductCategory>> Search(string value)
     {
-        var result = await productCategoriesClient.GetProductsCategoriesAsync(1, 20, value);
+        var result = await productCategoriesClient.GetProductCategoriesAsync(1, 20, value);
         return result.Items
             .Where(x => x.CanAddProducts)
             .Select(x => new ProductCategory(x.Id!, x.Name, x.CanAddProducts));

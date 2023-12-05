@@ -1,4 +1,4 @@
-@using AdminAPI
+@using CatalogAPI
 @inject NavigationManager NavigationManager
 @inject IProductsClient ProductsClient
 @inject IDialogService DialogService
@@ -63,10 +63,10 @@
     /// </summary>
     private async Task<TableData<Product>> ServerReload(TableState state)
     {
-        var result = await ProductsClient.GetProductVariantsAsync(ProductId.ToString(), state.Page + 1, state.PageSize,
+        var result = await ProductsClient.GetVariantsAsync(ProductId.ToString(), state.Page + 1, state.PageSize,
         searchString,
         state.SortLabel, state.SortDirection == MudBlazor.SortDirection.None ? null : (state.SortDirection ==
-        MudBlazor.SortDirection.Descending ? AdminAPI.SortDirection.Desc : AdminAPI.SortDirection.Asc));
+        MudBlazor.SortDirection.Descending ? CatalogAPI.SortDirection.Desc : CatalogAPI.SortDirection.Asc));
         return new TableData<Product>() { TotalItems = result.Total, Items = result.Items };
     }
 

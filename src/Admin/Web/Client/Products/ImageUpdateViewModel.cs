@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-using AdminAPI;
+using CatalogAPI;
 
 using Microsoft.AspNetCore.Components.Forms;
 

@@ -1,5 +1,5 @@
 ﻿@using System.ComponentModel.DataAnnotations
-@using AdminAPI
+@using CatalogAPI
 @inject IProductsClient ProductsClient
 @inject IProductCategoriesClient ProductCategoriesClient
 @inject IAttributesClient AttributesClient
@@ -12,7 +12,7 @@
         <DialogContent>
             <MudContainer Style="max-height: 300px; overflow-y: scroll">
 
-                <MudAutocomplete T="AdminAPI.Attribute" Class="mb-6" Variant="Variant.Outlined" Label="Attribute"
+                <MudAutocomplete T="CatalogAPI.Attribute" Class="mb-6" Variant="Variant.Outlined" Label="Attribute"
                     @bind-Value="Attribute" SearchFuncWithCancel="SearchAttribute" ShowProgressIndicator="true"
                     ToStringFunc="(x) => x.Name" Required />
 
@@ -47,7 +47,7 @@
 
     [Parameter] public bool IsVariant { get; set; } = default!;
 
-    [Required] public AdminAPI.Attribute Attribute { get; set; } = default!;
+    [Required] public CatalogAPI.Attribute Attribute { get; set; } = default!;
 
     [Required] public bool ForVariant { get; set; } = default!;
 
@@ -77,17 +77,17 @@
         }
         catch { Snackbar.Add("Error", Severity.Error); }
         /*
-        catch (AdminAPI.ApiException<AdminAPI.> exc)
+        catch (CatalogAPI.ApiException<CatalogAPI.> exc)
         {
         Snackbar.Add(exc.Result.Detail, Severity.Error);
         }
         */
     }
 
-    private async Task<IEnumerable<AdminAPI.Attribute>> SearchAttribute(string value,
+    private async Task<IEnumerable<CatalogAPI.Attribute>> SearchAttribute(string value,
     CancellationToken cancellationToken)
     {
-        var r = await AttributesClient.GetAttributesAsync(1, 10, value, null, null, cancellationToken);
+        var r = await AttributesClient.GetAttributesAsync(null, 1, 10, value, null, null, cancellationToken);
         return r.Items;
     }
 

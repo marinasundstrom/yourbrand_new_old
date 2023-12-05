@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 
 using MudBlazor;
-using AdminAPI;
+using CatalogAPI;
 
 namespace YourBrand.Client.Products;
 
@@ -41,7 +41,7 @@ partial class ProductAttributesView : ComponentBase
         var result = await ProductsClient.GetProductAttributesAsync(ProductId); /*, state.Page + 1, state.PageSize,
         searchString,
         state.SortLabel, state.SortDirection == MudBlazor.SortDirection.None ? null : (state.SortDirection ==
-        MudBlazor.SortDirection.Descending ? AdminAPI.SortDirection.Desc : AdminAPI.SortDirection.Asc)); */
+        MudBlazor.SortDirection.Descending ? CatalogAPI.SortDirection.Desc : CatalogAPI.SortDirection.Asc)); */
 
         return new TableData<ProductAttribute>() { TotalItems = result.Count, Items = result };
     }

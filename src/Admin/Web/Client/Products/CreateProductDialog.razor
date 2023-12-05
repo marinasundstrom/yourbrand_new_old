@@ -1,4 +1,4 @@
-@using AdminAPI
+@using CatalogAPI
 @using System.ComponentModel.DataAnnotations
 @inject IProductsClient ProductsClient
 @inject IProductCategoriesClient ProductCategoriesClient
@@ -24,8 +24,8 @@
 
                 @if (IsGroupedProduct)
                 {
-                    <MudNumericField Label="Price" @bind-Value="Price" Variant="Variant.Outlined" For="() => Price"
-                        Class="mb-4" Adornment="Adornment.End" AdornmentText="sek"></MudNumericField>
+                        <MudNumericField Label="Price" @bind-Value="Price" Variant="Variant.Outlined" For="() => Price"
+                            Class="mb-4" Adornment="Adornment.End" AdornmentText="sek"></MudNumericField>
                 }
 
                 <MudTextField Label="Handle" @bind-Value="Handle" Placeholder="red-tshirt-medium"
@@ -51,7 +51,7 @@
     public string Description { get; set; }
 
     [Required]
-    public AdminAPI.ParentProductCategory Category { get; set; }
+    public CatalogAPI.ParentProductCategory Category { get; set; }
 
     public bool IsGroupedProduct { get; set; }
 
@@ -80,7 +80,7 @@
 
     private async Task<IEnumerable<ParentProductCategory>> Search(string value)
     {
-        var result = await ProductCategoriesClient.GetProductsCategoriesAsync(1, 20, value);
+        var result = await ProductCategoriesClient.GetProductCategoriesAsync(1, 20, value);
         return result.Items
         .Where(x => x.CanAddProducts)
         .Select(x => new ParentProductCategory
