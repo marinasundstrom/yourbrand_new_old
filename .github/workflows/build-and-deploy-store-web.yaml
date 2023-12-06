@@ -9,6 +9,7 @@ on:
     - "src/Store/Web/**"
     - "src/Catalog/Catalog.Client/**"
     - "src/Carts/Carts.Client/**"
+    - "src/StoreFront/StoreFront.Client/**"
   
 jobs:
   build-and-deploy:
