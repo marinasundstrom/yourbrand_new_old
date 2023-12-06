@@ -25,12 +25,13 @@ Assign yourself as a ``Contributor`` so that you will be able to view and edit t
 Then assign the role ``AcrPull`` to allow container apps to pull images from ACR.
 
 
-| Resource                   | Role    |
-|--------                    |----     |
-| ``yourbrand-store-web``    | AcrPull |
-| ``yourbrand-admin-web``    | AcrPull |
-| ``yourbrand-catalog-svc``  | AcrPull |
-| ``yourbrand-carts-svc``    | AcrPull |
+| Resource                      | Role    |
+|--------                       |----     |
+| ``yourbrand-store-web``       | AcrPull |
+| ``yourbrand-admin-web``       | AcrPull |
+| ``yourbrand-catalog-svc``     | AcrPull |
+| ``yourbrand-carts-svc``       | AcrPull |
+| ``yourbrand-storefront-svc``  | AcrPull |
 
 ### Container apps
 
