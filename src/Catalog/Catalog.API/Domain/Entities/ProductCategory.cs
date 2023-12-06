@@ -68,7 +68,7 @@ public sealed class ProductCategory
         _subCategories.Remove(productCategory);
     }
 
-    private void IncrementProductsCount()
+    internal void IncrementProductsCount()
     {
         ProductsCount++;
 

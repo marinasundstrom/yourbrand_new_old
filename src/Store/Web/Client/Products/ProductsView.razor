@@ -10,19 +10,20 @@
 
 <div class="row gx-5 pt-md-4">
 
-     <div class="col-md-3 d-none d-lg-block">
+    <div class="col-md-3 d-none d-lg-block">
 
-     </div>
+    </div>
 
-     <div class="col-md-9 col-sm-md-12">
-         <h1>@(categoryName is null ? "Products" : categoryName)</h1>
+    <div class="col-md-9 col-sm-md-12">
+        <h1>@(categoryName is null ? "Products" : categoryName)</h1>
 
-         <p class="d-none d-lg-block mb-5">@(categoryDescription is null ? "Here are our products." : categoryDescription)</p>
-     </div>
+        <p class="d-none d-lg-block mb-5">@(categoryDescription is null ? "Here are our products." :
+            categoryDescription)</p>
+    </div>
 
     <div class="mb-4 d-xs-block d-sm-block d-sm-md-block d-md-none">
         <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Search..."
-        @bind:event="oninput" @bind:get="SearchTerm" @bind:set="OnSearchTermChanged"></input>
+            @bind:event="oninput" @bind:get="SearchTerm" @bind:set="OnSearchTermChanged"></input>
     </div>
 
     <div class="col-md-3 d-none d-lg-block">
@@ -58,19 +59,22 @@
                     <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">
                         <div class="accordion-body">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckIndeterminateDisabled" disabled>
+                                <input class="form-check-input" type="checkbox" value=""
+                                    id="flexCheckIndeterminateDisabled" disabled>
                                 <label class="form-check-label" for="flexCheckIndeterminateDisabled">
                                     Disabled indeterminate checkbox
                                 </label>
-                                </div>
-                                <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDisabled" disabled>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDisabled"
+                                    disabled>
                                 <label class="form-check-label" for="flexCheckDisabled">
                                     Disabled checkbox
                                 </label>
-                                </div>
-                                <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedDisabled" checked disabled>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedDisabled"
+                                    checked disabled>
                                 <label class="form-check-label" for="flexCheckCheckedDisabled">
                                     Disabled checked checkbox
                                 </label>
@@ -113,7 +117,8 @@
 
                 </div>
 
-                <Pagination Page="Page.GetValueOrDefault()" PageCount="pageCount" Href="/categories" PageChanged="OnPageChanged" class="mt-5" />
+                <Pagination Page="Page.GetValueOrDefault()" PageCount="pageCount" Href="/categories" PageChanged="OnPageChanged"
+                    class="mt-5" />
             }
         }
     </div>
@@ -151,13 +156,13 @@
         NavigationManager.LocationChanged += OnLocationChanged;
         //Console.WriteLine(Path);
 
-        persistingSubscription = 
-            ApplicationState.RegisterOnPersisting(PersistData);
+        persistingSubscription =
+        ApplicationState.RegisterOnPersisting(PersistData);
 
-        if(!string.IsNullOrEmpty(Path))
+        if (!string.IsNullOrEmpty(Path))
         {
             if (!ApplicationState.TryTakeFromJson<BlazorApp.ProductCategories.ProductCategoryDto>(
-                "productCategory", out var restored2))
+            "productCategory", out var restored2))
             {
                 category = await ProductCategoryService.GetProductCategoryById(Path);
             }
@@ -165,20 +170,19 @@
             {
                 category = restored2!;
             }
-        
+
             categoryName = category.Name;
             categoryDescription = category.Description;
 
-             // TODO: Set title to node.Name using JS
+            // TODO: Set title to node.Name using JS
         }
 
         //await FetchItems(Page.GetValueOrDefault());
 
         if (!ApplicationState.TryTakeFromJson<ICollection<Product>>(
-            "products", out var restored))
+        "products", out var restored))
         {
             await FetchItems(Page.GetValueOrDefault());
-            products = products;
         }
         else
         {
@@ -186,7 +190,7 @@
         }
 
         if (ApplicationState.TryTakeFromJson<int>(
-            "pageCount", out var restored3))
+        "pageCount", out var restored3))
         {
             pageCount = restored3!;
         }
@@ -223,12 +227,12 @@
         await ScrollToTop();
     }
 
-    async Task ScrollToTop() 
+    async Task ScrollToTop()
     {
         await JSRuntime.InvokeVoidAsync("scrollToTop");
     }
 
-    CancellationTokenSource cts = new ();
+    CancellationTokenSource cts = new();
     Task? task;
 
     private void OnSearchTermChanged(string value)
@@ -238,13 +242,16 @@
         SearchTerm = value;
         Page = 1;
 
-        if(task is not null) {
+        if (task is not null)
+        {
             cts.Cancel();
-            cts = new ();
+            cts = new();
         }
 
-        task = Task.Delay(400).ContinueWith(async t => {
-            if(cts.IsCancellationRequested) {
+        task = Task.Delay(400).ContinueWith(async t =>
+        {
+            if (cts.IsCancellationRequested)
+            {
                 return;
             }
 
@@ -265,7 +272,7 @@
         error = false;
         loading = true;
 
-        await InvokeAsync(StateHasChanged);
+        //await InvokeAsync(StateHasChanged);
 
         try
         {
@@ -283,7 +290,7 @@
             loading = false;
         }
 
-        await InvokeAsync(StateHasChanged);
+        //await InvokeAsync(StateHasChanged);
     }
 
     private async Task OnItemClicked(ProductCategoryTreeNodeDto node)

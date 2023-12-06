@@ -50,8 +50,10 @@ public static class Endpoints
         group.MapGet("/groups", GetAttributeGroups)
             .WithName($"Attributes_{nameof(GetAttributeGroups)}");
 
-        //group.MapGet("/groups/{id}", GetAttributeGroupById)
-        //    .WithName($"Attributes_{nameof(GetAttributeGroupById)}");
+        /*
+                group.MapGet("/groups/{id}", GetAttributeById)
+                    .WithName($"Attributes_{nameof(GetAttributeById)}");
+                    */
 
         group.MapPost("/groups", CreateAttributeGroup)
             .WithName($"Attributes_{nameof(CreateAttributeGroup)}");
@@ -66,7 +68,7 @@ public static class Endpoints
     }
 
     public static async Task<Results<Ok<PagedResult<AttributeDto>>, BadRequest>> GetAttributes(
-         [FromQuery] string[]? ids = null, int page = 0, int pageSize = 10, string? searchString = null, string? sortBy = null, SortDirection? sortDirection = null, IMediator mediator = default, CancellationToken cancellationToken = default)
+         [FromQuery] string[]? ids = null, int page = 1, int pageSize = 10, string? searchString = null, string? sortBy = null, SortDirection? sortDirection = null, IMediator mediator = default, CancellationToken cancellationToken = default)
     {
         return TypedResults.Ok(await mediator.Send(new GetAttributes(ids, page, pageSize, searchString, sortBy, sortDirection), cancellationToken));
     }

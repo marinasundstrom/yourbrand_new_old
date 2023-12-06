@@ -1,4 +1,6 @@
-﻿namespace Catalog.UnitTests;
+﻿using Catalog.API.Features.ProductManagement.Products.Variants;
+
+namespace Catalog.UnitTests;
 
 public class UnitTest1
 {

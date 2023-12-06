@@ -1,4 +1,4 @@
-@using AdminAPI
+@using CatalogAPI
 @using System.ComponentModel.DataAnnotations
 @inject IProductsClient ProductsClient
 @inject IProductCategoriesClient ProductCategoriesClient
@@ -10,11 +10,28 @@
     <MudDialog>
         <DialogContent>
             <div class="d-flex flex-column py-1">
-                <MudTextField Label="Name" @bind-Value="Name" Variant="Variant.Outlined" For="() => Name" Class="mb-4"></MudTextField>
-                <MudTextField Label="Description" Lines="5" @bind-Value="Description" Variant="Variant.Outlined" For="() => Description" Class="mb-4"></MudTextField>
-                <MudAutocomplete Label="Category" SearchFunc="Search" @bind-Value="Category" ToStringFunc="x => x.Name" Variant="Variant.Outlined" For="() => Category" Class="mb-4" />
-                <MudNumericField Label="Price" @bind-Value="Price" Variant="Variant.Outlined" For="() => Price" Class="mb-4" Adornment="Adornment.End" AdornmentText="sek"></MudNumericField>
-                <MudTextField Label="Handle" @bind-Value="Handle" Placeholder="red-tshirt-medium" HelperText="Unique identifier used in URLs etc" HelperTextOnFocus="true" Variant="Variant.Outlined" For="() => Handle" Class="mb-4"></MudTextField>
+                <MudTextField Label="Name" @bind-Value="Name" Variant="Variant.Outlined" For="() => Name"
+                    Class="mb-4" />
+
+                <MudTextField Label="Description" Lines="5" @bind-Value="Description" Variant="Variant.Outlined"
+                    For="() => Description" Class="mb-4"></MudTextField>
+
+                <MudAutocomplete Label="Category" SearchFunc="Search" @bind-Value="Category" ToStringFunc="x => x.Name"
+                    Variant="Variant.Outlined" For="() => Category" Class="mb-4" Strict="false" />
+
+                <MudCheckBox Label="Is grouped product" Lines="5" @bind-Checked="IsGroupedProduct"
+                    Variant="Variant.Outlined" For="() => IsGroupedProduct" Class="mb-4"></MudCheckBox>
+
+                @if (IsGroupedProduct)
+                {
+                        <MudNumericField Label="Price" @bind-Value="Price" Variant="Variant.Outlined" For="() => Price"
+                            Class="mb-4" Adornment="Adornment.End" AdornmentText="sek"></MudNumericField>
+                }
+
+                <MudTextField Label="Handle" @bind-Value="Handle" Placeholder="red-tshirt-medium"
+                    HelperText="Unique identifier used in URLs etc" HelperTextOnFocus="true" Variant="Variant.Outlined"
+                    For="() => Handle" Class="mb-4"></MudTextField>
+
             </div>
         </DialogContent>
         <DialogActions>
@@ -34,7 +51,9 @@
     public string Description { get; set; }
 
     [Required]
-    public AdminAPI.ParentProductCategory Category { get; set; }
+    public CatalogAPI.ParentProductCategory Category { get; set; }
+
+    public bool IsGroupedProduct { get; set; }
 
     [Required]
     public decimal Price { get; set; }
@@ -45,13 +64,14 @@
     async Task OnSubmit()
     {
         var product = await ProductsClient.CreateProductAsync(new CreateProductRequest()
-        {
-            Name = Name,
-            Description = Description,
-            CategoryId = Category.Id,
-            Price = Price,
-            Handle = Handle
-        });
+            {
+                Name = Name,
+                Description = Description,
+                CategoryId = Category.Id,
+                IsGroupedProduct = IsGroupedProduct,
+                Price = Price,
+                Handle = Handle
+            });
 
         MudDialog.Close(DialogResult.Ok(product));
     }
@@ -60,10 +80,10 @@
 
     private async Task<IEnumerable<ParentProductCategory>> Search(string value)
     {
-        var result = await ProductCategoriesClient.GetProductsCategoriesAsync(1, 20, value);
+        var result = await ProductCategoriesClient.GetProductCategoriesAsync(1, 20, value);
         return result.Items
-            .Where(x => x.CanAddProducts)
-            .Select(x => new ParentProductCategory
+        .Where(x => x.CanAddProducts)
+        .Select(x => new ParentProductCategory
             {
                 Id = x.Id,
                 Name = x.Name

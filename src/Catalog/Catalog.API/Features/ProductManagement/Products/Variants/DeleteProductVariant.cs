@@ -19,14 +19,14 @@ public record DeleteProductVariant(long ProductId, long ProductVariantId) : IReq
 
         public async Task Handle(DeleteProductVariant request, CancellationToken cancellationToken)
         {
-            var item = await _context.Products
+            var product = await _context.Products
                 .AsSplitQuery()
                 .Include(pv => pv.Variants)
                 .FirstAsync(x => x.Id == request.ProductVariantId);
 
-            var variant = item.Variants.First(x => x.Id == request.ProductVariantId);
+            var variant = product.Variants.First(x => x.Id == request.ProductVariantId);
 
-            item.RemoveVariant(variant);
+            product.RemoveVariant(variant);
             _context.Products.Remove(variant);
 
             await _context.SaveChangesAsync();

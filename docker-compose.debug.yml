@@ -94,3 +94,25 @@ services:
     depends_on:
       - rabbitmq
       - consul-server
+
+  storefront-svc:
+    image: storefront-svc
+    container_name: storefront-svc
+    hostname: storefront-svc
+    build:
+      context: .
+      dockerfile: src/StoreFront/StoreFront.API/Dockerfile
+      args:
+        - configuration=Debug
+    ports:
+      - 48728:8080
+    env_file: ./.env.dev
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - yourbrand__storefront-svc__db__connectionstring=Server=mssql,1433;User Id=sa;Password=P@ssw0rd;Encrypt=false;Database=yourbrand-storefront-db
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw
+    depends_on:
+      - mssql
+      - rabbitmq
+      - consul-server

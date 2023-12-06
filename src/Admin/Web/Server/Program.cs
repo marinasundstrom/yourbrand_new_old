@@ -18,8 +18,7 @@ using Steeltoe.Discovery.Client;
 using YourBrand;
 using YourBrand.Server;
 using YourBrand.Extensions;
-using YourBrand.Server.ProductCategories;
-using YourBrand.Server.Products;
+using YourBrand.Server.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -72,11 +71,24 @@ builder.Services
     .AddHealthChecks();
 //    .AddDbContextCheck<ApplicationDbContext>();
 
+var reverseProxy = builder.Services.AddReverseProxy();
+
+if (builder.Environment.IsDevelopment())
+{
+    reverseProxy.LoadFromMemory();
+}
+else
+{
+    reverseProxy.LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
+}
+
 var app = builder.Build();
 
 app.UseSerilogRequestLogging();
 
 app.MapObservability();
+
+app.MapReverseProxy();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -103,10 +115,6 @@ app.MapRazorComponents<App>()
     .AddInteractiveWebAssemblyRenderMode()
     .AddInteractiveServerRenderMode();
 
-app
-    .MapProductsEndpoints()
-    .MapProductCategoriesEndpoints();
-
 app.MapHealthChecks("/healthz", new HealthCheckOptions()
 {
     Predicate = _ => true,
@@ -119,14 +127,14 @@ app.Run();
 
 static void AddClients(WebApplicationBuilder builder)
 {
-    var catalogApiHttpClient = builder.Services.AddCatalogClients(new Uri(builder.Configuration["yourbrand:catalog-svc:url"]!),
+    var catalogApiHttpClient = builder.Services.AddCatalogClients(new Uri($"{builder.Configuration["yourbrand:admin-web:url"]!}/catalog"),
     clientBuilder =>
     {
         clientBuilder.AddStandardResilienceHandler();
 
         if (builder.Environment.IsDevelopment())
         {
-            clientBuilder.AddServiceDiscovery();
+            //clientBuilder.AddServiceDiscovery();
         }
     });
 }

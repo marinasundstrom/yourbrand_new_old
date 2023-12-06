@@ -18,6 +18,7 @@ These services explicitly register with service discovery:
 
 * ``Catalog``
 * ``Carts``
+* ``StoreFront``
 
 ## Load balancing
 

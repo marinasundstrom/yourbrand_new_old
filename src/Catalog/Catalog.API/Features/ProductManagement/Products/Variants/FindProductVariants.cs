@@ -8,17 +8,17 @@ public record FindProductVariants(string ProductIdOrHandle, Dictionary<string, s
     public class Handler : IRequestHandler<FindProductVariants, IEnumerable<ProductDto>>
     {
         private readonly CatalogContext _context;
-        private readonly ProductsService _itemVariantsService;
+        private readonly ProductVariantsService _productVariantsService;
 
-        public Handler(CatalogContext context, ProductsService itemVariantsService)
+        public Handler(CatalogContext context, ProductVariantsService productVariantsService)
         {
             _context = context;
-            _itemVariantsService = itemVariantsService;
+            _productVariantsService = productVariantsService;
         }
 
         public async Task<IEnumerable<ProductDto>> Handle(FindProductVariants request, CancellationToken cancellationToken)
         {
-            var variants = await _itemVariantsService.FindVariantCore(request.ProductIdOrHandle, null, request.SelectedOptions);
+            var variants = await _productVariantsService.FindVariants(request.ProductIdOrHandle, null, request.SelectedOptions, cancellationToken);
 
             return variants
                 .OrderBy(x => x.Id)

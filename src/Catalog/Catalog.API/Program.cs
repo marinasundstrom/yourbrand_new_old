@@ -20,6 +20,7 @@ using Microsoft.Extensions.Azure;
 using Steeltoe.Discovery.Client;
 
 using YourBrand;
+using Catalog.API.Features.ProductManagement.Products;
 
 string ServiceName = "Catalog.API";
 
@@ -87,11 +88,13 @@ builder.Services
     .AddOpenApi(ServiceName)
     .AddApiVersioningServices();
 
+builder.Services.AddProductsServices();
+
 builder.Services.AddObservability("Catalog.API", "1.0", builder.Configuration);
 
 builder.Services.AddSqlServer<CatalogContext>(
     builder.Configuration.GetValue<string>("yourbrand:catalog-svc:db:connectionstring"),
-    c => c.EnableRetryOnFailure());
+    c => c.UseAzureSqlDefaults());
 
 builder.Services.AddMediatR(c => c.RegisterServicesFromAssemblyContaining<Program>());
 
@@ -131,7 +134,7 @@ builder.Services
     .AddHealthChecks()
     .AddDbContextCheck<CatalogContext>();
 
-builder.Services.AddScoped<ProductsService>();
+builder.Services.AddScoped<ProductVariantsService>();
 
 builder.Services.AddScoped<ICurrentUserService>(sp => null!);
 

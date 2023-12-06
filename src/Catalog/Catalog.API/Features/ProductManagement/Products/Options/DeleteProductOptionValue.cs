@@ -20,13 +20,13 @@ public record DeleteProductOptionValue(long ProductId, string OptionId, string V
 
         public async Task Handle(DeleteProductOptionValue request, CancellationToken cancellationToken)
         {
-            var item = await _context.Products
+            var product = await _context.Products
              .AsSplitQuery()
              .Include(pv => pv.Options)
              .ThenInclude(pv => (pv as ChoiceOption)!.Values)
              .FirstAsync(p => p.Id == request.ProductId);
 
-            var option = item.Options.First(o => o.Id == request.OptionId);
+            var option = product.Options.First(o => o.Id == request.OptionId);
 
             var value = (option as ChoiceOption)!.Values.First(o => o.Id == request.ValueId);
 

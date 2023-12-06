@@ -34,6 +34,7 @@ public static class Mappings
             product.RegularPrice,
             product.Image,
             product.Handle,
+            product.SKU,
             product.HasVariants,
             (ProductVisibility)product.Visibility,
             product.ProductAttributes.Select(x => x.ToDto()),

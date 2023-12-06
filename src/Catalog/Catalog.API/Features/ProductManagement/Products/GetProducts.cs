@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.API.Features.ProductManagement.Products;
 
-public sealed record GetProducts(string? StoreId = null, string? BrandIdOrHandle = null, bool IncludeUnlisted = false, bool GroupProducts = true, string? ProductCategoryIdOrPath = null, int Page = 10, int PageSize = 10, string? SearchTerm = null, string? SortBy = null, API.SortDirection? SortDirection = null) : IRequest<PagedResult<ProductDto>>
+public sealed record GetProducts(string? StoreId = null, string? BrandIdOrHandle = null, bool IncludeUnlisted = false, bool GroupProducts = true, string? ProductCategoryIdOrPath = null, int Page = 1, int PageSize = 10, string? SearchTerm = null, string? SortBy = null, API.SortDirection? SortDirection = null) : IRequest<PagedResult<ProductDto>>
 {
     public sealed class Handler(CatalogContext catalogContext = default!) : IRequestHandler<GetProducts, PagedResult<ProductDto>>
     {
@@ -18,7 +18,8 @@ public sealed record GetProducts(string? StoreId = null, string? BrandIdOrHandle
                         .IncludeAll()
                         .AsSplitQuery()
                         .AsNoTracking()
-                        .AsQueryable();
+                        .AsQueryable()
+                        .TagWith(nameof(GetProducts));
 
             if (request.StoreId is not null)
             {
@@ -56,7 +57,8 @@ public sealed record GetProducts(string? StoreId = null, string? BrandIdOrHandle
 
             if (!string.IsNullOrEmpty(request.SearchTerm))
             {
-                query = query.Where(x => x.Name.ToLower().Contains(request.SearchTerm.ToLower()!) || x.Description.ToLower().Contains(request.SearchTerm.ToLower()!));
+                var t = $"%{request.SearchTerm}%";
+                query = query.Where(x => EF.Functions.Like(x.Name, t) || EF.Functions.Like(x.Description, t));
             }
 
             var total = await query.CountAsync(cancellationToken);

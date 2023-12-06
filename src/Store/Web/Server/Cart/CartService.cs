@@ -1,4 +1,4 @@
-using CartsAPI;
+using StoreFrontAPI;
 
 namespace BlazorApp.Cart;
 

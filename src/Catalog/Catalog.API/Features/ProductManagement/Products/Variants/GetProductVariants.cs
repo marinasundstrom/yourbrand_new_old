@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.API.Features.ProductManagement.Products.Variants;
 
-public record GetProductVariants(string ProductIdOrHandle, int Page = 10, int PageSize = 10, string? SearchString = null, string? SortBy = null, SortDirection? SortDirection = null) : IRequest<PagedResult<Catalog.API.Features.ProductManagement.Products.ProductDto>>
+public record GetProductVariants(string ProductIdOrHandle, int Page = 1, int PageSize = 10, string? SearchString = null, string? SortBy = null, SortDirection? SortDirection = null) : IRequest<PagedResult<Catalog.API.Features.ProductManagement.Products.ProductDto>>
 {
     public class Handler : IRequestHandler<GetProductVariants, PagedResult<Catalog.API.Features.ProductManagement.Products.ProductDto>>
     {
@@ -49,6 +49,7 @@ public record GetProductVariants(string ProductIdOrHandle, int Page = 10, int Pa
 
             var variants = await query
                 .IncludeAll()
+                .Skip(request.PageSize * (request.Page - 1))
                 .Take(request.PageSize).AsQueryable()
                 .ToArrayAsync();
 

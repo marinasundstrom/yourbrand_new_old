@@ -19,17 +19,17 @@ public record DeleteProductOptionGroup(long ProductId, string OptionGroupId) : I
 
         public async Task Handle(DeleteProductOptionGroup request, CancellationToken cancellationToken)
         {
-            var item = await _context.Products
+            var product = await _context.Products
                 .Include(x => x.OptionGroups)
                 .ThenInclude(x => x.Options)
                 .FirstAsync(x => x.Id == request.ProductId);
 
-            var optionGroup = item.OptionGroups
+            var optionGroup = product.OptionGroups
                 .First(x => x.Id == request.OptionGroupId);
 
             optionGroup.Options.Clear();
 
-            item.RemoveOptionGroup(optionGroup);
+            product.RemoveOptionGroup(optionGroup);
             _context.OptionGroups.Remove(optionGroup);
 
             await _context.SaveChangesAsync();

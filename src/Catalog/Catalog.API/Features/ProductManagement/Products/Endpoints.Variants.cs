@@ -8,6 +8,8 @@ using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 using Asp.Versioning.Builder;
+using Catalog.API.Domain.Entities;
+using Catalog.API.Features.ProductManagement.Attributes;
 
 namespace Catalog.API.Features.ProductManagement.Products;
 
@@ -34,17 +36,22 @@ public static partial class Endpoints
         group.MapDelete("{id}/variants{variantId}", DeleteVariant)
             .WithName($"Products_{nameof(DeleteVariant)}");
 
-        group.MapPost("{idOrHandle}/variants/find", FindVariantByAttributeValues)
+        group.MapPost("{idOrHandle}/variants/findVariant", FindVariantByAttributeValues)
             .WithName($"Products_{nameof(FindVariantByAttributeValues)}");
 
-        group.MapPost("{idOrHandle}/variants/find2", FindVariantByAttributeValues2)
-            .WithName($"Products_{nameof(FindVariantByAttributeValues2)}");
+        group.MapPost("{idOrHandle}/variants/find2", FindsVariantsByAttributeValues)
+            .WithName($"Products_{nameof(FindsVariantsByAttributeValues)}");
+
+        group.MapPost("{idOrHandle}/attributes/{attributeId}/availableValuesForVariant", GetAvailableVariantAttributeValues)
+            .WithName($"Products_{nameof(GetAvailableVariantAttributeValues)}");
 
         group.MapPost("{id}/variants", CreateVariant)
-            .WithName($"Products_{nameof(CreateVariant)}");
+            .WithName($"Products_{nameof(CreateVariant)}")
+            .ProducesProblem(StatusCodes.Status400BadRequest);
 
         group.MapPut("{id}/variants/{variantId}", UpdateVariant)
-            .WithName($"Products_{nameof(UpdateVariant)}");
+            .WithName($"Products_{nameof(UpdateVariant)}")
+            .ProducesProblem(StatusCodes.Status400BadRequest);
 
         group.MapPost("{id}/variants/{variantId}/uploadImage", UploadVariantImage)
             .WithName($"Products_{nameof(UploadVariantImage)}");
@@ -52,7 +59,7 @@ public static partial class Endpoints
         return app;
     }
 
-    public static async Task<Results<Ok<PagedResult<ProductDto>>, BadRequest>> GetVariants(string idOrHandle, int page = 0, int pageSize = 10, string? searchString = null, string? sortBy = null, SortDirection? sortDirection = null, IMediator mediator = default, CancellationToken cancellationToken = default)
+    public static async Task<Results<Ok<PagedResult<ProductDto>>, BadRequest>> GetVariants(string idOrHandle, int page = 1, int pageSize = 10, string? searchString = null, string? sortBy = null, SortDirection? sortDirection = null, IMediator mediator = default, CancellationToken cancellationToken = default)
     {
         return TypedResults.Ok(await mediator.Send(new GetProductVariants(idOrHandle, page, pageSize, searchString, sortBy, sortDirection)));
     }
@@ -68,19 +75,19 @@ public static partial class Endpoints
         return TypedResults.Ok(await mediator.Send(new GetProductVariant(idOrHandle, variantIdOrHandle), cancellationToken));
     }
 
-    public static async Task<Results<Ok<ProductDto>, BadRequest>> FindVariantByAttributeValues(string idOrHandle, Dictionary<string, string?> selectedAttributeValues, IMediator mediator, CancellationToken cancellationToken)
+    public static async Task<Results<Ok<ProductDto?>, BadRequest>> FindVariantByAttributeValues(string idOrHandle, Dictionary<string, string?> selectedAttributeValues, IMediator mediator, CancellationToken cancellationToken)
     {
         return TypedResults.Ok(await mediator.Send(new FindProductVariant(idOrHandle, selectedAttributeValues), cancellationToken));
     }
 
-    public static async Task<Results<Ok<IEnumerable<ProductDto>>, BadRequest>> FindVariantByAttributeValues2(string idOrHandle, Dictionary<string, string?> selectedAttributeValues, IMediator mediator, CancellationToken cancellationToken)
+    public static async Task<Results<Ok<IEnumerable<ProductDto>>, BadRequest>> FindsVariantsByAttributeValues(string idOrHandle, Dictionary<string, string?> selectedAttributeValues, IMediator mediator, CancellationToken cancellationToken)
     {
         return TypedResults.Ok(await mediator.Send(new FindProductVariants(idOrHandle, selectedAttributeValues), cancellationToken));
     }
 
-    public static async Task<Results<Ok<IEnumerable<ProductVariantAttributeDto>>, BadRequest>> GetVariantAttributes(long id, long variantId, IMediator mediator, CancellationToken cancellationToken)
+    public static async Task<Results<Ok<IEnumerable<AttributeValueDto>>, BadRequest>> GetAvailableVariantAttributeValues(string idOrHandle, string attributeId, Dictionary<string, string?> selectedAttributeValues, IMediator mediator, CancellationToken cancellationToken)
     {
-        return TypedResults.Ok(await mediator.Send(new GetProductVariantAttributes(id, variantId), cancellationToken));
+        return TypedResults.Ok(await mediator.Send(new GetAvailableAttributeValues(idOrHandle, attributeId, selectedAttributeValues), cancellationToken));
     }
 
     public static async Task<Results<Ok<ProductDto>, ProblemHttpResult>> CreateVariant(long id, CreateProductVariantData data, IMediator mediator, CancellationToken cancellationToken)

@@ -1,308 +1,192 @@
 @page "/products/{id}"
-@using AdminAPI
+@using CatalogAPI
+@attribute [StreamRendering(false)]
 @using static Microsoft.AspNetCore.Components.Web.RenderMode
 @rendermode renderMode
 @using System.ComponentModel.DataAnnotations
 @inject IProductsClient ProductsClient
 @inject IProductCategoriesClient ProductCategoriesClient
 @inject ISnackbar Snackbar
+@inject NavigationManager NavigationManager
+@implements IDisposable
 
 @if (loaded)
 {
+    <MudBreadcrumbs Items="_items" Class="ps-0"></MudBreadcrumbs>
+
     <PageTitle>@detailsUpdateViewModel.Name</PageTitle>
 
     <MudText Typo="Typo.h3" GutterBottom="true">@detailsUpdateViewModel.Name</MudText>
 
     <MudGrid>
         <MudItem xs="12" sm="6" md="4">
-            <MudImage Src="@image" ObjectFit="ObjectFit.Cover" Height="200" Width="200" Alt="@detailsUpdateViewModel.Name"
-                      Elevation="25" Class="rounded-lg" />
-
-            <div>
-                <MudFileUpload T="IBrowserFile" Accept="*.jpg, *.jpeg, *.png" FilesChanged="UploadProductImage">
-                    <ButtonTemplate>
-                        <MudButton HtmlTag="label"
-                                Variant="Variant.Filled"
-                                Color="Color.Primary"
-                                StartIcon="@Icons.Material.Filled.CloudUpload"
-                                for="@context">
-                            Upload image
-                        </MudButton>
-                    </ButtonTemplate>
-                </MudFileUpload>
-            </div>
+            <ImageUpdateView Model="imageUpdateViewModel" />
         </MudItem>
 
         <MudItem xs="12" sm="12" md="6">
             <MudPaper Elevation="2" Class="pa-4">
-                <EditForm Model="@detailsUpdateViewModel" OnValidSubmit="UpdateDetails">
-                    <DataAnnotationsValidator />
+                <DetailsUpdateView @key="detailsUpdateViewModel.ProductId" Model="@detailsUpdateViewModel" />
+            </MudPaper>
+        </MudItem>
 
-                    <MudTextField Label="Name" @bind-Value="detailsUpdateViewModel.ShadowName" Variant="Variant.Outlined" For="() => detailsUpdateViewModel.ShadowName"></MudTextField>
-                    <MudTextField Label="Description" Lines="5" @bind-Value="detailsUpdateViewModel.Description" Variant="Variant.Outlined" For="() => detailsUpdateViewModel.Description" Class="mt-4"></MudTextField>
+        <MudItem xs="12" sm="12" md="12">
+            <MudExpansionPanels MultiExpansion="true">
+                <MudExpansionPanel MaxHeight="350">
+                    <TitleContent>
+                        <div class="d-flex justify-start flex-grow-1 gap-1">
+                            <MudText Typo="Typo.h6" Class="mt-2">Description</MudText>
+                            <MudIconButton Icon="@Icons.Material.Filled.Add" OnClick="() => {}" />
+                        </div>
+                        <MudSpacer />
+                    </TitleContent>
 
-                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Class="mt-4">Update details</MudButton>
-                </EditForm>
+                    @* <Editor @ref="editorRef" @bind-Value="empty" Options="@options" Change="MarkdownChanged" /> *@
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudItem>
+
+        @if (product.Parent is null)
+        {
+            <MudItem xs="12" sm="12" md="3">
+                <MudPaper Elevation="2" Class="pa-4">
+                    <CategoryUpdateView Model="categoryUpdateViewModel" />
+                </MudPaper>
+            </MudItem>
+        }
+
+        <MudItem xs="12" sm="12" md="3">
+            <MudPaper Elevation="2" Class="pa-4">
+                <PriceUpdateView Model="priceUpdateViewModel" />
             </MudPaper>
         </MudItem>
 
         <MudItem xs="12" sm="12" md="3">
             <MudPaper Elevation="2" Class="pa-4">
-                <EditForm Model="@categoryUpdateViewModel" OnValidSubmit="UpdateCategory">
-                    <DataAnnotationsValidator />
-
-                    <MudAutocomplete Label="Category" SearchFunc="Search" @bind-Value="categoryUpdateViewModel.Category" ToStringFunc="x => x.Name" Variant="Variant.Outlined" For="() => categoryUpdateViewModel.Category" />
-
-                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Class="mt-4">Update category</MudButton>
-                </EditForm>
-            </MudPaper>
-        </MudItem>
-
-
-        <MudItem xs="12" sm="12" md="3">
-            <MudPaper Elevation="2" Class="pa-4">
-                <EditForm Model="@priceUpdateViewModel" OnValidSubmit="UpdatePrice">
-                    <DataAnnotationsValidator />
-
-                    <MudNumericField Label="Price" @bind-Value="priceUpdateViewModel.Price" Variant="Variant.Outlined" For="() => priceUpdateViewModel.Price" Adornment="Adornment.End" AdornmentText="sek"></MudNumericField>
-                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Class="mt-4">Update price</MudButton>
-                </EditForm>
+                <HandleUpdateView Model="handleUpdateViewModel" />
             </MudPaper>
         </MudItem>
 
         <MudItem xs="12" sm="12" md="3">
             <MudPaper Elevation="2" Class="pa-4">
-                <EditForm Model="@handleUpdateViewModel" OnValidSubmit="UpdateHandle">
-                    <DataAnnotationsValidator />
-
-                    <MudTextField Label="Handle" @bind-Value="handleUpdateViewModel.Handle" Variant="Variant.Outlined" For="() => handleUpdateViewModel.Handle"></MudTextField>
-                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Class="mt-4">Update handle</MudButton>
-                </EditForm>
+                <VisibilityUpdateView Model="visibilityUpdateViewModel" />
             </MudPaper>
         </MudItem>
 
         <MudItem xs="12" sm="12" md="3">
             <MudPaper Elevation="2" Class="pa-4">
-                <EditForm Model="@visibilityUpdateViewModel" OnValidSubmit="UpdateVisibility">
-                    <DataAnnotationsValidator />
-
-                    <MudSelect T="ProductVisibility" Label="Visibility" @bind-Value="visibilityUpdateViewModel.Visibility" Variant="Variant.Outlined"
-                        ToStringFunc="x => x.ToString()" For="() => visibilityUpdateViewModel.Visibility">
-                        @foreach (var item in Enum.GetValues<ProductVisibility>())
-                        {
-                            <MudSelectItem T="ProductVisibility" Value="@item" />
-                        }
-                    </MudSelect>
-
-                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Class="mt-4">Update visibility</MudButton>
-                </EditForm>
+                <SkuUpdateView Model="skuUpdateViewModel" />
             </MudPaper>
         </MudItem>
+
+        <MudItem xs="12" sm="12" md="12">
+            <ProductAttributesView @key="product.Id" ProductId="product.Id" HasVariants="product.HasVariants" />
+        </MudItem>
+
+        @if (product.Parent is null)
+        {
+            <MudItem xs="12" sm="12" md="12">
+                <VariantView @key="product.Id" ProductId="product.Id" Product="product" />
+            </MudItem>
+        }
 
     </MudGrid>
 }
 
 @code
 {
-    private static IComponentRenderMode renderMode = 
-        new InteractiveWebAssemblyRenderMode(prerender: false);
+    private static IComponentRenderMode renderMode =
+    new InteractiveWebAssemblyRenderMode(prerender: true);
 
     bool loaded = false;
+    Product product;
+    ImageUpdateViewModel imageUpdateViewModel;
     DetailsUpdateViewModel detailsUpdateViewModel;
     CategoryUpdateViewModel categoryUpdateViewModel;
     PriceUpdateViewModel priceUpdateViewModel;
     HandleUpdateViewModel handleUpdateViewModel;
     VisibilityUpdateViewModel visibilityUpdateViewModel;
-    string image;
+    SkuUpdateViewModel skuUpdateViewModel;
+
+    private List<BreadcrumbItem> _items = new List<BreadcrumbItem>();
 
     [Parameter] public string Id { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        var product = await ProductsClient.GetProductByIdAsync(Id);
+        NavigationManager.LocationChanged += OnLocationChanged;
 
-        detailsUpdateViewModel = new()
+        await LoadAsync();
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+    }
+
+    protected async void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        await LoadAsync();
+
+        await InvokeAsync(StateHasChanged);
+    }
+
+    async Task LoadAsync()
+    {
+        product = await ProductsClient.GetProductByIdAsync(Id);
+
+        _items.Clear();
+
+        _items.Add(new BreadcrumbItem("Products", href: "/products"));
+
+        if (product.Parent is null)
         {
-            Name = product.Name,
-            ShadowName = product.Name,
-            Description = product.Description
-        };
-
-        priceUpdateViewModel = new()
+            _items.Add(new BreadcrumbItem(product.Name, href: null, disabled: true));
+        }
+        else
         {
-            Price = product.Price
-        };
+            _items.Add(new BreadcrumbItem(product.Parent.Name, href: $"/products/{product.Parent.Id}"));
+            _items.Add(new BreadcrumbItem(product.Name, href: null, disabled: true));
+        }
 
-        handleUpdateViewModel = new()
+        imageUpdateViewModel = ImageUpdateViewModel.Create(
+        product,
+        ProductsClient,
+        Snackbar);
+
+        detailsUpdateViewModel = DetailsUpdateViewModel.Create(
+        product,
+        ProductsClient,
+        Snackbar);
+
+        priceUpdateViewModel = PriceUpdateViewModel.Create(
+        product,
+        ProductsClient,
+        Snackbar);
+
+        handleUpdateViewModel = HandleUpdateViewModel.Create(
+        product,
+        ProductsClient,
+        Snackbar);
+
+        visibilityUpdateViewModel = VisibilityUpdateViewModel.Create(
+        product,
+        ProductsClient,
+        Snackbar);
+
+        skuUpdateViewModel = SkuUpdateViewModel.Create(
+        product,
+        ProductsClient,
+        Snackbar);
+
+        if (product.Parent is null)
         {
-            Handle = product.Handle
-        };
-
-        visibilityUpdateViewModel = new()
-        {
-            Visibility = product.Visibility
-        };
-
-        categoryUpdateViewModel = new CategoryUpdateViewModel()
-        {
-            Category = new ParentProductCategory
-            {
-                Id = product.Category.Id,
-                Name = product.Category.Name
-            }
-        };
-
-        image = product.Image;
+            categoryUpdateViewModel = CategoryUpdateViewModel.Create(
+            product,
+            ProductsClient,
+            ProductCategoriesClient,
+            Snackbar);
+        }
 
         loaded = true;
-    }
-
-    private async Task UpdateDetails()
-    {
-        try
-        {
-            await ProductsClient.UpdateProductDetailsAsync(Id, new UpdateProductDetailsRequest()
-            {
-                Name = detailsUpdateViewModel.ShadowName,
-                Description = detailsUpdateViewModel.Description,
-            });
-
-            detailsUpdateViewModel.Name = detailsUpdateViewModel.ShadowName;
-
-            Snackbar.Add("Product details were updated", Severity.Info);
-        }
-        catch
-        {
-            Snackbar.Add("Failed to update product details", Severity.Error);
-        }
-    }
-
-    private async Task UpdatePrice()
-    {
-        try
-        {
-            await ProductsClient.UpdateProductPriceAsync(Id, new UpdateProductPriceRequest()
-            {
-                Price = priceUpdateViewModel.Price
-            });
-
-            Snackbar.Add("Price was updated", Severity.Info);
-        }
-        catch
-        {
-            Snackbar.Add("Failed to update product price", Severity.Error);
-        }
-    }
-
-    class DetailsUpdateViewModel
-    {
-        public string Name { get; set; }
-
-        [Required]
-        public string ShadowName { get; set; }
-
-        [Required]
-        public string Description { get; set; }
-    }
-
-    class PriceUpdateViewModel
-    {
-        [Range(0, 100000)]
-        public decimal Price { get; set; }
-    }
-
-    private async Task UploadProductImage(IBrowserFile file)
-    {
-        try
-        {
-            image = await ProductsClient.UploadProductImageAsync(Id, new FileParameter(file.OpenReadStream(3 * 1000000), file.Name));
-
-            Snackbar.Add("Image was updated", Severity.Info);
-        }
-        catch
-        {
-            Snackbar.Add("Failed to update product image", Severity.Error);
-        }
-    }
-
-    class HandleUpdateViewModel
-    {
-        [Required]
-        public string Handle { get; set; }
-    }
-
-    class VisibilityUpdateViewModel
-    {
-        [Required]
-        public ProductVisibility Visibility { get; set; }
-    }
-
-    private async Task UpdateHandle()
-    {
-        try
-        {
-            await ProductsClient.UpdateProductHandleAsync(Id, new UpdateProductHandleRequest()
-            {
-                Handle = handleUpdateViewModel.Handle
-            });
-
-            Snackbar.Add("Handle was updated", Severity.Info);
-        }
-        catch
-        {
-            Snackbar.Add("Failed to update product handle", Severity.Error);
-        }
-    }
-
-    private async Task UpdateVisibility()
-    {
-        try
-        {
-            await ProductsClient.UpdateProductVisibilityAsync(Id, new UpdateProductVisibilityRequest()
-            {
-                Visibility = visibilityUpdateViewModel.Visibility
-            });
-
-            Snackbar.Add("Visibility was updated", Severity.Info);
-        }
-        catch
-        {
-            Snackbar.Add("Failed to update product visibility", Severity.Error);
-        }
-    }
-
-    class CategoryUpdateViewModel
-    {
-        [Required]
-        public AdminAPI.ParentProductCategory Category { get; set; }
-    }
-
-    private async Task UpdateCategory()
-    {
-        try
-        {
-            await ProductsClient.UpdateProductCategoryAsync(Id, new UpdateProductCategoryRequest()
-            {
-                ProductCategoryId = categoryUpdateViewModel.Category.Id
-            }); ;
-
-            Snackbar.Add("Category was updated", Severity.Info);
-        }
-        catch
-        {
-            Snackbar.Add("Category to update product handle", Severity.Error);
-        }
-    }
-
-    private async Task<IEnumerable<ParentProductCategory>> Search(string value)
-    {
-        var result = await ProductCategoriesClient.GetProductsCategoriesAsync(1, 20, value);
-        return result.Items
-            .Where(x => x.CanAddProducts)
-            .Select(x => new ParentProductCategory
-            {
-                Id = x.Id,
-                Name = x.Name
-            });
     }
 }

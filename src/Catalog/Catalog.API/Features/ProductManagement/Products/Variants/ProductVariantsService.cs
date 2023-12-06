@@ -5,16 +5,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.API.Features.ProductManagement.Products.Variants;
 
-public class ProductsService
+public class ProductVariantsService
 {
     private readonly CatalogContext _context;
 
-    public ProductsService(CatalogContext context)
+    public ProductVariantsService(CatalogContext context)
     {
         _context = context;
     }
 
-    public async Task<IEnumerable<Product>> FindVariantCore(string productIdOrHandle, string? itemVariantIdOrHandle, IDictionary<string, string?> selectedAttributeValues)
+    public async Task<IEnumerable<Product>> FindVariants(string productIdOrHandle, string? productVariantIdOrHandle, IDictionary<string, string?> selectedAttributeValues, CancellationToken cancellationToken)
     {
         bool isProductId = long.TryParse(productIdOrHandle, out var productId);
 
@@ -22,23 +22,24 @@ public class ProductsService
             .AsSplitQuery()
             .AsNoTracking()
             .IncludeAll()
-            .AsQueryable();
+            .AsQueryable()
+            .TagWith(nameof(FindVariants));
 
         query = isProductId ?
             query.Where(pv => pv.ParentProduct!.Id == productId)
             : query.Where(pv => pv.ParentProduct!.Handle == productIdOrHandle);
 
-        if (itemVariantIdOrHandle is not null)
+        if (productVariantIdOrHandle is not null)
         {
-            bool isItemVariantId = long.TryParse(itemVariantIdOrHandle, out var itemVariantId);
+            bool isProductVariantId = long.TryParse(productVariantIdOrHandle, out var itemVariantId);
 
-            query = isItemVariantId ?
+            query = isProductVariantId ?
                 query.Where(pv => pv.Id == itemVariantId)
-                : query.Where(pv => pv.Handle == itemVariantIdOrHandle);
+                : query.Where(pv => pv.Handle == productVariantIdOrHandle);
         }
 
         IEnumerable<Product> variants = await query
-            .ToArrayAsync();
+            .ToArrayAsync(cancellationToken);
 
         foreach (var selectedOption in selectedAttributeValues)
         {
@@ -49,5 +50,40 @@ public class ProductsService
         }
 
         return variants;
+    }
+
+    public async Task<IEnumerable<AttributeValue>> GetAvailableAttributeValues(string productIdOrHandle, string attributeId, IDictionary<string, string?> selectedAttributeValues, CancellationToken cancellationToken)
+    {
+        bool isProductId = long.TryParse(productIdOrHandle, out var productId);
+
+        var query = _context.Products
+            .AsSplitQuery()
+            .AsNoTracking()
+            .Include(pv => pv.ProductAttributes)
+            .ThenInclude(pv => pv.Attribute)
+            .ThenInclude(pv => pv.Values)
+            .Include(pv => pv.ProductAttributes)
+            .ThenInclude(pv => pv.Value)
+            .AsQueryable();
+
+        query = isProductId ?
+            query.Where(pv => pv.ParentProduct!.Id == productId)
+            : query.Where(pv => pv.ParentProduct!.Handle == productIdOrHandle);
+
+        IEnumerable<Product> variants = await query.ToArrayAsync(cancellationToken);
+
+        foreach (var selectedAttribute in selectedAttributeValues)
+        {
+            if (selectedAttribute.Value is null)
+                continue;
+
+            variants = variants.Where(x => x.ProductAttributes.Any(vv => vv.Attribute.Id == selectedAttribute.Key && vv.Value?.Id == selectedAttribute.Value));
+        }
+
+        return variants
+            .SelectMany(x => x.ProductAttributes)
+            .Where(x => x.Attribute.Id == attributeId)
+            .Select(x => x.Value!)
+            .DistinctBy(x => x.Id);
     }
 }

@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Http.HttpResults;
 
 using Asp.Versioning.Builder;
 using YourBrand.Extensions;
+using Catalog.API.Features.ProductManagement.Import;
+using OpenTelemetry.Trace;
 
 namespace Catalog.API.Features.ProductManagement.Products;
 
@@ -61,6 +63,10 @@ public static partial class Endpoints
             .AddEndpointFilter<ValidationFilter<UpdateProductHandleRequest>>()
             .WithName($"Products_{nameof(UpdateProductHandle)}");
 
+        group.MapPut("/{idOrHandle}/sku", UpdateProductSku)
+            .AddEndpointFilter<ValidationFilter<UpdateProductSkuRequest>>()
+            .WithName($"Products_{nameof(UpdateProductSku)}");
+
         group.MapPut("/{idOrHandle}/visibility", UpdateProductVisibility)
             .AddEndpointFilter<ValidationFilter<UpdateProductVisibilityRequest>>()
             .WithName($"Products_{nameof(UpdateProductVisibility)}");
@@ -71,6 +77,11 @@ public static partial class Endpoints
 
         group.MapDelete("/{idOrHandle}", DeleteProduct)
             .WithName($"Products_{nameof(DeleteProduct)}");
+
+        group.MapPost("/import", ImportProducts)
+            .WithName($"Products_{nameof(ImportProducts)}")
+            .Produces<ProductImportResult>(StatusCodes.Status200OK)
+            .DisableAntiforgery();
 
         return app;
     }
@@ -93,7 +104,7 @@ public static partial class Endpoints
     private static async Task<Results<Ok<ProductDto>, BadRequest, ProblemHttpResult>> CreateProduct(CreateProductRequest request,
         IMediator mediator, CancellationToken cancellationToken)
     {
-        var result = await mediator.Send(new CreateProduct(request.Name, request.Description, request.CategoryId, request.Price, request.Handle), cancellationToken);
+        var result = await mediator.Send(new CreateProduct(request.Name, request.Description, request.CategoryId, request.IsGroupedProduct, request.Price, request.Handle), cancellationToken);
 
         return result.IsSuccess ? TypedResults.Ok(result.GetValue()) : TypedResults.BadRequest();
     }
@@ -130,6 +141,14 @@ public static partial class Endpoints
         return result.IsSuccess ? TypedResults.Ok() : TypedResults.NotFound();
     }
 
+    private static async Task<Results<Ok, NotFound, ProblemHttpResult>> UpdateProductSku(string idOrHandle, UpdateProductSkuRequest request,
+        IMediator mediator, CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(new UpdateProductSku(idOrHandle, request.Sku), cancellationToken);
+
+        return result.IsSuccess ? TypedResults.Ok() : TypedResults.NotFound();
+    }
+
     private static async Task<Results<Ok, NotFound, ProblemHttpResult>> UpdateProductVisibility(string idOrHandle, UpdateProductVisibilityRequest request,
         IMediator mediator, CancellationToken cancellationToken)
     {
@@ -154,9 +173,17 @@ public static partial class Endpoints
 
         return result.IsSuccess ? TypedResults.Ok() : TypedResults.NotFound();
     }
+
+    private static async Task<Results<Ok<ProductImportResult>, NotFound>> ImportProducts(IFormFile file,
+   IMediator mediator, CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(new ImportProducts(file.OpenReadStream()), cancellationToken);
+
+        return result.IsSuccess ? TypedResults.Ok(result.GetValue()) : TypedResults.NotFound();
+    }
 }
 
-public sealed record CreateProductRequest(string Name, string Description, long CategoryId, decimal Price, string Handle)
+public sealed record CreateProductRequest(string Name, string Description, long CategoryId, bool IsGroupedProduct, decimal Price, string Handle)
 {
     public class CreateProductRequestValidator : AbstractValidator<CreateProductRequest>
     {
@@ -218,6 +245,7 @@ public sealed record ProductDto(
     decimal? RegularPrice,
     string? Image,
     string Handle,
+    string? Sku,
     bool HasVariants,
     ProductVisibility Visibility,
     IEnumerable<ProductAttributeDto> Attributes,
@@ -239,3 +267,14 @@ public record class ProductAttributeDto(
 
 public record class ProductOptionDto(
     OptionDto Option, bool IsInherited);
+
+public sealed record UpdateProductSkuRequest(string Sku)
+{
+    public class UpdateProductSkuRequestValidator : AbstractValidator<UpdateProductSkuRequest>
+    {
+        public UpdateProductSkuRequestValidator()
+        {
+            RuleFor(p => p.Sku).MaximumLength(60).NotEmpty();
+        }
+    }
+}

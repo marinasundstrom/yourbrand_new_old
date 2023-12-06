@@ -21,7 +21,7 @@ public record GetProductOptions(long ProductId, string? VariantId) : IRequest<IE
 
         public async Task<IEnumerable<ProductOptionDto>> Handle(GetProductOptions request, CancellationToken cancellationToken)
         {
-            var item = await _context.Products
+            var product = await _context.Products
                 .AsSplitQuery()
                 .AsNoTracking()
                 .Include(pv => pv.ProductOptions)
@@ -32,7 +32,7 @@ public record GetProductOptions(long ProductId, string? VariantId) : IRequest<IE
                 .ThenInclude(pv => (pv.Option as ChoiceOption)!.DefaultValue)
                 .FirstAsync(p => p.Id == request.ProductId);
 
-            var options = item.ProductOptions
+            var options = product.ProductOptions
                 .ToList();
 
             return options.Select(x => x.ToDto());

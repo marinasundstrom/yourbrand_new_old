@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor;
 using MudBlazor.Services;
 
-using YourBrand.Client;
+using Catalog;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
@@ -27,10 +27,12 @@ builder.Services.AddMudServices(config =>
     config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
 });
 
-builder.Services.AddHttpClient<AdminAPI.IProductsClient>("WebAPI")
-        .AddTypedClient<AdminAPI.IProductsClient>((http, sp) => new AdminAPI.ProductsClient(http));
+var baseUri = new Uri(builder.HostEnvironment.BaseAddress + "catalog/");
 
-builder.Services.AddHttpClient<AdminAPI.IProductCategoriesClient>("WebAPI")
-        .AddTypedClient<AdminAPI.IProductCategoriesClient>((http, sp) => new AdminAPI.ProductCategoriesClient(http));
+var catalogApiHttpClient = builder.Services.AddCatalogClients(baseUri,
+clientBuilder =>
+{
+    //clientBuilder.AddStandardResilienceHandler();
+});
 
 await builder.Build().RunAsync();

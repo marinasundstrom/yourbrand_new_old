@@ -46,6 +46,8 @@ public sealed class Product
 
     public string? Headline { get; set; }
 
+    public string? SKU { get; set; }
+
     public string? GTIN { get; set; }
 
     public decimal Price { get; set; }

@@ -11,17 +11,17 @@ public record UpdateProductVariant(long ProductId, long ProductVariantId, Update
     public class Handler : IRequestHandler<UpdateProductVariant, ProductDto>
     {
         private readonly CatalogContext _context;
-        private readonly ProductsService _itemVariantsService;
+        private readonly ProductVariantsService _productVariantsService;
 
-        public Handler(CatalogContext context, ProductsService itemVariantsService)
+        public Handler(CatalogContext context, ProductVariantsService productVariantsService)
         {
             _context = context;
-            _itemVariantsService = itemVariantsService;
+            _productVariantsService = productVariantsService;
         }
 
         public async Task<ProductDto> Handle(UpdateProductVariant request, CancellationToken cancellationToken)
         {
-            var match = (await _itemVariantsService.FindVariantCore(request.ProductId.ToString(), request.ProductVariantId.ToString(), request.Data.Attributes.ToDictionary(x => x.AttributeId, x => x.ValueId)!))
+            var match = (await _productVariantsService.FindVariants(request.ProductId.ToString(), request.ProductVariantId.ToString(), request.Data.Attributes.ToDictionary(x => x.AttributeId, x => x.ValueId)!, cancellationToken))
                 .SingleOrDefault();
 
             if (match is not null)
@@ -29,7 +29,7 @@ public record UpdateProductVariant(long ProductId, long ProductVariantId, Update
                 throw new VariantAlreadyExistsException("Variant with the same options already exists.");
             }
 
-            var item = await _context.Products
+            var product = await _context.Products
                 .AsSplitQuery()
                 .Include(pv => pv.ParentProduct)
                     .ThenInclude(pv => pv!.Category)
@@ -41,7 +41,7 @@ public record UpdateProductVariant(long ProductId, long ProductVariantId, Update
                     .ThenInclude(o => o.Value)
                 .FirstAsync(x => x.Id == request.ProductId);
 
-            var variant = item.Variants.First(x => x.Id == request.ProductVariantId);
+            var variant = product.Variants.First(x => x.Id == request.ProductVariantId);
 
             variant.Name = request.Data.Name;
             variant.Description = request.Data.Description;

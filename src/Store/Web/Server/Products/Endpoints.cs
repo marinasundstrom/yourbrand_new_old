@@ -19,8 +19,20 @@ public static class Endpoints
             .WithName($"Products_{nameof(GetProducts)}")
             .CacheOutput(OutputCachePolicyNames.GetProductsExpire20);
 
-        productsGroup.MapGet("/{id}", GetProductById)
+        productsGroup.MapGet("/{productIdOrHandle}", GetProductById)
             .WithName($"Products_{nameof(GetProductById)}");
+
+        productsGroup.MapPost("/{productIdOrHandle}/findVariant", FindProductVariantByAttributes)
+            .WithName($"Products_{nameof(FindProductVariantByAttributes)}");
+
+        productsGroup.MapPost("/{productIdOrHandle}/find", FindProductVariantsByAttributes)
+            .WithName($"Products_{nameof(FindProductVariantsByAttributes)}");
+
+        productsGroup.MapGet("/{productIdOrHandle}/variants", GetProductVariants)
+            .WithName($"Products_{nameof(GetProductVariants)}");
+
+        productsGroup.MapPost("/{productIdOrHandle}/attributes/{attributeId}/availableValuesForVariant", GetAvailableVariantAttributeValues)
+            .WithName($"Products_{nameof(GetAvailableVariantAttributeValues)}");
 
         return app;
     }
@@ -31,9 +43,35 @@ public static class Endpoints
         return results is not null ? TypedResults.Ok(results) : TypedResults.NotFound();
     }
 
-    private static async Task<Results<Ok<Product>, NotFound>> GetProductById(string id, IProductsService productsService = default!, CancellationToken cancellationToken = default)
+    private static async Task<Results<Ok<Product>, NotFound>> GetProductById(string productIdOrHandle, IProductsService productsService = default!, CancellationToken cancellationToken = default)
     {
-        var product = await productsService.GetProductById(id, cancellationToken);
+        var product = await productsService.GetProductById(productIdOrHandle, cancellationToken);
         return product is not null ? TypedResults.Ok(product) : TypedResults.NotFound();
+    }
+
+    private static async Task<Results<Ok<Product>, NotFound>> FindProductVariantByAttributes(string productIdOrHandle, Dictionary<string, string> selectedAttributeValues, IProductsService productsService = default!, CancellationToken cancellationToken = default)
+    {
+        var product = await productsService.FindProductVariantByAttributes(productIdOrHandle, selectedAttributeValues, cancellationToken);
+        return product is not null ? TypedResults.Ok(product) : TypedResults.NotFound();
+    }
+
+    private static async Task<Results<Ok<IEnumerable<Product>>, NotFound>> FindProductVariantsByAttributes(string productIdOrHandle, Dictionary<string, string> selectedAttributeValues, IProductsService productsService = default!, CancellationToken cancellationToken = default)
+    {
+        var products = await productsService.FindProductVariantsByAttributes(productIdOrHandle, selectedAttributeValues, cancellationToken);
+        return products is not null ? TypedResults.Ok(products) : TypedResults.NotFound();
+    }
+
+    private static async Task<Results<Ok<PagedResult<Product>>, NotFound>> GetProductVariants(string productIdOrHandle, int page = 1, int pageSize = 10, string? searchTerm = null, IProductsService productsService = default!, CancellationToken cancellationToken = default)
+    {
+        var results = await productsService.GetProductVariants(productIdOrHandle, page, pageSize, searchTerm, cancellationToken);
+        return results is not null ? TypedResults.Ok(
+                new PagedResult<Product>(results.Items, results.Total)
+        ) : TypedResults.NotFound();
+    }
+
+    public static async Task<Results<Ok<IEnumerable<AttributeValue>>, BadRequest>> GetAvailableVariantAttributeValues(string productIdOrHandle, string attributeId, Dictionary<string, string?> selectedAttributeValues, IProductsService productsService = default!, CancellationToken cancellationToken = default!)
+    {
+        var results = await productsService.GetAvailableProductVariantAttributesValues(productIdOrHandle, attributeId, selectedAttributeValues, cancellationToken);
+        return results is not null ? TypedResults.Ok(results) : TypedResults.BadRequest();
     }
 }

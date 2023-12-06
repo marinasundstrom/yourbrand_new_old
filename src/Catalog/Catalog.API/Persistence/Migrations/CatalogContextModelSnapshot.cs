@@ -17,7 +17,7 @@ namespace Catalog.API.Persistence.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0-rc.2.23480.1")
+                .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -373,6 +373,9 @@ namespace Catalog.API.Persistence.Migrations
 
                     b.Property<decimal?>("RegularPrice")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("SKU")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StoreId")
                         .HasColumnType("nvarchar(450)");

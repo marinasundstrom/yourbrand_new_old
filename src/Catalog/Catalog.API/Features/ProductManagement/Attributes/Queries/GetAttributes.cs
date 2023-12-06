@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.API.Features.ProductManagement.Attributes;
 
-public record GetAttributes(string[]? Ids = null, int Page = 10, int PageSize = 10, string? SearchString = null, string? SortBy = null, SortDirection? SortDirection = null) : IRequest<PagedResult<AttributeDto>>
+public record GetAttributes(string[]? Ids = null, int Page = 1, int PageSize = 10, string? SearchString = null, string? SortBy = null, SortDirection? SortDirection = null) : IRequest<PagedResult<AttributeDto>>
 {
     public class Handler : IRequestHandler<GetAttributes, PagedResult<AttributeDto>>
     {
@@ -52,7 +52,7 @@ public record GetAttributes(string[]? Ids = null, int Page = 10, int PageSize = 
             var items = await query
                             .OrderBy(x => x.Name)
                             .Include(x => x.Values)
-                            .Skip(request.Page * request.PageSize)
+                            .Skip(request.PageSize * (request.Page - 1))
                             .Take(request.PageSize).AsQueryable()
                             .ToArrayAsync();
 

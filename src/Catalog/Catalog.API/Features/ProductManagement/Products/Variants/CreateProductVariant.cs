@@ -11,17 +11,19 @@ public record CreateProductVariant(long ProductId, CreateProductVariantData Data
     public class Handler : IRequestHandler<CreateProductVariant, ProductDto>
     {
         private readonly CatalogContext _context;
-        private readonly ProductsService _itemVariantsService;
+        private readonly ProductVariantsService _productVariantsService;
+        private readonly IConfiguration _configuration;
 
-        public Handler(CatalogContext context, ProductsService itemVariantsService)
+        public Handler(CatalogContext context, ProductVariantsService productVariantsService, IConfiguration configuration)
         {
             _context = context;
-            _itemVariantsService = itemVariantsService;
+            _productVariantsService = productVariantsService;
+            _configuration = configuration;
         }
 
         public async Task<ProductDto> Handle(CreateProductVariant request, CancellationToken cancellationToken)
         {
-            Product? match = (await _itemVariantsService.FindVariantCore(request.ProductId.ToString(), null, request.Data.Attributes.ToDictionary(x => x.AttributeId, x => x.ValueId)!))
+            Product? match = (await _productVariantsService.FindVariants(request.ProductId.ToString(), null, request.Data.Attributes.ToDictionary(x => x.AttributeId, x => x.ValueId)!, cancellationToken))
                 .SingleOrDefault();
 
             if (match is not null)
@@ -29,7 +31,14 @@ public record CreateProductVariant(long ProductId, CreateProductVariantData Data
                 throw new VariantAlreadyExistsException("Variant with the same options already exists.");
             }
 
-            var item = await _context.Products
+            var handleInUse = await _context.Products.AnyAsync(product => product.Handle == request.Data.Handle, cancellationToken);
+
+            if (handleInUse)
+            {
+                return Result.Failure<ProductDto>(Errors.HandleAlreadyTaken);
+            }
+
+            var product = await _context.Products
                 .AsSplitQuery()
                 .Include(pv => pv.ParentProduct)
                     .ThenInclude(pv => pv!.Category)
@@ -41,17 +50,27 @@ public record CreateProductVariant(long ProductId, CreateProductVariantData Data
                     .ThenInclude(o => o.Value)
                 .FirstAsync(x => x.Id == request.ProductId);
 
+            var connectionString = _context.Database.GetConnectionString()!;
+
+            string cdnBaseUrl = (connectionString.Contains("localhost") || connectionString.Contains("mssql"))
+                ? _configuration["CdnBaseUrl"]!
+                : "https://yourbrandstorage.blob.core.windows.net";
+
             var variant = new Domain.Entities.Product()
             {
                 Name = request.Data.Name,
                 Handle = request.Data.Handle,
-                Description = request.Data.Description,
-                Price = request.Data.Price
+                Description = request.Data.Description ?? string.Empty,
+                Price = request.Data.Price,
+                Image = $"{cdnBaseUrl}/images/products/placeholder.jpeg",
+                CategoryId = product.ParentProductId
             };
 
             foreach (var value in request.Data.Attributes)
             {
-                var attribute = _context.Attributes.First(x => x.Id == value.AttributeId);
+                var attribute = _context.Attributes
+                    .Include(x => x.Values)
+                    .First(x => x.Id == value.AttributeId);
 
                 var value2 = attribute.Values.First(x => x.Id == value.ValueId);
 
@@ -62,7 +81,7 @@ public record CreateProductVariant(long ProductId, CreateProductVariantData Data
                 });
             }
 
-            item.AddVariant(variant);
+            product.AddVariant(variant);
 
             await _context.SaveChangesAsync();
 

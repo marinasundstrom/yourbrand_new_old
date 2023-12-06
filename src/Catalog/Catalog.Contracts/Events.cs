@@ -42,3 +42,10 @@ public enum ProductVisibility
     Unlisted,
     Listed
 }
+
+public sealed record ProductSkuUpdated
+{
+    public required long ProductId { get; init; }
+
+    public required string Sku { get; init; }
+}

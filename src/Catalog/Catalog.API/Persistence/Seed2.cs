@@ -121,7 +121,7 @@ public static class Seed2
         var valueRed = new AttributeValue("Red");
         colorAttribute.Values.Add(valueRed);
 
-        var item = new Product("Färgad t-shirt", "fargad-tshirt")
+        var product = new Product("Färgad t-shirt", "fargad-tshirt")
         {
             Description = "",
             Headline = "T-shirt i olika färger",
@@ -132,11 +132,11 @@ public static class Seed2
             Image = $"{cdnBaseUrl}/images/products/placeholder.jpeg",
         };
 
-        tshirts.AddProduct(item);
+        tshirts.AddProduct(product);
 
-        context.Products.Add(item);
+        context.Products.Add(product);
 
-        item.AddProductAttribute(new ProductAttribute
+        product.AddProductAttribute(new ProductAttribute
         {
             ForVariant = true,
             IsMainAttribute = true,
@@ -144,7 +144,7 @@ public static class Seed2
             Value = null
         });
 
-        item.AddProductAttribute(new ProductAttribute
+        product.AddProductAttribute(new ProductAttribute
         {
             ForVariant = true,
             IsMainAttribute = false,
@@ -176,7 +176,7 @@ public static class Seed2
             IsMainAttribute = true
         });
 
-        item.AddVariant(variantBlueSmall);
+        product.AddVariant(variantBlueSmall);
 
         //*/
 
@@ -204,7 +204,7 @@ public static class Seed2
             IsMainAttribute = true
         });
 
-        item.AddVariant(variantBlueMedium);
+        product.AddVariant(variantBlueMedium);
 
         var variantBlueLarge = new Product("Blue L", "tshirt-blue-large")
         {
@@ -230,7 +230,7 @@ public static class Seed2
             IsMainAttribute = true
         });
 
-        item.AddVariant(variantBlueLarge);
+        product.AddVariant(variantBlueLarge);
 
         /////
 
@@ -258,7 +258,7 @@ public static class Seed2
             IsMainAttribute = true
         });
 
-        item.AddVariant(variantRedSmall);
+        product.AddVariant(variantRedSmall);
 
         var variantRedMedium = new Product("Red M", "tshirt-red-medium")
         {
@@ -284,7 +284,7 @@ public static class Seed2
             IsMainAttribute = true
         });
 
-        item.AddVariant(variantRedMedium);
+        product.AddVariant(variantRedMedium);
 
         var variantRedLarge = new Product("Red L", "tshirt-red-large")
         {
@@ -310,18 +310,18 @@ public static class Seed2
             IsMainAttribute = true
         });
 
-        item.AddVariant(variantRedLarge);
+        product.AddVariant(variantRedLarge);
 
         var textOption = new Domain.Entities.TextValueOption("Custom text");
 
-        item.AddOption(textOption);
+        product.AddOption(textOption);
 
         await context.SaveChangesAsync();
     }
 
     public static async Task CreateKebabPlate(CatalogContext context)
     {
-        var item = new Product("Kebabtallrik", "kebabtallrik")
+        var product = new Product("Kebabtallrik", "kebabtallrik")
         {
             Description = "",
             Headline = "Dönnerkebab, nyfriterad pommes frites, sallad, och sås",
@@ -330,14 +330,14 @@ public static class Seed2
             Image = $"{cdnBaseUrl}/images/products/placeholder.jpeg",
         };
 
-        food.AddProduct(item);
+        food.AddProduct(product);
 
-        context.Products.Add(item);
+        context.Products.Add(product);
 
         await context.SaveChangesAsync();
 
         var option = new ChoiceOption("Sås");
-        item.AddOption(option);
+        product.AddOption(option);
 
         await context.SaveChangesAsync();
 
@@ -360,7 +360,7 @@ public static class Seed2
 
     public static async Task CreateHerrgardsStek(CatalogContext context)
     {
-        var item = new Product("Herrgårdsstek", "herrgardsstek")
+        var product = new Product("Herrgårdsstek", "herrgardsstek")
         {
             Description = "",
             Headline = "Vår fina stek med pommes och vår hemlagade bearnaise sås",
@@ -369,15 +369,15 @@ public static class Seed2
             Image = $"{cdnBaseUrl}/images/products/placeholder.jpeg",
         };
 
-        food.AddProduct(item);
+        food.AddProduct(product);
 
-        context.Products.Add(item);
+        context.Products.Add(product);
 
         await context.SaveChangesAsync();
 
         var optionDoneness = new ChoiceOption("Stekning");
 
-        item.AddOption(optionDoneness);
+        product.AddOption(optionDoneness);
 
         await context.SaveChangesAsync();
 
@@ -405,14 +405,14 @@ public static class Seed2
             Price = 15
         };
 
-        item.AddOption(optionSize);
+        product.AddOption(optionSize);
 
         await context.SaveChangesAsync();
     }
 
     public static async Task CreateKorg(CatalogContext context)
     {
-        var item = new Product("Korg", "korg")
+        var product = new Product("Korg", "korg")
         {
             Description = "",
             Headline = "En korg med smårätter",
@@ -421,9 +421,9 @@ public static class Seed2
             Image = $"{cdnBaseUrl}/images/products/placeholder.jpeg",
         };
 
-        food.AddProduct(item);
+        food.AddProduct(product);
 
-        context.Products.Add(item);
+        context.Products.Add(product);
 
         await context.SaveChangesAsync();
 
@@ -432,35 +432,35 @@ public static class Seed2
             Max = 7
         };
 
-        item.AddOptionGroup(ratterGroup);
+        product.AddOptionGroup(ratterGroup);
 
         var optionFalafel = new NumericalValueOption("Falafel")
         {
             Group = ratterGroup
         };
 
-        item.AddOption(optionFalafel);
+        product.AddOption(optionFalafel);
 
         var optionChickenWing = new NumericalValueOption("Spicy Chicken Wing")
         {
             Group = ratterGroup
         };
 
-        item.AddOption(optionChickenWing);
+        product.AddOption(optionChickenWing);
 
         var optionRib = new NumericalValueOption("Rib")
         {
             Group = ratterGroup
         };
 
-        item.AddOption(optionRib);
+        product.AddOption(optionRib);
 
         await context.SaveChangesAsync();
 
 
         var extraGroup = new OptionGroup("Extra");
 
-        item.AddOptionGroup(extraGroup);
+        product.AddOptionGroup(extraGroup);
 
         await context.SaveChangesAsync();
 
@@ -469,7 +469,7 @@ public static class Seed2
             Group = extraGroup
         };
 
-        item.AddOption(optionSauce);
+        product.AddOption(optionSauce);
 
         optionSauce.Values.Add(new OptionValue("Favoritsås")
         {
@@ -486,7 +486,7 @@ public static class Seed2
 
     public static async Task CreatePizza(CatalogContext context)
     {
-        var item = new Product("Pizza", "pizza")
+        var product = new Product("Pizza", "pizza")
         {
             Description = "",
             Headline = "Custom pizza",
@@ -495,9 +495,9 @@ public static class Seed2
             Image = $"{cdnBaseUrl}/images/products/placeholder.jpeg",
         };
 
-        food.AddProduct(item);
+        food.AddProduct(product);
 
-        context.Products.Add(item);
+        context.Products.Add(product);
 
         await context.SaveChangesAsync();
 
@@ -506,7 +506,7 @@ public static class Seed2
             Seq = 1,
         };
 
-        item.AddOptionGroup(breadGroup);
+        product.AddOptionGroup(breadGroup);
 
         var meatGroup = new OptionGroup("Meat")
         {
@@ -514,34 +514,34 @@ public static class Seed2
             Max = 2
         };
 
-        item.AddOptionGroup(meatGroup);
+        product.AddOptionGroup(meatGroup);
 
         var nonMeatGroup = new OptionGroup("Non-Meat")
         {
             Seq = 3
         };
 
-        item.AddOptionGroup(nonMeatGroup);
+        product.AddOptionGroup(nonMeatGroup);
 
         var sauceGroup = new OptionGroup("Sauce")
         {
             Seq = 4
         };
 
-        item.AddOptionGroup(sauceGroup);
+        product.AddOptionGroup(sauceGroup);
 
         var toppingsGroup = new OptionGroup("Toppings")
         {
             Seq = 5
         };
 
-        item.AddOptionGroup(toppingsGroup);
+        product.AddOptionGroup(toppingsGroup);
 
         await context.SaveChangesAsync();
 
         var optionStyle = new ChoiceOption("Style");
 
-        item.AddOption(optionStyle);
+        product.AddOption(optionStyle);
 
         await context.SaveChangesAsync();
 
@@ -561,7 +561,7 @@ public static class Seed2
             Price = 15
         };
 
-        item.AddOption(optionHam);
+        product.AddOption(optionHam);
 
         var optionKebab = new SelectableOption("Kebab")
         {
@@ -570,7 +570,7 @@ public static class Seed2
             IsSelected = true
         };
 
-        item.AddOption(optionKebab);
+        product.AddOption(optionKebab);
 
         var optionChicken = new SelectableOption("Chicken")
         {
@@ -578,7 +578,7 @@ public static class Seed2
             Price = 10
         };
 
-        item.AddOption(optionChicken);
+        product.AddOption(optionChicken);
 
         var optionExtraCheese = new SelectableOption("Extra cheese")
         {
@@ -586,7 +586,7 @@ public static class Seed2
             Price = 5
         };
 
-        item.AddOption(optionExtraCheese);
+        product.AddOption(optionExtraCheese);
 
         var optionGreenOlives = new SelectableOption("Green Olives")
         {
@@ -594,14 +594,14 @@ public static class Seed2
             Price = 5
         };
 
-        item.AddOption(optionGreenOlives);
+        product.AddOption(optionGreenOlives);
 
         await context.SaveChangesAsync();
     }
 
     public static async Task CreateSalad(CatalogContext context)
     {
-        var item = new Product("Sallad", "sallad")
+        var product = new Product("Sallad", "sallad")
         {
             Description = "",
             Headline = "Din egna sallad",
@@ -611,16 +611,16 @@ public static class Seed2
             Image = $"{cdnBaseUrl}/images/products/placeholder.jpeg",
         };
 
-        food.AddProduct(item);
+        food.AddProduct(product);
 
-        context.Products.Add(item);
+        context.Products.Add(product);
 
         var baseGroup = new OptionGroup("Bas")
         {
             Seq = 1,
         };
 
-        item.AddOptionGroup(baseGroup);
+        product.AddOptionGroup(baseGroup);
 
         var proteinGroup = new OptionGroup("Välj protein")
         {
@@ -628,7 +628,7 @@ public static class Seed2
             Max = 1
         };
 
-        item.AddOptionGroup(proteinGroup);
+        product.AddOptionGroup(proteinGroup);
 
         var additionalGroup = new OptionGroup("Välj tillbehör")
         {
@@ -636,7 +636,7 @@ public static class Seed2
             Max = 3
         };
 
-        item.AddOptionGroup(additionalGroup);
+        product.AddOptionGroup(additionalGroup);
 
         var dressingGroup = new OptionGroup("Välj dressing")
         {
@@ -644,7 +644,7 @@ public static class Seed2
             Max = 1
         };
 
-        item.AddOptionGroup(dressingGroup);
+        product.AddOptionGroup(dressingGroup);
 
         await context.SaveChangesAsync();
 
@@ -653,7 +653,7 @@ public static class Seed2
             Group = baseGroup
         };
 
-        item.AddOption(optionBase);
+        product.AddOption(optionBase);
 
         await context.SaveChangesAsync();
 
@@ -680,133 +680,133 @@ public static class Seed2
             Group = proteinGroup
         };
 
-        item.AddOption(optionChicken);
+        product.AddOption(optionChicken);
 
         var optionSmokedTurkey = new SelectableOption("Rökt kalkonfilé")
         {
             Group = proteinGroup
         };
 
-        item.AddOption(optionSmokedTurkey);
+        product.AddOption(optionSmokedTurkey);
 
         var optionBeanMix = new SelectableOption("Marinerad bönmix")
         {
             Group = proteinGroup
         };
 
-        item.AddOption(optionBeanMix);
+        product.AddOption(optionBeanMix);
 
         var optionVegMe = new SelectableOption("VegMe")
         {
             Group = proteinGroup
         };
 
-        item.AddOption(optionVegMe);
+        product.AddOption(optionVegMe);
 
         var optionChevre = new SelectableOption("Chevré")
         {
             Group = proteinGroup
         };
 
-        item.AddOption(optionChevre);
+        product.AddOption(optionChevre);
 
         var optionSmokedSalmon = new SelectableOption("Varmrökt lax")
         {
             Group = proteinGroup
         };
 
-        item.AddOption(optionSmokedSalmon);
+        product.AddOption(optionSmokedSalmon);
 
         var optionPrawns = new SelectableOption("Handskalade räkor")
         {
             Group = proteinGroup
         };
 
-        item.AddOption(optionPrawns);
+        product.AddOption(optionPrawns);
 
         var optionCheese = new SelectableOption("Parmesanost")
         {
             Group = additionalGroup
         };
 
-        item.AddOption(optionCheese);
+        product.AddOption(optionCheese);
 
         var optionGreenOlives = new SelectableOption("Gröna oliver")
         {
             Group = additionalGroup
         };
 
-        item.AddOption(optionGreenOlives);
+        product.AddOption(optionGreenOlives);
 
         var optionSoltorkadTomat = new SelectableOption("Soltorkade tomater")
         {
             Group = additionalGroup
         };
 
-        item.AddOption(optionSoltorkadTomat);
+        product.AddOption(optionSoltorkadTomat);
 
         var optionInlagdRödlök = new SelectableOption("Inlagd rödlök")
         {
             Group = additionalGroup
         };
 
-        item.AddOption(optionInlagdRödlök);
+        product.AddOption(optionInlagdRödlök);
 
         var optionRostadAioli = new SelectableOption("Rostad aioli")
         {
             Group = dressingGroup
         };
 
-        item.AddOption(optionRostadAioli);
+        product.AddOption(optionRostadAioli);
 
         var optionPesto = new SelectableOption("Pesto")
         {
             Group = dressingGroup
         };
 
-        item.AddOption(optionPesto);
+        product.AddOption(optionPesto);
 
         var optionOrtvinagret = new SelectableOption("Örtvinägrett")
         {
             Group = dressingGroup
         };
 
-        item.AddOption(optionOrtvinagret);
+        product.AddOption(optionOrtvinagret);
 
         var optionSoyavinagret = new SelectableOption("Soyavinägrett")
         {
             Group = dressingGroup
         };
 
-        item.AddOption(optionSoyavinagret);
+        product.AddOption(optionSoyavinagret);
 
         var optionRhodeIsland = new SelectableOption("Rhode Island")
         {
             Group = dressingGroup
         };
 
-        item.AddOption(optionRhodeIsland);
+        product.AddOption(optionRhodeIsland);
 
         var optionKimchimayo = new SelectableOption("Kimchimayo")
         {
             Group = dressingGroup
         };
 
-        item.AddOption(optionKimchimayo);
+        product.AddOption(optionKimchimayo);
 
         var optionCaesar = new SelectableOption("Caesar")
         {
             Group = dressingGroup
         };
 
-        item.AddOption(optionCaesar);
+        product.AddOption(optionCaesar);
 
         var optionCitronLime = new SelectableOption("Citronlime")
         {
             Group = dressingGroup
         };
 
-        item.AddOption(optionCitronLime);
+        product.AddOption(optionCitronLime);
 
         await context.SaveChangesAsync();
     }

@@ -13,7 +13,7 @@ namespace Catalog.API.Features.ProductManagement.Products;
 
 public sealed record UpdateProductImage(string IdOrHandle, Stream Stream, string FileName, string ContentType) : IRequest<Result<string>>
 {
-    public sealed class Handler(BlobServiceClient blobServiceClient, IConfiguration configuration, IPublishEndpoint publishEndpoint, CatalogContext catalogContext = default!) : IRequestHandler<UpdateProductImage, Result<string>>
+    public sealed class Handler(IProductImageUploader productImageUploader, IPublishEndpoint publishEndpoint, CatalogContext catalogContext = default!) : IRequestHandler<UpdateProductImage, Result<string>>
     {
         public async Task<Result<string>> Handle(UpdateProductImage request, CancellationToken cancellationToken)
         {
@@ -28,20 +28,7 @@ public sealed record UpdateProductImage(string IdOrHandle, Stream Stream, string
                 return Result.Failure<string>(Errors.ProductNotFound);
             }
 
-            var blobContainerClient = blobServiceClient.GetBlobContainerClient("images");
-            await blobContainerClient.CreateIfNotExistsAsync();
-
-            BlobClient blobClient = blobContainerClient.GetBlobClient($"products/{request.FileName}");
-
-            await blobClient.UploadAsync(request.Stream, new BlobHttpHeaders { ContentType = request.ContentType });
-
-            var connectionString = catalogContext.Database.GetConnectionString()!;
-
-            string cdnBaseUrl = (connectionString.Contains("localhost") || connectionString.Contains("mssql"))
-                ? configuration["CdnBaseUrl"]!
-                : "https://yourbrandstorage.blob.core.windows.net";
-
-            product.Image = $"{cdnBaseUrl}/images/products/{request.FileName}";
+            product.Image = await productImageUploader.UploadProductImage(product.Id, request.FileName, request.Stream, request.ContentType);
 
             await catalogContext.SaveChangesAsync(cancellationToken);
 
