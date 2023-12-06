@@ -1,5 +1,11 @@
 name: Build and deploy Store Web
 
+env:
+  DOTNET_VERSION: '8.0.x' # set this to the .NET Core version to use
+  SERVICE_DIR: 'src/Store/Web/Server'
+  UNITTESTS_DIR: 'src/Store/Web/Server.UnitTests'
+  CONTAINERAPP_NAME: 'yourbrand-store-web'
+
 on:
   workflow_dispatch:
   push:
@@ -30,11 +36,11 @@ jobs:
       uses: azure/container-apps-deploy-action@v1
       with:
         appSourcePath: ${{ github.workspace }}
-        dockerfilePath: src/Store/Web/Server/Dockerfile
+        dockerfilePath: ${{ env.SERVICE_DIR }}/Dockerfile
         registryUrl: ${{ secrets.REGISTRY_LOGIN_SERVER }}
         registryUsername: ${{ secrets.REGISTRY_USERNAME }}
         registryPassword: ${{ secrets.REGISTRY_PASSWORD }}
-        containerAppName: yourbrand-store-web
+        containerAppName: ${{ env.CONTAINERAPP_NAME }}
         resourceGroup: ${{ secrets.RESOURCE_GROUP }}
         location: 'Sweden Central'
         targetPort: 8080
