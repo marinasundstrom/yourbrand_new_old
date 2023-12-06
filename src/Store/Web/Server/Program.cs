@@ -219,7 +219,7 @@ app.Run();
 
 static void AddClients(WebApplicationBuilder builder)
 {
-    var storefrontHttpClient = builder.Services.AddStoreFrontClients(new Uri(builder.Configuration["yourbrand:storefront-svc:url"]!),
+    var storefrontHttpClient = builder.Services.AddStoreFrontClients(new Uri("http://yourbrand-storefront-svc"), //new Uri(builder.Configuration["yourbrand:storefront-svc:url"]
     clientBuilder =>
     {
         clientBuilder.AddStandardResilienceHandler();
