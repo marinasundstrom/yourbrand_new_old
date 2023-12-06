@@ -80,6 +80,8 @@ builder.Services
 
 if (builder.Environment.IsProduction())
 {
+    Console.WriteLine("Foo bar");
+
     builder.Configuration.AddAzureAppConfiguration(options =>
         options.Connect(
             new Uri($"https://{builder.Configuration["Azure:AppConfig:Name"]}.azconfig.io"),
