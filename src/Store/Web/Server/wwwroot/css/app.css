@@ -4,7 +4,7 @@ body {
     scroll-behavior: smooth;
 }
 
-main.container {
+main.main {
     padding-top: 95px;
 }
 
@@ -167,4 +167,9 @@ h1:focus {
 
 .img-border-rounded {
     border-radius: var(--bs-border-radius);
+}
+
+img.carousel-item--image {
+    object-fit: cover;
+    height: 50vh;
 }
