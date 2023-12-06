@@ -29,6 +29,9 @@ using Steeltoe.Common.Http.Discovery;
 using Steeltoe.Discovery.Client;
 
 using YourBrand;
+using BlazorApp.Extensions;
+using Microsoft.AspNetCore.Hosting.Server;
+using Microsoft.AspNetCore.Hosting.Server.Features;
 
 string MyAllowSpecificOrigins = nameof(MyAllowSpecificOrigins);
 
@@ -80,8 +83,6 @@ builder.Services
 
 if (builder.Environment.IsProduction())
 {
-    Console.WriteLine("Foo bar");
-
     builder.Configuration.AddAzureAppConfiguration(options =>
         options.Connect(
             new Uri($"https://{builder.Configuration["Azure:AppConfig:Name"]}.azconfig.io"),
@@ -157,11 +158,24 @@ builder.Services.AddMassTransit(x =>
 builder.Services
     .AddHealthChecks();
 
+var reverseProxy = builder.Services.AddReverseProxy();
+
+if (builder.Environment.IsDevelopment())
+{
+    reverseProxy.LoadFromMemory();
+}
+else
+{
+    reverseProxy.LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
+}
+
 var app = builder.Build();
 
 app.UseSerilogRequestLogging();
 
 app.MapObservability();
+
+app.MapReverseProxy();
 
 app.UseStatusCodePagesWithRedirects("/error/{0}");
 
@@ -192,11 +206,6 @@ app.MapRazorComponents<App>()
     .AddInteractiveWebAssemblyRenderMode()
     .AddInteractiveServerRenderMode();
 
-app
-    .MapProductsEndpoints()
-    .MapProductCategoriesEndpoints()
-    .MapCartEndpoints();
-
 app.MapGroup("/identity").MapIdentityApi<IdentityUser>();
 
 app.MapGet("/requires-auth", (ClaimsPrincipal user) => $"Hello, {user.Identity?.Name}!").RequireAuthorization();
@@ -219,14 +228,28 @@ app.Run();
 
 static void AddClients(WebApplicationBuilder builder)
 {
-    var storefrontHttpClient = builder.Services.AddStoreFrontClients(new Uri("http://yourbrand-storefront-svc"), //new Uri(builder.Configuration["yourbrand:storefront-svc:url"]
-    clientBuilder =>
+    var catalogApiHttpClient = builder.Services.AddStoreFrontClients(static (sp, http) =>
     {
-        clientBuilder.AddStandardResilienceHandler();
+        var hostEnv = sp.GetRequiredService<IHostEnvironment>();
 
-        if (builder.Environment.IsDevelopment())
+        Uri? baseUrl;
+
+        if (hostEnv.IsDevelopment())
         {
-            clientBuilder.AddServiceDiscovery();
+            var server = sp.GetRequiredService<IServer>();
+            var serverAddress = server.Features.Get<IServerAddressesFeature>()!.Addresses.First();
+            baseUrl = new Uri(serverAddress + "/storefront/");
         }
+        else
+        {
+            var serverAddress = "http://yourbrand-store-web";
+            baseUrl = new Uri(serverAddress + "/storefront/");
+        }
+
+        http.BaseAddress = baseUrl;
+    },
+    static (clientBuilder) =>
+    {
+        //clientBuilder.AddStandardResilienceHandler();
     });
 }

@@ -1,10 +1,8 @@
-using BlazorApp.Cart;
+using StoreFrontAPI;
 
-using StoreWeb;
+namespace BlazorApp.Cart;
 
-namespace Client.Cart;
-
-public sealed class CartService(StoreWeb.ICartClient client) : ICartService
+public sealed class CartService(StoreFrontAPI.ICartClient client) : ICartService
 {
     private readonly List<BlazorApp.Cart.CartItem> _items = new();
 

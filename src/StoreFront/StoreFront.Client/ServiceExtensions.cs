@@ -22,6 +22,15 @@ public static class ServiceExtensions
         return services;
     }
 
+    public static IServiceCollection AddStoreFrontClients(this IServiceCollection services, Action<IServiceProvider, HttpClient> configureClient, Action<IHttpClientBuilder>? configureBuilder = null)
+    {
+        services.AddCatalogClients(configureClient, configureBuilder);
+
+        services.AddCartClient(configureClient, configureBuilder);
+
+        return services;
+    }
+
     public static IServiceCollection AddCatalogClients(this IServiceCollection services, Action<IServiceProvider, HttpClient> configureClient, Action<IHttpClientBuilder>? configureBuilder = null)
     {
         IHttpClientBuilder builder = services.AddHttpClient("CatalogAPI", configureClient);
@@ -43,7 +52,7 @@ public static class ServiceExtensions
 
         configureBuilder?.Invoke(builder);
 
-        services.AddHttpClient<ICartClient>("CartsAPI")
+        services.AddHttpClient<ICartClient>("CartAPI")
             .AddTypedClient<ICartClient>((http, sp) => new StoreFrontAPI.CartClient(http));
 
         return services;

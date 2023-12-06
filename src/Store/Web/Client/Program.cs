@@ -1,13 +1,15 @@
 using BlazorApp;
 
-using Client;
-using Client.Cart;
-using Client.ProductCategories;
-using Client.Products;
+using BlazorApp;
+using BlazorApp.Cart;
+using BlazorApp.ProductCategories;
+using BlazorApp.Products;
 
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Http.Resilience;
+
+using StoreFront;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
@@ -24,7 +26,13 @@ builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
 
 builder.Services.AddScoped<RenderingContext, ClientRenderingContext>();
 
-builder.Services.AddHttpClient<IWeatherForecastService, ClientWeatherForecastService>("WebAPI");
+var baseUri = new Uri(builder.HostEnvironment.BaseAddress + "storefront/");
+
+var catalogApiHttpClient = builder.Services.AddStoreFrontClients(baseUri,
+clientBuilder =>
+{
+    //clientBuilder.AddStandardResilienceHandler();
+});
 
 builder.Services
     .AddProductsServices()

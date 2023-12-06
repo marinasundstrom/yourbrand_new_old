@@ -20,6 +20,7 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Shared\Shared.csproj" />
+    <ProjectReference Include="..\..\..\StoreFront\StoreFront.Client\StoreFront.Client.csproj" />
   </ItemGroup>
 
   <ItemGroup>

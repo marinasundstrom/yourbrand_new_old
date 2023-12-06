@@ -1,3 +1,5 @@
+using Microsoft.Extensions.DependencyInjection;
+
 namespace BlazorApp.Products;
 
 public static class ServiceExtensions
