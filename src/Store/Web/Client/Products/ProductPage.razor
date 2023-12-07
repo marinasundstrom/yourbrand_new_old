@@ -66,19 +66,28 @@ else
 
             <h1 itemprop="name">@productViewModel.Name</h1>
 
-            <div class="mb-4" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-                <meta itemprop="priceCurrency" content="@currency">
-                <h5 class="price2" itemprop="price" content="@productViewModel.Price"
+            @if (productViewModel.OptionGroups.Any())
+            {
+                <h5 class="price2" itemprop="price" content="@productViewModel.Total"
                     style="display: inline-block; font-weight: 500; color: #ca0000; line-height: 0;">
-                    @(((decimal)productViewModel.Price).FormatCurrency(currency))</h5>
-                @if (productViewModel.RegularPrice is not null)
-                {
-                    <h5 class="price2 text-muted"
-                        style="display: inline-block; text-decoration: line-through; color: gray !important; margin-left: 10px; line-height: 0;">
-                        @(((decimal?)productViewModel.RegularPrice)?.FormatCurrency(currency))</h5>
-                }
-            </div>
+                    @(((decimal)productViewModel.Total).FormatCurrency(currency))</h5>
 
+            }
+            else
+            {
+                <div class="mb-4" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                    <meta itemprop="priceCurrency" content="@currency">
+                    <h5 class="price2" itemprop="price" content="@productViewModel.Price"
+                        style="display: inline-block; font-weight: 500; color: #ca0000; line-height: 0;">
+                        @(((decimal)productViewModel.Price).FormatCurrency(currency))</h5>
+                    @if (productViewModel.RegularPrice is not null)
+                    {
+                        <h5 class="price2 text-muted"
+                            style="display: inline-block; text-decoration: line-through; color: gray !important; margin-left: 10px; line-height: 0;">
+                            @(((decimal?)productViewModel.RegularPrice)?.FormatCurrency(currency))</h5>
+                    }
+                </div>
+            }
             <p itemprop="description">@productViewModel.Description</p>
 
             <InputQuantity Class="mt-2" MinValue="0" @bind-Value="quantity" />
