@@ -6,6 +6,7 @@
 @using BlazorApp.Shared
 @using Client.Shared
 @inject ICartService CartService
+@inject NavigationManager NavigationManager
 
 
 <AppPageTitle>Basket</AppPageTitle>
@@ -43,7 +44,7 @@ else
                                             </div>
 
                                             <div>
-                                                @* <button class="btn ms-2" @onclick="async () => await UpdateItem(cartItem)"><i class="bi bi-pencil-square" /></button> *@
+                                                <button class="btn ms-2" @onclick="async () => await UpdateItem(cartItem)"><i class="bi bi-pencil-square" /></button>
                                                 <button class="btn" @onclick="async () => await DeleteItem(cartItem)"><i class="bi bi-trash" /></button>                                           
                                             </div>
                                         </div>
@@ -121,9 +122,18 @@ else
 
     async Task UpdateItem(CartItem cartItem)
     {
-        //await CartClient.RemoveItemFromCartAsync(cartItem.Id);
+        NavigationManager.NavigateTo($"/products/{cartItem.ProductId}?cartItemId={cartItem.Id}");
 
-        //cart!.Items.Remove(cartItem);
+        /*
+        if(cartItem.Product.Parent is null) 
+        {
+            NavigationManager.NavigateTo($"/products/{cartItem.Product.Id}?cartItemId={cartItem.Id}");
+        }
+        else 
+        {
+            NavigationManager.NavigateTo($"/products/{cartItem.Product?.Parent.Id}/{cartItem.Product.Id}?cartItemId={cartItem.Id}");
+        }
+        */
     }
 
     async Task DeleteItem(CartItem cartItem)

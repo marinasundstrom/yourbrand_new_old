@@ -1,5 +1,21 @@
 # Carts
 
+## Migrations
+
+Adding migration
+
+```
+dotnet ef migrations add <Name>
+```
+
+Update database
+
+```
+dotnet ef database update --connection "Server=localhost,1433;User Id=sa;Password=P@ssw0rd;Encrypt=false;Database=yourbrand-carts-db"
+```
+
+_* This is the connection string to "yourbrand-carts-db" running locally in Docker._
+
 ## Seeding test data
 
 ```

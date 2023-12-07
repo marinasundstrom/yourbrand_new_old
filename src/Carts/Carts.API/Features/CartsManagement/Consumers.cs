@@ -41,6 +41,33 @@ public sealed class GetCartByIdConsumer(MediatR.IMediator mediator) : IConsumer<
     }
 }
 
+public sealed class GetCartByTagConsumer(MediatR.IMediator mediator) : IConsumer<GetCartByTag>
+{
+    public async Task Consume(ConsumeContext<Carts.Contracts.GetCartByTag> context)
+    {
+        var id = context.Message.Tag;
+
+        var r = await mediator.Send(new Requests.GetCartByTag(id), context.CancellationToken);
+        var cart = r.GetValue();
+
+        await context.RespondAsync<GetCartByTagResponse>(new GetCartByTagResponse { Cart = cart.Map() });
+    }
+}
+
+public sealed class CreateCartConsumer(MediatR.IMediator mediator) : IConsumer<Carts.Contracts.CreateCart>
+{
+    public async Task Consume(ConsumeContext<Carts.Contracts.CreateCart> context)
+    {
+        var request = context.Message;
+
+        var r = await mediator.Send(new Requests.CreateCart(request.Tag), context.CancellationToken);
+
+        var cart = r.GetValue();
+
+        await context.RespondAsync<CreateCartResponse>(new CreateCartResponse { Cart = cart.Map() });
+    }
+}
+
 public sealed class AddCartItemConsumer(MediatR.IMediator mediator) : IConsumer<Carts.Contracts.AddCartItem>
 {
     public async Task Consume(ConsumeContext<Carts.Contracts.AddCartItem> context)
@@ -56,7 +83,8 @@ public sealed class AddCartItemConsumer(MediatR.IMediator mediator) : IConsumer<
             request.Description,
             request.Price,
             request.RegularPrice,
-            request.Quantity
+            request.Quantity,
+            request.Data
         ), context.CancellationToken);
 
         var cartItem = r.GetValue();
@@ -80,6 +108,21 @@ public sealed class UpdateCartItemQuantityConsumer(MediatR.IMediator mediator) :
     }
 }
 
+public sealed class UpdateCartItemDataConsumer(MediatR.IMediator mediator) : IConsumer<UpdateCartItemData>
+{
+    public async Task Consume(ConsumeContext<Carts.Contracts.UpdateCartItemData> context)
+    {
+        var cartId = context.Message.CartId;
+        var cartItemId = context.Message.CartItemId;
+        var data = context.Message.Data;
+
+        var r = await mediator.Send(new Requests.UpdateCartItemData(cartId, cartItemId, data), context.CancellationToken);
+        var cartItem = r.GetValue();
+
+        await context.RespondAsync<UpdateCartItemDataResponse>(new UpdateCartItemDataResponse { CartItem = cartItem.Map() });
+    }
+}
+
 public sealed class RemoveCartItemQuantityConsumer(MediatR.IMediator mediator) : IConsumer<RemoveCartItem>
 {
     public async Task Consume(ConsumeContext<Carts.Contracts.RemoveCartItem> context)
@@ -98,7 +141,7 @@ public static class Mappings
     public static Carts.Contracts.Cart Map(this Carts.API.Domain.Entities.Cart cart) => new Carts.Contracts.Cart
     {
         Id = cart.Id,
-        Name = cart.Name,
+        Tag = cart.Tag,
         Total = cart.Total,
         Items = cart.Items.Select(cartItem => cartItem.Map())
     };
@@ -115,6 +158,7 @@ public static class Mappings
         RegularPrice = cartItem.RegularPrice,
         Quantity = cartItem.Quantity,
         Total = cartItem.Total,
+        Data = cartItem.Data,
         Created = cartItem.Created
     };
 }

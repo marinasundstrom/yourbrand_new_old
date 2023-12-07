@@ -4,32 +4,32 @@ public sealed class Cart
 {
     private readonly HashSet<CartItem> _cartItems = new HashSet<CartItem>();
 
-    public Cart(string name)
+    public Cart(string tag)
     {
-        Name = name;
+        Tag = tag;
     }
 
-    internal Cart(string id, string name)
+    internal Cart(string id, string tag)
     {
         Id = id;
-        Name = name;
+        Tag = tag;
     }
 
     public string Id { get; private set; } = Guid.NewGuid().ToString();
 
-    public string Name { get; set; } = default!;
+    public string Tag { get; set; } = default!;
 
     public decimal Total { get; private set; }
 
     public IReadOnlyCollection<CartItem> Items => _cartItems;
 
-    public CartItem AddItem(string name, string? image, long? productId, string? productHandle, string description, decimal price, decimal? regularPrice, int quantity)
+    public CartItem AddItem(string name, string? image, long? productId, string? productHandle, string description, decimal price, decimal? regularPrice, int quantity, string? data)
     {
-        var cartItem = _cartItems.FirstOrDefault(item => item.ProductId == productId);
+        var cartItem = _cartItems.FirstOrDefault(item => item.ProductId == productId && item.Data == data);
 
         if (cartItem is null)
         {
-            cartItem = new CartItem(name, image, productId, productHandle, description, price, regularPrice, quantity);
+            cartItem = new CartItem(name, image, productId, productHandle, description, price, regularPrice, quantity, data);
             _cartItems.Add(cartItem);
             Total += cartItem.Total;
         }
@@ -75,7 +75,7 @@ public sealed class CartItem
 
     }
 
-    public CartItem(string name, string? image, long? productId, string? productHandle, string description, decimal price, decimal? regularPrice, int quantity)
+    public CartItem(string name, string? image, long? productId, string? productHandle, string description, decimal price, decimal? regularPrice, int quantity, string? data)
     {
         Name = name;
         Image = image;
@@ -85,6 +85,7 @@ public sealed class CartItem
         Price = price;
         RegularPrice = regularPrice;
         Quantity = quantity;
+        Data = data;
 
         Created = DateTimeOffset.UtcNow;
     }
@@ -108,6 +109,13 @@ public sealed class CartItem
     public double Quantity { get; set; }
 
     public decimal Total => Price * (decimal)Quantity;
+
+    public string? Data { get; private set; }
+
+    public void UpdateData(string? data)
+    {
+        Data = data;
+    }
 
     public DateTimeOffset Created { get; private set; }
 }

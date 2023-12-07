@@ -30,6 +30,9 @@ public static class Endpoints
         cartGroup.MapPut("/items/{cartItemId}/quantity", UpdateCartItemQuantity)
             .WithName($"Cart_{nameof(UpdateCartItemQuantity)}");
 
+        cartGroup.MapPut("/items/{cartItemId}/data", UpdateCartItemData)
+            .WithName($"Cart_{nameof(UpdateCartItemData)}");
+
         cartGroup.MapDelete("/items/{cartItemId}", RemoveCartItem)
             .WithName($"Cart_{nameof(RemoveCartItem)}");
 
@@ -40,14 +43,13 @@ public static class Endpoints
     {
         var cart = await cartsClient.GetCartById("test", cancellationToken);
 
-        //var cart = await client.GetCartByIdAsync("test", cancellationToken);
         return cart is not null ? TypedResults.Ok(cart) : TypedResults.NotFound();
     }
 
     private static async Task<Results<Ok<CartItem>, NotFound>> AddCartItem(AddCartItemRequest request, MassTransitCartsClient cartsClient, CancellationToken cancellationToken)
     {
         var cartItem = await cartsClient.AddCartItem(
-            "test", request.Name, request.Image, request.ProductId, request.ProductHandle, request.Description, request.Price, request.RegularPrice, request.Quantity, cancellationToken);
+            "test", request.Name, request.Image, request.ProductId, request.ProductHandle, request.Description, request.Price, request.RegularPrice, request.Quantity, request.Data, cancellationToken);
 
         return cartItem is not null ? TypedResults.Ok(cartItem) : TypedResults.NotFound();
     }
@@ -58,7 +60,13 @@ public static class Endpoints
 
         var cartItem = await cartsClient.UpdateCartItemQuantity("test", cartItemId, request.Quantity, cancellationToken);
 
-        //var cartItem = await client.UpdateCartItemQuantityAsync("test", cartItemId, quantity, cancellationToken);
+        return cartItem is not null ? TypedResults.Ok(cartItem) : TypedResults.NotFound();
+    }
+
+    private static async Task<Results<Ok<CartItem>, NotFound>> UpdateCartItemData(string cartItemId, UpdateCartItemDataRequest request, MassTransitCartsClient cartsClient, CancellationToken cancellationToken)
+    {
+        var cartItem = await cartsClient.UpdateCartItemData("test", cartItemId, request.Data, cancellationToken);
+
         return cartItem is not null ? TypedResults.Ok(cartItem) : TypedResults.NotFound();
     }
 
@@ -66,26 +74,26 @@ public static class Endpoints
     {
         await cartsClient.RemoveCartItem("test", cartItemId, cancellationToken);
 
-        //await client.RemoveCartItemAsync("test", cartItemId, cancellationToken);
         return TypedResults.Ok();
     }
 }
 
-public sealed record AddCartItemRequest(string Name, string? Image, long? ProductId, string? ProductHandle, string Description, decimal Price, decimal? RegularPrice, int Quantity);
+public sealed record AddCartItemRequest(string Name, string? Image, long? ProductId, string? ProductHandle, string Description, decimal Price, decimal? RegularPrice, int Quantity, string? Data);
 
 public sealed record UpdateCartItemQuantityRequest(int Quantity);
 
+public sealed record UpdateCartItemDataRequest(string? Data);
 
 public sealed class Cart(string id, string name, IEnumerable<CartItem> items)
 {
     public string Id { get; set; } = id;
 
-    public string Name { get; set; } = name;
+    public string Tag { get; set; } = name;
 
     public IEnumerable<CartItem> Items { get; set; } = items;
 }
 
-public sealed class CartItem(string id, string name, string? image, long? productId, string? productHandle, string description, decimal price, decimal? regularPrice, int quantity)
+public sealed class CartItem(string id, string name, string? image, long? productId, string? productHandle, string description, decimal price, decimal? regularPrice, int quantity, string? data)
 {
     public string Id { get; set; } = id;
 
@@ -106,4 +114,6 @@ public sealed class CartItem(string id, string name, string? image, long? produc
     public int Quantity { get; set; } = quantity;
 
     public decimal Total => Price * Quantity;
+
+    public string? Data { get; set; } = data;
 }

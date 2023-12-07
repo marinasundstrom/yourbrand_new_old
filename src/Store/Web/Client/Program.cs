@@ -1,6 +1,5 @@
 using BlazorApp;
 
-using BlazorApp;
 using BlazorApp.Cart;
 using BlazorApp.ProductCategories;
 using BlazorApp.Products;

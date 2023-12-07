@@ -3,7 +3,7 @@ namespace Carts.Contracts;
 public sealed record Cart
 {
     public string Id { get; init; }
-    public string Name { get; init; }
+    public string Tag { get; init; }
     public decimal Total { get; init; }
     public IEnumerable<CartItem> Items { get; init; }
 }
@@ -20,5 +20,6 @@ public sealed record CartItem
     public decimal? RegularPrice { get; init; }
     public double Quantity { get; init; }
     public decimal Total { get; init; }
+    public string? Data { get; init; }
     public DateTimeOffset Created { get; init; }
 }

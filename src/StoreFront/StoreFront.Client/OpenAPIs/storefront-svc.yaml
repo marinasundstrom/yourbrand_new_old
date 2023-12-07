@@ -74,6 +74,36 @@ paths:
                 $ref: "#/components/schemas/CartItem"
         404:
           description: ""
+  /api/v1/cart/items/{cartItemId}/data:
+    put:
+      tags:
+        - Cart
+        - Cart
+      operationId: Cart_UpdateCartItemData
+      parameters:
+        - name: cartItemId
+          in: path
+          required: true
+          schema:
+            type: string
+          x-position: 1
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateCartItemDataRequest"
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CartItem"
+        404:
+          description: ""
   /api/v1/cart/items/{cartItemId}:
     delete:
       tags:
@@ -354,7 +384,7 @@ components:
       properties:
         id:
           type: string
-        name:
+        tag:
           type: string
         items:
           type: array
@@ -393,6 +423,9 @@ components:
         total:
           type: number
           format: decimal
+        data:
+          type: string
+          nullable: true
     AddCartItemRequest:
       type: object
       additionalProperties: false
@@ -421,6 +454,9 @@ components:
         quantity:
           type: integer
           format: int32
+        data:
+          type: string
+          nullable: true
     UpdateCartItemQuantityRequest:
       type: object
       additionalProperties: false
@@ -428,6 +464,13 @@ components:
         quantity:
           type: integer
           format: int32
+    UpdateCartItemDataRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: string
+          nullable: true
     ProductCategoryTreeRoot:
       type: object
       additionalProperties: false

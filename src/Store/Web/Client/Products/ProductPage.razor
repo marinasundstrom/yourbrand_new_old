@@ -3,348 +3,282 @@
 @attribute [StreamRendering(false)]
 @rendermode RenderMode.InteractiveWebAssembly
 @implements IDisposable
+@using BlazorApp.Cart
 @using BlazorApp.Products
 @using BlazorApp.ProductCategories
 @using Client.Products
 @using System.Globalization
+@using Client.Shared
 @using Microsoft.AspNetCore.Components.Forms
 @inject IProductsService ProductsService
+@inject ICartService CartService
 @inject NavigationManager NavigationManager
 @inject PersistentComponentState ApplicationState
 @inject IJSRuntime JSRuntime
+@inject RenderingContext RenderingContext
 
 @if (productViewModel is null)
 {
-        <em>Loading...</em>
+    <em>Loading...</em>
 }
 else
 {
-        <AppPageTitle>@productViewModel.Name</AppPageTitle>
+    <AppPageTitle>@productViewModel.Name</AppPageTitle>
 
-        <HeadContent>
-            <meta name="description" content="@productViewModel.Description" data-dynamic="1" />
-            <meta property="og:url" content="@NavigationManager.Uri" data-dynamic="1" />
-            <meta property="og:type" content="website" data-dynamic="1" />
-            <meta property="og:title" content="@productViewModel.Name" data-dynamic="1" />
-            <meta property="og:description" content="@productViewModel.Description" data-dynamic="1" />
-            <meta property="og:image" content="@productViewModel.Image" data-dynamic="1" />
-            <meta property="product:condition" content="new" data-dynamic="1" />
-            <meta property="product:availability" content="in stock" data-dynamic="1" />
-            <meta property="product:price:amount" content="@productViewModel.Price.ToString(CultureInfo.InvariantCulture)"
-                data-dynamic="1" />
-            <meta property="product:price:currency" content="@currency" data-dynamic="1" />
-            <meta property="product:retailer_item_id" content="@productViewModel.Id" data-dynamic="1" />
-        </HeadContent>
+    <HeadContent>
+        <meta name="description" content="@productViewModel.Description" data-dynamic="1" />
+        <meta property="og:url" content="@NavigationManager.Uri" data-dynamic="1" />
+        <meta property="og:type" content="website" data-dynamic="1" />
+        <meta property="og:title" content="@productViewModel.Name" data-dynamic="1" />
+        <meta property="og:description" content="@productViewModel.Description" data-dynamic="1" />
+        <meta property="og:image" content="@productViewModel.Image" data-dynamic="1" />
+        <meta property="product:condition" content="new" data-dynamic="1" />
+        <meta property="product:availability" content="in stock" data-dynamic="1" />
+        <meta property="product:price:amount" content="@productViewModel.Price.ToString(CultureInfo.InvariantCulture)"
+            data-dynamic="1" />
+        <meta property="product:price:currency" content="@currency" data-dynamic="1" />
+        <meta property="product:retailer_item_id" content="@productViewModel.Id" data-dynamic="1" />
+    </HeadContent>
 
-        <article itemscope itemtype="http://schema.org/Product" class="row gx-5 pt-md-4">
-            <div class="col-md-4 mb-4">
-                <img class="bd-placeholder-img card-img-top img-border-rounded shadow" itemprop="image"
-                    style="object-fit: cover; aspect-ratio: 1 / 1;" src="@productViewModel.Image" />
-            </div>
+    <article itemscope itemtype="http://schema.org/Product" class="row gx-5 pt-md-4">
+        <div class="col-md-4 mb-4">
+            <img class="bd-placeholder-img card-img-top img-border-rounded shadow" itemprop="image"
+                style="object-fit: cover; aspect-ratio: 1 / 1;" src="@productViewModel.Image" />
+        </div>
 
-            <div class="col-md-8 mb-4">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
+        <div class="col-md-8 mb-4">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
                     @foreach (var category in IterateCategories(productViewModel!.Product!.Category!))
                     {
-                                <li class="breadcrumb-item"><a class="text-decoration-none text-reset muted"
-                                        href="/categories/@category.Path">@category.Name</a></li>
+                        <li class="breadcrumb-item"><a class="text-decoration-none text-reset muted"
+                                href="/categories/@category.Path">@category.Name</a></li>
                     }
-                    </ol>
-                </nav>
+                </ol>
+            </nav>
 
-                <h1 itemprop="name">@productViewModel.Name</h1>
+            <h1 itemprop="name">@productViewModel.Name</h1>
 
-                <div class="mb-4" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-                    <meta itemprop="priceCurrency" content="@currency">
-                    <h5 class="price2" itemprop="price" content="@productViewModel.Price"
-                        style="display: inline-block; font-weight: 500; color: #ca0000; line-height: 0;">
+            <div class="mb-4" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                <meta itemprop="priceCurrency" content="@currency">
+                <h5 class="price2" itemprop="price" content="@productViewModel.Price"
+                    style="display: inline-block; font-weight: 500; color: #ca0000; line-height: 0;">
                     @(((decimal)productViewModel.Price).FormatCurrency(currency))</h5>
                 @if (productViewModel.RegularPrice is not null)
                 {
-                            <h5 class="price2 text-muted"
-                                style="display: inline-block; text-decoration: line-through; color: gray !important; margin-left: 10px; line-height: 0;">
+                    <h5 class="price2 text-muted"
+                        style="display: inline-block; text-decoration: line-through; color: gray !important; margin-left: 10px; line-height: 0;">
                         @(((decimal?)productViewModel.RegularPrice)?.FormatCurrency(currency))</h5>
                 }
-                </div>
+            </div>
 
-                <p itemprop="description">@productViewModel.Description</p>
+            <p itemprop="description">@productViewModel.Description</p>
 
-                <Client.Products.CartButton Product="productInfo" />
+            <InputQuantity Class="mt-2" MinValue="0" @bind-Value="quantity" />
+
+            @if (CartItemId is null)
+            {
+                <button class="btn btn-primary" @onclick="AddItemToCart"><i class="bi bi-basket" /> Add to cart</button>
+            }
+            else
+            {
+                <button class="btn btn-primary" @onclick="UpdateCartItem"><i class="bi bi-basket" /> Update item</button>
+            }
 
             @if (productViewModel.Variants is not null && productViewModel.Variants.Any())
             {
-                        <h4 class="mt-4">@(productViewModel.Variants.First().Attributes.FirstOrDefault(x =>
+                <h4 class="mt-4">@(productViewModel.Variants.First().Attributes.FirstOrDefault(x =>
             x.IsMainAttribute)?.Attribute?.Name ?? "Variants")</h4>
 
-                        <div class="d-flex">
+                <div class="d-flex">
             @foreach (var v in productViewModel.Variants)
                     {
                         var v2 = v;
 
-                                    <div @key="@v.Id" class="mt-1 me-3 @(v2.Id == productViewModel.Variant.Id ? "shadow" : "shadow-sm" )"
-                                        style="height: 150px; width: 150px; cursor: pointer; i" @onclick="async () => await SelectVariant(v2!)">
+                        <div @key="@v.Id" class="mt-1 me-3 @(v2.Id == productViewModel.Variant.Id ? "shadow" : "shadow-sm" )"
+                            style="height: 150px; width: 150px; cursor: pointer; i" @onclick="async () => await SelectVariant(v2!)">
                             @* <div href="@($"/products/{productViewModel.Product.Handle}/{v2?.Handle}")"
                 @onclick="async () => await SelectVariant(v2!)" @onclick:preventDefault> *@
                             @if ((v2?.Image ?? productViewModel.Product.Image) is not null)
                             {
-                                                <img src="@(v2?.Image ?? productViewModel.Product.Image)" height="100%" width="100%"
-                                                    style="object-fit: contain;" alt="@v2!.Name" />
+                                <img src="@(v2?.Image ?? productViewModel.Product.Image)" height="100%" width="100%"
+                                    style="object-fit: contain;" alt="@v2!.Name" />
                             }
                             else
                             {
-                                                <svg class="rounded-lg" width="100" height="100%" xmlns="http://www.w3.org/2000/svg" role="img"
-                                                    aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                                                    <title>Placeholder</title>
-                                                    <rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef"
-                                                        dy=".3em">Thumbnail</text>
-                                                </svg>
+                                <svg class="rounded-lg" width="100" height="100%" xmlns="http://www.w3.org/2000/svg" role="img"
+                                    aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                    <title>Placeholder</title>
+                                    <rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef"
+                                        dy=".3em">Thumbnail</text>
+                                </svg>
                             }
                             @* </div> *@
-                                    </div>
-                    }
                         </div>
+                    }
+                </div>
             }
 
-                <div>
+            <div>
                 @if (productViewModel.AttributeGroups.Any())
                 {
-                            <div class="form">
+                    <div class="form">
                         @foreach (var attributeGroup in productViewModel.AttributeGroups)
                         {
-                                        <div @key="@attributeGroup.Id">
-                                            <h4 class="mt-4">@(attributeGroup.Name ?? "Attributes")</h4>
+                            <div @key="@attributeGroup.Id">
+                                <h4 class="mt-4">@(attributeGroup.Name ?? "Attributes")</h4>
 
                                 @foreach (var itemAttribute in attributeGroup.Attributes)
                                 {
-                                                    <div class="form-floating mb-3 mt-3" @key="@itemAttribute.Id">
+                                    <div class="form-floating mb-3 mt-3" @key="@itemAttribute.Id">
 
-                                                        <InputSelect TValue="string?" Value="@itemAttribute.SelectedValueId"
-                                                            @onfocus="OnVariantActivated" ValueExpression="() => itemAttribute.SelectedValueId"
-                                                            ValueChanged="async (v) => { itemAttribute.SelectedValueId = v; await UpdateVariant(); }"
-                                                            class="form-select" aria-label="@itemAttribute.Name" placeholder="Choose option">
+                                        <InputSelect TValue="string?" Value="@itemAttribute.SelectedValueId"
+                                            @onfocus="OnVariantActivated" ValueExpression="() => itemAttribute.SelectedValueId"
+                                            ValueChanged="async (v) => { itemAttribute.SelectedValueId = v; await UpdateVariant(); }"
+                                            class="form-select" aria-label="@itemAttribute.Name" placeholder="Choose option">
                                             @* <option selected>None</option> *@
                                             @foreach (var value in itemAttribute.Values!)
                                             {
-                                                                    <option value="@value.Id" disabled="@value.Disabled">
+                                                <option value="@value.Id" disabled="@value.Disabled">
                                                     @value.Name
-                                                                    </option>
+                                                </option>
                                             }
-                                                        </InputSelect>
-                                                        <label for="exampleInputEmail1">
+                                        </InputSelect>
+                                        <label for="exampleInputEmail1">
                                             @itemAttribute.Name
-                                                        </label>
-                                                    </div>
+                                        </label>
+                                    </div>
                                 }
-                                        </div>
+                            </div>
                         }
-                            </div>
+                    </div>
                 }
-                </div>
+            </div>
 
-                <div class="accordion mt-5" id="accordionExample">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingOne">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                Specification
-                            </button>
-                        </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">
-                            <div class="accordion-body">
-                                <strong>This is the first item's accordion body.</strong> It is shown by default, until the
-                                collapse plugin adds the appropriate classes that we use to style each element. These classes
-                                control the overall appearance, as well as the showing and hiding via CSS transitions. You can
-                                modify any of this with custom CSS or overriding our default variables. It's also worth noting
-                                that just about any HTML can go within the <code>.accordion-body</code>, though the transition
-                                does limit overflow.
+            <div>
+                @if (productViewModel.OptionGroups.Any())
+                {
+                    <div class="form">
+                        @foreach (var optionGroup in productViewModel.OptionGroups)
+                        {
+                            <div @key="@optionGroup.Id">
+                                <h4 class="mt-4">@(optionGroup.Name ?? "Options")</h4>
+
+                                @if (optionGroup.Max is not null)
+                                {
+                                    <small class="text-muted">Max @optionGroup.Max</small>
+                                }
+
+                                @foreach (var itemOption in optionGroup.Options)
+                                {
+                                    <div class="form-floating mb-3 mt-3 ms-1" @key="@itemOption.Id">
+                                        @if (itemOption.OptionType == OptionType.YesOrNo)
+                                        {
+                                            <div class="form-check checkbox-lg">
+                                                <InputCheckbox class="form-check-input" Value="@itemOption.IsSelected"
+                                                    ValueExpression="() => itemOption.IsSelected"
+                                                    ValueChanged="async (v) => { itemOption.IsSelected = v; await UpdateUrl(); }"
+                                                    id="flexCheckDefault" disabled=@(!itemOption.IsSelected && optionGroup.Options.Count(x
+                                => x.IsSelected) >= optionGroup.Max) />
+
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    @itemOption.Name
+                                                    @if (itemOption.Price is not null)
+                                                    {
+                                                        <small class="text-muted ms-2">@itemOption.Price?.FormatCurrency(currency /*
+                                                                productViewModel.Currency */)</small>
+                                                    }
+                                                </label>
+                                            </div>
+                                        }
+                                        else if (itemOption.OptionType == OptionType.Choice)
+                                        {
+                                            <InputSelect TValue="string?" Value="@itemOption.SelectedValueId"
+                                                ValueExpression="() => itemOption.SelectedValueId"
+                                                ValueChanged="async (v) => { itemOption.SelectedValueId = v; await UpdateUrl(); }"
+                                                class="form-select" aria-label="@itemOption.Name" placeholder="Choose option">
+                                                @* <option selected>None</option> *@
+                                                @foreach (var value in itemOption.Values!)
+                                                {
+                                                    <option value="@value.Id">
+                                                        @value.Name
+                                                        @if (value.Price is not null)
+                                                        {
+                                                            <small class="text-muted ms-2">@value.Price?.FormatCurrency(currency /*
+                                                            productViewModel.Currency */)</small>
+                                                        }
+                                                    </option>
+                                                }
+                                            </InputSelect>
+                                            <label for="exampleInputEmail1">
+                            @itemOption.Name
+                        </label>
+                                        }
+                                        else if (itemOption.OptionType == OptionType.NumericalValue)
+                                        {
+                                            <InputNumber TValue="int?" Value="@itemOption.NumericalValue"
+                                                ValueExpression="() => itemOption.NumericalValue"
+                                                ValueChanged="async (v) => { itemOption.NumericalValue = v; await UpdateUrl(); }"
+                                                type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                                                placeholder="Enter value" min="@itemOption.MinNumericalValue" step="1"
+                                                max="@itemOption.MaxNumericalValue" />
+                                            <label for="exampleInputEmail1">@itemOption.Name</label>
+                                        }
+                                        else if (itemOption.OptionType == OptionType.TextValue)
+                                        {
+                                            <InputText Value="@itemOption.TextValue" ValueExpression="() => itemOption.TextValue"
+                                                ValueChanged="async (v) => { itemOption.TextValue = v; await UpdateUrl(); }" type="text"
+                                                class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                                                placeholder="Enter value" />
+                                            <label for="exampleInputEmail1">@itemOption.Name</label>
+                                        }
+
+                                    </div>
+                                }
                             </div>
+                        }
+                    </div>
+                }
+            </div>
+
+            <div class="accordion mt-5" id="accordionExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                            Specification
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">
+                        <div class="accordion-body">
+                            <strong>This is the first item's accordion body.</strong> It is shown by default, until the
+                            collapse plugin adds the appropriate classes that we use to style each element. These classes
+                            control the overall appearance, as well as the showing and hiding via CSS transitions. You can
+                            modify any of this with custom CSS or overriding our default variables. It's also worth noting
+                            that just about any HTML can go within the <code>.accordion-body</code>, though the transition
+                            does limit overflow.
                         </div>
                     </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingTwo">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                Reviews
-                            </button>
-                        </h2>
-                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">
-                            <div class="accordion-body">
-                                <strong>This is the second item's accordion body.</strong> It is hidden by default, until the
-                                collapse plugin adds the appropriate classes that we use to style each element. These classes
-                                control the overall appearance, as well as the showing and hiding via CSS transitions. You can
-                                modify any of this with custom CSS or overriding our default variables. It's also worth noting
-                                that just about any HTML can go within the <code>.accordion-body</code>, though the transition
-                                does limit overflow.
-                            </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Reviews
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">
+                        <div class="accordion-body">
+                            <strong>This is the second item's accordion body.</strong> It is hidden by default, until the
+                            collapse plugin adds the appropriate classes that we use to style each element. These classes
+                            control the overall appearance, as well as the showing and hiding via CSS transitions. You can
+                            modify any of this with custom CSS or overriding our default variables. It's also worth noting
+                            that just about any HTML can go within the <code>.accordion-body</code>, though the transition
+                            does limit overflow.
                         </div>
                     </div>
                 </div>
             </div>
-        </article>
-}
-
-@code
-{
-    string currency = "SEK";
-    BlazorApp.Products.Product? product;
-    ProductInfo? productInfo;
-
-    [Parameter]
-    public string Id { get; set; } = default!;
-
-    [Parameter]
-    public string? VariantId { get; set; } = default!;
-
-    ProductViewModel? productViewModel;
-
-    private PersistingComponentStateSubscription persistingSubscription;
-
-    protected override async Task OnInitializedAsync()
-    {
-        persistingSubscription =
-        ApplicationState.RegisterOnPersisting(PersistItems);
-
-        if (!ApplicationState.TryTakeFromJson<ProductViewModel>(
-        "productViewModel", out var restored))
-        {
-            var pwm = new ProductViewModel(ProductsService);
-            await pwm.Initialize(Id, VariantId);
-            productViewModel = pwm;
-        }
-        else
-        {
-            productViewModel = restored!;
-            productViewModel.SetClient(ProductsService);
-        }
-
-        productInfo = new ProductInfo(productViewModel.Name, productViewModel.Image, productViewModel.ProductId,
-        productViewModel.Id, productViewModel.Description,
-        (decimal)productViewModel.Price, (decimal?)productViewModel.RegularPrice);
-
-        /*
-        if (!RenderingContext.IsPrerendering)
-        {
-        if (CartItemId is not null)
-        {
-        var cart = await CartClient.GetCartAsync();
-        var item = cart.Items.First(x => x.Id == CartItemId);
-        quantity = item.Quantity;
-        Data = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(item.Data));
-        }
-        }
-
-        if (Data is not null)
-        {
-        var str = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(Data));
-        Deserialize(str);
-        }
-
-        if (!RenderingContext.IsPrerendering)
-        {
-        _ = ProductViewed();
-        }
-        */
-    }
-
-    private async Task ProductViewed()
-    {
-        /*
-        await AnalyticsService.RegisterEvent(new EventData
-        {
-        EventType = EventType.ProductViewed,
-        Data = new Dictionary<string, object>
-        {
-        { "productId", productViewModel.Variant?.Id ?? productViewModel.Product!.Id },
-        { "name", productViewModel.Name },
-        { "isEdit", CartItemId is not null }
-        }
-        });
-        */
-    }
-
-    async Task UpdateVariant()
-    {
-        Console.WriteLine("Foo");
-
-        await productViewModel!.UpdateVariant();
-
-        //InvokeAsync(StateHasChanged);
-
-        await UpdateUrl();
-
-        _ = ProductViewed();
-    }
-
-    async Task SelectVariant(Product v)
-    {
-        var oldVariant = productViewModel!.Variant;
-
-        if (oldVariant?.Id != v.Id)
-        {
-            await productViewModel!.SelectVariant(v!);
-
-            await UpdateUrl();
-
-            _ = ProductViewed();
-        }
-    }
-
-    async Task UpdateUrl()
-    {
-        //string data = Serialize();
-        //data = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(data));
-
-        //await JS.InvokeVoidAsync("skipScroll");
-
-        System.Text.StringBuilder sb = new();
-        sb.Append($"/products/{Id}");
-
-        if (productViewModel!.VariantId is not null)
-        {
-            sb.Append($"/{productViewModel.VariantId}");
-        }
-
-        /*
-        if (data is not null)
-        {
-        sb.Append($"?d={data}");
-        }
-
-        if (CartItemId is not null)
-        {
-        sb.Append($"&cartItemId={CartItemId}");
-        }
-        */
-
-        JSRuntime.InvokeVoidAsync("changeUrl", sb.ToString());
-    }
-
-    private Task PersistItems()
-    {
-        ApplicationState.PersistAsJson("productViewModel", productViewModel);
-
-        return Task.CompletedTask;
-    }
-
-    public void Dispose()
-    {
-        persistingSubscription.Dispose();
-    }
-
-    static IEnumerable<ProductCategoryParent> IterateCategories(ProductCategoryParent
-    category)
-    {
-        if (category.Parent is not null)
-        {
-            yield return IterateCategories(category.Parent).First();
-        }
-
-        yield return category;
-    }
-
-    async Task OnVariantActivated()
-    {
-        //var foo = await ProductsService.GetAvailableProductVariantAttributesValues(Id, );
-    }
+        </div>
+    </article>
 }

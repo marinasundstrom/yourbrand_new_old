@@ -6,6 +6,7 @@ public sealed class MassTransitCartsClient(
     IRequestClient<Carts.Contracts.GetCartById> getCartByIdClient,
     IRequestClient<Carts.Contracts.AddCartItem> addCartItemClient,
     IRequestClient<Carts.Contracts.UpdateCartItemQuantity> updateCartItemQuantityClient,
+    IRequestClient<Carts.Contracts.UpdateCartItemData> updateCartItemDataClient,
     IRequestClient<Carts.Contracts.RemoveCartItem> removeCartItemClient)
 {
     public async Task<Cart> GetCartById(string cartId, CancellationToken cancellationToken = default)
@@ -16,7 +17,7 @@ public sealed class MassTransitCartsClient(
         return response.Message.Cart.Map();
     }
 
-    public async Task<CartItem> AddCartItem(string cartId, string name, string? image, long? productId, string productHandle, string description, decimal price, decimal? regularPrice, int quantity, CancellationToken cancellationToken = default)
+    public async Task<CartItem> AddCartItem(string cartId, string name, string? image, long? productId, string productHandle, string description, decimal price, decimal? regularPrice, int quantity, string? data, CancellationToken cancellationToken = default)
     {
         var request2 = new Carts.Contracts.AddCartItem
         {
@@ -28,7 +29,8 @@ public sealed class MassTransitCartsClient(
             Description = description,
             Price = price,
             RegularPrice = regularPrice,
-            Quantity = quantity
+            Quantity = quantity,
+            Data = data
         };
 
         var response = await addCartItemClient.GetResponse<Carts.Contracts.AddCartItemResponse>(request2, cancellationToken);
@@ -48,6 +50,19 @@ public sealed class MassTransitCartsClient(
         return response.Message.CartItem.Map();
     }
 
+    public async Task<CartItem> UpdateCartItemData(string cartId, string cartItemId, string? data, CancellationToken cancellationToken = default)
+    {
+        var request2 = new Carts.Contracts.UpdateCartItemData
+        {
+            CartId = "test",
+            CartItemId = cartItemId,
+            Data = data
+        };
+
+        var response = await updateCartItemDataClient.GetResponse<Carts.Contracts.UpdateCartItemDataResponse>(request2, cancellationToken);
+        return response.Message.CartItem.Map();
+    }
+
     public async Task RemoveCartItem(string cartId, string cartItemId, CancellationToken cancellationToken = default)
     {
         var request2 = new Carts.Contracts.RemoveCartItem
@@ -63,8 +78,8 @@ public sealed class MassTransitCartsClient(
 public static class Mapper
 {
     public static Cart Map(this Carts.Contracts.Cart cart)
-        => new(cart.Id!, cart.Name!, cart.Items.Select(cartItem => cartItem.Map()));
+        => new(cart.Id!, cart.Tag!, cart.Items.Select(cartItem => cartItem.Map()));
 
     public static CartItem Map(this Carts.Contracts.CartItem cartItem)
-        => new(cartItem.Id!, cartItem.Name!, cartItem.Image!, cartItem.ProductId, cartItem.ProductHandle, cartItem.Description!, cartItem.Price, cartItem.RegularPrice, (int)cartItem.Quantity);
+        => new(cartItem.Id!, cartItem.Name!, cartItem.Image!, cartItem.ProductId, cartItem.ProductHandle, cartItem.Description!, cartItem.Price, cartItem.RegularPrice, (int)cartItem.Quantity, cartItem.Data);
 }

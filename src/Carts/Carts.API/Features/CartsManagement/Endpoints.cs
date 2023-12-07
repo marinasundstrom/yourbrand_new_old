@@ -27,6 +27,9 @@ public static class Endpoints
         group.MapGet("/{id}", GetCartById)
             .WithName($"Carts_{nameof(GetCartById)}");
 
+        group.MapGet("/GetByTag/{id}", GetCartByTag)
+            .WithName($"Carts_{nameof(GetCartByTag)}");
+
         group.MapPost("/", CreateCart)
             .WithName($"Carts_{nameof(CreateCart)}");
 
@@ -38,6 +41,9 @@ public static class Endpoints
 
         group.MapPut("{cartId}/items/{id}/quantity", UpdateCartItemQuantity)
             .WithName($"Carts_{nameof(UpdateCartItemQuantity)}");
+
+        group.MapPut("{cartId}/items/{id}/data", UpdateCartItemData)
+            .WithName($"Carts_{nameof(UpdateCartItemData)}");
 
         group.MapDelete("{cartId}/items/{id}", RemoveCartItem)
             .WithName($"Carts_{nameof(RemoveCartItem)}");
@@ -63,9 +69,21 @@ public static class Endpoints
         return TypedResults.Ok(result.GetValue());
     }
 
+    private static async Task<Results<Ok<Cart>, NotFound>> GetCartByTag(string tag, IMediator mediator, CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(new GetCartByTag(tag), cancellationToken);
+
+        if (result.HasError(Errors.CartNotFound))
+        {
+            return TypedResults.NotFound();
+        }
+
+        return TypedResults.Ok(result.GetValue());
+    }
+
     private static async Task<Results<Created<Cart>, NotFound>> CreateCart(CreateCartRequest request, IMediator mediator, LinkGenerator linkGenerator, CancellationToken cancellationToken)
     {
-        var result = await mediator.Send(new CreateCart(request.Name), cancellationToken);
+        var result = await mediator.Send(new CreateCart(request.Tag), cancellationToken);
 
         if (result.HasError(Errors.CartNotFound))
         {
@@ -81,7 +99,7 @@ public static class Endpoints
 
     private static async Task<Results<Created<CartItem>, NotFound>> AddCartItem(string id, AddCartItemRequest cartItemRequest, IMediator mediator = default!, LinkGenerator linkGenerator = default!, CancellationToken cancellationToken = default!)
     {
-        var result = await mediator.Send(new AddCartItem(id, cartItemRequest.Name, cartItemRequest.Image, cartItemRequest.ProductId, cartItemRequest.ProductHandle, cartItemRequest.Description, cartItemRequest.Price, cartItemRequest.RegularPrice, cartItemRequest.Quantity), cancellationToken);
+        var result = await mediator.Send(new AddCartItem(id, cartItemRequest.Name, cartItemRequest.Image, cartItemRequest.ProductId, cartItemRequest.ProductHandle, cartItemRequest.Description, cartItemRequest.Price, cartItemRequest.RegularPrice, cartItemRequest.Quantity, cartItemRequest.Data), cancellationToken);
 
         if (result.HasError(Errors.CartNotFound))
         {
@@ -129,6 +147,23 @@ public static class Endpoints
         return TypedResults.Ok(result.GetValue());
     }
 
+    private static async Task<Results<Ok<CartItem>, NotFound>> UpdateCartItemData(string cartId, string id, string data, IMediator mediator = default!, LinkGenerator linkGenerator = default!, CancellationToken cancellationToken = default!)
+    {
+        var result = await mediator.Send(new UpdateCartItemData(cartId, id, data), cancellationToken);
+
+        if (result.HasError(Errors.CartNotFound))
+        {
+            return TypedResults.NotFound();
+        }
+
+        if (result.HasError(Errors.CartItemNotFound))
+        {
+            return TypedResults.NotFound();
+        }
+
+        return TypedResults.Ok(result.GetValue());
+    }
+
     private static async Task<Results<Ok, NotFound>> RemoveCartItem(string cartId, string id, IMediator mediator = default!, LinkGenerator linkGenerator = default!, CancellationToken cancellationToken = default!)
     {
         var result = await mediator.Send(new RemoveCartItem(cartId, id), cancellationToken);
@@ -147,6 +182,6 @@ public static class Endpoints
     }
 }
 
-public sealed record CreateCartRequest(string Name);
+public sealed record CreateCartRequest(string Tag);
 
-public sealed record AddCartItemRequest(string Name, string? Image, long? ProductId, string? ProductHandle, string Description, decimal Price, decimal? RegularPrice, int Quantity);
+public sealed record AddCartItemRequest(string Name, string? Image, long? ProductId, string? ProductHandle, string Description, decimal Price, decimal? RegularPrice, int Quantity, string? Data);

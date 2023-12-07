@@ -199,7 +199,7 @@ public class ProductViewModel
     {
         var groups = productOptions
             .Select(x => x.Option)
-            .Select(x => x.Group ?? new OptionGroup(null!, string.Empty, string.Empty, 0, 0, 0))
+            .Select(x => x.Group ?? new OptionGroup(null!, string.Empty, string.Empty, null, null, null))
             .DistinctBy(x => x.Id);
 
         foreach (var optionGroup in groups)

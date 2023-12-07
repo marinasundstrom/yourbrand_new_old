@@ -17,10 +17,10 @@ public sealed class CartService(StoreFrontAPI.ICartClient client) : ICartService
     public async Task<IEnumerable<BlazorApp.Cart.CartItem>> GetCartItemsAsync(CancellationToken cancellationToken = default)
     {
         var cart = await client.GetCartAsync(cancellationToken);
-        return cart.Items!.Select(x => new BlazorApp.Cart.CartItem(x.Id!, x.Name!, x.Image!, x.ProductId, x.ProductHandle, x.Description!, (decimal)x.Price, (decimal?)x.RegularPrice, (int)x.Quantity));
+        return cart.Items!.Select(x => new BlazorApp.Cart.CartItem(x.Id!, x.Name!, x.Image!, x.ProductId, x.ProductHandle, x.Description!, (decimal)x.Price, (decimal?)x.RegularPrice, (int)x.Quantity, x.Data));
     }
 
-    public async Task AddCartItem(string name, string? image, long? productId, string? productHandle, string description, decimal price, decimal? regularPrice, int quantity)
+    public async Task AddCartItem(string name, string? image, long? productId, string? productHandle, string description, decimal price, decimal? regularPrice, int quantity, string? data = null)
     {
         var ci = await client.AddCartItemAsync(new AddCartItemRequest
         {
@@ -31,7 +31,8 @@ public sealed class CartService(StoreFrontAPI.ICartClient client) : ICartService
             Description = description,
             Price = price,
             RegularPrice = regularPrice,
-            Quantity = quantity
+            Quantity = quantity,
+            Data = data,
         });
 
         var cartItem = _items.FirstOrDefault(x => x.ProductId == productId);
@@ -42,7 +43,7 @@ public sealed class CartService(StoreFrontAPI.ICartClient client) : ICartService
         }
         else
         {
-            cartItem = new BlazorApp.Cart.CartItem(ci.Id, name, image, productId, productHandle, description, price, regularPrice, quantity);
+            cartItem = new BlazorApp.Cart.CartItem(ci.Id, name, image, productId, productHandle, description, price, regularPrice, quantity, data);
 
             _items.Add(cartItem);
         }
@@ -78,6 +79,16 @@ public sealed class CartService(StoreFrontAPI.ICartClient client) : ICartService
         Console.WriteLine(cartItem.Id);
 
         CartUpdated?.Invoke(this, EventArgs.Empty);
+    }
+
+    public async Task UpdateCartItem(string? cartItemId, int quantity, string? data)
+    {
+        await UpdateCartItemQuantity(cartItemId, quantity);
+
+        await client.UpdateCartItemDataAsync(cartItemId, new UpdateCartItemDataRequest()
+        {
+            Data = data
+        });
     }
 
     public IReadOnlyCollection<BlazorApp.Cart.CartItem> Items => _items;

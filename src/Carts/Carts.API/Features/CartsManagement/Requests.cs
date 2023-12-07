@@ -1,6 +1,8 @@
 using Carts.API.Domain.Entities;
 using Carts.API.Persistence;
 
+using FluentValidation;
+
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
@@ -53,13 +55,41 @@ public sealed record GetCartById(string Id) : IRequest<Result<Cart>>
     }
 }
 
-public sealed record CreateCart(string Name) : IRequest<Result<Cart>>
+public record GetCartByTag(string Tag) : IRequest<Result<Cart>>
+{
+    public class Validator : AbstractValidator<GetCartById>
+    {
+        public Validator()
+        {
+            RuleFor(x => x.Id).NotEmpty();
+        }
+    }
+
+    public class Handler(CartsContext cartsContext) : IRequestHandler<GetCartByTag, Result<Cart>>
+    {
+        public async Task<Result<Cart>> Handle(GetCartByTag request, CancellationToken cancellationToken)
+        {
+            var cart = await cartsContext.Carts
+                .Include(cart => cart.Items.OrderBy(cartItem => cartItem.Created))
+                .FirstOrDefaultAsync(cart => cart.Tag == request.Tag, cancellationToken);
+
+            if (cart is null)
+            {
+                return Result.Failure<Cart>(Errors.CartNotFound);
+            }
+
+            return Result.Success(cart);
+        }
+    }
+}
+
+public sealed record CreateCart(string Tag) : IRequest<Result<Cart>>
 {
     public sealed class Handler(CartsContext cartsContext) : IRequestHandler<CreateCart, Result<Cart>>
     {
         public async Task<Result<Cart>> Handle(CreateCart request, CancellationToken cancellationToken)
         {
-            var cart = new Cart(request.Name);
+            var cart = new Cart(request.Tag);
             cartsContext.Carts.Add(cart);
             await cartsContext.SaveChangesAsync(cancellationToken);
 
@@ -69,7 +99,7 @@ public sealed record CreateCart(string Name) : IRequest<Result<Cart>>
 }
 
 
-public sealed record AddCartItem(string CartId, string Name, string? Image, long? ProductId, string? ProductHandle, string Description, decimal Price, decimal? RegularPrice, int Quantity) : IRequest<Result<CartItem>>
+public sealed record AddCartItem(string CartId, string Name, string? Image, long? ProductId, string? ProductHandle, string Description, decimal Price, decimal? RegularPrice, int Quantity, string? Data) : IRequest<Result<CartItem>>
 {
     public sealed class Handler(CartsContext cartsContext) : IRequestHandler<AddCartItem, Result<CartItem>>
     {
@@ -84,7 +114,7 @@ public sealed record AddCartItem(string CartId, string Name, string? Image, long
                 return Result.Failure<CartItem>(Errors.CartNotFound);
             }
 
-            var cartItem = cart.AddItem(request.Name, request.Image, request.ProductId, request.ProductHandle, request.Description, request.Price, request.RegularPrice, request.Quantity);
+            var cartItem = cart.AddItem(request.Name, request.Image, request.ProductId, request.ProductHandle, request.Description, request.Price, request.RegularPrice, request.Quantity, request.Data);
 
             await cartsContext.SaveChangesAsync(cancellationToken);
 
@@ -161,6 +191,47 @@ public sealed record GetCartItemById(string CartId, string CartItemId) : IReques
             {
                 return Result.Failure<CartItem>(Errors.CartItemNotFound);
             }
+
+            return Result.Success(cartItem);
+        }
+    }
+}
+
+public sealed record UpdateCartItemData(string CartId, string CartItemId, string? Data) : IRequest<Result<CartItem>>
+{
+    public sealed class Validator : AbstractValidator<RemoveCartItem>
+    {
+        public Validator()
+        {
+            RuleFor(x => x.CartId).NotEmpty();
+
+            RuleFor(x => x.CartItemId).NotEmpty();
+        }
+    }
+
+    public sealed class Handler(CartsContext cartsContext) : IRequestHandler<UpdateCartItemData, Result<CartItem>>
+    {
+        public async Task<Result<CartItem>> Handle(UpdateCartItemData request, CancellationToken cancellationToken)
+        {
+            var cart = await cartsContext.Carts
+                .Include(x => x.Items)
+                .FirstOrDefaultAsync(x => x.Id == request.CartId, cancellationToken);
+
+            if (cart is null)
+            {
+                return Result.Failure<CartItem>(Errors.CartNotFound);
+            }
+
+            var cartItem = cart.Items.FirstOrDefault(x => x.Id == request.CartItemId);
+
+            if (cartItem is null)
+            {
+                throw new System.Exception();
+            }
+
+            cartItem.UpdateData(request.Data);
+
+            await cartsContext.SaveChangesAsync(cancellationToken);
 
             return Result.Success(cartItem);
         }
