@@ -9,8 +9,6 @@ Store Web: https://yourbrand-store-web.wonderfulsea-5402179d.swedencentral.azure
 
 Admin Web: https://yourbrand-admin-web.wonderfulsea-5402179d.swedencentral.azurecontainerapps.io/
 
-<img src="screenshot.png" style="max-height: 600px" />
-
 ## Goal
 
 Build an e-commerce solution that is ready for the cloud.
@@ -18,6 +16,14 @@ Build an e-commerce solution that is ready for the cloud.
 Learning in the process.
 
 Porting stuff from [eShop](https://github.com/marinasundstrom/eShop) whenever possible, but make it better.
+
+## Screenshots
+
+<img src="screenshot.png" style="max-height: 600px" />
+
+<img src="screenshot2.png" style="max-height: 600px" />
+
+<img src="screenshot3.png" style="max-height: 600px" />
 
 ## Development
 
