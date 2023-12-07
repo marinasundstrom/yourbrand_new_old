@@ -32,6 +32,7 @@ using YourBrand;
 using BlazorApp.Extensions;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;
+using Blazored.Toast;
 
 string MyAllowSpecificOrigins = nameof(MyAllowSpecificOrigins);
 
@@ -157,6 +158,8 @@ builder.Services.AddMassTransit(x =>
 
 builder.Services
     .AddHealthChecks();
+
+builder.Services.AddBlazoredToast();
 
 var reverseProxy = builder.Services.AddReverseProxy();
 

@@ -4,6 +4,8 @@ using BlazorApp.Cart;
 using BlazorApp.ProductCategories;
 using BlazorApp.Products;
 
+using Blazored.Toast;
+
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Http.Resilience;
@@ -37,5 +39,7 @@ builder.Services
     .AddProductsServices()
     .AddProductCategoriesServices()
     .AddCartServices();
+
+builder.Services.AddBlazoredToast();
 
 await builder.Build().RunAsync();

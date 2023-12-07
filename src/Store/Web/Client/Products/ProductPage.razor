@@ -16,6 +16,13 @@
 @inject PersistentComponentState ApplicationState
 @inject IJSRuntime JSRuntime
 @inject RenderingContext RenderingContext
+@inject IToastService ToastService
+
+@using Blazored.Toast
+@using Blazored.Toast.Configuration
+
+<BlazoredToasts Position="ToastPosition.BottomRight" Timeout="10" SuccessClass="success-toast-override"
+    SuccessIcon="bi bi-thumbs-up" ErrorIcon="bi bi-bug" />
 
 @if (productViewModel is null)
 {

@@ -216,7 +216,7 @@ namespace Client.Products
 
             //hasAddedToCart = true;
 
-            //ToastService.ShowInfo($"{productViewModel.Name} was updated in your basket,", "Item updated");
+            ToastService.ShowInfo($"{productViewModel.Name} was updated in your basket");
         }
     }
 }
