@@ -39,7 +39,7 @@ namespace Client.Cart
 
         private async void OnCartUpdated(object? sender, EventArgs eventArgs)
         {
-            cartItems = CartService.Items.ToList();
+            cartItems = await CartService.GetCartItemsAsync();
             await InvokeAsync(StateHasChanged);
         }
 
