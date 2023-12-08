@@ -5,6 +5,7 @@ using BlazorApp.ProductCategories;
 using BlazorApp.Products;
 
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.JSInterop;
 
 namespace Client.Products
@@ -35,6 +36,13 @@ namespace Client.Products
         private PersistingComponentStateSubscription persistingSubscription;
 
         protected override async Task OnInitializedAsync()
+        {
+            NavigationManager.LocationChanged += OnLocationChanged;
+
+            await Load();
+        }
+
+        private async Task Load()
         {
             persistingSubscription =
             ApplicationState.RegisterOnPersisting(PersistItems);
@@ -83,6 +91,13 @@ namespace Client.Products
                 _ = ProductViewed();
             }
             */
+        }
+
+        private async void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+        {
+            await Load();
+
+            StateHasChanged();
         }
 
         private async Task ProductViewed()
@@ -163,6 +178,7 @@ namespace Client.Products
 
         public void Dispose()
         {
+            NavigationManager.LocationChanged -= OnLocationChanged;
             persistingSubscription.Dispose();
         }
 

@@ -1,10 +1,8 @@
-const cartOffCanvas = document.querySelector("#offcanvasRight");
-
-function hideCartOffCanvas() {
+export function hideCartOffCanvas() {
+    const cartOffCanvas = document.querySelector("#offcanvasRight");
 
     let offcanvas = bootstrap.Offcanvas.getInstance(cartOffCanvas);
-    if(!offcanvas)
-    {
+    if (!offcanvas) {
         return;
     }
     offcanvas.hide();
@@ -12,7 +10,7 @@ function hideCartOffCanvas() {
 
 export function init() {
     const navbarLinks2 = document.querySelectorAll("#offcanvasRight a")
-    for(let navbarLink of navbarLinks2) {
+    for (let navbarLink of navbarLinks2) {
         navbarLink.addEventListener("click", hideCartOffCanvas)
     }
 }
