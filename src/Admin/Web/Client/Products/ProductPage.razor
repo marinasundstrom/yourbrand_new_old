@@ -82,6 +82,10 @@
             <ProductAttributesView @key="product.Id" ProductId="product.Id" HasVariants="product.HasVariants" />
         </MudItem>
 
+        <MudItem xs="12" sm="12" md="12">
+            <ProductOptionsView @key="product.Id" ProductId="product.Id" ProductOptions="product.Options.ToList()" />
+        </MudItem>
+
         @if (product.Parent is null)
         {
             <MudItem xs="12" sm="12" md="12">

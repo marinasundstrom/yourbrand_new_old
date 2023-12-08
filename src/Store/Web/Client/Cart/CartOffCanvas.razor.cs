@@ -67,13 +67,13 @@ namespace Client.Cart
 
             await CartService.RemoveCartItem(cartItem.Id);
 
-            HideCartOffCanvas();
-
             if (isProductPage
                 && NavigationManager.Uri.Contains($"/{cartItem.ProductHandle}")
                 && NavigationManager.Uri.Contains($"cartItemId={cartItem.Id}"))
             {
                 NavigationManager.NavigateTo("/");
+
+                HideCartOffCanvas();
             }
         }
 
