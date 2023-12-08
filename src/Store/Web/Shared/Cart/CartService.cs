@@ -24,13 +24,7 @@ public sealed class CartService(StoreFrontAPI.ICartClient client) : ICartService
     {
         var ci = await client.AddCartItemAsync(new AddCartItemRequest
         {
-            Name = name,
-            Image = image,
             ProductId = productId,
-            ProductHandle = productHandle,
-            Description = description,
-            Price = price,
-            RegularPrice = regularPrice,
             Quantity = quantity,
             Data = data,
         });

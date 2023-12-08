@@ -39,6 +39,9 @@ public static class Endpoints
         group.MapGet("{cartId}/items/{id}", GetCartItemById)
             .WithName($"Carts_{nameof(GetCartItemById)}");
 
+        group.MapPut("{cartId}/items/{id}/price", UpdateCartItemPrice)
+            .WithName($"Carts_{nameof(UpdateCartItemPrice)}");
+
         group.MapPut("{cartId}/items/{id}/quantity", UpdateCartItemQuantity)
             .WithName($"Carts_{nameof(UpdateCartItemQuantity)}");
 
@@ -116,6 +119,24 @@ public static class Endpoints
     private static async Task<Results<Ok<CartItem>, NotFound>> GetCartItemById(string cartId, string id, IMediator mediator = default!, CancellationToken cancellationToken = default!)
     {
         var result = await mediator.Send(new GetCartItemById(cartId, id), cancellationToken);
+
+        if (result.HasError(Errors.CartNotFound))
+        {
+            return TypedResults.NotFound();
+        }
+
+        if (result.HasError(Errors.CartItemNotFound))
+        {
+            return TypedResults.NotFound();
+        }
+
+        return TypedResults.Ok(result.GetValue());
+    }
+
+
+    private static async Task<Results<Ok<CartItem>, NotFound>> UpdateCartItemPrice(string cartId, string id, decimal price, IMediator mediator = default!, LinkGenerator linkGenerator = default!, CancellationToken cancellationToken = default!)
+    {
+        var result = await mediator.Send(new UpdateCartItemPrice(cartId, id, price), cancellationToken);
 
         if (result.HasError(Errors.CartNotFound))
         {

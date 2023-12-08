@@ -56,6 +56,18 @@ public sealed record AddCartItemResponse
     public CartItem CartItem { get; init; }
 }
 
+public sealed record UpdateCartItemPrice
+{
+    public string CartId { get; init; }
+    public string CartItemId { get; init; }
+    public decimal Price { get; init; }
+}
+
+public sealed record UpdateCartItemPriceResponse
+{
+    public CartItem CartItem { get; init; }
+}
+
 public sealed record UpdateCartItemQuantity
 {
     public string CartId { get; init; }

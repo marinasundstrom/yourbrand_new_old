@@ -1,4 +1,8 @@
+using System.Text.Json;
+
 using CartsAPI;
+
+using CatalogAPI;
 
 using MassTransit;
 
@@ -46,10 +50,41 @@ public static class Endpoints
         return cart is not null ? TypedResults.Ok(cart) : TypedResults.NotFound();
     }
 
-    private static async Task<Results<Ok<CartItem>, NotFound>> AddCartItem(AddCartItemRequest request, MassTransitCartsClient cartsClient, CancellationToken cancellationToken)
+    private static async Task<Results<Ok<CartItem>, NotFound>> AddCartItem(AddCartItemRequest request, MassTransitCartsClient cartsClient, IProductsClient productsClient, CancellationToken cancellationToken)
     {
+        var product = await productsClient.GetProductByIdAsync(request.ProductId.ToString()!, cancellationToken);
+
+        string? data = request.Data;
+
+        if (string.IsNullOrEmpty(data))
+        {
+            var dataArray = product.Options.Select(x =>
+            {
+                return new Option
+                {
+                    Id = x.Option.Id,
+                    Name = x.Option.Name,
+                    OptionType = (int)x.Option.OptionType,
+                    ProductId = x.Option.Sku,
+                    Price = x.Option.Price,
+                    IsSelected = x.Option.IsSelected,
+                    SelectedValueId = x.Option.DefaultValue?.Id,
+                    NumericalValue = x.Option.DefaultNumericalValue,
+                    TextValue = x.Option.DefaultTextValue
+                };
+            });
+
+            data = JsonSerializer.Serialize(dataArray, new JsonSerializerOptions
+            {
+                DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
+            });
+        }
+
+        PriceCalculator priceCalculator = new PriceCalculator();
+        var (price, regularPrice) = priceCalculator.CalculatePrice(product, data);
+
         var cartItem = await cartsClient.AddCartItem(
-            "test", request.Name, request.Image, request.ProductId, request.ProductHandle, request.Description, request.Price, request.RegularPrice, request.Quantity, request.Data, cancellationToken);
+            "test", product.Name, product.Image, request.ProductId, product.Handle, product.Description, price, regularPrice, request.Quantity, data, cancellationToken);
 
         return cartItem is not null ? TypedResults.Ok(cartItem) : TypedResults.NotFound();
     }
@@ -63,9 +98,18 @@ public static class Endpoints
         return cartItem is not null ? TypedResults.Ok(cartItem) : TypedResults.NotFound();
     }
 
-    private static async Task<Results<Ok<CartItem>, NotFound>> UpdateCartItemData(string cartItemId, UpdateCartItemDataRequest request, MassTransitCartsClient cartsClient, CancellationToken cancellationToken)
+    private static async Task<Results<Ok<CartItem>, NotFound>> UpdateCartItemData(string cartItemId, UpdateCartItemDataRequest request, MassTransitCartsClient cartsClient, IProductsClient productsClient, CancellationToken cancellationToken)
     {
-        var cartItem = await cartsClient.UpdateCartItemData("test", cartItemId, request.Data, cancellationToken);
+        var cart = await cartsClient.GetCartById("test", cancellationToken);
+        var cartItem = cart.Items.First(x => x.Id == cartItemId);
+
+        var product = await productsClient.GetProductByIdAsync(cartItem.ProductId.ToString()!, cancellationToken);
+
+        PriceCalculator priceCalculator = new PriceCalculator();
+        var (price, regularPrice) = priceCalculator.CalculatePrice(product, request.Data!);
+
+        cartItem = await cartsClient.UpdateCartItemPrice("test", cartItemId, price, cancellationToken);
+        cartItem = await cartsClient.UpdateCartItemData("test", cartItemId, request.Data, cancellationToken);
 
         return cartItem is not null ? TypedResults.Ok(cartItem) : TypedResults.NotFound();
     }
@@ -78,7 +122,7 @@ public static class Endpoints
     }
 }
 
-public sealed record AddCartItemRequest(string Name, string? Image, long? ProductId, string? ProductHandle, string Description, decimal Price, decimal? RegularPrice, int Quantity, string? Data);
+public sealed record AddCartItemRequest(long? ProductId, int Quantity, string? Data);
 
 public sealed record UpdateCartItemQuantityRequest(int Quantity);
 
@@ -116,4 +160,102 @@ public sealed class CartItem(string id, string name, string? image, long? produc
     public decimal Total => Price * Quantity;
 
     public string? Data { get; set; } = data;
+}
+
+public class Option
+{
+    public string Id { get; set; } = null!;
+
+    public string Name { get; set; } = null!;
+
+    public int OptionType { get; set; }
+
+    public string? ProductId { get; set; }
+
+    public decimal? Price { get; set; }
+
+    public string? TextValue { get; set; }
+
+    public int? NumericalValue { get; set; }
+
+    public bool? IsSelected { get; set; }
+
+    public string? SelectedValueId { get; set; }
+}
+
+
+public class PriceCalculator
+{
+    public (decimal price, decimal? regularPrice) CalculatePrice(Product product, string data)
+    {
+        var options = JsonSerializer.Deserialize<IEnumerable<Option>>(data, new JsonSerializerOptions
+        {
+            DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
+        })!;
+
+        var price = product!.Price;
+        var regularPrice = product.RegularPrice;
+
+        List<string> optionTexts = new List<string>();
+
+        foreach (var option in options)
+        {
+            var productOption = product.Options.FirstOrDefault(x => x.Option.Id == option.Id);
+
+            if (productOption is not null)
+            {
+                if (option.OptionType == 0)
+                {
+                    var isSelected = option.IsSelected.GetValueOrDefault();
+
+                    if (!isSelected && isSelected != productOption.Option.IsSelected)
+                    {
+                        optionTexts.Add($"No {option.Name}");
+
+                        continue;
+                    }
+
+                    if (isSelected)
+                    {
+                        price += option.Price.GetValueOrDefault();
+                        regularPrice += option.Price.GetValueOrDefault();
+
+                        if (option.Price is not null)
+                        {
+                            optionTexts.Add($"{option.Name} (+{option.Price?.ToString("c")})");
+                        }
+                        else
+                        {
+                            optionTexts.Add(option.Name);
+                        }
+                    }
+                }
+                else if (option.SelectedValueId is not null)
+                {
+                    var value = productOption.Option.Values.FirstOrDefault(x => x.Id == option.SelectedValueId)!;
+
+                    price += value.Price.GetValueOrDefault();
+                    regularPrice += value.Price.GetValueOrDefault();
+
+                    if (value.Price is not null)
+                    {
+                        optionTexts.Add($"{value.Name} (+{value.Price?.ToString("c")})");
+                    }
+                    else
+                    {
+                        optionTexts.Add(value.Name);
+                    }
+                }
+                else if (option.NumericalValue is not null)
+                {
+                    //price += option.Price.GetValueOrDefault();
+                    //regularPrice += option.Price.GetValueOrDefault();
+
+                    optionTexts.Add($"{option.NumericalValue} {option.Name}");
+                }
+            }
+        }
+
+        return (price, regularPrice);
+    }
 }

@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 namespace Carts.API.Domain.Entities;
 
 public sealed class Cart
@@ -53,9 +55,9 @@ public sealed class Cart
         }
     }
 
-    public void UpdateCartItemQuantity(string cartId, int quantity)
+    public void UpdateCartItemQuantity(string cartItemId, int quantity)
     {
-        var cartItem = _cartItems.FirstOrDefault(item => item.Id == cartId);
+        var cartItem = _cartItems.FirstOrDefault(item => item.Id == cartItemId);
 
         if (cartItem is not null)
         {
@@ -63,6 +65,20 @@ public sealed class Cart
             Total -= oldTotal;
 
             cartItem.Quantity = quantity;
+            Total += cartItem.Total;
+        }
+    }
+
+    public void UpdateCartItemPrice(string cartItemId, decimal price)
+    {
+        var cartItem = _cartItems.FirstOrDefault(item => item.Id == cartItemId);
+
+        if (cartItem is not null)
+        {
+            decimal oldTotal = cartItem.Total;
+            Total -= oldTotal;
+
+            cartItem.Price = price;
             Total += cartItem.Total;
         }
     }

@@ -176,12 +176,6 @@ namespace Client.Products
 
             yield return category;
         }
-
-        async Task OnVariantActivated()
-        {
-            //var foo = await ProductsService.GetAvailableProductVariantAttributesValues(Id, );
-        }
-
         string Serialize()
         {
             return JsonSerializer.Serialize(productViewModel!.GetData(), new JsonSerializerOptions
@@ -204,8 +198,10 @@ namespace Client.Products
         {
             var product = productViewModel.Product;
 
-            await CartService.AddCartItem(product.Name, product.Image, product.Id, product.Handle, product.Description,
-        product.Price, product.RegularPrice, quantity, Serialize());
+            var productId = (productViewModel?.Variant?.Id ?? productViewModel?.Product?.Id);
+
+            await CartService.AddCartItem(product.Name, product.Image, productId, product.Handle, product.Description,
+                productViewModel.Total, product.RegularPrice, quantity, Serialize());
         }
 
         async Task UpdateCartItem()

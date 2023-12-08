@@ -5,6 +5,7 @@ namespace StoreFront.API.Features.Cart;
 public sealed class MassTransitCartsClient(
     IRequestClient<Carts.Contracts.GetCartById> getCartByIdClient,
     IRequestClient<Carts.Contracts.AddCartItem> addCartItemClient,
+    IRequestClient<Carts.Contracts.UpdateCartItemPrice> updateCartItemPriceClient,
     IRequestClient<Carts.Contracts.UpdateCartItemQuantity> updateCartItemQuantityClient,
     IRequestClient<Carts.Contracts.UpdateCartItemData> updateCartItemDataClient,
     IRequestClient<Carts.Contracts.RemoveCartItem> removeCartItemClient)
@@ -36,6 +37,20 @@ public sealed class MassTransitCartsClient(
         var response = await addCartItemClient.GetResponse<Carts.Contracts.AddCartItemResponse>(request2, cancellationToken);
         return response.Message.CartItem.Map();
     }
+
+    public async Task<CartItem> UpdateCartItemPrice(string cartId, string cartItemId, decimal price, CancellationToken cancellationToken = default)
+    {
+        var request2 = new Carts.Contracts.UpdateCartItemPrice
+        {
+            CartId = "test",
+            CartItemId = cartItemId,
+            Price = price
+        };
+
+        var response = await updateCartItemPriceClient.GetResponse<Carts.Contracts.UpdateCartItemPriceResponse>(request2, cancellationToken);
+        return response.Message.CartItem.Map();
+    }
+
 
     public async Task<CartItem> UpdateCartItemQuantity(string cartId, string cartItemId, int quantity, CancellationToken cancellationToken = default)
     {

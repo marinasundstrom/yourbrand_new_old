@@ -93,6 +93,21 @@ public sealed class AddCartItemConsumer(MediatR.IMediator mediator) : IConsumer<
     }
 }
 
+public sealed class UpdateCartItemPriceConsumer(MediatR.IMediator mediator) : IConsumer<UpdateCartItemPrice>
+{
+    public async Task Consume(ConsumeContext<Carts.Contracts.UpdateCartItemPrice> context)
+    {
+        var cartId = context.Message.CartId;
+        var cartItemId = context.Message.CartItemId;
+        var price = context.Message.Price;
+
+        var r = await mediator.Send(new Requests.UpdateCartItemPrice(cartId, cartItemId, price), context.CancellationToken);
+        var cartItem = r.GetValue();
+
+        await context.RespondAsync<UpdateCartItemPriceResponse>(new UpdateCartItemPriceResponse { CartItem = cartItem.Map() });
+    }
+}
+
 public sealed class UpdateCartItemQuantityConsumer(MediatR.IMediator mediator) : IConsumer<UpdateCartItemQuantity>
 {
     public async Task Consume(ConsumeContext<Carts.Contracts.UpdateCartItemQuantity> context)

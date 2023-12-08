@@ -181,6 +181,41 @@ paths:
           description: ""
         404:
           description: ""
+  /v1/carts/{cartId}/items/{id}/price:
+    put:
+      tags:
+        - Carts
+        - Carts
+      operationId: Carts_UpdateCartItemPrice
+      parameters:
+        - name: cartId
+          in: path
+          required: true
+          schema:
+            type: string
+          x-position: 1
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          x-position: 2
+        - name: price
+          in: query
+          required: true
+          schema:
+            type: number
+            format: decimal
+          x-position: 3
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CartItem"
+        404:
+          description: ""
   /v1/carts/{cartId}/items/{id}/quantity:
     put:
       tags:
