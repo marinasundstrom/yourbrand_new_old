@@ -32,13 +32,11 @@ if (builder.Environment.IsDevelopment())
 
 builder.Services.AddCors();
 
-string GetStoreFrontExpire20 = nameof(GetStoreFrontExpire20);
-
 builder.Services.AddOutputCache(options =>
 {
-    options.AddPolicy(GetStoreFrontExpire20, builder =>
+    options.AddPolicy(OutputCachePolicyNames.GetProductsExpire20, builder =>
     {
-        builder.Expire(TimeSpan.FromSeconds(20));
+        builder.Expire(TimeSpan.FromSeconds(5));
         builder.SetVaryByQuery("page", "pageSize", "searchTerm");
     });
 });

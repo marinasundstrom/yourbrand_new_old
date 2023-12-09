@@ -8,14 +8,14 @@ namespace Catalog.API.Persistence;
 public static class Seed2
 {
     private static string cdnBaseUrl;
-    private static ProductCategory drinks;
-    private static ProductCategory food;
-    private static ProductCategory tshirts;
-    private static ProductCategory clothes;
+    private static ProductCategory? drinks;
+    private static ProductCategory? food;
+    private static ProductCategory? tshirts;
+    private static ProductCategory? clothes;
 
     public static async Task SeedData(CatalogContext context, IConfiguration configuration)
     {
-        await context.Database.EnsureDeletedAsync();
+        //await context.Database.EnsureDeletedAsync();
         await context.Database.EnsureCreatedAsync();
 
         var connectionString = context.Database.GetConnectionString()!;
@@ -24,66 +24,91 @@ public static class Seed2
             ? configuration["CdnBaseUrl"]!
             : "https://yourbrandstorage.blob.core.windows.net";
 
-        var currency = context.Currencies.Add(new Currency("SEK", "Swedish Krona", "kr")).Entity;
+        var currency = await context.Currencies.FirstOrDefaultAsync(x => x.Code == "SEK");
+
+        if (currency is null)
+        {
+            context.Currencies.Add(currency ??= new Currency("SEK", "Swedish Krona", "kr"));
+        }
 
         await context.SaveChangesAsync();
 
-        context.Stores.Add(new Store("My store", "my-store", currency));
+        var store = await context.Stores.FirstOrDefaultAsync(x => x.Handle == "my-store");
+
+        if (store is null)
+        {
+            context.Stores.Add(store ??= new Store("My store", "my-store", await context.Currencies.FirstAsync(x => x.Code == "SEK")));
+        }
+
+        var brand = await context.Brands.FirstOrDefaultAsync(x => x.Handle == "my-brand");
+
+        if (brand is null)
+        {
+            context.Brands.Add(brand ??= new Brand("My brand", "my-brand"));
+        }
 
         await context.SaveChangesAsync();
 
-        context.Brands.Add(new Brand("my-brand", "my-brand"));
+        clothes = await context.ProductCategories.FirstOrDefaultAsync(x => x.Handle == "clothes");
+
+        if (clothes is null)
+        {
+            context.ProductCategories.Add(clothes ??= new ProductCategory("Clothes")
+            {
+                Handle = "clothes",
+                Path = "clothes",
+                Description = null,
+                Store = await context.Stores.FirstAsync(x => x.Handle == "my-store")
+            });
+        }
+
+        tshirts = await context.ProductCategories.FirstOrDefaultAsync(x => x.Handle == "t-shirts");
+
+        if (tshirts is null)
+        {
+            context.ProductCategories.Add(tshirts ??= new ProductCategory("T-shirts")
+            {
+                Handle = "t-shirts",
+                Path = "t-shirts",
+                Description = null,
+                CanAddProducts = true,
+                Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
+            });
+
+            clothes.AddSubCategory(tshirts);
+        }
+
+        food = await context.ProductCategories.FirstOrDefaultAsync(x => x.Handle == "food");
+
+        if (food is null)
+        {
+            context.ProductCategories.Add(food ??= new ProductCategory("Food")
+            {
+                Handle = "food",
+                Path = "food",
+                Description = null,
+                CanAddProducts = true,
+                Store = await context.Stores.FirstAsync(x => x.Handle == "my-store")
+            });
+        }
+
+        drinks = await context.ProductCategories.FirstOrDefaultAsync(x => x.Handle == "drinks");
+
+        if (drinks is null)
+        {
+            context.ProductCategories.Add(food ??= new ProductCategory("Drinks")
+            {
+                Handle = "drinks",
+                Path = "drinks",
+                Description = null,
+                CanAddProducts = true,
+                Store = await context.Stores.FirstAsync(x => x.Handle == "my-store")
+            });
+        }
 
         await context.SaveChangesAsync();
 
-        clothes = new ProductCategory("Clothes")
-        {
-            Handle = "clothes",
-            Path = "clothes",
-            Description = null,
-            Store = await context.Stores.FirstAsync(x => x.Handle == "my-store")
-        };
-
-        context.ProductCategories.Add(clothes);
-
-        tshirts = new ProductCategory("T-shirts")
-        {
-            Handle = "t-shirts",
-            Path = "t-shirts",
-            Description = null,
-            CanAddProducts = true,
-            Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
-        };
-
-        clothes.AddSubCategory(tshirts);
-
-        context.ProductCategories.Add(tshirts);
-
-        food = new ProductCategory("Food")
-        {
-            Handle = "food",
-            Path = "food",
-            Description = null,
-            CanAddProducts = true,
-            Store = await context.Stores.FirstAsync(x => x.Handle == "my-store")
-        };
-
-        context.ProductCategories.Add(food);
-
-        drinks = new ProductCategory("Drinks")
-        {
-            Handle = "drinks",
-            Path = "drinks",
-            Description = null,
-            CanAddProducts = true,
-            Store = await context.Stores.FirstAsync(x => x.Handle == "my-store")
-        };
-
-        context.ProductCategories.Add(drinks);
-
-        await context.SaveChangesAsync();
-
-        await CreateTShirt(context);
+        //await CreateTShirt(context);
 
         await CreateKebabPlate(context);
 

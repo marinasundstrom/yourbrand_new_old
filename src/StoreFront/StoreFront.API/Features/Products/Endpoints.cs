@@ -18,8 +18,8 @@ public static class Endpoints
             .RequireCors();
 
         productsGroup.MapGet("/", GetProducts)
-            .WithName($"Products_{nameof(GetProducts)}");
-        //.CacheOutput(OutputCachePolicyNames.GetProductsExpire20);
+            .WithName($"Products_{nameof(GetProducts)}")
+            .CacheOutput(OutputCachePolicyNames.GetProductsExpire20);
 
         productsGroup.MapGet("/{productIdOrHandle}", GetProductById)
             .WithName($"Products_{nameof(GetProductById)}");

@@ -31,13 +31,11 @@ if (builder.Environment.IsDevelopment())
     builder.Services.AddDiscoveryClient();
 }
 
-string GetProductsExpire20 = nameof(GetProductsExpire20);
-
 builder.Services.AddOutputCache(options =>
 {
-    options.AddPolicy(GetProductsExpire20, builder =>
+    options.AddPolicy(OutputCachePolicyNames.GetProductsExpire20, builder =>
     {
-        builder.Expire(TimeSpan.FromSeconds(20));
+        builder.Expire(TimeSpan.FromSeconds(0.6));
         builder.SetVaryByQuery("page", "pageSize", "searchTerm", "categoryPathOrId", "sortBy", "sortDirection");
     });
 });

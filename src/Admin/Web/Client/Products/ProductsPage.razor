@@ -19,7 +19,7 @@
 </MudButton>
 
 <MudTable T="Product" ServerData="@(new Func<TableState, Task<TableData<Product>>>(ServerReload))" Dense="true"
-    Hover="true" @ref="table" OnRowClick="@OnItemClicked">
+    Hover="true" @ref="table" OnRowClick="@OnItemClicked" Class="mt-3">
     <ToolBarContent>
         <MudSpacer />
         <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Immediate="true" Placeholder="Search"
@@ -71,7 +71,7 @@
     /// </summary>
     private async Task<TableData<Product>> ServerReload(TableState state)
     {
-        var result = await ProductsClient.GetProductsAsync(null, null, false, true, state.Page + 1, state.PageSize,
+        var result = await ProductsClient.GetProductsAsync(null, null, true, true, state.Page + 1, state.PageSize,
         searchString, null, state.SortLabel,
         state.SortDirection == MudBlazor.SortDirection.None ? null : (state.SortDirection == MudBlazor.SortDirection.Descending
         ? CatalogAPI.SortDirection.Desc : CatalogAPI.SortDirection.Asc));

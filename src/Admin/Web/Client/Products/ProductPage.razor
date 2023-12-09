@@ -8,6 +8,7 @@
 @inject IProductCategoriesClient ProductCategoriesClient
 @inject ISnackbar Snackbar
 @inject NavigationManager NavigationManager
+@inject IDialogService DialogService
 @implements IDisposable
 
 @if (loaded)
@@ -92,6 +93,11 @@
                 <VariantView @key="product.Id" ProductId="product.Id" Product="product" />
             </MudItem>
         }
+
+        <MudItem xs="12" sm="12" md="12">
+            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Delete" Color="Color.Error"
+                OnClick="DeleteProduct">Delete product</MudButton>
+        </MudItem>
 
     </MudGrid>
 }
@@ -192,5 +198,16 @@
         }
 
         loaded = true;
+    }
+
+    async Task DeleteProduct()
+    {
+        var r = await DialogService.ShowMessageBox("Delete product", "Are you sure?", "Yes", "No");
+        if (r.GetValueOrDefault())
+        {
+            await ProductsClient.DeleteProductAsync(Id.ToString());
+
+            NavigationManager.NavigateTo("/");
+        }
     }
 }

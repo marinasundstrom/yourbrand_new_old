@@ -22,8 +22,6 @@ public static partial class Endpoints
 {
     public static IEndpointRouteBuilder MapProductsEndpoints(this IEndpointRouteBuilder app)
     {
-        string GetProductsExpire20 = nameof(GetProductsExpire20);
-
         MapProductVariantsEndpoints(app);
 
         app.MapProductAttributesEndpoints()
@@ -39,7 +37,7 @@ public static partial class Endpoints
 
         group.MapGet("/", GetProducts)
             .WithName($"Products_{nameof(GetProducts)}")
-            .CacheOutput(GetProductsExpire20);
+            .CacheOutput(OutputCachePolicyNames.GetProductsExpire20);
 
         group.MapGet("/{idOrHandle}", GetProductById)
             .WithName($"Products_{nameof(GetProductById)}");
