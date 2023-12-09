@@ -28,6 +28,8 @@ public abstract class Option : Entity<string>
 
     public List<Product> Products { get; } = new List<Product>();
 
+    public List<ProductOption> ProductOption { get; } = new List<ProductOption>();
+
     public List<ProductVariantOption> ProductVariantOptions { get; } = new List<ProductVariantOption>();
 }
 

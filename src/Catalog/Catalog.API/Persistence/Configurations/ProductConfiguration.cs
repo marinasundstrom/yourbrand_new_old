@@ -22,6 +22,11 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
             .WithMany(p => p.Products)
             .UsingEntity<ProductOption>();
 
+        builder
+            .HasMany(x => x.OptionGroups)
+            .WithOne(x => x.Product)
+            .OnDelete(DeleteBehavior.ClientNoAction);
+
         /*
         builder
             .HasMany(p => p.Attributes)

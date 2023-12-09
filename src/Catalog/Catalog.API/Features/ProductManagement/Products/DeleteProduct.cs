@@ -23,6 +23,38 @@ public sealed record DeleteProduct(string IdOrHandle) : IRequest<Result>
                 return Result.Failure(Errors.ProductNotFound);
             }
 
+            await catalogContext.ProductAttributes
+                .Where(x => x.ProductId == product.Id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            await catalogContext.AttributeGroups
+                .Where(x => x.Product!.Id == product.Id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            await catalogContext.ProductOptions
+                .Where(x => x.ProductId == product.Id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            await catalogContext.Products
+                .Where(x => x.ParentProductId == product.Id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            await catalogContext.ProductVariantOptions
+                .Where(x => x.ProductId == product.Id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            await catalogContext.OptionValues
+                .Where(x => x.Option.Group!.Product!.Id == product.Id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            await catalogContext.Options
+                .Where(x => x.Group!.Product!.Id == product.Id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            await catalogContext.OptionGroups
+                .Where(x => x.Product!.Id == product.Id)
+                .ExecuteDeleteAsync(cancellationToken);
+
             catalogContext.Products.Remove(product);
 
             await catalogContext.SaveChangesAsync(cancellationToken);
