@@ -10,7 +10,7 @@ using YourBrand.Extensions;
 using BlazorApp.ProductCategories;
 using BlazorApp.Products;
 
-using StoreFront;
+using YourBrand.StoreFront;
 
 using HealthChecks.UI.Client;
 

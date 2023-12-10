@@ -4,12 +4,13 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <RootNamespace>YourBrand.Catalog</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
         <OpenApiReference Include="OpenAPIs\catalog-svc.yaml"
             Options="/UseBaseUrl:false /GenerateClientInterfaces:true /GenerateNullableReferenceTypes:true"
-            Namespace="CatalogAPI">
+            Namespace="YourBrand.Catalog">
             <SourceUri>https://localhost:5001/swagger/v1/swagger.yaml</SourceUri>
             <ClassName>{controller}Client</ClassName>
             <OutputPath>CatalogApiClient.cs</OutputPath>

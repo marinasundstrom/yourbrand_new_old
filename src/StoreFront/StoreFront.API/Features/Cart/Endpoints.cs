@@ -1,8 +1,8 @@
 using System.Text.Json;
 
-using CartsAPI;
+using YourBrand.Carts;
 
-using CatalogAPI;
+using YourBrand.Catalog;
 
 using MassTransit;
 

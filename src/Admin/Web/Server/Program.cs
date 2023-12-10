@@ -1,18 +1,15 @@
 ﻿using Azure.Identity;
 
-using Catalog;
+using YourBrand.Catalog;
 
 using HealthChecks.UI.Client;
 
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
-using Microsoft.Extensions.Http.Resilience;
 
 using MudBlazor.Services;
 
 using Serilog;
-
-using Steeltoe.Common.Http.Discovery;
 using Steeltoe.Discovery.Client;
 
 using YourBrand;

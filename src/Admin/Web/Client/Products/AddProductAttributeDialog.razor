@@ -1,5 +1,5 @@
 ﻿@using System.ComponentModel.DataAnnotations
-@using CatalogAPI
+@using YourBrand.Catalog
 @inject IProductsClient ProductsClient
 @inject IProductCategoriesClient ProductCategoriesClient
 @inject IAttributesClient AttributesClient
@@ -12,9 +12,9 @@
         <DialogContent>
             <MudContainer Style="max-height: 300px; overflow-y: scroll">
 
-                <MudAutocomplete T="CatalogAPI.Attribute" Class="mb-6" Variant="Variant.Outlined" Label="Attribute"
-                    @bind-Value="Attribute" SearchFuncWithCancel="SearchAttribute" ShowProgressIndicator="true"
-                    ToStringFunc="(x) => x.Name" Required />
+                <MudAutocomplete T="YourBrand.Catalog.Attribute" Class="mb-6" Variant="Variant.Outlined"
+                    Label="Attribute" @bind-Value="Attribute" SearchFuncWithCancel="SearchAttribute"
+                    ShowProgressIndicator="true" ToStringFunc="(x) => x.Name" Required />
 
                 @if (!IsVariant)
                 {
@@ -47,7 +47,7 @@
 
     [Parameter] public bool IsVariant { get; set; } = default!;
 
-    [Required] public CatalogAPI.Attribute Attribute { get; set; } = default!;
+    [Required] public YourBrand.Catalog.Attribute Attribute { get; set; } = default!;
 
     [Required] public bool ForVariant { get; set; } = default!;
 
@@ -77,14 +77,14 @@
         }
         catch { Snackbar.Add("Error", Severity.Error); }
         /*
-        catch (CatalogAPI.ApiException<CatalogAPI.> exc)
+        catch (YourBrand.Catalog.ApiException<YourBrand.Catalog.> exc)
         {
         Snackbar.Add(exc.Result.Detail, Severity.Error);
         }
         */
     }
 
-    private async Task<IEnumerable<CatalogAPI.Attribute>> SearchAttribute(string value,
+    private async Task<IEnumerable<YourBrand.Catalog.Attribute>> SearchAttribute(string value,
     CancellationToken cancellationToken)
     {
         var r = await AttributesClient.GetAttributesAsync(null, 1, 10, value, null, null, cancellationToken);

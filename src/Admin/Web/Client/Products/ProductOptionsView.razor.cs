@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
 
 using MudBlazor;
-using CatalogAPI;
+
+using YourBrand.Catalog;
 
 namespace YourBrand.Client.Products;
 

@@ -21,6 +21,9 @@ using Steeltoe.Common.Http.Discovery;
 using YourBrand;
 using Microsoft.Extensions.Http.Resilience;
 
+using YourBrand.Carts;
+using YourBrand.Catalog;
+
 string ServiceName = "StoreFront.API";
 
 var builder = WebApplication.CreateBuilder(args);

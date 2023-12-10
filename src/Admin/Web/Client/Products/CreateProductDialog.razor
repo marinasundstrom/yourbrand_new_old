@@ -1,4 +1,4 @@
-@using CatalogAPI
+@using YourBrand.Catalog
 @using System.ComponentModel.DataAnnotations
 @inject IProductsClient ProductsClient
 @inject IProductCategoriesClient ProductCategoriesClient
@@ -24,8 +24,8 @@
 
                 @if (IsGroupedProduct)
                 {
-                        <MudNumericField Label="Price" @bind-Value="Price" Variant="Variant.Outlined" For="() => Price"
-                            Class="mb-4" Adornment="Adornment.End" AdornmentText="sek"></MudNumericField>
+                    <MudNumericField Label="Price" @bind-Value="Price" Variant="Variant.Outlined" For="() => Price"
+                        Class="mb-4" Adornment="Adornment.End" AdornmentText="sek"></MudNumericField>
                 }
 
                 <MudTextField Label="Handle" @bind-Value="Handle" Placeholder="red-tshirt-medium"
@@ -51,7 +51,7 @@
     public string Description { get; set; }
 
     [Required]
-    public CatalogAPI.ParentProductCategory Category { get; set; }
+    public YourBrand.Catalog.ParentProductCategory Category { get; set; }
 
     public bool IsGroupedProduct { get; set; }
 

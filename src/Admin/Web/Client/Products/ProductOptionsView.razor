@@ -6,7 +6,7 @@
 @inject IDialogService DialogService
 @inject ISnackbar Snackbar
 @using System.ComponentModel.DataAnnotations
-@using CatalogAPI
+@using YourBrand.Catalog
 
 <style>
     .mud-table-cell-custom-group {
@@ -54,10 +54,10 @@
         <MudTd DataLabel="Price">@context.Option.Price?.ToString("c")</MudTd>
         <MudTd DataLabel="Price">@context.IsInherited</MudTd>
         <MudTd Style="text-align:right">
-            @if(!context.IsInherited) 
+            @if (!context.IsInherited)
             {
-                <MudIconButton Icon="@Icons.Material.Filled.Edit" Size="Size.Small" OnClick="async () => await ShowEditOptionDialog(context)" />
-                <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Small" OnClick="async () => await DeleteOption(context.Option.Id)" />
+                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Size="Size.Small" OnClick="async () => await ShowEditOptionDialog(context)" />
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Small" OnClick="async () => await DeleteOption(context.Option.Id)" />
             }
         </MudTd>
     </RowTemplate>

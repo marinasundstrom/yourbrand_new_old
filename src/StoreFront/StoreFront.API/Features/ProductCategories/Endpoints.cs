@@ -1,4 +1,4 @@
-using CatalogAPI;
+using YourBrand.Catalog;
 
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
@@ -50,32 +50,32 @@ public record class ProductCategoryParent(long Id, string Name, string Handle, s
 
 public static class Mapping
 {
-    public static ProductCategoryDto ToDto(this CatalogAPI.ProductCategory productCategory)
+    public static ProductCategoryDto ToDto(this YourBrand.Catalog.ProductCategory productCategory)
     {
         return new(productCategory.Id, productCategory.Name, productCategory.Description ?? string.Empty, productCategory.Handle, productCategory.Path, null, productCategory.ProductsCount);
     }
 
-    public static ProductCategoryTreeRootDto ToProductCategoryTreeRootDto(this CatalogAPI.ProductCategoryTreeRoot productCategory)
+    public static ProductCategoryTreeRootDto ToProductCategoryTreeRootDto(this YourBrand.Catalog.ProductCategoryTreeRoot productCategory)
     {
         return new ProductCategoryTreeRootDto(productCategory.Categories.Select(x => x.ToProductCategoryTreeNodeDto()), productCategory.ProductsCount);
     }
 
-    public static ProductCategoryTreeNodeDto ToProductCategoryTreeNodeDto(this CatalogAPI.ProductCategoryTreeNode productCategory)
+    public static ProductCategoryTreeNodeDto ToProductCategoryTreeNodeDto(this YourBrand.Catalog.ProductCategoryTreeNode productCategory)
     {
         return new(productCategory.Id, productCategory.Name, productCategory.Handle, productCategory.Path, productCategory.Description, productCategory.Parent?.ToParentDto(), productCategory.SubCategories.Select(x => x.ToProductCategoryTreeNodeDto()), productCategory.ProductsCount, productCategory.CanAddProducts);
     }
 
-    public static ProductCategoryParent ToParentDto(this CatalogAPI.ParentProductCategoryTreeNode productCategory)
+    public static ProductCategoryParent ToParentDto(this YourBrand.Catalog.ParentProductCategoryTreeNode productCategory)
     {
         return new(productCategory.Id, productCategory.Name, productCategory.Handle, productCategory.Path, productCategory.Parent?.ToParentDto(), productCategory.ProductsCount);
     }
 
-    public static ProductCategoryParent ToParentDto2(this CatalogAPI.ParentProductCategory productCategory)
+    public static ProductCategoryParent ToParentDto2(this YourBrand.Catalog.ParentProductCategory productCategory)
     {
         return new(productCategory.Id, productCategory.Name, productCategory.Handle, productCategory.Path, productCategory.Parent?.ToParentDto2(), productCategory.ProductsCount);
     }
 
-    public static ProductCategoryParent ToParentDto3(this CatalogAPI.ProductCategory2 productCategory)
+    public static ProductCategoryParent ToParentDto3(this YourBrand.Catalog.ProductCategory2 productCategory)
     {
         return new(productCategory.Id, productCategory.Name, productCategory.Handle, productCategory.Path, productCategory.Parent?.ToParentDto2(), productCategory.ProductsCount);
     }

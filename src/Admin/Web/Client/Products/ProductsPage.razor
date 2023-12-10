@@ -1,5 +1,5 @@
 @page "/products"
-@using CatalogAPI
+@using YourBrand.Catalog
 @using static Microsoft.AspNetCore.Components.Web.RenderMode
 @rendermode renderMode
 @inject IProductsClient ProductsClient
@@ -74,7 +74,7 @@
         var result = await ProductsClient.GetProductsAsync(null, null, true, true, state.Page + 1, state.PageSize,
         searchString, null, state.SortLabel,
         state.SortDirection == MudBlazor.SortDirection.None ? null : (state.SortDirection == MudBlazor.SortDirection.Descending
-        ? CatalogAPI.SortDirection.Desc : CatalogAPI.SortDirection.Asc));
+        ? YourBrand.Catalog.SortDirection.Desc : YourBrand.Catalog.SortDirection.Asc));
         return new TableData<Product>() { TotalItems = result.Total, Items = result.Items };
     }
 
@@ -96,7 +96,7 @@
 
         if (!result.Canceled)
         {
-            var product = (CatalogAPI.Product)result.Data;
+            var product = (YourBrand.Catalog.Product)result.Data;
             NavigationManager.NavigateTo($"/products/{product.Id}");
         }
     }

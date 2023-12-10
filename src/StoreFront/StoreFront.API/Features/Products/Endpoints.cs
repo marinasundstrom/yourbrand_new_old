@@ -1,4 +1,4 @@
-using CatalogAPI;
+using YourBrand.Catalog;
 
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
