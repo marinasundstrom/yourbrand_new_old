@@ -1,3 +1,4 @@
+using Catalog.API.Domain.Entities;
 using Catalog.API.Persistence;
 
 using MediatR;
@@ -42,6 +43,10 @@ public sealed record DeleteProduct(string IdOrHandle) : IRequest<Result>
             await catalogContext.ProductVariantOptions
                 .Where(x => x.ProductId == product.Id)
                 .ExecuteDeleteAsync(cancellationToken);
+
+            await catalogContext.Options
+                .Where(x => x.Group!.Product!.Id == product.Id)
+                .ExecuteUpdateAsync(x => x.SetProperty(z => ((ChoiceOption)z).DefaultValue, (OptionValue?)null), cancellationToken);
 
             await catalogContext.OptionValues
                 .Where(x => x.Option.Group!.Product!.Id == product.Id)

@@ -108,7 +108,7 @@ public static class Seed2
 
         await context.SaveChangesAsync();
 
-        //await CreateTShirt(context);
+        await CreateTShirt(context);
 
         await CreateKebabPlate(context);
 
