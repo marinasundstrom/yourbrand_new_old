@@ -28,7 +28,7 @@ public static class Endpoints
 
     private static async Task<Results<Ok<ProductCategoryTreeRootDto>, NotFound>> GetProductCategories(IProductCategoriesClient productCategoriesClient = default!, CancellationToken cancellationToken = default)
     {
-        var tree = await productCategoriesClient.GetProductCategoryTreeAsync(cancellationToken);
+        var tree = await productCategoriesClient.GetProductCategoryTreeAsync(null, cancellationToken);
         return tree is not null ? TypedResults.Ok(tree.ToProductCategoryTreeRootDto()) : TypedResults.NotFound();
     }
 

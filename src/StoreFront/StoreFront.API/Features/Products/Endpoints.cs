@@ -42,7 +42,7 @@ public static class Endpoints
 
     private static async Task<Results<Ok<PagedResult<Product>>, NotFound>> GetProducts(int? page = 1, int? pageSize = 10, string? searchTerm = null, string? categoryPath = null, IProductsClient productsClient = default!, CancellationToken cancellationToken = default)
     {
-        var results = await productsClient.GetProductsAsync(null, null, false, true, page, pageSize, searchTerm, categoryPath, null, null, cancellationToken);
+        var results = await productsClient.GetProductsAsync(null, null, false, true, searchTerm, categoryPath, page, pageSize, null, null, cancellationToken);
         return results is not null ? TypedResults.Ok(
                 new PagedResult<Product>(results.Items.Select(x => x.Map()), results.Total)
         ) : TypedResults.NotFound();
