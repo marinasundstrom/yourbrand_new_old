@@ -83,7 +83,7 @@ else
     {
         store = StoreProvider.CurrentStore;
 
-        var result = await ProductsClient.GetProductsAsync(StoreId, BrandId, true, true, Path, null, page,
+        var result = await ProductsClient.GetProductsAsync(StoreId, BrandId, true, true, null, Path, page,
         pageSize, null, null);
         items = result.Items;
 
