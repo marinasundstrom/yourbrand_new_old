@@ -37,10 +37,11 @@ public static partial class Endpoints
 
         group.MapGet("/", GetProducts)
             .WithName($"Products_{nameof(GetProducts)}")
-            .CacheOutput(OutputCachePolicyNames.GetProductsExpire20);
+            .CacheOutput(OutputCachePolicyNames.GetProducts);
 
         group.MapGet("/{idOrHandle}", GetProductById)
-            .WithName($"Products_{nameof(GetProductById)}");
+            .WithName($"Products_{nameof(GetProductById)}")
+            .CacheOutput(OutputCachePolicyNames.GetProductById);
 
         group.MapPost("/", CreateProduct)
             .AddEndpointFilter<ValidationFilter<CreateProductRequest>>()

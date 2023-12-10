@@ -33,12 +33,11 @@ if (builder.Environment.IsDevelopment())
 
 builder.Services.AddOutputCache(options =>
 {
-    options.AddPolicy(OutputCachePolicyNames.GetProductsExpire20, builder =>
-    {
-        builder.Expire(TimeSpan.FromSeconds(0.6));
-        builder.SetVaryByQuery("page", "pageSize", "searchTerm", "categoryPathOrId", "sortBy", "sortDirection");
-    });
+    options.AddGetProductsPolicy();
+
+    options.AddGetProductByIdPolicy();
 });
+
 
 if (builder.Environment.IsProduction())
 {

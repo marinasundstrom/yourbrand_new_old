@@ -34,11 +34,9 @@ builder.Services.AddCors();
 
 builder.Services.AddOutputCache(options =>
 {
-    options.AddPolicy(OutputCachePolicyNames.GetProductsExpire20, builder =>
-    {
-        builder.Expire(TimeSpan.FromSeconds(5));
-        builder.SetVaryByQuery("page", "pageSize", "searchTerm", "categoryPath");
-    });
+    options.AddGetProductsPolicy();
+
+    options.AddGetProductByIdPolicy();
 });
 
 if (builder.Environment.IsProduction())

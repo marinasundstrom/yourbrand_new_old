@@ -19,10 +19,11 @@ public static class Endpoints
 
         productsGroup.MapGet("/", GetProducts)
             .WithName($"Products_{nameof(GetProducts)}")
-            .CacheOutput(OutputCachePolicyNames.GetProductsExpire20);
+            .CacheOutput(OutputCachePolicyNames.GetProducts);
 
         productsGroup.MapGet("/{productIdOrHandle}", GetProductById)
-            .WithName($"Products_{nameof(GetProductById)}");
+            .WithName($"Products_{nameof(GetProductById)}")
+            .CacheOutput(OutputCachePolicyNames.GetProductById);
 
         productsGroup.MapPost("/{productIdOrHandle}/findVariant", FindProductVariantByAttributes)
             .WithName($"Products_{nameof(FindProductVariantByAttributes)}");
