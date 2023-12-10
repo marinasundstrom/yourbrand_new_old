@@ -24,6 +24,8 @@ public sealed record DeleteProduct(string IdOrHandle) : IRequest<Result>
                 return Result.Failure(Errors.ProductNotFound);
             }
 
+            using var transaction = await catalogContext.Database.BeginTransactionAsync();
+
             await catalogContext.ProductAttributes
                 .Where(x => x.ProductId == product.Id)
                 .ExecuteDeleteAsync(cancellationToken);
@@ -44,9 +46,9 @@ public sealed record DeleteProduct(string IdOrHandle) : IRequest<Result>
                 .Where(x => x.ProductId == product.Id)
                 .ExecuteDeleteAsync(cancellationToken);
 
-            await catalogContext.Options
+            await catalogContext.ChoiceOptions
                 .Where(x => x.Group!.Product!.Id == product.Id)
-                .ExecuteUpdateAsync(x => x.SetProperty(z => ((ChoiceOption)z).DefaultValue, (OptionValue?)null), cancellationToken);
+                .ExecuteUpdateAsync(x => x.SetProperty(z => z.DefaultValueId, (string?)null), cancellationToken);
 
             await catalogContext.OptionValues
                 .Where(x => x.Option.Group!.Product!.Id == product.Id)
@@ -64,6 +66,7 @@ public sealed record DeleteProduct(string IdOrHandle) : IRequest<Result>
 
             await catalogContext.SaveChangesAsync(cancellationToken);
 
+            await transaction.CommitAsync();
 
             return Result.Success();
         }
