@@ -187,21 +187,21 @@ else
 
                                 @foreach (var itemOption in optionGroup.Options)
                                 {
-                                    <div class="form-floating mb-3 mt-3 ms-1" @key="@itemOption.Id">
+                                    <div class="form-floating mb-3 mt-3" @key="@itemOption.Id">
                                         @if (itemOption.OptionType == OptionType.YesOrNo)
                                         {
-                                            <div class="form-check checkbox-lg">
+                                            <div class="form-check checkbox-lg ms-1">
                                                 <InputCheckbox class="form-check-input" Value="@itemOption.IsSelected"
                                                     ValueExpression="() => itemOption.IsSelected"
                                                     ValueChanged="async (v) => { itemOption.IsSelected = v; await UpdateUrl(); }"
                                                     id="flexCheckDefault" disabled=@(!itemOption.IsSelected && optionGroup.Options.Count(x
                                 => x.IsSelected) >= optionGroup.Max) />
 
-                                                <label class="form-check-label" for="flexCheckDefault">
+                                                <label class="form-check-label ms-2" for="flexCheckDefault">
                                                     @itemOption.Name
                                                     @if (itemOption.Price is not null)
                                                     {
-                                                        <small class="text-muted ms-2">@itemOption.Price?.FormatCurrency(currency /*
+                                                        <small class="text-muted ms-2">+ @itemOption.Price?.FormatCurrency(currency /*
                                                                 productViewModel.Currency */)</small>
                                                     }
                                                 </label>
@@ -220,7 +220,7 @@ else
                                                         @value.Name
                                                         @if (value.Price is not null)
                                                         {
-                                                            <small class="text-muted ms-2">@value.Price?.FormatCurrency(currency /*
+                                                            <small class="text-muted ms-2">+ @value.Price?.FormatCurrency(currency /*
                                                             productViewModel.Currency */)</small>
                                                         }
                                                     </option>

@@ -173,3 +173,7 @@ img.carousel-item--image {
     object-fit: cover;
     height: 50vh;
 }
+
+input[type="checkbox"] {
+    transform: scale(1.5);
+}
