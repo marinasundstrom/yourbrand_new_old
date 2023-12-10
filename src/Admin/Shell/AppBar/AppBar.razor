@@ -1,0 +1,52 @@
+﻿@using YourBrand.Admin.Theming
+@using YourBrand.Admin.Authentication
+@implements IDisposable
+@inject IThemeManager ThemeManager
+@inject IStringLocalizer<AppBar> T
+
+<MudAppBar Elevation="25" Dense="true">
+    <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start"
+        OnClick="@(async (e) => await DrawerToggleCallback.InvokeAsync())" />
+    @*
+    <a href="/">
+    <img style="height: 30px; width: auto;" class="mt-1" src="logo.svg" />
+    </a>
+    *@
+    <MudHidden Breakpoint="Breakpoint.SmAndDown">
+        <MudText Typo="Typo.h5" Class="ms-2"><b>@T["AppTitle"]</b></MudText>
+    </MudHidden>
+    <MudSpacer />
+    <AppBarTray />
+</MudAppBar>
+
+@code {
+    ColorScheme? _currentColorScheme;
+    private DialogOptions _dialogOptions = new()
+        {
+            Position = DialogPosition.TopCenter,
+            MaxWidth = MaxWidth.Medium,
+            NoHeader
+        = true
+        };
+
+    [Parameter]
+    public EventCallback DrawerToggleCallback { get; set; }
+
+    protected override void OnInitialized()
+    {
+        ThemeManager.ColorSchemeChanged += OnColorSchemeChanged;
+        _currentColorScheme = ThemeManager.CurrentColorScheme;
+    }
+
+    private void OnColorSchemeChanged(object? sender, ColorSchemeChangedEventArgs e)
+    {
+        _currentColorScheme = e.ColorScheme;
+
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+
+    }
+}

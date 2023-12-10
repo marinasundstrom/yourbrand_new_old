@@ -1,0 +1,60 @@
+@using YourBrand.Admin.AppBar
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@inject NavigationManager Navigation
+@inject IDialogService DialogService
+@inject IStringLocalizer<LoginDisplay> T
+
+<AuthorizeView>
+    <Authorized>
+        <MudMenu Dense="true" Color="Color.Inherit" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight"
+            PopoverClass="docs-layout-menu-shadow" ListClass="pa-2 docs-menu-list" LockScroll="true">
+            <ActivatorContent>
+                <div style="height: 48px; padding: 12px" class="me-2">
+                    <MudAvatar Size="Size.Small">@context.User.Identity!.Name!.First()</MudAvatar>
+                </div>
+            </ActivatorContent>
+            <ChildContent>
+                <MudMenuItem OnClick="BeginSignOut">
+                    <div class="d-flex">
+                        <MudIcon Icon="@Icons.Material.Filled.Logout" class="me-2" />
+                        <MudText Style="overflow: hidden; white-space: nowrap;">@T["LogOut"]</MudText>
+                    </div>
+                </MudMenuItem>
+            </ChildContent>
+        </MudMenu>
+    </Authorized>
+    <NotAuthorized>
+        <MudIconButton Icon="@Icons.Material.Filled.Login" Color="Color.Inherit" Href="authentication/login" />
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    [CascadingParameter]
+    public AppBarTrayItem? TrayItem { get; set; }
+
+    private async Task BeginSignOut(MouseEventArgs args)
+    {
+        /*
+        TrayItem.Name = "Foo";
+        TrayItem.Hide();
+        return;
+        */
+
+        var result = await DialogService.ShowMessageBox(T["LogOut"], T["AreYouSure"], T["Yes"], T["No"]);
+
+        if (!result.GetValueOrDefault())
+        {
+            return;
+        }
+
+        Navigation.NavigateToLogout("authentication/logout");
+    }
+
+    private string GetInitials(string? name)
+    {
+        if (name is null) return string.Empty;
+
+        return new string(name.Split(' ').Select(part => part.First()).ToArray());
+    }
+}

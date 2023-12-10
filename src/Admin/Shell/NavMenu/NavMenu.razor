@@ -1,0 +1,56 @@
+﻿@using System.Runtime.CompilerServices
+@inject NavManager NavManager
+@inject YourBrand.Admin.Services.ICurrentUserService CurrentUserService
+@inject IStringLocalizer<NavMenu> T
+@inject Blazored.LocalStorage.ISyncLocalStorageService LocalStorageService
+@implements IDisposable
+
+<MudNavMenu>
+    <MudSpacer />
+    <NavItemListView Items="NavManager.Items" SaveCallback="Save" />
+</MudNavMenu>
+
+@code {
+    IEnumerable<string> roles = Array.Empty<string>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        roles = await CurrentUserService.GetRoles();
+
+        foreach (var navGroup in NavManager.GetGroupsRecursive())
+        {
+            navGroup.Expanded = LocalStorageService.GetItem<bool>($"navmenu.{navGroup.Id.ToLower()}");
+        }
+
+        NavManager.Updated += NavManagerUpdate;
+    }
+
+    public void NavManagerUpdate(object? sender, EventArgs eventArgs)
+    {
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        NavManager.Updated -= NavManagerUpdate;
+    }
+
+    bool Save(bool newValue, NavGroup navGroup)
+    {
+        LocalStorageService.SetItem($"navmenu.{navGroup.Id}", newValue);
+        navGroup.Expanded = newValue;
+
+        return newValue;
+    }
+
+    private bool IsInAnyRole(IEnumerable<string> desiredRoles)
+    {
+        foreach (var desiredRole in desiredRoles)
+        {
+            bool isInRole = roles.Any(r => r == desiredRole);
+            if (isInRole) return true;
+        }
+
+        return false;
+    }
+}

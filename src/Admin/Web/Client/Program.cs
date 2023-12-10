@@ -1,8 +1,12 @@
+using Blazored.LocalStorage;
+
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 using MudBlazor;
 using MudBlazor.Services;
 
+using YourBrand.Admin;
+using YourBrand.Admin.Localization;
 using YourBrand.Catalog;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -34,4 +38,18 @@ clientBuilder =>
     //clientBuilder.AddStandardResilienceHandler();
 });
 
-await builder.Build().RunAsync();
+builder.Services.AddApiAuthorization();
+
+builder.Services.AddBlazoredLocalStorage();
+
+builder.Services.AddLocalization();
+
+builder.Services.AddShellServices();
+
+var app = builder.Build();
+
+app.Services.UseShell();
+
+await app.Services.ApplyLocalization();
+
+await app.RunAsync();

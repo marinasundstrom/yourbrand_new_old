@@ -1,8 +1,10 @@
-<Router AppAssembly="@typeof(Routes).Assembly">
-    <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(YourBrand.Client.Shared.MainLayout)">
+<CascadingAuthenticationState>
+    <Router AppAssembly="@typeof(Routes).Assembly">
+        <Found Context="routeData">
+            <RouteView RouteData="@routeData" DefaultLayout="@typeof(YourBrand.Admin.Layouts.MainLayout)">
 
-        </RouteView>
-        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
-    </Found>
-</Router>
+            </RouteView>
+            <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+        </Found>
+    </Router>
+</CascadingAuthenticationState>
