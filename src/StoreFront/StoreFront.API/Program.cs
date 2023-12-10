@@ -37,7 +37,7 @@ builder.Services.AddOutputCache(options =>
     options.AddPolicy(OutputCachePolicyNames.GetProductsExpire20, builder =>
     {
         builder.Expire(TimeSpan.FromSeconds(5));
-        builder.SetVaryByQuery("page", "pageSize", "searchTerm");
+        builder.SetVaryByQuery("page", "pageSize", "searchTerm", "categoryPath");
     });
 });
 

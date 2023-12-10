@@ -218,6 +218,8 @@ namespace Client.Products
 
             await CartService.AddCartItem(product.Name, product.Image, productId, product.Handle, product.Description,
                 productViewModel.Total, product.RegularPrice, quantity, Serialize());
+
+            ToastService.ShowInfo($"{productViewModel.Name} was added to your basket");
         }
 
         async Task UpdateCartItem()
