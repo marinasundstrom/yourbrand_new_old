@@ -1,103 +1,102 @@
-@page "/products"
-@using YourBrand.Catalog
-@using static Microsoft.AspNetCore.Components.Web.RenderMode
-@rendermode renderMode
+﻿@page "/products"
+@layout MainLayout2
+@implements IDisposable
+@inject IStoresClient StoresClient
 @inject IProductsClient ProductsClient
-@inject NavigationManager NavigationManager
+@inject IProductCategoriesClient ProductCategoriesClient
 @inject IDialogService DialogService
+@inject NavigationManager NavigationManager
+@inject IStoreProvider StoreProvider
+@using Catalog
+@using YourBrand.Admin.Layouts
 
-<PageTitle>Products</PageTitle>
+<AppPageTitle>Products</AppPageTitle>
 
-<MudText Typo="Typo.h3" GutterBottom="true">Products</MudText>
+<section>
+    <MudText Typo="Typo.h3" Align="Align.Center" Class="mb-12">Products</MudText>
 
-<MudButton OnClick="OpenCreateProductDialog" Variant="Variant.Filled" Color="Color.Primary">
-    New product
-</MudButton>
+    <MudPaper Elevation="25" Class="pa-2">
+        <div class="d-flex flex-grow-1 gap-4">
+            @* <div class="justify-start" style="max-width: 250px">
 
-<MudButton Href="/products/Import" Class="ms-2" Variant="Variant.Filled" Color="Color.Primary">
-    Import products
-</MudButton>
+            </div> *@  
 
-<MudTable T="Product" ServerData="@(new Func<TableState, Task<TableData<Product>>>(ServerReload))" Dense="true"
-    Hover="true" @ref="table" OnRowClick="@OnItemClicked" Class="mt-3">
-    <ToolBarContent>
-        <MudSpacer />
-        <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Immediate="true" Placeholder="Search"
-            Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium"
-            Class="mt-0"></MudTextField>
-    </ToolBarContent>
-    <HeaderContent>
-        <MudTh>
-            <MudTableSortLabel SortLabel="Id" T="Product">Id</MudTableSortLabel>
-        </MudTh>
-        <MudTh>
-            <MudTableSortLabel SortLabel="Name" T="Product">Name</MudTableSortLabel>
-        </MudTh>
-        <MudTh>
-            <MudTableSortLabel SortLabel="Description" T="Product">Description</MudTableSortLabel>
-        </MudTh>
-        <MudTh>
-            <MudTableSortLabel SortLabel="Price" T="Product">Price</MudTableSortLabel>
-        </MudTh>
-    </HeaderContent>
-    <RowTemplate>
-        <MudTd DataLabel="Id">@context.Id</MudTd>
-        <MudTd DataLabel="Name">@context.Name</MudTd>
-        <MudTd DataLabel="Description">@context.Description</MudTd>
-        <MudTd DataLabel="Price">@context.Price sek</MudTd>
-    </RowTemplate>
-    <NoRecordsContent>
-        <MudText>No matching records found</MudText>
-    </NoRecordsContent>
-    <LoadingContent>
-        <MudText>Loading...</MudText>
-    </LoadingContent>
-    <PagerContent>
-        <MudTablePager />
-    </PagerContent>
-</MudTable>
+            <div>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="CreateProduct" StartIcon="@Icons.Material.Filled.Add" Class="my-2">Create product</MudButton>
+                <MudMenu Dense="true" Color="Color.Inherit" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight"
+                        PopoverClass="docs-layout-menu-shadow" ListClass="pa-2 docs-menu-list" LockScroll="true">
+                    <ActivatorContent>
+                        <MudIconButton Icon="@(mode == ProductsViewMode.List ? Icons.Material.Filled.ViewList : Icons.Material.Filled.GridView)" Color="Color.Inherit" Edge="Edge.End" Class="me-2" />
+                    </ActivatorContent>
+                    <ChildContent>
+                        <MudMenuItem OnClick="() => SetViewMode(ProductsViewMode.List)">
+                            <div class="d-flex">
+                                <MudIcon Icon="@Icons.Material.Filled.ViewList" class="me-2" />
+                                <MudText Style="overflow: hidden; white-space: nowrap;">List</MudText>
+                            </div>
+                        </MudMenuItem>
+                        <MudMenuItem OnClick="() => SetViewMode(ProductsViewMode.Grid)">
+                            <div class="d-flex">
+                                <MudIcon Icon="@Icons.Material.Filled.GridView" class="me-2" />
+                                <MudText Style="overflow: hidden; white-space: nowrap;">Grid</MudText>
+                            </div>
+                        </MudMenuItem>
+                    </ChildContent>
+                </MudMenu>
+                <MudButton StartIcon="@Icons.Material.Filled.Edit" Color="Color.Inherit" Edge="Edge.End" Class="me-2" Href="/products/import">Import products</MudButton>
+            </div>   
+        </div>
 
-@code {
-    private static IComponentRenderMode renderMode =
-    new InteractiveWebAssemblyRenderMode(prerender: false);
+    </MudPaper>
 
-    private MudTable<Product> table;
+</section>
 
-    private int totalItems;
-    private string searchString = null;
+<ProductsView @ref="productsView" Mode="@mode" StoreId="@store?.Id" GroupId="@GroupId" />
 
-    /// <summary>
-    /// Here we simulate getting the paged, filtered and ordered data from the server
-    /// </summary>
-    private async Task<TableData<Product>> ServerReload(TableState state)
+@code
+{
+    ProductsView? productsView;
+    Store? store = null;
+    ProductsViewMode mode = ProductsViewMode.List;
+
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public long? GroupId { get; set; }
+
+    protected override async Task OnInitializedAsync()
     {
-        var result = await ProductsClient.GetProductsAsync(null, null, true, true, state.Page + 1, state.PageSize,
-        searchString, null, state.SortLabel,
-        state.SortDirection == MudBlazor.SortDirection.None ? null : (state.SortDirection == MudBlazor.SortDirection.Descending
-        ? YourBrand.Catalog.SortDirection.Desc : YourBrand.Catalog.SortDirection.Asc));
-        return new TableData<Product>() { TotalItems = result.Total, Items = result.Items };
+        StoreProvider.CurrentStoreChanged += OnCurrentStoreChanged;
+
+        store = StoreProvider.CurrentStore;
     }
 
-    private void OnSearch(string text)
+    private async void OnCurrentStoreChanged(object? sender, EventArgs e)
     {
-        searchString = text;
-        table.ReloadServerData();
+        store = StoreProvider.CurrentStore;
     }
 
-    private void OnItemClicked(TableRowClickEventArgs<Product> args)
+    private async Task SetViewMode(ProductsViewMode mode)
     {
-        NavigationManager.NavigateTo($"/products/{args.Item.Id}");
+        this.mode = mode;
+        await productsView.SetMode(mode);
     }
 
-    private async Task OpenCreateProductDialog()
+    public void Dispose()
     {
-        var dialog = await DialogService.ShowAsync<CreateProductDialog>("New product");
-        var result = await dialog.Result;
+        StoreProvider.CurrentStoreChanged -= OnCurrentStoreChanged;
+    }
 
-        if (!result.Canceled)
-        {
-            var product = (YourBrand.Catalog.Product)result.Data;
-            NavigationManager.NavigateTo($"/products/{product.Id}");
-        }
+    async Task CreateProduct()
+    {
+        var modalRef = DialogService.Show<CreateProductDialog>("New Product");
+
+        var result = await modalRef.Result;
+
+        if (result.Cancelled) return;
+
+        var item = (Product)result.Data;
+
+        NavigationManager.NavigateTo($"/products/{item.Id}/edit");
     }
 }
+

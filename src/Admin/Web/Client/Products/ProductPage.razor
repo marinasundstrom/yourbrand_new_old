@@ -1,4 +1,5 @@
 @page "/products/{id}"
+@page "/products/{id}/edit"
 @using YourBrand.Catalog
 @attribute [StreamRendering(false)]
 @using static Microsoft.AspNetCore.Components.Web.RenderMode
@@ -9,6 +10,7 @@
 @inject ISnackbar Snackbar
 @inject NavigationManager NavigationManager
 @inject IDialogService DialogService
+@inject IStoreProvider StoreProvider
 @implements IDisposable
 
 @if (loaded)
@@ -194,7 +196,8 @@
             product,
             ProductsClient,
             ProductCategoriesClient,
-            Snackbar);
+            Snackbar,
+            StoreProvider);
         }
 
         loaded = true;

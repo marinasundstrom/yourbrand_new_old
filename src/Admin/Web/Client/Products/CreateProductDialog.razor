@@ -3,6 +3,7 @@
 @inject IProductsClient ProductsClient
 @inject IProductCategoriesClient ProductCategoriesClient
 @inject ISnackbar Snackbar
+@inject IStoreProvider StoreProvider
 
 <EditForm Model="@this" OnValidSubmit="OnSubmit">
     <DataAnnotationsValidator />
@@ -80,7 +81,10 @@
 
     private async Task<IEnumerable<ParentProductCategory>> Search(string value)
     {
-        var result = await ProductCategoriesClient.GetProductCategoriesAsync(1, 20, value);
+        var store = StoreProvider.CurrentStore;
+
+        var result = await ProductCategoriesClient.GetProductCategoriesAsync(store.Id, null, true, true, 1, 20, value, null,
+        null);
         return result.Items
         .Where(x => x.CanAddProducts)
         .Select(x => new ParentProductCategory

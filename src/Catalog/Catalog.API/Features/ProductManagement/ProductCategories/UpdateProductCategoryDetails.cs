@@ -6,29 +6,34 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.API.Features.ProductManagement.ProductCategories;
 
-public sealed record UpdateProductCategoryDetails(string IdOrPath, string Name, string Description) : IRequest<Result>
+public sealed record UpdateProductCategoryDetails(string IdOrPath, string Name, string Description) : IRequest<Result<ProductCategory>>
 {
-    public sealed class Handler(CatalogContext catalogContext = default!) : IRequestHandler<UpdateProductCategoryDetails, Result>
+    public sealed class Handler(CatalogContext catalogContext = default!) : IRequestHandler<UpdateProductCategoryDetails, Result<ProductCategory>>
     {
-        public async Task<Result> Handle(UpdateProductCategoryDetails request, CancellationToken cancellationToken)
+        public async Task<Result<ProductCategory>> Handle(UpdateProductCategoryDetails request, CancellationToken cancellationToken)
         {
             var isId = int.TryParse(request.IdOrPath, out var id);
 
-            var product = isId ?
+            var productCategory = isId ?
                 await catalogContext.ProductCategories.FirstOrDefaultAsync(product => product.Id == id, cancellationToken)
                 : await catalogContext.ProductCategories.FirstOrDefaultAsync(product => product.Path == request.IdOrPath, cancellationToken);
 
-            if (product is null)
+            if (productCategory is null)
             {
-                return Result.Failure(Errors.ProductCategoryNotFound);
+                return Result.Failure<ProductCategory>(Errors.ProductCategoryNotFound);
             }
 
-            product.Name = request.Name;
-            product.Description = request.Description;
+            productCategory.Name = request.Name;
+            productCategory.Description = request.Description;
 
             await catalogContext.SaveChangesAsync(cancellationToken);
 
-            return Result.Success();
+            productCategory = await catalogContext.ProductCategories
+                .Include(x => x.Parent)
+                .AsNoTracking()
+                .FirstAsync(x => x.Id == productCategory.Id, cancellationToken);
+
+            return Result.Success<ProductCategory>(productCategory.ToDto());
         }
     }
 }

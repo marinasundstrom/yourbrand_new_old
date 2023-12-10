@@ -46,10 +46,11 @@ public static class Endpoints
         return app;
     }
 
-    private static async Task<Ok<PagedResult<ProductCategory>>> GetProductCategories(int page = 1, int pageSize = 10, string? searchTerm = null,
+    private static async Task<Ok<PagedResult<ProductCategory>>> GetProductCategories(string? storeId = null, long? parentGroupId = null, bool includeWithUnlistedProducts = false, bool includeHidden = false,
+        int page = 0, int pageSize = 10, string? searchString = null, string? sortBy = null, SortDirection? sortDirection = null,
             IMediator mediator = default!, CancellationToken cancellationToken = default!)
     {
-        var pagedResult = await mediator.Send(new GetProductCategories(page, pageSize, searchTerm), cancellationToken);
+        var pagedResult = await mediator.Send(new GetProductCategories(storeId, parentGroupId, includeWithUnlistedProducts, includeHidden, page, pageSize, searchString, sortBy, sortDirection), cancellationToken);
         return TypedResults.Ok(pagedResult);
     }
 
@@ -66,9 +67,9 @@ public static class Endpoints
     */
 
     private static async Task<Results<Ok<ProductCategoryTreeRootDto>, BadRequest>> GetProductCategoryTree(
-        IMediator mediator, CancellationToken cancellationToken)
+        string? storeId, IMediator mediator, CancellationToken cancellationToken)
     {
-        var result = await mediator.Send(new GetProductCategoryTree(), cancellationToken);
+        var result = await mediator.Send(new GetProductCategoryTree(storeId), cancellationToken);
 
         return result.IsSuccess ? TypedResults.Ok(result.GetValue()) : TypedResults.BadRequest();
     }
@@ -81,12 +82,12 @@ public static class Endpoints
         return result.IsSuccess ? TypedResults.Ok(result.GetValue()) : TypedResults.BadRequest();
     }
 
-    private static async Task<Results<Ok, NotFound>> UpdateProductCategoryDetails(string idOrPath, UpdateProductCategoryDetailsRequest request,
+    private static async Task<Results<Ok<ProductCategory>, NotFound>> UpdateProductCategoryDetails(string idOrPath, UpdateProductCategoryDetailsRequest request,
         IMediator mediator, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new UpdateProductCategoryDetails(idOrPath, request.Name, request.Description), cancellationToken);
 
-        return result.IsSuccess ? TypedResults.Ok() : TypedResults.NotFound();
+        return result.IsSuccess ? TypedResults.Ok(result.GetValue()) : TypedResults.NotFound();
     }
 
     private static async Task<Results<Ok, NotFound>> DeleteProductCategory(string idOrPath,

@@ -6,11 +6,11 @@ using MudBlazor;
 
 namespace YourBrand.Client.Products;
 
-public class CategoryUpdateViewModel(IProductsClient productsClient, IProductCategoriesClient productCategoriesClient, ISnackbar snackbar)
+public class CategoryUpdateViewModel(IProductsClient productsClient, IProductCategoriesClient productCategoriesClient, ISnackbar snackbar, IStoreProvider storeProvider)
 {
-    public static CategoryUpdateViewModel Create(Product product, IProductsClient productsClient, IProductCategoriesClient productCategoriesClient, ISnackbar snackbar)
+    public static CategoryUpdateViewModel Create(Product product, IProductsClient productsClient, IProductCategoriesClient productCategoriesClient, ISnackbar snackbar, IStoreProvider storeProvider)
     {
-        return new(productsClient, productCategoriesClient, snackbar)
+        return new(productsClient, productCategoriesClient, snackbar, storeProvider)
         {
             ProductId = product.Id,
             Category = new ProductCategory(product.Category.Id!, product.Category.Name, true)
@@ -24,7 +24,10 @@ public class CategoryUpdateViewModel(IProductsClient productsClient, IProductCat
 
     public async Task<IEnumerable<ProductCategory>> Search(string value)
     {
-        var result = await productCategoriesClient.GetProductCategoriesAsync(1, 20, value);
+        var store = storeProvider.CurrentStore;
+
+        var result = await productCategoriesClient.GetProductCategoriesAsync(store.Id, null, true, true, 1, 20, value, null, null);
+
         return result.Items
             .Where(x => x.CanAddProducts)
             .Select(x => new ProductCategory(x.Id!, x.Name, x.CanAddProducts));

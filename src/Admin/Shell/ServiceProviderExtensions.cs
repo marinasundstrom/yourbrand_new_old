@@ -39,15 +39,6 @@ public static class ServiceProviderExtensions
             options.Index = 0;
         });
 
-        navManager.CreateItem("products", options =>
-        {
-            options.NameFunc = () => t["Products"];
-            options.Icon = MudBlazor.Icons.Material.Filled.List;
-            options.Href = "/products";
-            options.RequiresAuthorization = false;
-            options.Index = 1;
-        });
-
         /*
         var group = navManager.GetGroup("administration") ?? navManager.CreateGroup("administration", () => t["Administration"]);
 

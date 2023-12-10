@@ -8,10 +8,6 @@
     <LangVersion>preview</LangVersion>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <InvariantGlobalization>true</InvariantGlobalization>
-  </PropertyGroup>
-
   <ItemGroup>
     <SupportedPlatform Include="browser" />
   </ItemGroup>

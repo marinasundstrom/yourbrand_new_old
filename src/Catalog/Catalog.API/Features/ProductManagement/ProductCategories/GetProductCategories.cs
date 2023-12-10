@@ -7,13 +7,38 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.API.Features.ProductManagement.ProductCategories;
 
-public sealed record GetProductCategories(int Page = 1, int PageSize = 10, string? SearchTerm = null, string? CategoryPath = null) : IRequest<PagedResult<ProductCategory>>
+public sealed record GetProductCategories(string? StoreId, long? ParentGroupId, bool IncludeWithUnlistedProducts, bool IncludeHidden,
+    int Page = 1, int PageSize = 10, string? SearchTerm = null, string? SortBy = null, SortDirection? SortDirection = null) : IRequest<PagedResult<ProductCategory>>
 {
     public sealed class Handler(CatalogContext catalogContext = default!) : IRequestHandler<GetProductCategories, PagedResult<ProductCategory>>
     {
         public async Task<PagedResult<ProductCategory>> Handle(GetProductCategories request, CancellationToken cancellationToken)
         {
             var query = catalogContext.ProductCategories.AsNoTracking().AsQueryable();
+
+            if (request.StoreId is not null)
+            {
+                query = query.Where(x => x.StoreId == request.StoreId);
+            }
+
+            if (request.ParentGroupId is not null)
+            {
+                query = query.Where(x => x.Parent!.Id == request.ParentGroupId);
+            }
+
+            /*
+            if (!request.IncludeHidden)
+            {
+                query = query.Where(x => !x.Hidden);
+            }
+            */
+
+            var doNotIncludeWithUnlisted = !request.IncludeWithUnlistedProducts;
+            if (doNotIncludeWithUnlisted)
+            {
+                query = query.Where(x => x.Products.Any()
+                && !x.Products.All(z => z.Visibility == Domain.Enums.ProductVisibility.Unlisted));
+            }
 
             if (!string.IsNullOrEmpty(request.SearchTerm))
             {
