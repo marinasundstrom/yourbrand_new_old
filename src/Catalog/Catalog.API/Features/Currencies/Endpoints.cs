@@ -1,9 +1,11 @@
 
-using Microsoft.AspNetCore.Mvc;
-using MediatR;
+using Asp.Versioning.Builder;
+
 using Catalog.API.Model;
 
-using Asp.Versioning.Builder;
+using MediatR;
+
+using Microsoft.AspNetCore.Mvc;
 
 namespace Catalog.API.Features.Currencies;
 

@@ -1,6 +1,6 @@
-using StoreFront.API.Domain.Entities;
-
 using Microsoft.EntityFrameworkCore;
+
+using StoreFront.API.Domain.Entities;
 
 namespace StoreFront.API.Persistence;
 

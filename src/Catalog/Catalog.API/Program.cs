@@ -2,8 +2,8 @@
 using Azure.Storage.Blobs;
 
 using Catalog.API.Common;
-using YourBrand.Extensions;
 using Catalog.API.Features;
+using Catalog.API.Features.ProductManagement.Products;
 using Catalog.API.Features.ProductManagement.Products.Variants;
 using Catalog.API.Persistence;
 
@@ -20,7 +20,7 @@ using Microsoft.Extensions.Azure;
 using Steeltoe.Discovery.Client;
 
 using YourBrand;
-using Catalog.API.Features.ProductManagement.Products;
+using YourBrand.Extensions;
 
 string ServiceName = "Catalog.API";
 

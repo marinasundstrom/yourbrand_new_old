@@ -11,7 +11,7 @@ namespace Client.Cart
     [SupportedOSPlatform("browser")]
     public partial class CartOffCanvas
     {
-        string currency = "SEK";
+        readonly string currency = "SEK";
         IEnumerable<BlazorApp.Cart.CartItem>? cartItems;
 
         protected override async Task OnInitializedAsync()

@@ -1,10 +1,13 @@
-using YourBrand.Admin.AppBar;
-using YourBrand.Admin.Localization;
-using MudBlazor;
+using System.Globalization;
+
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using Microsoft.JSInterop;
-using System.Globalization;
+
+using MudBlazor;
+
+using YourBrand.Admin.AppBar;
+using YourBrand.Admin.Localization;
 
 namespace YourBrand.Admin.Localization;
 

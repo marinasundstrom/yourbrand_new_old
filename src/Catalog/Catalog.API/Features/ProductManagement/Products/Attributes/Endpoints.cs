@@ -1,12 +1,14 @@
 
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
+using Asp.Versioning.Builder;
+
 using Catalog.API.Features.ProductManagement.Products.Attributes;
 using Catalog.API.Model;
 
-using Asp.Versioning.Builder;
+using MediatR;
+
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Catalog.API.Features.ProductManagement.Products.Attributes;
 

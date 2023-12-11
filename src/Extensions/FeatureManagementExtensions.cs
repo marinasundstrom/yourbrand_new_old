@@ -1,7 +1,7 @@
-using Microsoft.FeatureManagement.FeatureFilters;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.FeatureManagement.FeatureFilters;
 
 namespace YourBrand.Extensions;
 

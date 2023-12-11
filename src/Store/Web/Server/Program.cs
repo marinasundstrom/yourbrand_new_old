@@ -6,11 +6,11 @@ using Azure.Identity;
 using BlazorApp;
 using BlazorApp.Cart;
 using BlazorApp.Data;
-using YourBrand.Extensions;
+using BlazorApp.Extensions;
 using BlazorApp.ProductCategories;
 using BlazorApp.Products;
 
-using YourBrand.StoreFront;
+using Blazored.Toast;
 
 using HealthChecks.UI.Client;
 
@@ -18,9 +18,10 @@ using MassTransit;
 
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Hosting.Server;
+using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-
 using Microsoft.Extensions.Http.Resilience;
 
 using Serilog;
@@ -29,10 +30,8 @@ using Steeltoe.Common.Http.Discovery;
 using Steeltoe.Discovery.Client;
 
 using YourBrand;
-using BlazorApp.Extensions;
-using Microsoft.AspNetCore.Hosting.Server;
-using Microsoft.AspNetCore.Hosting.Server.Features;
-using Blazored.Toast;
+using YourBrand.Extensions;
+using YourBrand.StoreFront;
 
 string MyAllowSpecificOrigins = nameof(MyAllowSpecificOrigins);
 

@@ -1,13 +1,12 @@
 using System.Text.Json;
 
-using YourBrand.Carts;
-
-using YourBrand.Catalog;
-
 using MassTransit;
 
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
+
+using YourBrand.Carts;
+using YourBrand.Catalog;
 
 namespace StoreFront.API.Features.Cart;
 

@@ -4,6 +4,7 @@ using System.Security.Claims;
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+
 using YourBrand.Admin.Services;
 
 namespace YourBrand.Admin.Widgets;
@@ -138,7 +139,7 @@ public enum WidgetSize
 
 public sealed class WidgetService : IWidgetService, IDisposable
 {
-    private IDictionary<string, Widget> _widgets = new Dictionary<string, Widget>();
+    private readonly IDictionary<string, Widget> _widgets = new Dictionary<string, Widget>();
 
     public IReadOnlyCollection<Widget> Widgets => _widgets.Select(x => x.Value).ToList();
 

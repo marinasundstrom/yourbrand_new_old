@@ -13,8 +13,7 @@ namespace Client.Products
     public partial class ProductPage
     {
         int quantity = 1;
-        string currency = "SEK";
-        BlazorApp.Products.Product? product;
+        readonly string currency = "SEK";
         ProductInfo? productInfo;
 
         [Parameter]

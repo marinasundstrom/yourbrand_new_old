@@ -1,8 +1,8 @@
+using Asp.Versioning;
+
 using Catalog.API.Persistence;
 
 using MediatR;
-
-using Asp.Versioning;
 
 using Microsoft.AspNetCore.Mvc;
 

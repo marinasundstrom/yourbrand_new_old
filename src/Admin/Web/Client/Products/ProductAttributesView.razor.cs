@@ -9,7 +9,7 @@ namespace YourBrand.Client.Products;
 partial class ProductAttributesView : ComponentBase
 {
     MudTable<ProductAttribute> productAttributesTable = default!;
-    TableGroupDefinition<ProductAttribute> tableGroupDefinition = new TableGroupDefinition<ProductAttribute>()
+    readonly TableGroupDefinition<ProductAttribute> tableGroupDefinition = new TableGroupDefinition<ProductAttribute>()
     {
         GroupName = "Group",
         Indentation = false,
@@ -129,4 +129,3 @@ partial class ProductAttributesView : ComponentBase
         await productAttributesTable.ReloadServerData();
     }
 }
-

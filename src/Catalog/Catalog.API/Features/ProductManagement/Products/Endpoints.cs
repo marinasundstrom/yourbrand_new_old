@@ -1,8 +1,13 @@
+using Asp.Versioning.Builder;
+
+using Catalog.API.Features.Brands;
 using Catalog.API.Features.ProductManagement.Attributes;
+using Catalog.API.Features.ProductManagement.Import;
 using Catalog.API.Features.ProductManagement.Options;
 using Catalog.API.Features.ProductManagement.ProductCategories;
 using Catalog.API.Features.ProductManagement.Products.Attributes;
 using Catalog.API.Features.ProductManagement.Products.Options;
+using Catalog.API.Features.Stores;
 using Catalog.API.Model;
 
 using FluentValidation;
@@ -11,12 +16,9 @@ using MediatR;
 
 using Microsoft.AspNetCore.Http.HttpResults;
 
-using Asp.Versioning.Builder;
-using YourBrand.Extensions;
-using Catalog.API.Features.ProductManagement.Import;
 using OpenTelemetry.Trace;
-using Catalog.API.Features.Stores;
-using Catalog.API.Features.Brands;
+
+using YourBrand.Extensions;
 
 namespace Catalog.API.Features.ProductManagement.Products;
 

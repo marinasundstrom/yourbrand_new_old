@@ -1,5 +1,5 @@
 ﻿using Azure.Identity;
-using YourBrand.Extensions;
+
 using Carts.API.Features.CartsManagement;
 using Carts.API.Persistence;
 
@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Steeltoe.Discovery.Client;
 
 using YourBrand;
+using YourBrand.Extensions;
 
 string ServiceName = "Carts.API";
 

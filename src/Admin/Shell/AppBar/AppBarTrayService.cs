@@ -4,6 +4,7 @@ using System.Security.Claims;
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+
 using YourBrand.Admin.Services;
 
 namespace YourBrand.Admin.AppBar;
@@ -135,7 +136,7 @@ public sealed class AppBarTrayItem
 
 public sealed class AppBarTrayService : IAppBarTrayService, IDisposable
 {
-    private IDictionary<string, AppBarTrayItem> _items = new Dictionary<string, AppBarTrayItem>();
+    private readonly IDictionary<string, AppBarTrayItem> _items = new Dictionary<string, AppBarTrayItem>();
 
     public IReadOnlyCollection<AppBarTrayItem> Items => _items.Select(x => x.Value).ToList();
 

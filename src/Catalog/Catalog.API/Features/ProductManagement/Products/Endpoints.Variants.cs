@@ -1,3 +1,7 @@
+using Asp.Versioning.Builder;
+
+using Catalog.API.Domain.Entities;
+using Catalog.API.Features.ProductManagement.Attributes;
 using Catalog.API.Features.ProductManagement.Products.Variants;
 using Catalog.API.Model;
 
@@ -6,10 +10,6 @@ using FluentValidation;
 using MediatR;
 
 using Microsoft.AspNetCore.Http.HttpResults;
-
-using Asp.Versioning.Builder;
-using Catalog.API.Domain.Entities;
-using Catalog.API.Features.ProductManagement.Attributes;
 
 namespace Catalog.API.Features.ProductManagement.Products;
 

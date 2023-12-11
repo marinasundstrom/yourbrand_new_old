@@ -17,7 +17,7 @@ public interface IStoreProvider
 
 public sealed class StoreProvider : IStoreProvider
 {
-    IStoresClient _storesClient;
+    readonly IStoresClient _storesClient;
     private readonly ILocalStorageService _localStorageService;
     IEnumerable<Store> _stores;
 

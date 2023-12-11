@@ -1,10 +1,11 @@
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
+
 using YourBrand.Admin.AppBar;
 using YourBrand.Admin.Authentication;
 using YourBrand.Admin.Localization;
 using YourBrand.Admin.NavMenu;
 using YourBrand.Admin.Theming;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Localization;
 using YourBrand.Admin.Widgets;
 
 namespace YourBrand.Admin;

@@ -162,7 +162,7 @@ public sealed record ImportProducts(Stream Stream) : IRequest<Result<ProductImpo
                 .Replace("-", string.Empty);
         }
 
-        Dictionary<long, ProductCategory> categories = new Dictionary<long, ProductCategory>();
+        readonly Dictionary<long, ProductCategory> categories = new Dictionary<long, ProductCategory>();
 
         private async Task<ProductCategory> GetCategory(Store store, long categoryId, CancellationToken cancellationToken)
         {
@@ -178,7 +178,7 @@ public sealed record ImportProducts(Stream Stream) : IRequest<Result<ProductImpo
             return category;
         }
 
-        Dictionary<string, Brand> brands = new Dictionary<string, Brand>();
+        readonly Dictionary<string, Brand> brands = new Dictionary<string, Brand>();
 
         private async Task<Brand> GetBrand(string handle, CancellationToken cancellationToken)
         {
@@ -190,7 +190,7 @@ public sealed record ImportProducts(Stream Stream) : IRequest<Result<ProductImpo
             return brand;
         }
 
-        Dictionary<string, Store> stores = new Dictionary<string, Store>();
+        readonly Dictionary<string, Store> stores = new Dictionary<string, Store>();
 
         private async Task<Store> GetStore(string handle, CancellationToken cancellationToken)
         {
@@ -202,7 +202,7 @@ public sealed record ImportProducts(Stream Stream) : IRequest<Result<ProductImpo
             return store;
         }
 
-        Dictionary<string, Product> products = new Dictionary<string, Product>();
+        readonly Dictionary<string, Product> products = new Dictionary<string, Product>();
 
         private async Task<Product> GetProduct(Store store, string sku, CancellationToken cancellationToken)
         {

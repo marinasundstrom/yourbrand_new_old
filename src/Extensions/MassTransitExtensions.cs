@@ -1,4 +1,5 @@
 using MassTransit;
+
 using Microsoft.Extensions.DependencyInjection;
 
 namespace YourBrand.Extensions;

@@ -1,10 +1,10 @@
+using Asp.Versioning.Builder;
+
 using Catalog.API.Model;
 
 using MediatR;
 
 using Microsoft.AspNetCore.Http.HttpResults;
-
-using Asp.Versioning.Builder;
 
 namespace Catalog.API.Features.ProductManagement.ProductCategories;
 

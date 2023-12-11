@@ -1,6 +1,4 @@
 
-using StoreFront.API.Persistence;
-
 using DotNet.Testcontainers.Builders;
 
 using MassTransit;
@@ -12,6 +10,8 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 using Respawn;
+
+using StoreFront.API.Persistence;
 
 using Testcontainers.SqlEdge;
 

@@ -1,10 +1,11 @@
+using Microsoft.Extensions.DependencyInjection;
+
 using YourBrand.Admin.AppBar;
+using YourBrand.Admin.Markdown;
 using YourBrand.Admin.NavMenu;
 using YourBrand.Admin.Services;
 using YourBrand.Admin.Theming;
-using Microsoft.Extensions.DependencyInjection;
 using YourBrand.Admin.Widgets;
-using YourBrand.Admin.Markdown;
 
 namespace YourBrand.Admin;
 

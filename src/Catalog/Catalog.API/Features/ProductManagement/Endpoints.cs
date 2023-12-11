@@ -1,7 +1,7 @@
+using Catalog.API.Features.ProductManagement.Attributes;
+using Catalog.API.Features.ProductManagement.Options;
 using Catalog.API.Features.ProductManagement.ProductCategories;
 using Catalog.API.Features.ProductManagement.Products;
-using Catalog.API.Features.ProductManagement.Options;
-using Catalog.API.Features.ProductManagement.Attributes;
 
 namespace Catalog.API.Features.ProductManagement;
 

@@ -1,11 +1,11 @@
-using StoreFront.Contracts;
-
 using MassTransit;
 using MassTransit.Testing;
 
 using Meziantou.Extensions.Logging.Xunit;
 
 using Microsoft.AspNetCore.Mvc.Testing;
+
+using StoreFront.Contracts;
 
 using Xunit.Abstractions;
 

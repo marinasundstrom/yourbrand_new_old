@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
-using YourBrand.Catalog;
-
 using MudBlazor;
+
+using YourBrand.Catalog;
 
 namespace YourBrand.Client.Products;
 

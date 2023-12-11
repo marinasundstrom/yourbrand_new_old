@@ -10,7 +10,7 @@ partial class ProductOptionsView : ComponentBase
 {
     MudTable<ProductOption> productOptionsTable = default!;
 
-    TableGroupDefinition<ProductOption> tableGroupDefinition = new TableGroupDefinition<ProductOption>()
+    readonly TableGroupDefinition<ProductOption> tableGroupDefinition = new TableGroupDefinition<ProductOption>()
     {
         GroupName = "Group",
         Indentation = false,

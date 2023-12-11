@@ -66,6 +66,8 @@ else
 
             <h1 itemprop="name">@productViewModel.Name</h1>
 
+            @*<p>@productViewModel.Product?.Name</p>*@
+
             @if (productViewModel.OptionGroups.Any())
             {
                 <h5 class="price2" itemprop="price" content="@productViewModel.Total"

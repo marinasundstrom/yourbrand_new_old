@@ -1,7 +1,5 @@
 ﻿using Azure.Identity;
 
-using YourBrand.Catalog;
-
 using HealthChecks.UI.Client;
 
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -10,11 +8,13 @@ using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using MudBlazor.Services;
 
 using Serilog;
+
 using Steeltoe.Discovery.Client;
 
 using YourBrand;
-using YourBrand.Server;
+using YourBrand.Catalog;
 using YourBrand.Extensions;
+using YourBrand.Server;
 using YourBrand.Server.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);

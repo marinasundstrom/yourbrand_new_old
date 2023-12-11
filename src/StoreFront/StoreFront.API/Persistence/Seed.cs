@@ -1,9 +1,9 @@
-using StoreFront.API.Domain.Entities;
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+
+using StoreFront.API.Domain.Entities;
 
 namespace StoreFront.API.Persistence;
 

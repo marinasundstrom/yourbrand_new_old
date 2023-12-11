@@ -3,6 +3,7 @@ using System.Data;
 using System.Security.Claims;
 
 using Microsoft.AspNetCore.Components.Authorization;
+
 using YourBrand.Admin.Services;
 
 namespace YourBrand.Admin.Services;
@@ -101,4 +102,3 @@ public class CurrentUserService2 : ICurrentUserService
         return string.Empty;
     }
 }
-

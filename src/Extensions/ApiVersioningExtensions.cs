@@ -1,7 +1,8 @@
 using Asp.Versioning;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
+
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace YourBrand.Extensions;

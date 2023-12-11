@@ -1,11 +1,14 @@
 using Asp.Versioning;
-using NSwag;
-using NSwag.AspNetCore;
-using NSwag.Generation.Processors.Security;
-using NJsonSchema.Generation;
+
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+
+using NJsonSchema.Generation;
+
+using NSwag;
+using NSwag.AspNetCore;
+using NSwag.Generation.Processors.Security;
 
 namespace YourBrand.Extensions;
 
@@ -16,8 +19,8 @@ public static class OpenApiExtensions
         services.AddEndpointsApiExplorer();
 
         IEnumerable<ApiVersion> apiVersionDescriptions = [
-            new (1, 0),
-            new (2, 0)
+            new(1, 0),
+            new(2, 0)
         ];
 
         foreach (var apiVersion in apiVersionDescriptions)

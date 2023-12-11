@@ -1,8 +1,10 @@
-using YourBrand.Admin.AppBar;
-using YourBrand.Admin.Theming;
-using MudBlazor;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
+
+using MudBlazor;
+
+using YourBrand.Admin.AppBar;
+using YourBrand.Admin.Theming;
 
 namespace YourBrand.Admin.Theming;
 

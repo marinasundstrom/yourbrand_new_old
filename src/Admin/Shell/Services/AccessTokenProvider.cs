@@ -1,8 +1,8 @@
 ﻿using System;
 
-using YourBrand.Admin.Services;
-
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+
+using YourBrand.Admin.Services;
 
 namespace YourBrand.Admin.Services;
 
