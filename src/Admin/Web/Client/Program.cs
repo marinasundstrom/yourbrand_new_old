@@ -62,7 +62,7 @@ else
     {
         builder.Configuration.Bind("AzureAd", options.ProviderOptions.Authentication);
 
-        options.ProviderOptions.LoginMode = "redirect";
+        //options.ProviderOptions.LoginMode = "redirect";
     });
 }
 
