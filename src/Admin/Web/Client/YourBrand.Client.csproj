@@ -61,4 +61,8 @@
         <ProjectReference Include="..\..\..\Catalog\Catalog.Client\Catalog.Client.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+        <TrimmerRootAssembly Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" />
+    </ItemGroup>
+
 </Project>
