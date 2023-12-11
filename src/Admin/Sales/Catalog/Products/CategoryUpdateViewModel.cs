@@ -5,7 +5,7 @@ using MudBlazor;
 using YourBrand.Admin.Services;
 using YourBrand.Catalog;
 
-namespace YourBrand.Sales.Catalog.Products;
+namespace YourBrand.Admin.Sales.Catalog.Products;
 
 public class CategoryUpdateViewModel(IProductsClient productsClient, IProductCategoriesClient productCategoriesClient, ISnackbar snackbar, IStoreProvider storeProvider)
 {

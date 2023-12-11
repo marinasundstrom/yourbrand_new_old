@@ -6,7 +6,7 @@ using MudBlazor;
 
 using YourBrand.Catalog;
 
-namespace YourBrand.Sales.Catalog.Products;
+namespace YourBrand.Admin.Sales.Catalog.Products;
 
 public class ImageUpdateViewModel(IProductsClient productsClient, ISnackbar snackbar)
 {

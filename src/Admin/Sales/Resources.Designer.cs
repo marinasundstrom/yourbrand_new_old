@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace YourBrand.Sales
+namespace YourBrand.Admin.Sales
 {
     using System;
 

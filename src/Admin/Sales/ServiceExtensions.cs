@@ -12,7 +12,7 @@ using YourBrand.Catalog;
 
 using Store = YourBrand.Admin.Services.Store;
 
-namespace YourBrand.Sales;
+namespace YourBrand.Admin.Sales;
 
 public sealed class ServiceExtensions
 {

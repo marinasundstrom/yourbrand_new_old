@@ -13,7 +13,7 @@ using YourBrand.Admin.NavMenu;
 using YourBrand.Admin.Services;
 using YourBrand.Catalog;
 using YourBrand.Client;
-using YourBrand.Sales;
+using YourBrand.Admin.Sales;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
@@ -80,7 +80,7 @@ app.Services.UseShell();
 
 await app.Services.ApplyLocalization();
 
-YourBrand.Sales.ServiceExtensions.InitNavBar(app.Services);
-YourBrand.Sales.ServiceExtensions.InitAppBarTray(app.Services);
+YourBrand.Admin.Sales.ServiceExtensions.InitNavBar(app.Services);
+YourBrand.Admin.Sales.ServiceExtensions.InitAppBarTray(app.Services);
 
 await app.RunAsync();

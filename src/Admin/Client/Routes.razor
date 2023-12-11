@@ -6,7 +6,7 @@
 
 <CascadingAuthenticationState>
     <Router AppAssembly="@typeof(Routes).Assembly"
-        AdditionalAssemblies="@(new [] { typeof(YourBrand.Sales.StoreProvider).Assembly })">
+        AdditionalAssemblies="@(new [] { typeof(YourBrand.Admin.Sales.StoreProvider).Assembly })">
         <Found Context="routeData">
             <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(YourBrand.Admin.Layouts.MainLayout)">
                 <Authorizing>

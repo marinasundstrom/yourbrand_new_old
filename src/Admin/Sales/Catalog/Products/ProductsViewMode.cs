@@ -1,4 +1,4 @@
-namespace YourBrand.Sales.Catalog.Products;
+namespace YourBrand.Admin.Sales.Catalog.Products;
 
 public enum ProductsViewMode
 {

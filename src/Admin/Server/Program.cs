@@ -161,7 +161,7 @@ app.UseAntiforgery();
 app.MapRazorComponents<App>()
     .AddAdditionalAssemblies(
         typeof(YourBrand.Client.Pages.Counter).Assembly,
-        typeof(YourBrand.Sales.ServiceExtensions).Assembly)
+        typeof(YourBrand.Admin.Sales.ServiceExtensions).Assembly)
     .AddInteractiveWebAssemblyRenderMode()
     .AddInteractiveServerRenderMode()
     .AllowAnonymous();
