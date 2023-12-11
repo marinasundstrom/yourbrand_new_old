@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.API.Features.ProductManagement.Products;
 
-public sealed record UpdateProductCategory(string IdOrHandle, long ProductCategoryId) : IRequest<Result>
+public sealed record UpdateProductBrand(string IdOrHandle, long BrandId) : IRequest<Result>
 {
-    public sealed class Handler(CatalogContext catalogContext = default!) : IRequestHandler<UpdateProductCategory, Result>
+    public sealed class Handler(CatalogContext catalogContext = default!) : IRequestHandler<UpdateProductBrand, Result>
     {
-        public async Task<Result> Handle(UpdateProductCategory request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(UpdateProductBrand request, CancellationToken cancellationToken)
         {
             var isId = int.TryParse(request.IdOrHandle, out var id);
 
@@ -27,19 +27,15 @@ public sealed record UpdateProductCategory(string IdOrHandle, long ProductCatego
                 return Result.Failure(Errors.ProductNotFound);
             }
 
-            var newCategory = await catalogContext.ProductCategories
-                .Include(productCategory => productCategory.Parent)
-                .Include(productCategory => productCategory.Products)
-                .FirstOrDefaultAsync(productCategory => productCategory.Id == request.ProductCategoryId, cancellationToken);
+            var brand = await catalogContext.Brands
+                .FirstOrDefaultAsync(brand => brand.Id == request.BrandId, cancellationToken);
 
-            if (newCategory is null)
+            if (brand is null)
             {
-                return Result.Failure(Errors.ProductNotFound);
+                return Result.Failure(Errors.BrandNotFound);
             }
 
-            product.Category.RemoveProduct(product);
-
-            newCategory.AddProduct(product);
+            product.Brand = brand;
 
             await catalogContext.SaveChangesAsync(cancellationToken);
 

@@ -21,9 +21,9 @@
                     <MudTh>
                         <MudTableSortLabel SortLabel="Name" T="Product">Name</MudTableSortLabel>
                     </MudTh>
-                   @*<MudTh>
+                   <MudTh>
                         <MudTableSortLabel SortLabel="Brand" T="Product">Brand</MudTableSortLabel>
-                    </MudTh> *@
+                    </MudTh>
                     <MudTh>
                         <MudTableSortLabel SortLabel="Category" T="Product">Category</MudTableSortLabel>
                     </MudTh>
@@ -65,7 +65,7 @@
                     </MudTd>
                     <MudTd DataLabel="Id">@context.Id</MudTd>
                     <MudTd DataLabel="Name">@context.Name</MudTd>
-                    @* <MudTd DataLabel="Brand">@context.Brand?.Name</MudTd> *@
+                    <MudTd DataLabel="Brand">@context.Brand?.Name</MudTd>
                     <MudTd DataLabel="Category">@context.Category?.Name</MudTd>
                     <MudTd DataLabel="Has variants">@(context.HasVariants ? "Yes" : string.Empty)</MudTd>
                         @* <MudTd DataLabel="Handle">@context.Handle</MudTd> *@

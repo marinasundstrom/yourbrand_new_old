@@ -15,6 +15,8 @@ using Asp.Versioning.Builder;
 using YourBrand.Extensions;
 using Catalog.API.Features.ProductManagement.Import;
 using OpenTelemetry.Trace;
+using Catalog.API.Features.Stores;
+using Catalog.API.Features.Brands;
 
 namespace Catalog.API.Features.ProductManagement.Products;
 
@@ -73,6 +75,10 @@ public static partial class Endpoints
         group.MapPut("/{idOrHandle}/category", UpdateProductCategory)
             .AddEndpointFilter<ValidationFilter<CreateProductCategoryRequest>>()
             .WithName($"Products_{nameof(UpdateProductCategory)}");
+
+        group.MapPut("/{idOrHandle}/brand", UpdateProductBrand)
+            //.AddEndpointFilter<ValidationFilter<CreateProductCategoryRequest>>()
+            .WithName($"Products_{nameof(UpdateProductBrand)}");
 
         group.MapDelete("/{idOrHandle}", DeleteProduct)
             .WithName($"Products_{nameof(DeleteProduct)}");
@@ -165,6 +171,14 @@ public static partial class Endpoints
         return result.IsSuccess ? TypedResults.Ok() : TypedResults.NotFound();
     }
 
+    private static async Task<Results<Ok, NotFound, ProblemHttpResult>> UpdateProductBrand(string idOrHandle, UpdateProductBrandRequest request,
+        IMediator mediator, CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(new UpdateProductBrand(idOrHandle, request.BrandId), cancellationToken);
+
+        return result.IsSuccess ? TypedResults.Ok() : TypedResults.NotFound();
+    }
+
     private static async Task<Results<Ok, NotFound>> DeleteProduct(string idOrHandle,
     IMediator mediator, CancellationToken cancellationToken)
     {
@@ -234,9 +248,13 @@ public sealed record UpdateProductCategoryRequest(long ProductCategoryId)
     }
 }
 
+public sealed record UpdateProductBrandRequest(long BrandId);
+
 public sealed record ProductDto(
     long Id,
     string Name,
+    StoreDto? Store,
+    BrandDto? Brand,
     ProductCategory2? Category,
     ParentProductDto? Parent,
     string Description,

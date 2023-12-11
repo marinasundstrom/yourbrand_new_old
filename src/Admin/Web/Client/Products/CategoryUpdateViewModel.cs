@@ -46,7 +46,7 @@ public class CategoryUpdateViewModel(IProductsClient productsClient, IProductCat
         }
         catch
         {
-            snackbar.Add("Category to update product handle", Severity.Error);
+            snackbar.Add("Failed to update product category", Severity.Error);
         }
     }
 

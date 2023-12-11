@@ -7,6 +7,7 @@
 @using System.ComponentModel.DataAnnotations
 @inject IProductsClient ProductsClient
 @inject IProductCategoriesClient ProductCategoriesClient
+@inject IBrandsClient BrandsClient
 @inject ISnackbar Snackbar
 @inject NavigationManager NavigationManager
 @inject IDialogService DialogService
@@ -50,6 +51,12 @@
 
         @if (product.Parent is null)
         {
+            <MudItem xs="12" sm="12" md="3">
+                <MudPaper Elevation="2" Class="pa-4">
+                    <BrandUpdateView Model="brandUpdateViewModel" />
+                </MudPaper>
+            </MudItem>
+
             <MudItem xs="12" sm="12" md="3">
                 <MudPaper Elevation="2" Class="pa-4">
                     <CategoryUpdateView Model="categoryUpdateViewModel" />
@@ -113,6 +120,7 @@
     Product product;
     ImageUpdateViewModel imageUpdateViewModel;
     DetailsUpdateViewModel detailsUpdateViewModel;
+    BrandUpdateViewModel brandUpdateViewModel;
     CategoryUpdateViewModel categoryUpdateViewModel;
     PriceUpdateViewModel priceUpdateViewModel;
     HandleUpdateViewModel handleUpdateViewModel;
@@ -169,6 +177,13 @@
         product,
         ProductsClient,
         Snackbar);
+
+        brandUpdateViewModel = BrandUpdateViewModel.Create(
+        product,
+        ProductsClient,
+        BrandsClient,
+        Snackbar,
+        StoreProvider);
 
         priceUpdateViewModel = PriceUpdateViewModel.Create(
         product,

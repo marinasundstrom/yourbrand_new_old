@@ -12,4 +12,6 @@ public static class Errors
     public readonly static Error HandleAlreadyTaken = new("handle-already-taken", "Handle already taken", "");
 
     public readonly static Error SkuAlreadyTaken = new("sku-already-taken", "SKU already taken", "");
+
+    public readonly static Error BrandNotFound = new("brand-not-found", "Brand not found", "");
 }

@@ -16,7 +16,11 @@ public static class ProductQueryExtensions
 
     public static IQueryable<Product> IncludeBasics(this IQueryable<Product> source)
     {
-        return source.Include(pv => pv.ParentProduct)
+        return source
+                .Include(pv => pv.Store)
+                    .ThenInclude(pv => pv.Currency)
+                .Include(pv => pv.Brand)
+                .Include(pv => pv.ParentProduct)
                     .ThenInclude(pv => pv!.Category)
                     .ThenInclude(pv => pv!.Parent)
                 .Include(pv => pv.Brand)

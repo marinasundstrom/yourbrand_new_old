@@ -27,6 +27,8 @@ public static class Mappings
         return new ProductDto(
             product.Id,
             product.Name,
+            product.Store?.ToDto(),
+            product.Brand?.ToDto(),
             product.Category?.ToProductCategory2(),
             product.ParentProduct?.ToParentProductDto(),
             product.Description,
