@@ -29,7 +29,7 @@ public static class ServiceProviderExtensions
         var navManager = services
             .GetRequiredService<NavManager>();
 
-        var t = services.GetRequiredService<IStringLocalizer<YourBrand.Admin.Resources>>();
+        var t = services.GetRequiredService<IStringLocalizer<Resources>>();
 
         navManager.CreateItem("home", options =>
         {

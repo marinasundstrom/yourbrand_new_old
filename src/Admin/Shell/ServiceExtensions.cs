@@ -19,7 +19,7 @@ public static class ServiceExtensions
             .AddNavigationServices()
             .AddAppBar()
             .AddScoped<CustomAuthorizationMessageHandler>()
-            .AddScoped<ICurrentUserService, CurrentUserService>() // CurrentUserService
+            .AddScoped<ICurrentUserService, CurrentUserService>()
             .AddScoped<Services.IAccessTokenProvider, AccessTokenProvider>()
             .AddMarkdownServices();
 

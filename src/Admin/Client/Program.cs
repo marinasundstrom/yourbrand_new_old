@@ -78,9 +78,9 @@ var app = builder.Build();
 
 app.Services.UseShell();
 
-await app.Services.ApplyLocalization();
-
 YourBrand.Admin.Sales.ServiceExtensions.InitNavBar(app.Services);
 YourBrand.Admin.Sales.ServiceExtensions.InitAppBarTray(app.Services);
+
+await app.Services.ApplyLocalization();
 
 await app.RunAsync();

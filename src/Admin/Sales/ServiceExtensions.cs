@@ -21,14 +21,14 @@ public sealed class ServiceExtensions
         var navManager = services
            .GetRequiredService<NavManager>();
 
-        var t = services.GetRequiredService<IStringLocalizer<Resources>>();
+        var t = services.GetRequiredService<IStringLocalizer<YourBrand.Admin.Sales.Resources>>();
 
         var group = navManager.GetGroup("sales") ?? navManager.CreateGroup("sales", () => t["Sales"]);
         group.RequiresAuthorization = true;
 
         var catalogItem = group.CreateGroup("catalog", options =>
         {
-            options.Name = t["Catalog"];
+            options.NameFunc = () => t["Catalog"];
             options.Icon = MudBlazor.Icons.Material.Filled.Book;
         });
 
@@ -51,7 +51,7 @@ public sealed class ServiceExtensions
         var snackbar = services
             .GetRequiredService<ISnackbar>();
 
-        var t = services.GetRequiredService<IStringLocalizer<Resources>>();
+        var t = services.GetRequiredService<IStringLocalizer<YourBrand.Admin.Sales.Resources>>();
 
         appBarTray.AddItem(new AppBarTrayItem("show", () => t["Store"], typeof(StoreSelector)));
     }

@@ -7,9 +7,25 @@
     <RootNamespace>YourBrand.Admin.Sales</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <BlazorWebAssemblyLoadAllGlobalizationData>true</BlazorWebAssemblyLoadAllGlobalizationData>
+  </PropertyGroup>
 
   <ItemGroup>
     <SupportedPlatform Include="browser" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources.resx">
+      <!-- Tell Visual Studio that MSBuild will do the generation. -->
+      <Generator>MSBuild:Compile</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <!-- Put generated files in the 'obj' folder. -->
+      <StronglyTypedFileName>$(IntermediateOutputPath)\Resources.Designer.cs</StronglyTypedFileName>
+      <StronglyTypedLanguage>CSharp</StronglyTypedLanguage>
+      <StronglyTypedNamespace>YourBrand.Admin.Sales</StronglyTypedNamespace>
+      <StronglyTypedClassName>Resources</StronglyTypedClassName>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
