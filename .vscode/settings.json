@@ -26,7 +26,7 @@
                 {
                     "name": "Admin Web",
                     "commands": [
-                        "dotnet run --project src/Admin/Web/Server"
+                        "dotnet run --project src/Admin/Server"
                     ],
                     "shouldRunCommands": false
                 }

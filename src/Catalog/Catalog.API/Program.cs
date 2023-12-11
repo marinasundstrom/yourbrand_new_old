@@ -134,9 +134,15 @@ builder.Services.AddScoped<ProductVariantsService>();
 
 builder.Services.AddScoped<ICurrentUserService>(sp => null!);
 
+var reverseProxy = builder.Services
+.AddReverseProxy()
+    .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
+
 var app = builder.Build();
 
 app.MapObservability();
+
+app.MapReverseProxy();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
