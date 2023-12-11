@@ -5,11 +5,11 @@
 
 window.isDarkMode = () => {
   if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return true;
+    return true;
   }
   return false;
 };
 
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', async event => {
-  await DotNet.invokeMethodAsync("Portal.Shell", "OnDarkModeChanged", event.matches);
+  await DotNet.invokeMethodAsync("Shell", "OnDarkModeChanged", event.matches);
 });
