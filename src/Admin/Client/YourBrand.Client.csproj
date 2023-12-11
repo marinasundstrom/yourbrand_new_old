@@ -45,7 +45,7 @@
 
     <ItemGroup>
         <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
-        <PackageReference Include="Microsoft.Extensions.ApiDescription.Client" Version="7.0.2">
+        <PackageReference Include="Microsoft.Extensions.ApiDescription.Client" Version="8.0.0">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
@@ -57,7 +57,9 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Shared\YourBrand.Shared.csproj" />
+        <ProjectReference Include="..\Sales\Sales.csproj" />
         <ProjectReference Include="..\Shell\Shell.csproj" />
+        <ProjectReference Include="..\Services\Services.csproj" />
         <ProjectReference Include="..\..\Catalog\Catalog.Client\Catalog.Client.csproj" />
     </ItemGroup>
 

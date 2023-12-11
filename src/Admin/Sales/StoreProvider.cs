@@ -1,19 +1,11 @@
 using Blazored.LocalStorage;
 
+using YourBrand.Admin.Services;
 using YourBrand.Catalog;
 
-namespace YourBrand.Client;
+using Store = YourBrand.Admin.Services.Store;
 
-public interface IStoreProvider
-{
-    Task<IEnumerable<Store>> GetAvailableStoresAsync();
-
-    Store? CurrentStore { get; set; }
-
-    Task SetCurrentStore(string storeId);
-
-    event EventHandler? CurrentStoreChanged;
-}
+namespace YourBrand.Sales;
 
 public sealed class StoreProvider : IStoreProvider
 {
@@ -29,7 +21,9 @@ public sealed class StoreProvider : IStoreProvider
 
     public async Task<IEnumerable<Store>> GetAvailableStoresAsync()
     {
-        var items = _stores = (await _storesClient.GetStoresAsync(0, null, null, null, null)).Items;
+        var items = _stores = (await _storesClient.GetStoresAsync(0, null, null, null, null)).Items
+            .Select(x => new Store(x.Id, x.Name, x.Handle, new Admin.Services.Currency(x.Currency.Code, x.Currency.Name, x.Currency.Symbol)));
+
         if (CurrentStore is null)
         {
             var storeId = await _localStorageService.GetItemAsStringAsync("storeId");

@@ -5,30 +5,32 @@
 @inject IDialogService DialogService
 @inject NavigationManager NavigationManager
 @inject IStoreProvider StoreProvider
-@using Catalog
+@using YourBrand.Catalog
+@using YourBrand.Admin.Services
+@using Store = YourBrand.Admin.Services.Store
 
 <MudGrid Spacing="4" Class="mt-2">
     <MudItem xs="12" sm="5" md="5" lg="3" xl="2">
         @if (productGroupTreeNodes is not null)
         {
-            <MudPaper Elevation="25" Class="pa-4">
-                <MudTreeView T="ProductCategoryTreeNode"
-                    Items="(new HashSet<ProductCategoryTreeNode>(productGroupTreeNodes))" Hover="true"
-                    SelectedValueChanged="async (e) => await SetGroup(e)">
-                    <ItemTemplate>
-                        <MudTreeViewItem Items="@(new HashSet<ProductCategoryTreeNode>(context.SubCategories))" Value="@context"
-                            Text="@context.Name" EndText="@context.ProductsCount.ToString()" EndTextTypo="@Typo.caption" />
-                    </ItemTemplate>
-                </MudTreeView>
+                <MudPaper Elevation="25" Class="pa-4">
+                    <MudTreeView T="ProductCategoryTreeNode"
+                        Items="(new HashSet<ProductCategoryTreeNode>(productGroupTreeNodes))" Hover="true"
+                        SelectedValueChanged="async (e) => await SetGroup(e)">
+                        <ItemTemplate>
+                            <MudTreeViewItem Items="@(new HashSet<ProductCategoryTreeNode>(context.SubCategories))" Value="@context"
+                                Text="@context.Name" EndText="@context.ProductsCount.ToString()" EndTextTypo="@Typo.caption" />
+                        </ItemTemplate>
+                    </MudTreeView>
 
-                <MudButton Class="mt-4" Size="@Size.Small" StartIcon="@Icons.Material.Filled.Clear"
-                    OnClick="async () => { productGroupTreeNode = null; GroupId = null; }">Clear selection
-                </MudButton>
-            </MudPaper>
+                    <MudButton Class="mt-4" Size="@Size.Small" StartIcon="@Icons.Material.Filled.Clear"
+                        OnClick="async () => { productGroupTreeNode = null; GroupId = null; }">Clear selection
+                    </MudButton>
+                </MudPaper>
         }
 
         <MudPaper Elevation="25" Class="mt-4 pa-4">
-            <YourBrand.Client.Brands.BrandSelector Label="Brand" Class="mb-6" Variant="Variant.Outlined"
+            <YourBrand.Sales.Catalog.Brands.BrandSelector Label="Brand" Class="mb-6" Variant="Variant.Outlined"
                 @bind-Value="Brand" For="() => Brand" />
         </MudPaper>
     </MudItem>
@@ -36,11 +38,11 @@
     <MudItem xs="12" sm="7" md="7" lg="9" xl="10">
         @if (Mode == ProductsViewMode.List)
         {
-            <ProductsListView StoreId="@StoreId" BrandId="@Brand?.Handle" Path="@productGroupTreeNode?.Path" />
+                <ProductsListView StoreId="@StoreId" BrandId="@Brand?.Handle" Path="@productGroupTreeNode?.Path" />
         }
         else if (Mode == ProductsViewMode.Grid)
         {
-            <ProductsGridView StoreId="@StoreId" BrandId="@Brand?.Handle" Path="@productGroupTreeNode?.Path" />
+                <ProductsGridView StoreId="@StoreId" BrandId="@Brand?.Handle" Path="@productGroupTreeNode?.Path" />
         }
     </MudItem>
 </MudGrid>

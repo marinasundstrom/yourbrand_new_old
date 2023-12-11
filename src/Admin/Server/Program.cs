@@ -159,7 +159,9 @@ app.UseStaticFiles();
 app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
-    .AddAdditionalAssemblies(typeof(YourBrand.Client.Pages.Counter).Assembly)
+    .AddAdditionalAssemblies(
+        typeof(YourBrand.Client.Pages.Counter).Assembly,
+        typeof(YourBrand.Sales.ServiceExtensions).Assembly)
     .AddInteractiveWebAssemblyRenderMode()
     .AddInteractiveServerRenderMode()
     .AllowAnonymous();

@@ -3,8 +3,10 @@
 @inject IDialogService DialogService
 @inject NavigationManager NavigationManager
 @inject IStoreProvider StoreProvider
-@using Catalog
+@using YourBrand.Catalog
 @using YourBrand.Admin
+@using YourBrand.Admin.Services
+@using Store = YourBrand.Admin.Services.Store
 
 @if (items is null)
 {

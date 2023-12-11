@@ -1,7 +1,9 @@
+@using YourBrand.Admin.Services
 @inject IStoreProvider StoreProvider
 @inject ISnackbar Snackbar
 @using YourBrand.Catalog
 @implements IDisposable
+@using Store = YourBrand.Admin.Services.Store
 
 <MudMenu Dense="true" Color="Color.Inherit" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight"
     PopoverClass="docs-layout-menu-shadow" ListClass="pa-2 docs-menu-list" LockScroll="true">

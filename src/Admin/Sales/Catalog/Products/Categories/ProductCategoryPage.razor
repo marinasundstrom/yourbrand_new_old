@@ -10,7 +10,9 @@
 @inject NavigationManager NavigationManager
 @inject IStoreProvider StoreProvider
 @using YourBrand.Admin
+@using YourBrand.Admin.Services
 @using YourBrand.Catalog
+@using Store = YourBrand.Admin.Services.Store
 
 <AppPageTitle>@(productCategory is null ? "Product Categories" : productCategory?.Name)</AppPageTitle>
 

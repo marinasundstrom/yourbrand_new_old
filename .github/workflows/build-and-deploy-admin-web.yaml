@@ -6,7 +6,7 @@ on:
     branches:
     - main
     paths:
-    - "src/Admin/Web/**"
+    - "src/Admin/**"
     - "src/Catalog/Catalog.Client/**"
   
 jobs:
@@ -28,7 +28,7 @@ jobs:
       uses: azure/container-apps-deploy-action@v1
       with:
         appSourcePath: ${{ github.workspace }}
-        dockerfilePath: src/Admin/Web/Server/Dockerfile
+        dockerfilePath: src/Admin/Server/Dockerfile
         registryUrl: ${{ secrets.REGISTRY_LOGIN_SERVER }}
         registryUsername: ${{ secrets.REGISTRY_USERNAME }}
         registryPassword: ${{ secrets.REGISTRY_PASSWORD }}

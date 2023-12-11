@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace YourBrand.Client
+namespace YourBrand.Sales
 {
     using System;
 

@@ -8,12 +8,12 @@ USER app
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG configuration=Release
 WORKDIR /
-COPY ["src/Admin/Web/Server/YourBrand.Server.csproj", "src/Admin/Web/Server/"]
+COPY ["src/Admin/Server/YourBrand.Server.csproj", "src/Admin/Server/"]
 COPY ["NuGet.config", "/"]
-RUN dotnet restore "src/Admin/Web/Server/YourBrand.Server.csproj"
+RUN dotnet restore "src/Admin/Server/YourBrand.Server.csproj"
 COPY . .
-RUN dotnet test "/src/Admin/Web/Server.UnitTests"
-WORKDIR "/src/Admin/Web/Server"
+RUN dotnet test "/src/Admin/Server.UnitTests"
+WORKDIR "/src/Admin/Server"
 RUN dotnet build "YourBrand.Server.csproj" -c $configuration -o /app/build
 
 FROM build AS publish

@@ -4,7 +4,7 @@ using MudBlazor;
 
 using YourBrand.Catalog;
 
-namespace YourBrand.Client.Products;
+namespace YourBrand.Sales.Catalog.Products;
 
 partial class ProductOptionsView : ComponentBase
 {

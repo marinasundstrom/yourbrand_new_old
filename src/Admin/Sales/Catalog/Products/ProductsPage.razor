@@ -8,9 +8,11 @@
 @inject IDialogService DialogService
 @inject NavigationManager NavigationManager
 @inject IStoreProvider StoreProvider
-@using Catalog
+@using YourBrand.Catalog
 @using YourBrand.Admin
 @using YourBrand.Admin.Layouts
+@using YourBrand.Admin.Services
+@using Store = YourBrand.Admin.Services.Store
 
 <AppPageTitle>Products</AppPageTitle>
 
@@ -21,14 +23,18 @@
         <div class="d-flex flex-grow-1 gap-4">
             @* <div class="justify-start" style="max-width: 250px">
 
-            </div> *@  
+            </div> *@
 
             <div>
-                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="CreateProduct" StartIcon="@Icons.Material.Filled.Add" Class="my-2">Create product</MudButton>
-                <MudMenu Dense="true" Color="Color.Inherit" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight"
-                        PopoverClass="docs-layout-menu-shadow" ListClass="pa-2 docs-menu-list" LockScroll="true">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="CreateProduct"
+                    StartIcon="@Icons.Material.Filled.Add" Class="my-2">Create product</MudButton>
+                <MudMenu Dense="true" Color="Color.Inherit" AnchorOrigin="Origin.BottomRight"
+                    TransformOrigin="Origin.TopRight" PopoverClass="docs-layout-menu-shadow"
+                    ListClass="pa-2 docs-menu-list" LockScroll="true">
                     <ActivatorContent>
-                        <MudIconButton Icon="@(mode == ProductsViewMode.List ? Icons.Material.Filled.ViewList : Icons.Material.Filled.GridView)" Color="Color.Inherit" Edge="Edge.End" Class="me-2" />
+                        <MudIconButton
+                            Icon="@(mode == ProductsViewMode.List ? Icons.Material.Filled.ViewList : Icons.Material.Filled.GridView)"
+                            Color="Color.Inherit" Edge="Edge.End" Class="me-2" />
                     </ActivatorContent>
                     <ChildContent>
                         <MudMenuItem OnClick="() => SetViewMode(ProductsViewMode.List)">
@@ -45,8 +51,9 @@
                         </MudMenuItem>
                     </ChildContent>
                 </MudMenu>
-                <MudButton StartIcon="@Icons.Material.Filled.Edit" Color="Color.Inherit" Edge="Edge.End" Class="me-2" Href="/products/import">Import products</MudButton>
-            </div>   
+                <MudButton StartIcon="@Icons.Material.Filled.Edit" Color="Color.Inherit" Edge="Edge.End" Class="me-2"
+                    Href="/products/import">Import products</MudButton>
+            </div>
         </div>
 
     </MudPaper>
@@ -101,4 +108,3 @@
         NavigationManager.NavigateTo($"/products/{item.Id}/edit");
     }
 }
-

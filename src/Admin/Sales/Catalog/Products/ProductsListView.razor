@@ -3,7 +3,10 @@
 @inject IDialogService DialogService
 @inject NavigationManager NavigationManager
 @inject IStoreProvider StoreProvider
-@using Catalog
+@using Store = YourBrand.Admin.Services.Store
+@using YourBrand.Admin.Services
+@using YourBrand.Catalog
+
 
             <MudTable T="Product" ServerData="@(new Func<TableState, Task<TableData<Product>>>(ServerReload))"
             Dense="true" Hover="true" @ref="table" OnRowClick="(e) => ShowProduct(e.Item)" Elevation="25">

@@ -5,7 +5,8 @@
 @inject IStringLocalizer<Routes> T
 
 <CascadingAuthenticationState>
-    <Router AppAssembly="@typeof(Routes).Assembly">
+    <Router AppAssembly="@typeof(Routes).Assembly"
+        AdditionalAssemblies="@(new [] { typeof(YourBrand.Sales.StoreProvider).Assembly })">
         <Found Context="routeData">
             <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(YourBrand.Admin.Layouts.MainLayout)">
                 <Authorizing>

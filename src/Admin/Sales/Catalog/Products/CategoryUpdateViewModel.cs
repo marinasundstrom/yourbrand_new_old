@@ -2,9 +2,10 @@ using System.ComponentModel.DataAnnotations;
 
 using MudBlazor;
 
+using YourBrand.Admin.Services;
 using YourBrand.Catalog;
 
-namespace YourBrand.Client.Products;
+namespace YourBrand.Sales.Catalog.Products;
 
 public class CategoryUpdateViewModel(IProductsClient productsClient, IProductCategoriesClient productCategoriesClient, ISnackbar snackbar, IStoreProvider storeProvider)
 {
