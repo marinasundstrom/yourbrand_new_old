@@ -556,6 +556,10 @@ components:
           format: int64
         name:
           type: string
+        brand:
+          nullable: true
+          oneOf:
+            - $ref: "#/components/schemas/Brand"
         category:
           nullable: true
           oneOf:
@@ -584,6 +588,15 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/ProductOption"
+    Brand:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
     ProductAttribute:
       type: object
       additionalProperties: false
