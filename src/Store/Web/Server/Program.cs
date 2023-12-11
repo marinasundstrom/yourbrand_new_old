@@ -104,9 +104,11 @@ builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents()
     .AddInteractiveServerComponents();
 
+/*
 builder.Services.AddAuthorization()
     .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie();
+*/
 
 builder.Services.AddHttpContextAccessor();
 
@@ -208,7 +210,7 @@ app.MapRazorComponents<App>()
     .AddInteractiveWebAssemblyRenderMode()
     .AddInteractiveServerRenderMode();
 
-app.MapGroup("/identity").MapIdentityApi<IdentityUser>();
+//app.MapGroup("/identity").MapIdentityApi<IdentityUser>();
 
 app.MapGet("/requires-auth", (ClaimsPrincipal user) => $"Hello, {user.Identity?.Name}!").RequireAuthorization();
 

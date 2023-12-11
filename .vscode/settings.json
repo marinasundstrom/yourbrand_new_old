@@ -68,6 +68,17 @@
         {
             "splitTerminals": [
                 {
+                    "name": "IdentityService",
+                    "commands": [
+                        "dotnet run --project src/IdentityService"
+                    ],
+                    "shouldRunCommands": false
+                }
+            ]
+        },
+        {
+            "splitTerminals": [
+                {
                     "name": "Docker",
                     "commands": [
                         "docker compose -f docker-compose.deps.yml up -d"

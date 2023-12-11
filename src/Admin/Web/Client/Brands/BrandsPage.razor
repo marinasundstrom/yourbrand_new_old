@@ -1,10 +1,12 @@
 @page "/brands"
+@attribute [Authorize]
 @inject IBrandsClient BrandsClient
 @inject NavigationManager NavigationManager
 @inject IDialogService DialogService
 @attribute [StreamRendering(false)]
 @using static Microsoft.AspNetCore.Components.Web.RenderMode
 @rendermode renderMode
+@using YourBrand.Admin
 @using YourBrand.Catalog
 
 <AppPageTitle>Brands</AppPageTitle>

@@ -1,9 +1,16 @@
-﻿using Azure.Identity;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+
+using Azure.Identity;
 
 using HealthChecks.UI.Client;
 
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
+using Microsoft.AspNetCore.Server.HttpSys;
+using Microsoft.IdentityModel.Tokens;
 
 using MudBlazor.Services;
 
@@ -68,6 +75,46 @@ builder.Services
     .AddHealthChecks();
 //    .AddDbContextCheck<ApplicationDbContext>();
 
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+                    {
+                        options.Authority = "https://localhost:5041";
+                        options.Audience = "myapi";
+
+                        options.TokenValidationParameters = new TokenValidationParameters()
+                        {
+                            NameClaimType = "name"
+                        };
+
+                        options.Events = new JwtBearerEvents
+                        {
+                            OnTokenValidated = context =>
+                            {
+                                // Add the access_token as a claim, as we may actually need it
+                                var accessToken = context.SecurityToken as JwtSecurityToken;
+                                if (accessToken != null)
+                                {
+                                    ClaimsIdentity? identity = context?.Principal?.Identity as ClaimsIdentity;
+                                    if (identity != null)
+                                    {
+                                        identity.AddClaim(new Claim("access_token", accessToken.RawData));
+                                    }
+                                }
+
+                                return Task.CompletedTask;
+                            }
+                        };
+
+                        //options.TokenValidationParameters.ValidateAudience = false;
+
+                        //options.Audience = "openid";
+
+                        //options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };
+                    });
+
+builder.Services.AddAuthorization();
+
 var reverseProxy = builder.Services.AddReverseProxy();
 
 if (builder.Environment.IsDevelopment())
@@ -103,6 +150,10 @@ else
 
 //app.UseHttpsRedirection();
 
+app.UseAuthentication();
+
+app.UseAuthorization();
+
 app.UseStaticFiles();
 
 app.UseAntiforgery();
@@ -110,7 +161,8 @@ app.UseAntiforgery();
 app.MapRazorComponents<App>()
     .AddAdditionalAssemblies(typeof(YourBrand.Client.Pages.Counter).Assembly)
     .AddInteractiveWebAssemblyRenderMode()
-    .AddInteractiveServerRenderMode();
+    .AddInteractiveServerRenderMode()
+    .AllowAnonymous();
 
 app.MapHealthChecks("/healthz", new HealthCheckOptions()
 {

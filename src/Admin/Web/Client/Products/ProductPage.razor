@@ -1,5 +1,7 @@
 @page "/products/{id}"
 @page "/products/{id}/edit"
+@attribute [Authorize]
+@using YourBrand.Admin
 @using YourBrand.Catalog
 @attribute [StreamRendering(false)]
 @using static Microsoft.AspNetCore.Components.Web.RenderMode
@@ -18,7 +20,7 @@
 {
     <MudBreadcrumbs Items="_items" Class="ps-0"></MudBreadcrumbs>
 
-    <PageTitle>@detailsUpdateViewModel.Name</PageTitle>
+    <AppPageTitle>@detailsUpdateViewModel.Name</AppPageTitle>
 
     <MudText Typo="Typo.h3" GutterBottom="true">@detailsUpdateViewModel.Name</MudText>
 

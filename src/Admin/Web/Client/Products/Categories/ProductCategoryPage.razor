@@ -1,5 +1,6 @@
 ﻿@page "/products/categories/{*path}"
 @implements IDisposable
+@attribute [Authorize]
 @attribute [StreamRendering(false)]
 @using static Microsoft.AspNetCore.Components.Web.RenderMode
 @rendermode renderMode
@@ -8,6 +9,7 @@
 @inject IDialogService DialogService
 @inject NavigationManager NavigationManager
 @inject IStoreProvider StoreProvider
+@using YourBrand.Admin
 @using YourBrand.Catalog
 
 <AppPageTitle>@(productCategory is null ? "Product Categories" : productCategory?.Name)</AppPageTitle>

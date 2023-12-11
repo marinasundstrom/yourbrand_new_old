@@ -42,7 +42,29 @@ clientBuilder =>
     //clientBuilder.AddStandardResilienceHandler();
 });
 
-builder.Services.AddApiAuthorization();
+bool isDebug = false;
+#if DEBUG
+isDebug = true;
+#endif
+
+if (isDebug)
+{
+    builder.Services.AddOidcAuthentication(options =>
+    {
+        builder.Configuration.Bind("Local", options.ProviderOptions);
+    });
+
+    Console.WriteLine("Foo");
+}
+else
+{
+    builder.Services.AddMsalAuthentication(options =>
+    {
+        builder.Configuration.Bind("AzureAd", options.ProviderOptions.Authentication);
+
+        options.ProviderOptions.LoginMode = "redirect";
+    });
+}
 
 builder.Services.AddBlazoredLocalStorage();
 
@@ -71,7 +93,7 @@ static void InitNavBar(IServiceProvider services)
     var t = services.GetRequiredService<IStringLocalizer<Resources>>();
 
     var group = navManager.GetGroup("sales") ?? navManager.CreateGroup("sales", () => t["Sales"]);
-    group.RequiresAuthorization = false; //true;
+    group.RequiresAuthorization = true;
 
     var catalogItem = group.CreateGroup("catalog", options =>
     {

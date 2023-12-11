@@ -1,6 +1,7 @@
 ﻿@page "/products"
 @layout MainLayout2
 @implements IDisposable
+@attribute [Authorize]
 @inject IStoresClient StoresClient
 @inject IProductsClient ProductsClient
 @inject IProductCategoriesClient ProductCategoriesClient
@@ -8,6 +9,7 @@
 @inject NavigationManager NavigationManager
 @inject IStoreProvider StoreProvider
 @using Catalog
+@using YourBrand.Admin
 @using YourBrand.Admin.Layouts
 
 <AppPageTitle>Products</AppPageTitle>

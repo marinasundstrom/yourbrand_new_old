@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta http-equiv="refresh" content="3600">
+    <title>YourBrand</title>
     <base href="/" />
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
@@ -21,7 +22,14 @@
     <YourBrand.Client.Routes @rendermode="renderMode" />
 
     <script src="_content/MudBlazor/MudBlazor.min.js"></script>
-    <script src="_content/Microsoft.AspNetCore.Components.WebAssembly.Authentication/AuthenticationService.js"></script>
+    @if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+    {
+        <script src="_content/Microsoft.AspNetCore.Components.WebAssembly.Authentication/AuthenticationService.js"></script>
+    }
+    else
+    {
+        <script src="_content/Microsoft.Authentication.WebAssembly.Msal/AuthenticationService.js"></script>
+    }
     <script src="_framework/blazor.web.js" suppress-error="BL9992"></script>
     <script src="js/app.js"></script>
 </body>

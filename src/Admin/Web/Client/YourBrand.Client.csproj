@@ -24,8 +24,7 @@
         </OpenApiReference>
     </ItemGroup>
 
-    <PropertyGroup
-        Condition=" '$(RunConfiguration)' == 'YourBrand' ">
+    <PropertyGroup Condition=" '$(RunConfiguration)' == 'YourBrand' ">
         <ExternalConsole>true</ExternalConsole>
     </PropertyGroup>
     <ItemGroup>
@@ -37,6 +36,8 @@
             Version="8.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer"
             Version="8.0.0" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.Authentication.WebAssembly.Msal" Version="8.0.0"
+        />
         <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
         <PackageReference Include="MudBlazor" Version="6.11.0" />
         <PackageReference Include="ToastUIEditor" Version="0.1.2" />
