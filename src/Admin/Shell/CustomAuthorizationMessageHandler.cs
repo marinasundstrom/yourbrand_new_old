@@ -10,7 +10,7 @@ public sealed class CustomAuthorizationMessageHandler : AuthorizationMessageHand
         : base(provider, navigationManager)
     {
         ConfigureHandler(
-            authorizedUrls: new[] { "https://localhost:5001", "https://localhost:5261/" },
+            authorizedUrls: new[] { "https://localhost:5001", "https://yourbrand-admin-web.wonderfulsea-5402179d.swedencentral.azurecontainerapps.io" },
             scopes: new[] { "openid", "profile", "myapi" });
     }
 }
