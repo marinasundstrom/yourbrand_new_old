@@ -9,8 +9,21 @@ public sealed class CustomAuthorizationMessageHandler : AuthorizationMessageHand
         NavigationManager navigationManager)
         : base(provider, navigationManager)
     {
+#if DEBUG
         ConfigureHandler(
-            authorizedUrls: new[] { "https://localhost:5001", "https://yourbrand-admin-web.wonderfulsea-5402179d.swedencentral.azurecontainerapps.io" },
-            scopes: new[] { "openid", "profile", "catalogapi" });
+            authorizedUrls: new[] { "https://localhost:5001" },
+
+        scopes: new[] { "openid", "profile", "catalogapi" });
+
+#else
+        ConfigureHandler(
+            authorizedUrls: new[] { 
+                "https://yourbrand-admin-web.wonderfulsea-5402179d.swedencentral.azurecontainerapps.io"            },
+
+        scopes: new[] { 
+            "https://graph.microsoft.com/User.Read", 
+        });
+
+#endif
     }
 }
