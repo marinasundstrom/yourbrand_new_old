@@ -17,7 +17,7 @@ public class AccessTokenProvider : YourBrand.Admin.Services.IAccessTokenProvider
 
     public async Task<string?> GetAccessTokenAsync()
     {
-        var results = await _accessTokenProvider.RequestAccessToken(new AccessTokenRequestOptions() { Scopes = new[] { "myapi" } });
+        var results = await _accessTokenProvider.RequestAccessToken(new AccessTokenRequestOptions() { Scopes = new[] { "catalogapi" } });
 
         if (results.TryGetToken(out var accessToken))
         {

@@ -39,3 +39,7 @@ Metadata:
    - namespace: yourbrand-servicebus
    - queue: get-cart-by-id
 ```
+
+## Entra
+
+Access.

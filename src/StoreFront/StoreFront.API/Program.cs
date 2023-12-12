@@ -6,11 +6,14 @@ using Catalog;
 
 using HealthChecks.UI.Client;
 
+using IdentityModel.Client;
+
 using MassTransit;
 
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Http.Resilience;
+using Microsoft.Identity.Client;
 
 using Steeltoe.Common.Http.Discovery;
 using Steeltoe.Discovery.Client;
@@ -107,7 +110,9 @@ builder.Services
     .AddHealthChecks()
     .AddDbContextCheck<StoreFrontContext>();
 
-AddClients(builder);
+var accessToken = await GetAccessToken(builder.Configuration);
+
+AddClients(builder, accessToken!);
 
 var app = builder.Build();
 
@@ -173,9 +178,13 @@ static async Task SeedData(StoreFrontContext context, IConfiguration configurati
     }
 }
 
-static void AddClients(WebApplicationBuilder builder)
+static void AddClients(WebApplicationBuilder builder, string accessToken)
 {
-    var catalogApiHttpClient = builder.Services.AddCatalogClients(new Uri(builder.Configuration["yourbrand:catalog-svc:url"]!),
+    var catalogApiHttpClient = builder.Services.AddCatalogClients((sp, httpClient) =>
+    {
+        httpClient.BaseAddress = new Uri(builder.Configuration["yourbrand:catalog-svc:url"]!);
+        httpClient.SetBearerToken(accessToken);
+    },
     clientBuilder =>
     {
         clientBuilder.AddStandardResilienceHandler();
@@ -196,6 +205,60 @@ static void AddClients(WebApplicationBuilder builder)
             clientBuilder.AddServiceDiscovery();
         }
     });
+}
+
+static async Task<string?> GetAccessToken(IConfiguration configuration)
+{
+    var isDev = configuration["ASPNETCORE_ENVIRONMENT"] == "Development";
+
+    if (isDev)
+    {
+        return await Local(configuration);
+    }
+
+    return await Production(configuration);
+}
+
+static async Task<string?> Production(IConfiguration configuration)
+{
+    IConfidentialClientApplication app = ConfidentialClientApplicationBuilder.Create(configuration.GetValue<string>("AzureAd:ClientId"))
+           .WithClientSecret(configuration.GetValue<string>("AzureAd:ClientSecret"))
+           .Build();
+
+    var c = app.AcquireTokenForClient(["https://graph.microsoft.com/.default"]);
+    var x = await c.ExecuteAsync();
+    return x.AccessToken;
+}
+
+static async Task<string?> Local(IConfiguration configuration)
+{
+    // discover endpoints from metadata
+    var client = new HttpClient();
+
+    var disco = await client.GetDiscoveryDocumentAsync("https://localhost:5041");
+    if (disco.IsError)
+    {
+        Console.WriteLine(disco.Error);
+        throw new Exception();
+    }
+
+    // request token
+    TokenResponse tokenResponse = await client.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
+    {
+        Address = disco.TokenEndpoint,
+
+        ClientId = configuration.GetValue<string>("ApiClient:ClientId")!,
+        ClientSecret = configuration.GetValue<string>("ApiClient:ClientSecret"),
+        Scope = configuration.GetValue<string>("ApiClient:Scope"),
+    });
+    if (tokenResponse.IsError)
+    {
+        Console.WriteLine(tokenResponse.Error);
+    }
+
+    Console.WriteLine(tokenResponse.Json);
+
+    return tokenResponse.AccessToken;
 }
 
 // INFO: Makes Program class visible to IntegrationTests.
