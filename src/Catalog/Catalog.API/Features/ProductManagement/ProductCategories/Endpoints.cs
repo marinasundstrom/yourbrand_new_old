@@ -19,7 +19,8 @@ public static class Endpoints
         var group = versionedApi.MapGroup("/v{version:apiVersion}/productCategories")
             .WithTags("ProductCategories")
             .HasApiVersion(1, 0)
-            .WithOpenApi();
+            .WithOpenApi()
+            .RequireAuthorization();
 
         group.MapGet("/", GetProductCategories)
             .WithName($"ProductCategories_{nameof(GetProductCategories)}");

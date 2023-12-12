@@ -42,8 +42,7 @@ public static partial class Endpoints
 
         group.MapGet("/", GetProducts)
             .WithName($"Products_{nameof(GetProducts)}")
-            .CacheOutput(OutputCachePolicyNames.GetProducts)
-            .RequireAuthorization();
+            .CacheOutput(OutputCachePolicyNames.GetProducts);
 
         group.MapGet("/{idOrHandle}", GetProductById)
             .WithName($"Products_{nameof(GetProductById)}")
