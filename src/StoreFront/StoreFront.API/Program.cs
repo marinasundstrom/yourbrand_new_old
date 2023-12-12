@@ -112,6 +112,8 @@ builder.Services
 
 var accessToken = await GetAccessToken(builder.Configuration);
 
+Console.WriteLine($"Access token: {accessToken}");
+
 AddClients(builder, accessToken!);
 
 var app = builder.Build();
@@ -222,6 +224,7 @@ static async Task<string?> GetAccessToken(IConfiguration configuration)
 static async Task<string?> Production(IConfiguration configuration)
 {
     IConfidentialClientApplication app = ConfidentialClientApplicationBuilder.Create(configuration.GetValue<string>("AzureAd:ClientId"))
+           .WithTenantId(configuration.GetValue<string>("AzureAd:TenantId"))
            .WithClientSecret(configuration.GetValue<string>("AzureAd:ClientSecret"))
            .Build();
 
