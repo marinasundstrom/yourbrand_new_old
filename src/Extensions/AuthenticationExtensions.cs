@@ -1,9 +1,11 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Microsoft.Identity.Web;
 
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
@@ -12,7 +14,27 @@ namespace YourBrand.Extensions;
 
 public static class AuthenticationExtensions
 {
-    public static IServiceCollection AddAuthenticationServices(this IServiceCollection services)
+    public static IServiceCollection AddAuthenticationServices(this IServiceCollection services, IConfiguration configuration)
+    {
+        var isDev = configuration["ASPNETCORE_ENVIRONMENT"] == "Development";
+
+        if (isDev)
+        {
+            return Dev(services, configuration);
+        }
+
+        return Production(services, configuration);
+    }
+
+    private static IServiceCollection Production(IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddMicrosoftIdentityWebApi(configuration.GetSection("AzureAd"));
+
+        return services;
+    }
+
+    private static IServiceCollection Dev(IServiceCollection services, IConfiguration configuration)
     {
 #if DEBUG
         IdentityModelEventSource.ShowPII = true;
@@ -21,8 +43,12 @@ public static class AuthenticationExtensions
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
                     {
-                        options.Authority = "https://localhost:5041";
-                        options.Audience = "myapi";
+                        options.Authority = configuration.GetValue<string>("Local:Authority");
+                        options.Audience = configuration.GetValue<string>("Local:Audience");
+
+                        Console.WriteLine(options.Authority);
+                        Console.WriteLine("Audience: " + options.Audience);
+
 
                         options.TokenValidationParameters = new TokenValidationParameters()
                         {
@@ -48,11 +74,9 @@ public static class AuthenticationExtensions
                             }
                         };
 
-                        //options.TokenValidationParameters.ValidateAudience = false;
+                        options.TokenValidationParameters.ValidateAudience = false;
 
-                        //options.Audience = "openid";
-
-                        //options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };
+                        options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };
                     });
 
         return services;

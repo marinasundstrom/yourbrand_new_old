@@ -18,7 +18,8 @@ public static class Endpoints
         var group = versionedApi.MapGroup("/v{version:apiVersion}/currencies")
             .WithTags("Currencies")
             .HasApiVersion(1, 0)
-            .WithOpenApi();
+            .WithOpenApi()
+            .RequireAuthorization();
 
         group.MapGet("/", GetCurrencies)
             .WithName($"Currencies_{nameof(GetCurrencies)}");

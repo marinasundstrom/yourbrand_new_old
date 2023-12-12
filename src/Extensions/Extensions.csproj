@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Identity.Web" Version="2.16.0" />
     <PackageReference Include="NSwag.AspNetCore" Version="14.0.0-preview*" />
     <PackageReference Include="OpenTelemetry.Exporter.Console" Version="1.6.0" />
     <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.6.0" />
@@ -23,9 +24,9 @@
     <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore"
       Version="8.0.0" />
     <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="7.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.13" />
-    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis"
-      Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
+    <PackageReference Include="Microsoft.IdentityModel.Logging" Version="7.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.0" />
     <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="2.5.1" />
     <PackageReference Include="Asp.Versioning.Http" Version="7.1.0" />
     <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="7.1.0" />

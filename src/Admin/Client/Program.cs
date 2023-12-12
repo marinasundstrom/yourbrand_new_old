@@ -41,7 +41,8 @@ var baseUri = new Uri(builder.HostEnvironment.BaseAddress + "catalog/");
 var catalogApiHttpClient = builder.Services.AddCatalogClients(baseUri,
 clientBuilder =>
 {
-    //clientBuilder.AddStandardResilienceHandler();
+    clientBuilder.AddHttpMessageHandler<CustomAuthorizationMessageHandler>();
+    clientBuilder.AddStandardResilienceHandler();
 });
 
 bool isDebug = false;

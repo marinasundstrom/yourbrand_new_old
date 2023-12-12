@@ -37,11 +37,13 @@ public static partial class Endpoints
             .WithTags("Products")
             .RequireRateLimiting(RateLimiterPolicyNames.FixedRateLimiter)
             .HasApiVersion(1, 0)
-            .WithOpenApi();
+            .WithOpenApi()
+            .RequireAuthorization();
 
         group.MapGet("/", GetProducts)
             .WithName($"Products_{nameof(GetProducts)}")
-            .CacheOutput(OutputCachePolicyNames.GetProducts);
+            .CacheOutput(OutputCachePolicyNames.GetProducts)
+            .RequireAuthorization();
 
         group.MapGet("/{idOrHandle}", GetProductById)
             .WithName($"Products_{nameof(GetProductById)}")

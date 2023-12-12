@@ -1,4 +1,7 @@
-﻿using Azure.Identity;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+
+using Azure.Identity;
 using Azure.Storage.Blobs;
 
 using Catalog.API.Common;
@@ -13,9 +16,11 @@ using HealthChecks.UI.Client;
 
 using MassTransit;
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Azure;
+using Microsoft.IdentityModel.Tokens;
 
 using Steeltoe.Discovery.Client;
 
@@ -134,6 +139,10 @@ builder.Services.AddScoped<ProductVariantsService>();
 
 builder.Services.AddScoped<ICurrentUserService>(sp => null!);
 
+builder.Services.AddAuthenticationServices(builder.Configuration);
+
+builder.Services.AddAuthorization();
+
 var reverseProxy = builder.Services
 .AddReverseProxy()
     .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
@@ -153,6 +162,10 @@ if (app.Environment.IsDevelopment())
 app.UseOutputCache();
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
+
+app.UseAuthorization();
 
 app.MapControllers();
 
