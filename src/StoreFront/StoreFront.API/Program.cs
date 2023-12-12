@@ -228,7 +228,7 @@ static async Task<string?> Production(IConfiguration configuration)
            .WithClientSecret(configuration.GetValue<string>("AzureAd:ClientSecret"))
            .Build();
 
-    var c = app.AcquireTokenForClient(["https://graph.microsoft.com/.default"]);
+    var c = app.AcquireTokenForClient(configuration.GetValue<string[]>("AzureAd:Scopes"));
     var x = await c.ExecuteAsync();
     return x.AccessToken;
 }
