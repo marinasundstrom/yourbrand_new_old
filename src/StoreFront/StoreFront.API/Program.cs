@@ -225,10 +225,10 @@ static async Task<string?> Production(IConfiguration configuration)
 {
     IConfidentialClientApplication app = ConfidentialClientApplicationBuilder.Create(configuration.GetValue<string>("AzureAd:ClientId"))
            .WithTenantId(configuration.GetValue<string>("AzureAd:TenantId"))
-           .WithClientSecret(configuration.GetValue<string>("AzureAd:ClientSecret"))
+           .WithClientSecret(configuration.GetValue<string>("AzureAd:StoreFront:ClientCredentials:ClientSecret"))
            .Build();
 
-    var c = app.AcquireTokenForClient(configuration.GetSection("AzureAd:Scopes").Get<List<string>>());
+    var c = app.AcquireTokenForClient(configuration.GetSection("AzureAd:StoreFront:Scopes").Get<List<string>>());
     var x = await c.ExecuteAsync();
     return x.AccessToken;
 }
@@ -250,9 +250,9 @@ static async Task<string?> Local(IConfiguration configuration)
     {
         Address = disco.TokenEndpoint,
 
-        ClientId = configuration.GetValue<string>("ApiClient:ClientId")!,
-        ClientSecret = configuration.GetValue<string>("ApiClient:ClientSecret"),
-        Scope = configuration.GetValue<string>("ApiClient:Scope"),
+        ClientId = configuration.GetValue<string>("StoreFront:ClientCredentials:ClientId")!,
+        ClientSecret = configuration.GetValue<string>("StoreFront:ClientCredentials:ClientSecret"),
+        Scope = configuration.GetValue<string>("StoreFront:Scope"),
     });
     if (tokenResponse.IsError)
     {
