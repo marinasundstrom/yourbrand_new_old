@@ -18,12 +18,8 @@ public sealed class CustomAuthorizationMessageHandler : AuthorizationMessageHand
 #else
         ConfigureHandler(
             authorizedUrls: new[] { 
-                "https://yourbrand-admin-web.wonderfulsea-5402179d.swedencentral.azurecontainerapps.io"            },
-
-        scopes: new[] { 
-            "https://graph.microsoft.com/User.Read", 
-        });
-
+                "https://yourbrand-admin-web.wonderfulsea-5402179d.swedencentral.azurecontainerapps.io"            
+            });
 #endif
     }
 }

@@ -63,10 +63,8 @@ else
     {
         builder.Configuration.Bind("AzureAd", options.ProviderOptions.Authentication);
 
-        options.ProviderOptions.DefaultAccessTokenScopes.Add("User.Read");
-
-        options.ProviderOptions.DefaultAccessTokenScopes.Add("Admin.All");
-        options.ProviderOptions.DefaultAccessTokenScopes.Add("Catalog.All");
+        //options.ProviderOptions.DefaultAccessTokenScopes.Add("User.Read");
+        options.ProviderOptions.DefaultAccessTokenScopes.Add("api://6aebaf1f-7160-4a72-bb48-034e661e8c7b/Catalog.All");
 
         options.ProviderOptions.LoginMode = "redirect";
     });
