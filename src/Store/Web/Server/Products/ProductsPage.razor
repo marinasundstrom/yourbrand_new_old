@@ -31,7 +31,12 @@
 
         if(!string.IsNullOrEmpty(Path))
         {
-            var category = await ProductCategoryService.GetProductCategoryById(Path);
+            // Encode
+            var encodedPath = Uri.EscapeDataString(Path);
+
+            Console.WriteLine(encodedPath);
+
+            var category = await ProductCategoryService.GetProductCategoryById(encodedPath);
 
             categoryName = category.Name;
             categoryDescription = category.Description;
