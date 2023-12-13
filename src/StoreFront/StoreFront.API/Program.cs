@@ -110,11 +110,9 @@ builder.Services
     .AddHealthChecks()
     .AddDbContextCheck<StoreFrontContext>();
 
-var accessToken = await GetAccessToken(builder.Configuration);
+AddClients(builder);
 
-Console.WriteLine($"Access token: {accessToken}");
-
-AddClients(builder, accessToken!);
+builder.Services.AddScoped<AuthenticationDelegatingHandler>();
 
 var app = builder.Build();
 
@@ -180,15 +178,16 @@ static async Task SeedData(StoreFrontContext context, IConfiguration configurati
     }
 }
 
-static void AddClients(WebApplicationBuilder builder, string accessToken)
+static void AddClients(WebApplicationBuilder builder)
 {
     var catalogApiHttpClient = builder.Services.AddCatalogClients((sp, httpClient) =>
     {
         httpClient.BaseAddress = new Uri(builder.Configuration["yourbrand:catalog-svc:url"]!);
-        httpClient.SetBearerToken(accessToken);
     },
     clientBuilder =>
     {
+        clientBuilder.AddHttpMessageHandler<AuthenticationDelegatingHandler>();
+
         clientBuilder.AddStandardResilienceHandler();
 
         if (builder.Environment.IsDevelopment())
@@ -207,61 +206,6 @@ static void AddClients(WebApplicationBuilder builder, string accessToken)
             clientBuilder.AddServiceDiscovery();
         }
     });
-}
-
-static async Task<string?> GetAccessToken(IConfiguration configuration)
-{
-    var isDev = configuration["ASPNETCORE_ENVIRONMENT"] == "Development";
-
-    if (isDev)
-    {
-        return await Local(configuration);
-    }
-
-    return await Production(configuration);
-}
-
-static async Task<string?> Production(IConfiguration configuration)
-{
-    IConfidentialClientApplication app = ConfidentialClientApplicationBuilder.Create(configuration.GetValue<string>("AzureAd:ClientId"))
-           .WithTenantId(configuration.GetValue<string>("AzureAd:TenantId"))
-           .WithClientSecret(configuration.GetValue<string>("AzureAd:StoreFront:ClientCredentials:ClientSecret"))
-           .Build();
-
-    var c = app.AcquireTokenForClient(configuration.GetSection("AzureAd:StoreFront:Scopes").Get<List<string>>());
-    var x = await c.ExecuteAsync();
-    return x.AccessToken;
-}
-
-static async Task<string?> Local(IConfiguration configuration)
-{
-    // discover endpoints from metadata
-    var client = new HttpClient();
-
-    var disco = await client.GetDiscoveryDocumentAsync("https://localhost:5041");
-    if (disco.IsError)
-    {
-        Console.WriteLine(disco.Error);
-        throw new Exception();
-    }
-
-    // request token
-    TokenResponse tokenResponse = await client.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
-    {
-        Address = disco.TokenEndpoint,
-
-        ClientId = configuration.GetValue<string>("StoreFront:ClientCredentials:ClientId")!,
-        ClientSecret = configuration.GetValue<string>("StoreFront:ClientCredentials:ClientSecret"),
-        Scope = configuration.GetValue<string>("StoreFront:Scope"),
-    });
-    if (tokenResponse.IsError)
-    {
-        Console.WriteLine(tokenResponse.Error);
-    }
-
-    Console.WriteLine(tokenResponse.Json);
-
-    return tokenResponse.AccessToken;
 }
 
 // INFO: Makes Program class visible to IntegrationTests.
