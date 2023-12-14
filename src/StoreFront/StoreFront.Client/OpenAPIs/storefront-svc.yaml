@@ -128,13 +128,36 @@ paths:
         - ProductCategories
         - ProductCategories
       operationId: ProductCategories_GetProductCategories
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: 1
+            nullable: true
+          x-position: 1
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            nullable: true
+          x-position: 2
+        - name: searchTerm
+          in: query
+          schema:
+            type: string
+            nullable: true
+          x-position: 3
       responses:
         200:
           description: ""
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ProductCategoryTreeRoot"
+                $ref: "#/components/schemas/PagedResultOfProductCategory"
         404:
           description: ""
   /api/v1/productCategories/{id}:
@@ -157,6 +180,28 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ProductCategory"
+        404:
+          description: ""
+  /api/v1/productCategories/tree:
+    get:
+      tags:
+        - ProductCategories
+        - ProductCategories
+      operationId: ProductCategories_GetProductCategoryTree
+      parameters:
+        - name: rootNodeIdOrPath
+          in: query
+          schema:
+            type: string
+            nullable: true
+          x-position: 1
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductCategoryTreeRoot"
         404:
           description: ""
   /api/v1/products:
@@ -454,6 +499,59 @@ components:
         data:
           type: string
           nullable: true
+    PagedResultOfProductCategory:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/ProductCategory"
+        total:
+          type: integer
+          format: int32
+    ProductCategory:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        handle:
+          type: string
+        path:
+          type: string
+        parent:
+          nullable: true
+          oneOf:
+            - $ref: "#/components/schemas/ProductCategoryParent"
+        productsCount:
+          type: integer
+          format: int64
+    ProductCategoryParent:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        handle:
+          type: string
+        path:
+          type: string
+        parent:
+          nullable: true
+          oneOf:
+            - $ref: "#/components/schemas/ProductCategoryParent"
+        productsCount:
+          type: integer
+          format: int64
     ProductCategoryTreeRoot:
       type: object
       additionalProperties: false
@@ -494,48 +592,6 @@ components:
           format: int64
         canAddProducts:
           type: boolean
-    ProductCategoryParent:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: integer
-          format: int64
-        name:
-          type: string
-        handle:
-          type: string
-        path:
-          type: string
-        parent:
-          nullable: true
-          oneOf:
-            - $ref: "#/components/schemas/ProductCategoryParent"
-        productsCount:
-          type: integer
-          format: int64
-    ProductCategory:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: integer
-          format: int64
-        name:
-          type: string
-        description:
-          type: string
-        handle:
-          type: string
-        path:
-          type: string
-        parent:
-          nullable: true
-          oneOf:
-            - $ref: "#/components/schemas/ProductCategoryParent"
-        productsCount:
-          type: integer
-          format: int64
     PagedResultOfProduct:
       type: object
       additionalProperties: false

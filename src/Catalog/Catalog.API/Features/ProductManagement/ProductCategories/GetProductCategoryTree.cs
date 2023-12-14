@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.API.Features.ProductManagement.ProductCategories;
 
-public sealed record GetProductCategoryTree(string? StoreId) : IRequest<Result<ProductCategoryTreeRootDto>>
+public sealed record GetProductCategoryTree(string? StoreId, string? RootNodeIdOrPath) : IRequest<Result<ProductCategoryTreeRootDto>>
 {
     public sealed class Handler(CatalogContext catalogContext = default!) : IRequestHandler<GetProductCategoryTree, Result<ProductCategoryTreeRootDto>>
     {
@@ -24,6 +24,15 @@ public sealed record GetProductCategoryTree(string? StoreId) : IRequest<Result<P
             if (request.StoreId is not null)
             {
                 query = query.Where(x => x.StoreId == request.StoreId);
+            }
+
+            if (!string.IsNullOrEmpty(request.RootNodeIdOrPath))
+            {
+                var isId = int.TryParse(request.RootNodeIdOrPath, out var id);
+
+                query = isId ?
+                        query.Where(category => category.Id == id)
+                        : query.Where(category => category.Path == request.RootNodeIdOrPath);
             }
 
             var productCategories = await query

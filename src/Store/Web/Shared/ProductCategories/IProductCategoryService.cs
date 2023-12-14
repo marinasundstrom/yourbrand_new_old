@@ -2,7 +2,7 @@ namespace BlazorApp.ProductCategories;
 
 public interface IProductCategoryService
 {
-    Task<ProductCategoryTreeRootDto> GetProductCategories(CancellationToken cancellationToken = default);
+    Task<ProductCategoryTreeRootDto> GetProductCategoryTree(string? rootNodeIdOrPath = null, CancellationToken cancellationToken = default);
 
     Task<ProductCategoryDto> GetProductCategoryById(string productCategoryId, CancellationToken cancellationToken = default);
 }

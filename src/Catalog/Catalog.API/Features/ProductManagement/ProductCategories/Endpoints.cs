@@ -32,16 +32,16 @@ public static class Endpoints
 
         */
 
-        group.MapGet("tree", GetProductCategoryTree)
+        group.MapGet("tree/{*idOrPath}", GetProductCategoryTree)
             .WithName($"ProductCategories_{nameof(GetProductCategoryTree)}");
 
         group.MapPost("/", CreateProductCategory)
             .WithName($"ProductCategories_{nameof(CreateProductCategory)}");
 
-        group.MapPut("{idOrPath}", UpdateProductCategoryDetails)
+        group.MapPut("{*idOrPath}", UpdateProductCategoryDetails)
             .WithName($"ProductCategories_{nameof(UpdateProductCategoryDetails)}");
 
-        group.MapDelete("{idOrPath}", DeleteProductCategory)
+        group.MapDelete("{*idOrPath}", DeleteProductCategory)
             .WithName($"ProductCategories_{nameof(DeleteProductCategory)}");
 
         return app;
@@ -68,9 +68,9 @@ public static class Endpoints
     */
 
     private static async Task<Results<Ok<ProductCategoryTreeRootDto>, BadRequest>> GetProductCategoryTree(
-        string? storeId, IMediator mediator, CancellationToken cancellationToken)
+        string? storeId, string? rootNodeIdOrPath, IMediator mediator, CancellationToken cancellationToken)
     {
-        var result = await mediator.Send(new GetProductCategoryTree(storeId), cancellationToken);
+        var result = await mediator.Send(new GetProductCategoryTree(storeId, rootNodeIdOrPath), cancellationToken);
 
         return result.IsSuccess ? TypedResults.Ok(result.GetValue()) : TypedResults.BadRequest();
     }

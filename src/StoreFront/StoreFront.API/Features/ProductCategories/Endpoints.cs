@@ -20,22 +20,33 @@ public static class Endpoints
         productsGroup.MapGet("/", GetProductCategories)
             .WithName($"ProductCategories_{nameof(GetProductCategories)}");
 
-        productsGroup.MapGet("{*id}", GetProductCategoryById)
+        productsGroup.MapGet("{id}", GetProductCategoryById)
             .WithName($"ProductCategories_{nameof(GetProductCategoryById)}");
+
+        productsGroup.MapGet("tree/{*idOrPath}", GetProductCategoryTree)
+            .WithName($"ProductCategories_{nameof(GetProductCategoryTree)}");
 
         return app;
     }
 
-    private static async Task<Results<Ok<ProductCategoryTreeRootDto>, NotFound>> GetProductCategories(IProductCategoriesClient productCategoriesClient = default!, CancellationToken cancellationToken = default)
+    private static async Task<Results<Ok<PagedResult<ProductCategoryDto>>, NotFound>> GetProductCategories(int? page = 1, int? pageSize = 10, string? searchTerm = null, IProductCategoriesClient productCategoriesClient = default!, CancellationToken cancellationToken = default)
     {
-        var tree = await productCategoriesClient.GetProductCategoryTreeAsync(null, cancellationToken);
-        return tree is not null ? TypedResults.Ok(tree.ToProductCategoryTreeRootDto()) : TypedResults.NotFound();
+        var results = await productCategoriesClient.GetProductCategoriesAsync(null, null, false, false, page, pageSize, searchTerm, null, null, cancellationToken);
+        return results is not null ? TypedResults.Ok(
+                new PagedResult<ProductCategoryDto>(results.Items.Select(x => x.ToDto()), results.Total)
+        ) : TypedResults.NotFound();
     }
 
     private static async Task<Results<Ok<ProductCategoryDto>, NotFound>> GetProductCategoryById(string id, IProductCategoriesClient productCategoriesClient, CancellationToken cancellationToken = default)
     {
         var productCategory = await productCategoriesClient.GetProductCategoryByIdAsync(id, cancellationToken);
         return productCategory is not null ? TypedResults.Ok(productCategory.ToDto()) : TypedResults.NotFound();
+    }
+
+    private static async Task<Results<Ok<ProductCategoryTreeRootDto>, NotFound>> GetProductCategoryTree(string? rootNodeIdOrPath, IProductCategoriesClient productCategoriesClient = default!, CancellationToken cancellationToken = default)
+    {
+        var tree = await productCategoriesClient.GetProductCategoryTreeAsync(null, rootNodeIdOrPath, cancellationToken);
+        return tree is not null ? TypedResults.Ok(tree.ToProductCategoryTreeRootDto()) : TypedResults.NotFound();
     }
 }
 

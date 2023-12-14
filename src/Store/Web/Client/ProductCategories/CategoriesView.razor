@@ -5,21 +5,21 @@
 @inject NavigationManager NavigationManager
 @inject PersistentComponentState ApplicationState
 
-@if(categoryTree is not null)
+@if (categoryTreeNodes is not null)
 {
     <CascadingValue Name="Path" Value="path">
-        <ul id="myUL">
-            @*<li>
-                <div class="row">
-                    <div class="col">
-                        <a href="/categories" class="text-decoration-none text-reset @(path == string.Empty ? "active" : null)">
-                            All products
-                        </a>
-                    </div>
-                </div>
-            </li>*@
+    <ul id="myUL">
+        @*<li>
+        <div class="row">
+        <div class="col">
+        <a href="/categories" class="text-decoration-none text-reset @(path == string.Empty ? "active" : null)">
+        All products
+        </a>
+        </div>
+        </div>
+        </li>*@
 
-            @foreach (var node in categoryTree.Categories)
+        @foreach (var node in categoryTreeNodes)
             {
                 <CategoryTreeNodeView @key="node.Id" Node="node" OnClick="OnClick" />
             }
@@ -27,33 +27,51 @@
     </CascadingValue>
 }
 
-@code 
+@code
 {
     private PersistingComponentStateSubscription persistingSubscription;
 
     string? path;
 
     ProductCategoryTreeRootDto? categoryTree;
+    IEnumerable<ProductCategoryTreeNodeDto>? categoryTreeNodes;
 
     protected override async Task OnInitializedAsync()
     {
 
-        persistingSubscription = 
-            ApplicationState.RegisterOnPersisting(PersistData);
+        persistingSubscription =
+        ApplicationState.RegisterOnPersisting(PersistData);
 
-                path = new Uri(NavigationManager.Uri).LocalPath[1..];
-                path = path.Substring(path.IndexOf("/") + 1);
+        path = new Uri(NavigationManager.Uri).LocalPath[1..];
+        path = path.Substring(path.IndexOf("/") + 1);
 
 
-            if (!ApplicationState.TryTakeFromJson<BlazorApp.ProductCategories.ProductCategoryTreeRootDto>(
-                "categoryTree", out var restored))
+        if (!ApplicationState.TryTakeFromJson<BlazorApp.ProductCategories.ProductCategoryTreeRootDto>(
+        "categoryTree", out var restored))
+        {
+            categoryTree = await ProductCategoryService.GetProductCategoryTree(path);
+        }
+        else
+        {
+            categoryTree = restored!;
+        }
+
+        if (categoryTree.Categories.Count() == 1)
+        {
+            categoryTreeNodes = categoryTree.Categories;
+        }
+        else
+        {
+            var n = categoryTree.Categories.FirstOrDefault();
+            if (n?.Parent is null)
             {
-                categoryTree = await ProductCategoryService.GetProductCategories();           
+                categoryTreeNodes = categoryTree.Categories;
             }
             else
             {
-                categoryTree = restored!;
+                categoryTreeNodes = n.SubCategories;
             }
+        }
 
         NavigationManager.LocationChanged += OnLocationChanged;
     }
@@ -76,7 +94,7 @@
         Console.WriteLine("Tree" + path);
     }
 
-     void IDisposable.Dispose()
+    void IDisposable.Dispose()
     {
         persistingSubscription.Dispose();
         NavigationManager.LocationChanged -= OnLocationChanged;

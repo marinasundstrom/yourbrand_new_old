@@ -157,7 +157,7 @@
     if (!ApplicationState.TryTakeFromJson<BlazorApp.ProductCategories.ProductCategoryTreeRootDto>(
     "categoryTree", out var restored))
     {
-      categoryTree = await ProductCategoryService.GetProductCategories();
+      categoryTree = await ProductCategoryService.GetProductCategoryTree();
     }
     else
     {
