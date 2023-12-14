@@ -37,7 +37,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var treeRoot = await ProductCategoriesClient.GetProductCategoryTreeAsync(StoreId);
+        var treeRoot = await ProductCategoriesClient.GetProductCategoryTreeAsync(StoreId, null);
         tree = treeRoot.Categories;
 
         if (CategoryId is not null)

@@ -73,7 +73,7 @@
 
         store = StoreProvider.CurrentStore;
 
-        var treeRoot = await ProductCategoriesClient.GetProductCategoryTreeAsync(store?.Id);
+        var treeRoot = await ProductCategoriesClient.GetProductCategoryTreeAsync(store?.Id, null);
 
         productGroupTreeNodes = treeRoot.Categories;
         productGroupTreeNode = productGroupTreeNodes.FindNode(GroupId.GetValueOrDefault());
@@ -86,7 +86,7 @@
         StoreId = store.Id;
         GroupId = null;
 
-        var treeRoot = await ProductCategoriesClient.GetProductCategoryTreeAsync(store?.Id);
+        var treeRoot = await ProductCategoriesClient.GetProductCategoryTreeAsync(store?.Id, null);
 
         productGroupTreeNodes = treeRoot.Categories;
         productGroupTreeNode = null;
