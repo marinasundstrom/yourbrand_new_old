@@ -64,8 +64,7 @@
           @foreach (var category in categoryTree?.Categories ?? Array.Empty<ProductCategoryTreeNodeDto>())
           {
             <li class="nav-item">
-              @* data-enhance-nav is a workaround *@
-              <NavLink class="nav-link" href="@($"/categories/{category.Path}")" data-enhance-nav="false">
+              <NavLink class="nav-link" href="@($"/categories/{category.Path}")">
                 @category.Name
               </NavLink>
             </li>

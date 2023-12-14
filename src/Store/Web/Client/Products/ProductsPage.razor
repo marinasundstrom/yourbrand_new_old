@@ -1,10 +1,12 @@
-@* page "/categories/{*path}" *@
+@page "/categories/{*path}"
+@attribute [StreamRendering(false)]
 @using BlazorApp.ProductCategories
+@rendermode RenderMode.InteractiveAuto
 @inject IProductCategoryService ProductCategoryService
 
 <AppPageTitle>@(categoryName is null ? "Products" : categoryName)</AppPageTitle>
 
-<Client.Products.ProductsView Page="Page" PageSize="PageSize" SearchTerm="@SearchTerm" Path="@Path" @rendermode="@RenderMode.InteractiveAuto" />
+<Client.Products.ProductsView Page="Page" PageSize="PageSize" SearchTerm="@SearchTerm" Path="@Path" />
 
 @code {
     string? categoryName = null;
