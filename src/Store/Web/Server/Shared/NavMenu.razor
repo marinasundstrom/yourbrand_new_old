@@ -27,7 +27,7 @@
   </symbol>
 </svg>
 
-<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-white shadow-sm">
   <div class="container flex-wrap flex-md-nowrap" aria-label="Main navigation">
     <div>
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
@@ -70,7 +70,7 @@
                   href="@($"/categories/{category.Path}")">
                   @category.Name
                 </a>
-                <ul class="dropdown-menu dropdown-menu bg-light">
+                <ul class="dropdown-menu bg-white">
                   @foreach (var subCategory in category.SubCategories)
                   {
                     <li><a class="dropdown-item" href="@($"/categories/{subCategory.Path}")">@subCategory.Name</a></li>

@@ -177,3 +177,40 @@ img.carousel-item--image {
 input[type="checkbox"] {
     transform: scale(1.5);
 }
+
+.btn {
+    border-radius: 0;
+}
+
+.btn-primary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #1f1f1f;
+    --bs-btn-border-color: #1f1f1f;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: rgb(58, 58, 58);
+    ;
+    --bs-btn-hover-border-color: rgb(58, 58, 58);
+    ;
+    --bs-btn-focus-shadow-rgb: 49, 132, 253;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #333333;
+    --bs-btn-active-border-color: #333333;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #000000;
+    --bs-btn-disabled-border-color: #000000;
+}
+}
+
+.btn-primary:hover {}
+
+.dropdown-menu {
+    border-radius: 0;
+}
+
+.pagination .page-item .page-link {
+    border-radius: 0 !important;
+    --bs-pagination-active-color: #fff;
+    --bs-pagination-active-bg: #1f1f1f;
+    --bs-pagination-active-border-color: #1f1f1f;
+}
