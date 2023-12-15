@@ -20,7 +20,7 @@ public static class Endpoints
         productsGroup.MapGet("/", GetProductCategories)
             .WithName($"ProductCategories_{nameof(GetProductCategories)}");
 
-        productsGroup.MapGet("{id}", GetProductCategoryById)
+        productsGroup.MapGet("{*id}", GetProductCategoryById)
             .WithName($"ProductCategories_{nameof(GetProductCategoryById)}");
 
         productsGroup.MapGet("tree/{*idOrPath}", GetProductCategoryTree)
