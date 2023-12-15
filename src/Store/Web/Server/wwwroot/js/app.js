@@ -60,8 +60,12 @@ function hideNavbarOffcanvas() {
     offcanvas.hide();
 }
 
-const navbarLinks = document.querySelectorAll("#offcanvasNavbar .nav-link")
+const navbarLinks = document.querySelectorAll("#offcanvasNavbar .nav-link, #offcanvasNavbar .dropdown-item")
 for (let navbarLink of navbarLinks) {
+    if (navbarLink.classList.contains("dropdown-toggle")) {
+        continue;
+    }
+
     navbarLink.addEventListener("click", hideNavbarOffcanvas)
 }
 

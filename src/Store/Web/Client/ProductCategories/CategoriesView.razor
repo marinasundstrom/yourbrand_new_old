@@ -45,6 +45,7 @@
         path = new Uri(NavigationManager.Uri).LocalPath[1..];
         path = path.Substring(path.IndexOf("/") + 1);
 
+        Console.WriteLine(path);
 
         if (!ApplicationState.TryTakeFromJson<BlazorApp.ProductCategories.ProductCategoryTreeRootDto>(
         "categoryTree", out var restored))
@@ -56,22 +57,7 @@
             categoryTree = restored!;
         }
 
-        if (categoryTree.Categories.Count() == 1)
-        {
-            categoryTreeNodes = categoryTree.Categories;
-        }
-        else
-        {
-            var n = categoryTree.Categories.FirstOrDefault();
-            if (n?.Parent is null)
-            {
-                categoryTreeNodes = categoryTree.Categories;
-            }
-            else
-            {
-                categoryTreeNodes = n.SubCategories;
-            }
-        }
+        categoryTreeNodes = categoryTree.Categories;
 
         NavigationManager.LocationChanged += OnLocationChanged;
     }

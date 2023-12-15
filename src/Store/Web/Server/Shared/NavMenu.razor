@@ -63,11 +63,29 @@
 
           @foreach (var category in categoryTree?.Categories ?? Array.Empty<ProductCategoryTreeNodeDto>())
           {
-            <li class="nav-item">
-              <NavLink class="nav-link" href="@($"/categories/{category.Path}")">
-                @category.Name
-              </NavLink>
-            </li>
+            if (category.SubCategories.Any())
+            {
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"
+                  href="@($"/categories/{category.Path}")">
+                  @category.Name
+                </a>
+                <ul class="dropdown-menu dropdown-menu bg-light">
+                  @foreach (var subCategory in category.SubCategories)
+                  {
+                    <li><a class="dropdown-item" href="@($"/categories/{subCategory.Path}")">@subCategory.Name</a></li>
+                  }
+                </ul>
+              </li>
+            }
+            else
+            {
+              <li class="nav-item">
+                <NavLink class="nav-link" href="@($"/categories/{category.Path}")">
+                  @category.Name
+                </NavLink>
+              </li>
+            }
           }
         </ul>
         <hr class="d-md-none text-white-50">
