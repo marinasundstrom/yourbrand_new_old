@@ -150,7 +150,21 @@ h1:focus {
 
 @media (max-width: 991.98px) {
     .price {
-        font-size: 0.9rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .discount-label {
+        top: 5% !important;
+        left: 90% !important;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .discount-label {
+        top: 3% !important;
+        left: 92% !important;
     }
 }
 
@@ -179,7 +193,8 @@ input[type="checkbox"] {
 }
 
 :root {
-    --primay-color: #1f1f1f;
+    --primay-color: #373737;
+    --secondary-color: #7a7a7a;
 }
 
 .btn {
@@ -204,9 +219,13 @@ input[type="checkbox"] {
     --bs-btn-disabled-bg: #000000;
     --bs-btn-disabled-border-color: #000000;
 }
-}
 
 .btn-primary:hover {}
+
+.btn-secondary {
+    --bs-btn-color: #ffffff;
+    --bs-btn-bg: #8b8b8b;
+}
 
 .dropdown-menu {
     border-radius: 0;

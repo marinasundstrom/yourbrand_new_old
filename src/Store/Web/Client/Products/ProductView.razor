@@ -2,7 +2,7 @@
 @inject IToastService ToastService
 
 <div class="col card-group">
-    <div class="card">
+    <div class="card position-relative">
         <a href="/products/@Product.Handle">
             <img class="bd-placeholder-img card-img-top shadow" alt="Product image"
                 style="max-width: 100%; height: auto; object-fit: cover; aspect-ratio: 1 / 1;" src="@Product.Image" />
@@ -19,11 +19,11 @@
             <div class="d-flex justify-content-between align-items-center">
                 <div>
                     <span class="price" content="@Product.Price"
-                        style="display: inline-block; font-weight: 500; color: #ca0000; line-height: 0;">@(((decimal)Product.Price).FormatCurrency(currency))</span>
+                        style="display: inline-block; font-weight: 500; color: #ca0000; line-height: 0; margin-right: 10px; ">@(((decimal)Product.Price).FormatCurrency(currency))</span>
                     @if (Product.RegularPrice is not null)
                     {
                         <span class="price text-muted"
-                            style="display: inline-block; text-decoration: line-through; color: gray !important; margin-left: 10px; line-height: 0;">@(((decimal?)Product.RegularPrice)?.FormatCurrency(currency))</span>
+                            style="display: inline-block; text-decoration: line-through; color: gray !important; line-height: 0;">@(((decimal?)Product.RegularPrice)?.FormatCurrency(currency))</span>
                     }
                 </div>
                 <div>
@@ -34,6 +34,13 @@
         <div class="btn-group mt-2">
             @* <button class="btn btn-outline-primary">Purchase</button> *@
         </div>
+        @if(Product.RegularPrice is not null) 
+        {
+            <span class="discount-label position-absolute top-0 start-100 translate-middle text-white bg-red border-0 p-2 fs-md-5" style="background: #e60c0c;">
+                <text>-@(Math.Round((double)(((Product.RegularPrice - Product.Price) / Product.Price) * 100)))%</text>
+                <span class="visually-hidden">unread messages</span>
+            </span>
+        }
     </div>
 </div>
 
