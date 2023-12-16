@@ -9,6 +9,8 @@ public static class Errors
 {
     public readonly static Error ProductNotFound = new("product-not-found", "Product not found", "");
 
+    public readonly static Error ProductPriceExceedsDiscountPrice = new("product-price-exceeds-discount-price", "Product price exceeeds dicount price", "");
+
     public readonly static Error ProductNotDiscounted = new("product-not-discounted", "Product not discounted", "");
 
     public readonly static Error ProductAlreadyDiscounted = new("product-already-discounted", "Product already discounted", "");

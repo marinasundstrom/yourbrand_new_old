@@ -25,6 +25,15 @@ public sealed record UpdateProductPrice(string IdOrHandle, decimal Price) : IReq
                 return Result.Failure(Errors.ProductNotFound);
             }
 
+            if (product.RegularPrice is not null)
+            {
+                var p = product.RegularPrice.GetValueOrDefault();
+                if (request.Price >= p)
+                {
+                    return Result.Failure(Errors.ProductPriceExceedsDiscountPrice);
+                }
+            }
+
             product.Price = request.Price;
 
             await catalogContext.SaveChangesAsync(cancellationToken);

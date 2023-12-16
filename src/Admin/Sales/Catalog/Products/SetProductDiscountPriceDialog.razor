@@ -12,13 +12,17 @@
     <MudDialog>
         <DialogContent>
             <div class="d-flex flex-column py-1">
-                <MudField Label="Regular Price">
-                    Product.Price
+                <MudField Label="Regular Price" Variant="Variant.Outlined" Class="mb-4">
+                    @RegularPrice
                 </MudField>
 
                 <MudNumericField Label="Discount Price" @bind-Value="DiscountPrice" Variant="Variant.Outlined"
                     For="() => DiscountPrice" Class="mb-4" Adornment="Adornment.End" AdornmentText="sek">
                 </MudNumericField>
+
+                @* <MudNumericField Label="Discount Price" @bind-Value="DiscountPercent" Variant="Variant.Outlined"
+                For="() => DiscountPercent" Class="mb-4" Adornment="Adornment.End" AdornmentText="%">
+                </MudNumericField> *@
             </div>
         </DialogContent>
         <DialogActions>
@@ -32,7 +36,7 @@
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
 
     [Parameter]
-    public Product Product { get; set; } = default!;
+    public decimal RegularPrice { get; set; } = default!;
 
     [Parameter]
     public long ProductId { get; set; }
