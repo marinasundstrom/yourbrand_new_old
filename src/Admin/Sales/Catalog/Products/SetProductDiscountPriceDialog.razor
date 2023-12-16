@@ -1,0 +1,55 @@
+@using YourBrand.Catalog
+@using YourBrand.Admin.Services
+@using System.ComponentModel.DataAnnotations
+@inject IProductsClient ProductsClient
+@inject IProductCategoriesClient ProductCategoriesClient
+@inject ISnackbar Snackbar
+@inject IStoreProvider StoreProvider
+
+<EditForm Model="@this" OnValidSubmit="OnSubmit">
+    <DataAnnotationsValidator />
+
+    <MudDialog>
+        <DialogContent>
+            <div class="d-flex flex-column py-1">
+                <MudField Label="Regular Price">
+                    Product.Price
+                </MudField>
+
+                <MudNumericField Label="Discount Price" @bind-Value="DiscountPrice" Variant="Variant.Outlined"
+                    For="() => DiscountPrice" Class="mb-4" Adornment="Adornment.End" AdornmentText="sek">
+                </MudNumericField>
+            </div>
+        </DialogContent>
+        <DialogActions>
+            <MudButton ButtonType="ButtonType.Submit" Color="Color.Primary">Add</MudButton>
+            <MudButton Color="Color.Primary" OnClick="Cancel">Cancel</MudButton>
+        </DialogActions>
+    </MudDialog>
+</EditForm>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public Product Product { get; set; } = default!;
+
+    [Parameter]
+    public long ProductId { get; set; }
+
+    [Required]
+    public decimal DiscountPrice { get; set; }
+
+    async Task OnSubmit()
+    {
+        await ProductsClient.SetProductDiscountPriceAsync(ProductId.ToString(), new
+        SetProductDiscountPriceRequest()
+            {
+                DiscountPrice = DiscountPrice
+            });
+
+        MudDialog.Close(DiscountPrice);
+    }
+
+    void Cancel() => MudDialog.Close(DialogResult.Cancel());
+}
