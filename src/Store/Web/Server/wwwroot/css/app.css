@@ -178,19 +178,23 @@ input[type="checkbox"] {
     transform: scale(1.5);
 }
 
+:root {
+    --primay-color: #1f1f1f;
+}
+
 .btn {
     border-radius: 0;
 }
 
 .btn-primary {
     --bs-btn-color: #fff;
-    --bs-btn-bg: #1f1f1f;
-    --bs-btn-border-color: #1f1f1f;
+    --bs-btn-bg: var(--primay-color);
+    --bs-btn-border-color: var(--primay-color);
     --bs-btn-hover-color: #fff;
     --bs-btn-hover-bg: rgb(58, 58, 58);
-    ;
+
     --bs-btn-hover-border-color: rgb(58, 58, 58);
-    ;
+
     --bs-btn-focus-shadow-rgb: 49, 132, 253;
     --bs-btn-active-color: #fff;
     --bs-btn-active-bg: #333333;
@@ -211,6 +215,17 @@ input[type="checkbox"] {
 .pagination .page-item .page-link {
     border-radius: 0 !important;
     --bs-pagination-active-color: #fff;
-    --bs-pagination-active-bg: #1f1f1f;
-    --bs-pagination-active-border-color: #1f1f1f;
+    --bs-pagination-active-bg: var(--primay-color);
+    --bs-pagination-active-border-color: var(--primay-color);
+}
+
+.card {
+    border-radius: 0;
+}
+
+.accordion {
+    --bs-accordion-border-radius: 0;
+    --bs-accordion-inner-border-radius: 0;
+    --bs-accordion-active-bg: var(--primay-color);
+    --bs-accordion-active-color: #fff;
 }

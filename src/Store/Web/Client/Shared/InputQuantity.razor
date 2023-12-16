@@ -1,7 +1,9 @@
-<div class="input-group mb-2 mr-sm-2 @Class" @attributes="AdditionalAttributes">
-    <button class="btn btn-outline-secondary" @onclick="async () => await SetValue(Value - 1)">-</button>
-    <input type="number" min="@MinValue" max="@MaxValue" class="form-control" style="width: 50px; border: 1px solid; border-radius: 0;" value="@Value" @oninput="async (e) => await SetValue(int.Parse(e.Value.ToString()))" />
-    <button class="btn btn-outline-secondary" @onclick="async () => await SetValue(Value + 1)">+</button>
+<div class="input-group mr-sm-2 @Class" @attributes="AdditionalAttributes">
+    <button class="btn btn-outline-secondary @ButtonClass" @onclick="async () => await SetValue(Value - 1)">-</button>
+    <input type="number" min="@MinValue" max="@MaxValue" class="form-control"
+        style="width: 80px; border: 1px solid; border-radius: 0;" value="@Value"
+        @oninput="async (e) => await SetValue(int.Parse(e.Value.ToString()))" />
+    <button class="btn btn-outline-secondary @ButtonClass" @onclick="async () => await SetValue(Value + 1)">+</button>
 </div>
 
 @code {
@@ -16,6 +18,9 @@
 
     [Parameter]
     public string? Class { get; set; } = null;
+
+    [Parameter]
+    public string? ButtonClass { get; set; } = null;
 
     [Parameter]
     public EventCallback<int> ValueChanged { get; set; }
