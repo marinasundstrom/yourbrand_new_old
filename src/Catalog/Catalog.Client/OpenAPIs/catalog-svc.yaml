@@ -1192,6 +1192,62 @@ paths:
           description: ""
       security:
         - JWT: []
+  /v1/products/{idOrHandle}/price/discount:
+    post:
+      tags:
+        - Products
+        - Products
+      operationId: Products_SetProductDiscountPrice
+      parameters:
+        - name: idOrHandle
+          in: path
+          required: true
+          schema:
+            type: string
+          x-position: 1
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SetProductDiscountPriceRequest"
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ""
+        404:
+          description: ""
+      security:
+        - JWT: []
+  /v1/products/{idOrHandle}/price/restore:
+    post:
+      tags:
+        - Products
+        - Products
+      operationId: Products_RestoreProductRegularPrice
+      parameters:
+        - name: idOrHandle
+          in: path
+          required: true
+          schema:
+            type: string
+          x-position: 1
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RestoreProductRegularPriceReguest"
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ""
+        404:
+          description: ""
+      security:
+        - JWT: []
   /v1/products/{idOrHandle}/image:
     post:
       tags:
@@ -2809,6 +2865,16 @@ components:
         price:
           type: number
           format: decimal
+    SetProductDiscountPriceRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        discountPrice:
+          type: number
+          format: decimal
+    RestoreProductRegularPriceReguest:
+      type: object
+      additionalProperties: false
     UpdateProductHandleRequest:
       type: object
       additionalProperties: false

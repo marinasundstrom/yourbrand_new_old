@@ -59,6 +59,12 @@ public static partial class Endpoints
         group.MapPut("/{idOrHandle}/price", UpdateProductPrice)
             .WithName($"Products_{nameof(UpdateProductPrice)}");
 
+        group.MapPost("/{idOrHandle}/price/discount", SetProductDiscountPrice)
+            .WithName($"Products_{nameof(SetProductDiscountPrice)}");
+
+        group.MapPost("/{idOrHandle}/price/restore", RestoreProductRegularPrice)
+            .WithName($"Products_{nameof(RestoreProductRegularPrice)}");
+
         group.MapPost("/{idOrHandle}/image", UploadProductImage)
             .WithName($"Products_{nameof(UploadProductImage)}")
             .DisableAntiforgery();
@@ -129,6 +135,22 @@ public static partial class Endpoints
         IMediator mediator, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new UpdateProductPrice(idOrHandle, request.Price), cancellationToken);
+
+        return result.IsSuccess ? TypedResults.Ok() : TypedResults.NotFound();
+    }
+
+    private static async Task<Results<Ok, NotFound>> SetProductDiscountPrice(string idOrHandle, SetProductDiscountPriceRequest request,
+        IMediator mediator, CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(new SetProductDiscountPrice(idOrHandle, request.DiscountPrice), cancellationToken);
+
+        return result.IsSuccess ? TypedResults.Ok() : TypedResults.NotFound();
+    }
+
+    private static async Task<Results<Ok, NotFound>> RestoreProductRegularPrice(string idOrHandle, RestoreProductRegularPriceReguest request,
+        IMediator mediator, CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(new RestoreProductRegularPrice(idOrHandle), cancellationToken);
 
         return result.IsSuccess ? TypedResults.Ok() : TypedResults.NotFound();
     }
@@ -226,6 +248,11 @@ public sealed record UpdateProductDetailsRequest(string Name, string Description
 }
 
 public sealed record UpdateProductPriceRequest(decimal Price);
+
+public sealed record SetProductDiscountPriceRequest(decimal DiscountPrice);
+
+
+public sealed record RestoreProductRegularPriceReguest();
 
 public sealed record UpdateProductHandleRequest(string Handle)
 {

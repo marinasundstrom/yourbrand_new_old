@@ -186,7 +186,9 @@ public sealed class ProductPriceUpdatedConsumer(Carts.API.Persistence.CartsConte
 
         await cartsContext.CartItems
             .Where(cartItem => cartItem.ProductId == message.ProductId)
-            .ExecuteUpdateAsync(s => s.SetProperty(e => e.Price, e => message.NewPrice), context.CancellationToken);
+            .ExecuteUpdateAsync(s =>
+                s.SetProperty(e => e.Price, e => message.NewPrice)
+                .SetProperty(e => e.RegularPrice, e => message.RegularPrice), context.CancellationToken);
 
     }
 }

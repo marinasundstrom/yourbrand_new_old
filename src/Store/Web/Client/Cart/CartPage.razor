@@ -40,7 +40,21 @@ else
                                                 <h6 class="mb-2">@cartItem.Name x @cartItem.Quantity</h6>
                                                 <small class="text-muted">@cartItem.Description</small>
                                                 <InputQuantity Class="mt-2" MinValue="0" Value="cartItem.Quantity" ValueChanged="async (v) => await ItemQuantityChanged(cartItem, v)" />
-                                                <p class="small text-muted my-2">@((cartItem.Price * cartItem.Quantity).FormatCurrency(Currency))</p>
+
+                                                <p class="small text-muted my-2">
+                                                        <span
+                                                            style="display: inline-block; font-weight: 500; color: #ca0000 !important; line-height: 0; margin-right: 10px; ">
+                                                            @((cartItem.Price *
+                                                                cartItem.Quantity).FormatCurrency(Currency))</span>
+
+                                                        @if (cartItem.RegularPrice is not null)
+                                                        {
+                                                            <span
+                                                                style="display: inline-block; text-decoration: line-through; color: gray !important; line-height: 0;">
+                                                                @((cartItem.RegularPrice.GetValueOrDefault() *
+                                                                    cartItem.Quantity).FormatCurrency(Currency))</span>
+                                                        }
+                                                    </p>
                                             </div>
 
                                             <div>

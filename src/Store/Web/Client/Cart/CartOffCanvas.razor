@@ -43,8 +43,20 @@
                                                 <div class="py-2">
                                                     <h6 class="mb-2">@cartItem.Name x @cartItem.Quantity</h6>
                                                     <small class="text-muted">@cartItem.Description</small>
-                                                    <p class="small text-muted my-2">@((cartItem.Price *
-                                            cartItem.Quantity).FormatCurrency(currency))</p>
+                                                    <p class="small text-muted my-2">
+                                                        <span
+                                                            style="display: inline-block; font-weight: 500; color: #ca0000 !important; line-height: 0; margin-right: 10px; ">
+                                                            @((cartItem.Price *
+                                                                cartItem.Quantity).FormatCurrency(currency))</span>
+
+                                                        @if (cartItem.RegularPrice is not null)
+                                                        {
+                                                            <span
+                                                                style="display: inline-block; text-decoration: line-through; color: gray !important; line-height: 0;">
+                                                                @((cartItem.RegularPrice.GetValueOrDefault() *
+                                                                    cartItem.Quantity).FormatCurrency(currency))</span>
+                                                        }
+                                                    </p>
                                                 </div>
 
                                                 <div>

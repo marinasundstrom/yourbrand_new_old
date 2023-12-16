@@ -14,6 +14,8 @@ public sealed record ProductPriceUpdated
     public required long ProductId { get; init; }
 
     public required decimal NewPrice { get; init; }
+
+    public decimal? RegularPrice { get; init; }
 }
 
 public sealed record ProductImageUpdated
