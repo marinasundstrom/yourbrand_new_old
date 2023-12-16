@@ -75,6 +75,11 @@ namespace Client.Cart
 
                 HideCartOffCanvas();
             }
+
+            if (!CartService.Items.Any())
+            {
+                HideCartOffCanvas();
+            }
         }
 
         public void Dispose()

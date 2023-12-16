@@ -1,12 +1,26 @@
+@using Client.Shared
 @inject BlazorApp.Cart.ICartService CartService
 @inject IToastService ToastService
 
 <div class="col card-group">
-    <div class="card position-relative">
-        <a href="/products/@Product.Handle">
-            <img class="bd-placeholder-img card-img-top shadow" alt="Product image"
-                style="max-width: 100%; height: auto; object-fit: cover; aspect-ratio: 1 / 1;" src="@Product.Image" />
-        </a>
+    <div class="card">
+        <Badge BadgeClass="top-0 start-100 discount-label" BadgeStyle="padding-right: 20px"
+            IsVisible="@(Product.RegularPrice is not null)">
+            <ChildContent>
+                <a href="/products/@Product.Handle">
+                    <img class="bd-placeholder-img card-img-top shadow" alt="Product image"
+                        style="max-width: 100%; height: auto; object-fit: cover; aspect-ratio: 1 / 1;"
+                        src="@Product.Image" />
+                </a>
+            </ChildContent>
+
+            <BadgeContent>
+                <span class="translate-middle text-white bg-red border-0 p-2 fs-md-5" style="background: #e60c0c;">
+                    <text>-@(Math.Round((double)(((Product.RegularPrice.GetValueOrDefault() - Product.Price) /
+                        Product.Price) * 100)))%</text>
+                </span>
+            </BadgeContent>
+        </Badge>
         <div class="card-body">
             <a href="/products/@Product.Handle" class="text-decoration-none text-reset">
                 <h5 class="card-title mt-2">@Product.Name</h5>
@@ -31,16 +45,9 @@
                 </div>
             </div>
         </div>
-        <div class="btn-group mt-2">
-            @* <button class="btn btn-outline-primary">Purchase</button> *@
-        </div>
-        @if(Product.RegularPrice is not null) 
-        {
-            <span class="discount-label position-absolute top-0 start-100 translate-middle text-white bg-red border-0 p-2 fs-md-5" style="background: #e60c0c;">
-                <text>-@(Math.Round((double)(((Product.RegularPrice - Product.Price) / Product.Price) * 100)))%</text>
-                <span class="visually-hidden">unread messages</span>
-            </span>
-        }
+        @* <div class="btn-group mt-2">
+        <button class="btn btn-outline-primary">Purchase</button>
+        </div> *@
     </div>
 </div>
 

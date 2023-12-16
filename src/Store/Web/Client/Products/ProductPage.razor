@@ -49,8 +49,21 @@ else
 
     <article itemscope itemtype="http://schema.org/Product" class="row gx-5 pt-md-4">
         <div class="col-md-4 mb-4">
-            <img class="bd-placeholder-img card-img-top img-border-rounded shadow" itemprop="image"
-                style="object-fit: cover; aspect-ratio: 1 / 1;" src="@productViewModel.Image" />
+            <Badge BadgeClass="top-0 start-100" BadgeStyle="padding-right: 20px"
+                IsVisible="@(productViewModel.RegularPrice is not null)">
+                <ChildContent>
+                    <img class="bd-placeholder-img card-img-top img-border-rounded shadow" itemprop="image"
+                        style="object-fit: cover; aspect-ratio: 1 / 1;" src="@productViewModel.Image" />
+                </ChildContent>
+
+                <BadgeContent>
+                    <span class="translate-middle text-white bg-red border-0 p-2 fs-5" style="background: #e60c0c;">
+                        <text>-@(Math.Round((double)(((productViewModel.RegularPrice.GetValueOrDefault() -
+                            productViewModel.Price) /
+                            productViewModel.Price) * 100)))%</text>
+                    </span>
+                </BadgeContent>
+            </Badge>
         </div>
 
         <div class="col-md-8 mb-4">
