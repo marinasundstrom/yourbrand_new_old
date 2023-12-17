@@ -8,9 +8,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Carts.API.Features.CartsManagement.Consumers;
 
-public sealed class GetCartsConsumer(MediatR.IMediator mediator) : IConsumer<Carts.Contracts.GetCarts>
+public sealed class GetCartsConsumer(IMediator mediator) : IConsumer<GetCarts>
 {
-    public async Task Consume(ConsumeContext<Carts.Contracts.GetCarts> context)
+    public async Task Consume(ConsumeContext<GetCarts> context)
     {
         var page = context.Message.Page;
         var pageSize = context.Message.PageSize;
@@ -24,39 +24,39 @@ public sealed class GetCartsConsumer(MediatR.IMediator mediator) : IConsumer<Car
             Total = cartsResult.Total
         };
 
-        await context.RespondAsync<PagedCartResult>(result);
+        await context.RespondAsync(result);
     }
 }
 
-public sealed class GetCartByIdConsumer(MediatR.IMediator mediator) : IConsumer<GetCartById>
+public sealed class GetCartByIdConsumer(IMediator mediator) : IConsumer<GetCartById>
 {
-    public async Task Consume(ConsumeContext<Carts.Contracts.GetCartById> context)
+    public async Task Consume(ConsumeContext<GetCartById> context)
     {
         var id = context.Message.Id;
 
         var r = await mediator.Send(new Requests.GetCartById(id), context.CancellationToken);
         var cart = r.GetValue();
 
-        await context.RespondAsync<GetCartByIdResponse>(new GetCartByIdResponse { Cart = cart.Map() });
+        await context.RespondAsync(new GetCartByIdResponse { Cart = cart.Map() });
     }
 }
 
-public sealed class GetCartByTagConsumer(MediatR.IMediator mediator) : IConsumer<GetCartByTag>
+public sealed class GetCartByTagConsumer(IMediator mediator) : IConsumer<GetCartByTag>
 {
-    public async Task Consume(ConsumeContext<Carts.Contracts.GetCartByTag> context)
+    public async Task Consume(ConsumeContext<GetCartByTag> context)
     {
         var id = context.Message.Tag;
 
         var r = await mediator.Send(new Requests.GetCartByTag(id), context.CancellationToken);
         var cart = r.GetValue();
 
-        await context.RespondAsync<GetCartByTagResponse>(new GetCartByTagResponse { Cart = cart.Map() });
+        await context.RespondAsync(new GetCartByTagResponse { Cart = cart.Map() });
     }
 }
 
-public sealed class CreateCartConsumer(MediatR.IMediator mediator) : IConsumer<Carts.Contracts.CreateCart>
+public sealed class CreateCartConsumer(IMediator mediator) : IConsumer<CreateCart>
 {
-    public async Task Consume(ConsumeContext<Carts.Contracts.CreateCart> context)
+    public async Task Consume(ConsumeContext<CreateCart> context)
     {
         var request = context.Message;
 
@@ -64,13 +64,13 @@ public sealed class CreateCartConsumer(MediatR.IMediator mediator) : IConsumer<C
 
         var cart = r.GetValue();
 
-        await context.RespondAsync<CreateCartResponse>(new CreateCartResponse { Cart = cart.Map() });
+        await context.RespondAsync(new CreateCartResponse { Cart = cart.Map() });
     }
 }
 
-public sealed class AddCartItemConsumer(MediatR.IMediator mediator) : IConsumer<Carts.Contracts.AddCartItem>
+public sealed class AddCartItemConsumer(IMediator mediator) : IConsumer<AddCartItem>
 {
-    public async Task Consume(ConsumeContext<Carts.Contracts.AddCartItem> context)
+    public async Task Consume(ConsumeContext<AddCartItem> context)
     {
         var request = context.Message;
 
@@ -89,13 +89,13 @@ public sealed class AddCartItemConsumer(MediatR.IMediator mediator) : IConsumer<
 
         var cartItem = r.GetValue();
 
-        await context.RespondAsync<AddCartItemResponse>(new AddCartItemResponse { CartItem = cartItem.Map() });
+        await context.RespondAsync(new AddCartItemResponse { CartItem = cartItem.Map() });
     }
 }
 
-public sealed class UpdateCartItemPriceConsumer(MediatR.IMediator mediator) : IConsumer<UpdateCartItemPrice>
+public sealed class UpdateCartItemPriceConsumer(IMediator mediator) : IConsumer<UpdateCartItemPrice>
 {
-    public async Task Consume(ConsumeContext<Carts.Contracts.UpdateCartItemPrice> context)
+    public async Task Consume(ConsumeContext<UpdateCartItemPrice> context)
     {
         var cartId = context.Message.CartId;
         var cartItemId = context.Message.CartItemId;
@@ -104,13 +104,13 @@ public sealed class UpdateCartItemPriceConsumer(MediatR.IMediator mediator) : IC
         var r = await mediator.Send(new Requests.UpdateCartItemPrice(cartId, cartItemId, price), context.CancellationToken);
         var cartItem = r.GetValue();
 
-        await context.RespondAsync<UpdateCartItemPriceResponse>(new UpdateCartItemPriceResponse { CartItem = cartItem.Map() });
+        await context.RespondAsync(new UpdateCartItemPriceResponse { CartItem = cartItem.Map() });
     }
 }
 
-public sealed class UpdateCartItemQuantityConsumer(MediatR.IMediator mediator) : IConsumer<UpdateCartItemQuantity>
+public sealed class UpdateCartItemQuantityConsumer(IMediator mediator) : IConsumer<UpdateCartItemQuantity>
 {
-    public async Task Consume(ConsumeContext<Carts.Contracts.UpdateCartItemQuantity> context)
+    public async Task Consume(ConsumeContext<UpdateCartItemQuantity> context)
     {
         var cartId = context.Message.CartId;
         var cartItemId = context.Message.CartItemId;
@@ -119,13 +119,13 @@ public sealed class UpdateCartItemQuantityConsumer(MediatR.IMediator mediator) :
         var r = await mediator.Send(new Requests.UpdateCartItemQuantity(cartId, cartItemId, quantity), context.CancellationToken);
         var cartItem = r.GetValue();
 
-        await context.RespondAsync<UpdateCartItemQuantityResponse>(new UpdateCartItemQuantityResponse { CartItem = cartItem.Map() });
+        await context.RespondAsync(new UpdateCartItemQuantityResponse { CartItem = cartItem.Map() });
     }
 }
 
-public sealed class UpdateCartItemDataConsumer(MediatR.IMediator mediator) : IConsumer<UpdateCartItemData>
+public sealed class UpdateCartItemDataConsumer(IMediator mediator) : IConsumer<UpdateCartItemData>
 {
-    public async Task Consume(ConsumeContext<Carts.Contracts.UpdateCartItemData> context)
+    public async Task Consume(ConsumeContext<UpdateCartItemData> context)
     {
         var cartId = context.Message.CartId;
         var cartItemId = context.Message.CartItemId;
@@ -134,26 +134,26 @@ public sealed class UpdateCartItemDataConsumer(MediatR.IMediator mediator) : ICo
         var r = await mediator.Send(new Requests.UpdateCartItemData(cartId, cartItemId, data), context.CancellationToken);
         var cartItem = r.GetValue();
 
-        await context.RespondAsync<UpdateCartItemDataResponse>(new UpdateCartItemDataResponse { CartItem = cartItem.Map() });
+        await context.RespondAsync(new UpdateCartItemDataResponse { CartItem = cartItem.Map() });
     }
 }
 
-public sealed class RemoveCartItemQuantityConsumer(MediatR.IMediator mediator) : IConsumer<RemoveCartItem>
+public sealed class RemoveCartItemQuantityConsumer(IMediator mediator) : IConsumer<RemoveCartItem>
 {
-    public async Task Consume(ConsumeContext<Carts.Contracts.RemoveCartItem> context)
+    public async Task Consume(ConsumeContext<RemoveCartItem> context)
     {
         var cartId = context.Message.CartId;
         var cartItemId = context.Message.CartItemId;
 
         var r = await mediator.Send(new Requests.RemoveCartItem(cartId, cartItemId), context.CancellationToken);
 
-        await context.RespondAsync<RemoveCartItemResponse>(new RemoveCartItemResponse());
+        await context.RespondAsync(new RemoveCartItemResponse());
     }
 }
 
 public static class Mappings
 {
-    public static Carts.Contracts.Cart Map(this Carts.API.Domain.Entities.Cart cart) => new Carts.Contracts.Cart
+    public static Cart Map(this Domain.Entities.Cart cart) => new()
     {
         Id = cart.Id,
         Tag = cart.Tag,
@@ -161,7 +161,7 @@ public static class Mappings
         Items = cart.Items.Select(cartItem => cartItem.Map())
     };
 
-    public static Carts.Contracts.CartItem Map(this Carts.API.Domain.Entities.CartItem cartItem) => new Carts.Contracts.CartItem
+    public static CartItem Map(this Domain.Entities.CartItem cartItem) => new()
     {
         Id = cartItem.Id,
         Name = cartItem.Name,
@@ -179,7 +179,7 @@ public static class Mappings
     };
 }
 
-public sealed class ProductPriceUpdatedConsumer(Carts.API.Persistence.CartsContext cartsContext) : IConsumer<Catalog.Contracts.ProductPriceUpdated>
+public sealed class ProductPriceUpdatedConsumer(Persistence.CartsContext cartsContext) : IConsumer<Catalog.Contracts.ProductPriceUpdated>
 {
     public async Task Consume(ConsumeContext<Catalog.Contracts.ProductPriceUpdated> context)
     {
@@ -194,7 +194,7 @@ public sealed class ProductPriceUpdatedConsumer(Carts.API.Persistence.CartsConte
     }
 }
 
-public sealed class ProductDetailsUpdatedConsumer(Carts.API.Persistence.CartsContext cartsContext) : IConsumer<Catalog.Contracts.ProductDetailsUpdated>
+public sealed class ProductDetailsUpdatedConsumer(Persistence.CartsContext cartsContext) : IConsumer<Catalog.Contracts.ProductDetailsUpdated>
 {
     public async Task Consume(ConsumeContext<Catalog.Contracts.ProductDetailsUpdated> context)
     {
@@ -208,7 +208,7 @@ public sealed class ProductDetailsUpdatedConsumer(Carts.API.Persistence.CartsCon
     }
 }
 
-public sealed class ProductImageUpdatedConsumer(Carts.API.Persistence.CartsContext cartsContext) : IConsumer<Catalog.Contracts.ProductImageUpdated>
+public sealed class ProductImageUpdatedConsumer(Persistence.CartsContext cartsContext) : IConsumer<Catalog.Contracts.ProductImageUpdated>
 {
     public async Task Consume(ConsumeContext<Catalog.Contracts.ProductImageUpdated> context)
     {
@@ -221,7 +221,7 @@ public sealed class ProductImageUpdatedConsumer(Carts.API.Persistence.CartsConte
 }
 
 
-public sealed class ProductHandleUpdatedConsumer(Carts.API.Persistence.CartsContext cartsContext) : IConsumer<Catalog.Contracts.ProductHandleUpdated>
+public sealed class ProductHandleUpdatedConsumer(Persistence.CartsContext cartsContext) : IConsumer<Catalog.Contracts.ProductHandleUpdated>
 {
     public async Task Consume(ConsumeContext<Catalog.Contracts.ProductHandleUpdated> context)
     {
