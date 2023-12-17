@@ -25,6 +25,10 @@ public sealed class Cart
 
     public IReadOnlyCollection<CartItem> Items => _cartItems;
 
+    public DateTimeOffset Created { get; set; }
+
+    public DateTimeOffset? Updated { get; set; }
+
     public CartItem AddItem(string name, string? image, long? productId, string? productHandle, string description, decimal price, decimal? regularPrice, int quantity, string? data)
     {
         var cartItem = _cartItems.FirstOrDefault(item => item.ProductId == productId && item.Data == data);
@@ -102,8 +106,6 @@ public sealed class CartItem
         RegularPrice = regularPrice;
         Quantity = quantity;
         Data = data;
-
-        Created = DateTimeOffset.UtcNow;
     }
 
     public string Id { get; private set; } = Guid.NewGuid().ToString();
@@ -133,5 +135,7 @@ public sealed class CartItem
         Data = data;
     }
 
-    public DateTimeOffset Created { get; private set; }
+    public DateTimeOffset Created { get; set; }
+
+    public DateTimeOffset? Updated { get; set; }
 }

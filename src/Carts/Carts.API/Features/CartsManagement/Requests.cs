@@ -91,6 +91,7 @@ public sealed record CreateCart(string Tag) : IRequest<Result<Cart>>
         {
             var cart = new Cart(request.Tag);
             cartsContext.Carts.Add(cart);
+            cart.Created = DateTimeOffset.UtcNow;
             await cartsContext.SaveChangesAsync(cancellationToken);
 
             return Result.Success(cart);
@@ -115,6 +116,10 @@ public sealed record AddCartItem(string CartId, string Name, string? Image, long
             }
 
             var cartItem = cart.AddItem(request.Name, request.Image, request.ProductId, request.ProductHandle, request.Description, request.Price, request.RegularPrice, request.Quantity, request.Data);
+
+            var date = DateTimeOffset.UtcNow;
+            cartItem.Created = date;
+            cart.Updated = date;
 
             await cartsContext.SaveChangesAsync(cancellationToken);
 
@@ -146,6 +151,10 @@ public sealed record UpdateCartItemPrice(string CartId, string CartItemId, decim
             }
 
             cart.UpdateCartItemPrice(request.CartItemId, request.Price);
+
+            var date = DateTimeOffset.UtcNow;
+            cartItem.Updated = date;
+            cart.Updated = date;
 
             await cartsContext.SaveChangesAsync(cancellationToken);
 
@@ -179,6 +188,10 @@ public sealed record UpdateCartItemQuantity(string CartId, string CartItemId, in
 
             cart.UpdateCartItemQuantity(request.CartItemId, request.Quantity);
 
+            var date = DateTimeOffset.UtcNow;
+            cartItem.Updated = date;
+            cart.Updated = date;
+
             await cartsContext.SaveChangesAsync(cancellationToken);
 
             return Result.Success(cartItem);
@@ -202,6 +215,9 @@ public sealed record RemoveCartItem(string CartId, string CartItemId) : IRequest
             }
 
             cart.RemoveItem(request.CartItemId!);
+
+            var date = DateTimeOffset.UtcNow;
+            cart.Updated = date;
 
             await cartsContext.SaveChangesAsync(cancellationToken);
 
@@ -262,6 +278,10 @@ public sealed record UpdateCartItemData(string CartId, string CartItemId, string
             }
 
             cartItem.UpdateData(request.Data);
+
+            var date = DateTimeOffset.UtcNow;
+            cartItem.Updated = date;
+            cart.Updated = date;
 
             await cartsContext.SaveChangesAsync(cancellationToken);
 

@@ -174,7 +174,8 @@ public static class Mappings
         Quantity = cartItem.Quantity,
         Total = cartItem.Total,
         Data = cartItem.Data,
-        Created = cartItem.Created
+        Created = cartItem.Created,
+        Updated = cartItem.Updated
     };
 }
 

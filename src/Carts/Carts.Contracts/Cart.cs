@@ -22,4 +22,5 @@ public sealed record CartItem
     public decimal Total { get; init; }
     public string? Data { get; init; }
     public DateTimeOffset Created { get; init; }
+    public DateTimeOffset? Updated { get; init; }
 }
