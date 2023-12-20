@@ -31,6 +31,7 @@ Then assign the role ``AcrPull`` to allow container apps to pull images from ACR
 | ``yourbrand-admin-web``       | AcrPull |
 | ``yourbrand-catalog-svc``     | AcrPull |
 | ``yourbrand-carts-svc``       | AcrPull |
+| ``yourbrand-sales-svc``       | AcrPull |
 | ``yourbrand-storefront-svc``  | AcrPull |
 
 ### Container apps
@@ -53,6 +54,7 @@ Then assign the role ``App Configuration Data Reader`` to resources according to
 | ``yourbrand-admin-web``         | App Configuration Data Reader  |
 | ``yourbrand-catalog-svc``       | App Configuration Data Reader  |
 | ``yourbrand-carts-svc``         | App Configuration Data Reader  |
+| ``yourbrand-sales-svc``         | App Configuration Data Reader  |
 | ``yourbrand-storefront-svc``    | App Configuration Data Reader  |
 
 ## Key Vault access
@@ -69,6 +71,7 @@ Then assign the role ``Key Vault Secrets User`` to resources according to this:
 | ``yourbrand-admin-web``         | Key Vault Secrets User  |
 | ``yourbrand-catalog-svc``       | Key Vault Secrets User  |
 | ``yourbrand-carts-svc``         | Key Vault Secrets User  |
+| ``yourbrand-sales-svc``         | Key Vault Secrets User  |
 | ``yourbrand-storefront-svc``    | Key Vault Secrets User  |
 
 ## Service bus access
@@ -83,6 +86,7 @@ Then assign the role ``Azure Service Bus Data Owner`` to resources according to 
 | ``yourbrand-admin-web``         | Azure Service Bus Data Owner  |
 | ``yourbrand-catalog-svc``       | Azure Service Bus Data Owner  |
 | ``yourbrand-carts-svc``         | Azure Service Bus Data Owner  |
+| ``yourbrand-sales-svc``         | Azure Service Bus Data Owner  |
 | ``yourbrand-storefront-svc``    | Azure Service Bus Data Owner  |
 
 These permissions are required so that the container apps can set up topics and subscriptions.
@@ -105,6 +109,7 @@ Assign these role ``Contributor`` to the following Container apps:
 |--------                         |----           |
 | ``yourbrand-catalog-svc``       | Contributor   |
 | ``yourbrand-carts-svc``         | Contributor   |
+| ``yourbrand-sales-svc``         | Contributor   |
 | ``yourbrand-storefront-svc``    | Contributor   |
 
 _This list might change as more  container apps and databases are added._
@@ -129,6 +134,14 @@ And, in ``yourbrand-carts-db`` run this to create user for ``yourbrand-carts-svc
 CREATE USER [yourbrand-carts-svc] FROM EXTERNAL PROVIDER
 ALTER ROLE db_datareader ADD MEMBER [yourbrand-carts-svc]
 ALTER ROLE db_datawriter ADD MEMBER [yourbrand-carts-svc]
+```
+
+And, in ``yourbrand-sales-db`` run this to create user for ``yourbrand-sales-svc``:
+
+```sql
+CREATE USER [yourbrand-sales-svc] FROM EXTERNAL PROVIDER
+ALTER ROLE db_datareader ADD MEMBER [yourbrand-sales-svc]
+ALTER ROLE db_datawriter ADD MEMBER [yourbrand-sales-svc]
 ```
 
 And, in ``yourbrand-storefront-db`` run this to create user for ``yourbrand-storefront-svc``:

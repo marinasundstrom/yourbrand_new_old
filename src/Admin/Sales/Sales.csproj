@@ -29,6 +29,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Catalog\Resources.resx">
+      <!-- Tell Visual Studio that MSBuild will do the generation. -->
+      <Generator>MSBuild:Compile</Generator>
+      <LastGenOutput>CatalogResources.Designer.cs</LastGenOutput>
+      <!-- Put generated files in the 'obj' folder. -->
+      <StronglyTypedFileName>$(IntermediateOutputPath)\CatalogResources.Designer.cs</StronglyTypedFileName>
+      <StronglyTypedLanguage>CSharp</StronglyTypedLanguage>
+      <StronglyTypedNamespace>YourBrand.Admin.Sales.Catalog</StronglyTypedNamespace>
+      <StronglyTypedClassName>Resources</StronglyTypedClassName>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Localization" Version="8.0.0" />
@@ -45,6 +58,7 @@
     <ProjectReference Include="..\Shell\Shell.csproj" />
     <ProjectReference Include="..\Services\Services.csproj" />
     <ProjectReference Include="..\..\Catalog\Catalog.Client\Catalog.Client.csproj" />
+    <ProjectReference Include="..\..\Sales\Sales.Client\Sales.Client.csproj" />
   </ItemGroup>
 
 </Project>

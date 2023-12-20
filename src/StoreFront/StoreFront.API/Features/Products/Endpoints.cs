@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
+using StoreFront.API.Features.Products.Categories;
+
 using YourBrand.Catalog;
 
 namespace StoreFront.API.Features.Products;
@@ -9,9 +11,11 @@ public static class Endpoints
 {
     public static IEndpointRouteBuilder MapProductsEndpoints(this IEndpointRouteBuilder app)
     {
+        app.MapProductCategoriesEndpoints();
+
         var versionedApi = app.NewVersionedApi("Products");
 
-        var productsGroup = versionedApi.MapGroup("/api/v{version:apiVersion}/products")
+        var productsGroup = versionedApi.MapGroup("/v{version:apiVersion}/products")
             .WithTags("Products")
             .HasApiVersion(1, 0)
             .WithOpenApi()

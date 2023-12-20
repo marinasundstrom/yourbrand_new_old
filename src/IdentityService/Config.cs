@@ -15,15 +15,17 @@ public static class Config
     public static IEnumerable<ApiResource> ApiResources =>
         new ApiResource[]
         {
-                // the api requires the role claim
                 new ApiResource("catalogapi", "The Catalog API", new[] { JwtClaimTypes.Name, JwtClaimTypes.PreferredUserName, JwtClaimTypes.Email, JwtClaimTypes.Role })
                 {
                     Scopes = new string[] { "catalogapi" }
                 },
-                // the api requires the role claim
                 new ApiResource("cartsapi", "The Carts API", new[] { JwtClaimTypes.Name, JwtClaimTypes.PreferredUserName, JwtClaimTypes.Email, JwtClaimTypes.Role })
                 {
                     Scopes = new string[] { "cartsapi" }
+                },
+                new ApiResource("salesapi", "The Carts API", new[] { JwtClaimTypes.Name, JwtClaimTypes.PreferredUserName, JwtClaimTypes.Email, JwtClaimTypes.Role })
+                {
+                    Scopes = new string[] { "salesapi" }
                 }
         };
 
@@ -32,6 +34,7 @@ public static class Config
         {
             new ApiScope("catalogapi", "Access the Catalog API"),
             new ApiScope("cartsapi", "Access the Carts API"),
+            new ApiScope("salesapi", "Access the Carts API")
         };
 
     public static IEnumerable<Client> Clients =>
@@ -44,7 +47,7 @@ public static class Config
                 RequirePkce = true,
                 RequireClientSecret = false,
                 AllowedCorsOrigins = { "https://localhost:5001" },
-                AllowedScopes = { "openid", "profile", "email", "catalogapi" },
+                AllowedScopes = { "openid", "profile", "email", "catalogapi", "salesapi" },
                 RedirectUris = { "https://localhost:5001/authentication/login-callback" },
                 PostLogoutRedirectUris = { "https://localhost:5001/" },
                 Enabled = true
@@ -63,7 +66,7 @@ public static class Config
                 },
 
                 // scopes that client has access to
-                AllowedScopes = { "profile", "email", "catalogapi", "cartsapi" },
+                AllowedScopes = { "profile", "email", "catalogapi", "cartsapi", "salesapi" },
             }
         };
 }

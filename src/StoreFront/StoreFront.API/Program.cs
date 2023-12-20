@@ -18,8 +18,9 @@ using Microsoft.Identity.Client;
 using Steeltoe.Common.Http.Discovery;
 using Steeltoe.Discovery.Client;
 
+using StoreFront.API;
 using StoreFront.API.Features.Cart;
-using StoreFront.API.Features.ProductCategories;
+using StoreFront.API.Features.Products.Categories;
 using StoreFront.API.Features.Products;
 using StoreFront.API.Persistence;
 
@@ -27,6 +28,8 @@ using YourBrand;
 using YourBrand.Carts;
 using YourBrand.Catalog;
 using YourBrand.Extensions;
+using YourBrand.Sales;
+using StoreFront.API.Features.Checkout;
 
 string ServiceName = "StoreFront.API";
 
@@ -74,6 +77,8 @@ builder.Services.AddMediatR(x => x.RegisterServicesFromAssemblyContaining<Progra
 
 builder.Services.AddCartServices();
 
+builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+
 builder.Services.AddMassTransit(x =>
 {
     x.SetKebabCaseEndpointNameFormatter();
@@ -112,7 +117,7 @@ builder.Services
 
 AddClients(builder);
 
-builder.Services.AddScoped<AuthenticationDelegatingHandler>();
+builder.Services.AddTransient<AuthenticationDelegatingHandler>();
 
 var app = builder.Build();
 
@@ -131,8 +136,8 @@ app.UseHttpsRedirection();
 app.UseCors();
 
 app.MapCartEndpoints()
-    .MapProductCategoriesEndpoints()
-    .MapProductsEndpoints();
+    .MapProductsEndpoints()
+    .MapCheckoutEndpoints();
 
 app.MapHealthChecks("/healthz", new HealthCheckOptions()
 {
@@ -199,6 +204,21 @@ static void AddClients(WebApplicationBuilder builder)
     var cartsApiHttpClient = builder.Services.AddCartsClient(new Uri(builder.Configuration["yourbrand:carts-svc:url"]!),
     clientBuilder =>
     {
+        clientBuilder.AddHttpMessageHandler<AuthenticationDelegatingHandler>();
+
+        clientBuilder.AddStandardResilienceHandler();
+
+        if (builder.Environment.IsDevelopment())
+        {
+            clientBuilder.AddServiceDiscovery();
+        }
+    });
+
+    var salesApiHttpClient = builder.Services.AddSalesClients(new Uri(builder.Configuration["yourbrand:sales-svc:url"]!),
+    clientBuilder =>
+    {
+        clientBuilder.AddHttpMessageHandler<AuthenticationDelegatingHandler>();
+
         clientBuilder.AddStandardResilienceHandler();
 
         if (builder.Environment.IsDevelopment())

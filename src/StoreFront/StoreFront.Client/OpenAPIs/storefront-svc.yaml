@@ -6,7 +6,7 @@ info:
 servers:
   - url: https://localhost:7174
 paths:
-  /api/v1/cart:
+  /v1/cart:
     get:
       tags:
         - Cart
@@ -21,7 +21,7 @@ paths:
                 $ref: "#/components/schemas/Cart"
         404:
           description: ""
-  /api/v1/cart/items:
+  /v1/cart/items:
     post:
       tags:
         - Cart
@@ -44,7 +44,7 @@ paths:
                 $ref: "#/components/schemas/CartItem"
         404:
           description: ""
-  /api/v1/cart/items/{cartItemId}/quantity:
+  /v1/cart/items/{cartItemId}/quantity:
     put:
       tags:
         - Cart
@@ -74,7 +74,7 @@ paths:
                 $ref: "#/components/schemas/CartItem"
         404:
           description: ""
-  /api/v1/cart/items/{cartItemId}/data:
+  /v1/cart/items/{cartItemId}/data:
     put:
       tags:
         - Cart
@@ -104,7 +104,7 @@ paths:
                 $ref: "#/components/schemas/CartItem"
         404:
           description: ""
-  /api/v1/cart/items/{cartItemId}:
+  /v1/cart/items/{cartItemId}:
     delete:
       tags:
         - Cart
@@ -122,7 +122,7 @@ paths:
           description: ""
         404:
           description: ""
-  /api/v1/productCategories:
+  /v1/productCategories:
     get:
       tags:
         - ProductCategories
@@ -160,7 +160,7 @@ paths:
                 $ref: "#/components/schemas/PagedResultOfProductCategory"
         404:
           description: ""
-  /api/v1/productCategories/{id}:
+  /v1/productCategories/{id}:
     get:
       tags:
         - ProductCategories
@@ -182,7 +182,7 @@ paths:
                 $ref: "#/components/schemas/ProductCategory"
         404:
           description: ""
-  /api/v1/productCategories/tree:
+  /v1/productCategories/tree:
     get:
       tags:
         - ProductCategories
@@ -204,7 +204,7 @@ paths:
                 $ref: "#/components/schemas/ProductCategoryTreeRoot"
         404:
           description: ""
-  /api/v1/products:
+  /v1/products:
     get:
       tags:
         - Products
@@ -248,7 +248,7 @@ paths:
                 $ref: "#/components/schemas/PagedResultOfProduct"
         404:
           description: ""
-  /api/v1/products/{productIdOrHandle}:
+  /v1/products/{productIdOrHandle}:
     get:
       tags:
         - Products
@@ -270,7 +270,7 @@ paths:
                 $ref: "#/components/schemas/Product"
         404:
           description: ""
-  /api/v1/products/{productIdOrHandle}/findVariant:
+  /v1/products/{productIdOrHandle}/findVariant:
     post:
       tags:
         - Products
@@ -303,7 +303,7 @@ paths:
                 $ref: "#/components/schemas/Product"
         404:
           description: ""
-  /api/v1/products/{productIdOrHandle}/find:
+  /v1/products/{productIdOrHandle}/find:
     post:
       tags:
         - Products
@@ -338,7 +338,7 @@ paths:
                   $ref: "#/components/schemas/Product"
         404:
           description: ""
-  /api/v1/products/{productIdOrHandle}/variants:
+  /v1/products/{productIdOrHandle}/variants:
     get:
       tags:
         - Products
@@ -380,7 +380,7 @@ paths:
                 $ref: "#/components/schemas/PagedResultOfProduct"
         404:
           description: ""
-  ? /api/v1/products/{productIdOrHandle}/attributes/{attributeId}/availableValuesForVariant
+  ? /v1/products/{productIdOrHandle}/attributes/{attributeId}/availableValuesForVariant
   : post:
       tags:
         - Products
@@ -420,6 +420,23 @@ paths:
                 items:
                   $ref: "#/components/schemas/AttributeValue"
         400:
+          description: ""
+  /v1/checkout:
+    post:
+      tags:
+        - Checkout
+        - Checkout
+      operationId: Checkout_Checkout
+      requestBody:
+        x-name: dto
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Checkout"
+        required: true
+        x-position: 1
+      responses:
+        200:
           description: ""
 components:
   schemas:
@@ -832,6 +849,66 @@ components:
           type: integer
           format: int32
           nullable: true
+    Checkout:
+      type: object
+      additionalProperties: false
+      properties:
+        billingDetails:
+          $ref: "#/components/schemas/BillingDetails"
+        shippingDetails:
+          $ref: "#/components/schemas/ShippingDetails"
+    BillingDetails:
+      type: object
+      additionalProperties: false
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        ssn:
+          type: string
+          nullable: true
+        phoneNumber:
+          type: string
+        email:
+          type: string
+        address:
+          $ref: "#/components/schemas/Address"
+    Address:
+      type: object
+      additionalProperties: false
+      properties:
+        thoroughfare:
+          type: string
+        premises:
+          type: string
+          nullable: true
+        subPremises:
+          type: string
+          nullable: true
+        postalCode:
+          type: string
+        locality:
+          type: string
+        subAdministrativeArea:
+          type: string
+        administrativeArea:
+          type: string
+        country:
+          type: string
+    ShippingDetails:
+      type: object
+      additionalProperties: false
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        careOf:
+          type: string
+          nullable: true
+        address:
+          $ref: "#/components/schemas/Address"
   securitySchemes:
     JWT:
       type: apiKey

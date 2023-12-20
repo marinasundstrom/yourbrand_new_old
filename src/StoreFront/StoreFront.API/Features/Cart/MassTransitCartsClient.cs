@@ -88,6 +88,16 @@ public sealed class MassTransitCartsClient(
 
         var response = await removeCartItemClient.GetResponse<Carts.Contracts.RemoveCartItemResponse>(request2, cancellationToken);
     }
+
+    public async Task ClearCart(string cartId, CancellationToken cancellationToken = default)
+    {
+        var request2 = new Carts.Contracts.ClearCart
+        {
+            CartId = "test"
+        };
+
+        var response = await removeCartItemClient.GetResponse<Carts.Contracts.ClearCartResponse>(request2, cancellationToken);
+    }
 }
 
 public static class Mapper

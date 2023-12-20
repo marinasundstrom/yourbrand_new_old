@@ -21,6 +21,7 @@ Create a container app environment with containers:
 * ``yourbrand-store-web``
 * ``yourbrand-catalog-svc``
 * ``yourbrand-carts-svc``
+* ``yourbrand-sales-svc``
 * ``yourbrand-storefront-svc``
 
 Make sure that the container of each container app has a system-assigned managed identity.
@@ -35,6 +36,7 @@ Create a SQL Server and the following database:
 
 * ``yourbrand-catalog-db``
 * ``yourbrand-carts-db``
+* ``yourbrand-sales-db``
 * ``yourbrand-storefront-db``
 
 Enable password for connection string used by migrations.

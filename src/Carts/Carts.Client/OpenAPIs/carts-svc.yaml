@@ -285,6 +285,24 @@ paths:
                 $ref: "#/components/schemas/CartItem"
         404:
           description: ""
+  /v1/carts/{cartId}/items:
+    delete:
+      tags:
+        - Carts
+        - Carts
+      operationId: Carts_ClearCart
+      parameters:
+        - name: cartId
+          in: path
+          required: true
+          schema:
+            type: string
+          x-position: 1
+      responses:
+        200:
+          description: ""
+        404:
+          description: ""
 components:
   schemas:
     PagedResultOfCart:
@@ -313,6 +331,13 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/CartItem"
+        created:
+          type: string
+          format: date-time
+        updated:
+          type: string
+          format: date-time
+          nullable: true
     CartItem:
       type: object
       additionalProperties: false
@@ -352,6 +377,10 @@ components:
         created:
           type: string
           format: date-time
+        updated:
+          type: string
+          format: date-time
+          nullable: true
     CreateCartRequest:
       type: object
       additionalProperties: false

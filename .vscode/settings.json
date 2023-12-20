@@ -57,6 +57,17 @@
         {
             "splitTerminals": [
                 {
+                    "name": "Sales service",
+                    "commands": [
+                        "dotnet run --project src/Sales/Sales.API"
+                    ],
+                    "shouldRunCommands": false
+                }
+            ]
+        },
+        {
+            "splitTerminals": [
+                {
                     "name": "Carts service",
                     "commands": [
                         "dotnet run --project src/Carts/Carts.API"

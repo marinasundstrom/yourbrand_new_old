@@ -13,7 +13,7 @@ public sealed class CustomAuthorizationMessageHandler : AuthorizationMessageHand
         ConfigureHandler(
             authorizedUrls: new[] { "https://localhost:5001" },
 
-        scopes: new[] { "openid", "profile", "catalogapi" });
+        scopes: new[] { "openid", "profile", "catalogapi", "salesapi" });
 
 #else
         ConfigureHandler(

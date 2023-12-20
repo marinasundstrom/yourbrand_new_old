@@ -51,6 +51,9 @@ public static class Endpoints
         group.MapDelete("{cartId}/items/{id}", RemoveCartItem)
             .WithName($"Carts_{nameof(RemoveCartItem)}");
 
+        group.MapDelete("{cartId}/items", ClearCart)
+            .WithName($"Carts_{nameof(ClearCart)}");
+
         return app;
     }
 
@@ -195,6 +198,18 @@ public static class Endpoints
         }
 
         if (result.HasError(Errors.CartItemNotFound))
+        {
+            return TypedResults.NotFound();
+        }
+
+        return TypedResults.Ok();
+    }
+
+    private static async Task<Results<Ok, NotFound>> ClearCart(string cartId, IMediator mediator = default!, CancellationToken cancellationToken = default!)
+    {
+        var result = await mediator.Send(new ClearCart(cartId), cancellationToken);
+
+        if (result.HasError(Errors.CartNotFound))
         {
             return TypedResults.NotFound();
         }

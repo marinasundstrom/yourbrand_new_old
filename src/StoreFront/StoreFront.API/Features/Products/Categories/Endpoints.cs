@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 using YourBrand.Catalog;
 
-namespace StoreFront.API.Features.ProductCategories;
+namespace StoreFront.API.Features.Products.Categories;
 
 public static class Endpoints
 {
@@ -11,7 +11,7 @@ public static class Endpoints
     {
         var versionedApi = app.NewVersionedApi("ProductCategories");
 
-        var productsGroup = versionedApi.MapGroup("/api/v{version:apiVersion}/productCategories")
+        var productsGroup = versionedApi.MapGroup("/v{version:apiVersion}/productCategories")
             .WithTags("ProductCategories")
             .HasApiVersion(1, 0)
             .WithOpenApi()
@@ -20,6 +20,7 @@ public static class Endpoints
         productsGroup.MapGet("/", GetProductCategories)
             .WithName($"ProductCategories_{nameof(GetProductCategories)}");
 
+        // {*id} for Swagger
         productsGroup.MapGet("{*id}", GetProductCategoryById)
             .WithName($"ProductCategories_{nameof(GetProductCategoryById)}");
 

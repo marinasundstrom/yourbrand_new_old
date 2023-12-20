@@ -32,7 +32,9 @@ var baseUri = new Uri(builder.HostEnvironment.BaseAddress + "storefront/");
 var catalogApiHttpClient = builder.Services.AddStoreFrontClients(baseUri,
 clientBuilder =>
 {
-    //clientBuilder.AddStandardResilienceHandler();
+#if !DEBUG
+    clientBuilder.AddStandardResilienceHandler();
+#endif
 });
 
 builder.Services

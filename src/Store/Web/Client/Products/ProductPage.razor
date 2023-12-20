@@ -122,7 +122,7 @@ else
 
             @if (productViewModel.Variants is not null && productViewModel.Variants.Any())
             {
-                <h4 class="mt-4">@(productViewModel.Variants.First().Attributes.FirstOrDefault(x =>
+                <h4 class="mt-5">@(productViewModel.Variants.First().Attributes.FirstOrDefault(x =>
             x.IsMainAttribute)?.Attribute?.Name ?? "Variants")</h4>
 
                 <div class="d-flex">
@@ -161,7 +161,7 @@ else
                         @foreach (var attributeGroup in productViewModel.AttributeGroups)
                         {
                             <div @key="@attributeGroup.Id">
-                                <h4 class="mt-4">@(attributeGroup.Name ?? "Attributes")</h4>
+                                <h4 class="mt-5">@(attributeGroup.Name ?? "Attributes")</h4>
 
                                 @foreach (var itemAttribute in attributeGroup.Attributes)
                                 {
@@ -197,7 +197,7 @@ else
                         @foreach (var optionGroup in productViewModel.OptionGroups)
                         {
                             <div @key="@optionGroup.Id">
-                                <h4 class="mt-4">@(optionGroup.Name ?? "Options")</h4>
+                                <h4 class="mt-5">@(optionGroup.Name ?? "Options")</h4>
 
                                 @if (optionGroup.Max is not null)
                                 {

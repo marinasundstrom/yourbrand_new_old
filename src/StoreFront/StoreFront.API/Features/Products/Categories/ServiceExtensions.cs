@@ -1,4 +1,4 @@
-namespace StoreFront.API.Features.ProductCategories;
+namespace StoreFront.API.Features.Products.Categories;
 
 public static class ServiceExtensions
 {

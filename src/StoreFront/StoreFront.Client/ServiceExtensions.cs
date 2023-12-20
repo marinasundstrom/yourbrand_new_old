@@ -11,8 +11,12 @@ public static class ServiceExtensions
             http.BaseAddress = baseUrl;
         }, configureBuilder);
 
-
         services.AddCartClient((sp, http) =>
+        {
+            http.BaseAddress = baseUrl;
+        }, configureBuilder);
+
+        services.AddCheckoutClient((sp, http) =>
         {
             http.BaseAddress = baseUrl;
         }, configureBuilder);
@@ -25,6 +29,8 @@ public static class ServiceExtensions
         services.AddCatalogClients(configureClient, configureBuilder);
 
         services.AddCartClient(configureClient, configureBuilder);
+
+        services.AddCheckoutClient(configureClient, configureBuilder);
 
         return services;
     }
@@ -52,6 +58,18 @@ public static class ServiceExtensions
 
         services.AddHttpClient<ICartClient>("StoreFront")
             .AddTypedClient<ICartClient>((http, sp) => new YourBrand.StoreFront.CartClient(http));
+
+        return services;
+    }
+
+    public static IServiceCollection AddCheckoutClient(this IServiceCollection services, Action<IServiceProvider, HttpClient> configureClient, Action<IHttpClientBuilder>? configureBuilder = null)
+    {
+        IHttpClientBuilder builder = services.AddHttpClient("StoreFront", configureClient);
+
+        configureBuilder?.Invoke(builder);
+
+        services.AddHttpClient<ICheckoutClient>("StoreFront")
+            .AddTypedClient<ICheckoutClient>((http, sp) => new YourBrand.StoreFront.CheckoutClient(http));
 
         return services;
     }

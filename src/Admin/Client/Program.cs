@@ -14,6 +14,7 @@ using YourBrand.Admin.Services;
 using YourBrand.Catalog;
 using YourBrand.Client;
 using YourBrand.Admin.Sales;
+using YourBrand.Sales;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
@@ -39,6 +40,15 @@ builder.Services.AddMudServices(config =>
 var baseUri = new Uri(builder.HostEnvironment.BaseAddress + "catalog/");
 
 var catalogApiHttpClient = builder.Services.AddCatalogClients(baseUri,
+clientBuilder =>
+{
+    clientBuilder.AddHttpMessageHandler<CustomAuthorizationMessageHandler>();
+    clientBuilder.AddStandardResilienceHandler();
+});
+
+var baseUri2 = new Uri(builder.HostEnvironment.BaseAddress + "sales/");
+
+var salesApiHttpClient = builder.Services.AddSalesClients(baseUri2,
 clientBuilder =>
 {
     clientBuilder.AddHttpMessageHandler<CustomAuthorizationMessageHandler>();
@@ -80,10 +90,9 @@ builder.Services.AddScoped<IStoreProvider, StoreProvider>();
 
 var app = builder.Build();
 
-app.Services.UseShell();
-
-YourBrand.Admin.Sales.ServiceExtensions.InitNavBar(app.Services);
-YourBrand.Admin.Sales.ServiceExtensions.InitAppBarTray(app.Services);
+app.Services
+    .UseShell()
+    .UseSales();
 
 await app.Services.ApplyLocalization();
 

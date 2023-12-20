@@ -245,6 +245,28 @@ public sealed record GetCartItemById(string CartId, string CartItemId) : IReques
     }
 }
 
+public sealed record ClearCart(string CartId) : IRequest<Result>
+{
+    public sealed class Handler(CartsContext cartsContext) : IRequestHandler<ClearCart, Result>
+    {
+        public async Task<Result> Handle(ClearCart request, CancellationToken cancellationToken)
+        {
+            var cart = await cartsContext.Carts
+                .Include(cart => cart.Items)
+                .FirstOrDefaultAsync(cart => cart.Id == request.CartId, cancellationToken);
+
+            if (cart is null)
+            {
+                return Result.Failure<CartItem>(Errors.CartNotFound);
+            }
+
+            cart.Clear();
+
+            return Result.Success();
+        }
+    }
+}
+
 public sealed record UpdateCartItemData(string CartId, string CartItemId, string? Data) : IRequest<Result<CartItem>>
 {
     public sealed class Validator : AbstractValidator<RemoveCartItem>

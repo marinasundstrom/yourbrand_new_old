@@ -8,6 +8,7 @@ These are the services in this project:
 | ``AdminWeb``   | ``Admin/Web``                  | ``yourbrand-admin-web``         | Web app |
 | ``Catalog``    | ``Catalog/Catalog.API``        | ``yourbrand-catalog-svc``       | Service |
 | ``Carts``      | ``Carts/Carts.API``            | ``yourbrand-carts-svc``         | Service |
+| ``Sales``      | ``Sales/Sales.API``            | ``yourbrand-sales-svc``         | Service |
 | ``StoreFront`` | ``StoreFront/StoreFront.API``  | ``yourbrand-storefront-svc``    | Service |
 
 ## Dependencies

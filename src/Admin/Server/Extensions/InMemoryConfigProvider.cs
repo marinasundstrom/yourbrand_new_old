@@ -36,6 +36,22 @@ public class InMemoryConfigProvider : IProxyConfigProvider, IHostedService, IDis
                                     { "PathPattern", "{**catchall}"}
                                 }
                             }
+                        },
+                        new RouteConfig()
+                        {
+                            RouteId = "sales_route",
+                            ClusterId = "yourbrand-sales-svc",
+                            Match = new RouteMatch
+                            {
+                                Path = "sales/{**catchall}"
+                            },
+                            Transforms =  new List<Dictionary<string, string>>
+                            {
+                                new Dictionary<string, string>
+                                {
+                                    { "PathPattern", "{**catchall}"}
+                                }
+                            }
                         }
                     };
 

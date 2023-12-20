@@ -113,3 +113,13 @@ public sealed record GetCartItemByIdResponse
 {
     public CartItem CartItem { get; init; }
 }
+
+public sealed record ClearCart
+{
+    public string CartId { get; init; }
+}
+
+public sealed record ClearCartResponse
+{
+
+}

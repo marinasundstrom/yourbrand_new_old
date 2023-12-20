@@ -15,7 +15,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <OpenApiReference Include="OpenAPIs\swagger.yaml" Options="/UseBaseUrl:false /GenerateClientInterfaces:true /GenerateNullableReferenceTypes:true" Namespace="AdminAPI">
+        <OpenApiReference Include="OpenAPIs\swagger.yaml"
+            Options="/UseBaseUrl:false /GenerateClientInterfaces:true /GenerateNullableReferenceTypes:true"
+            Namespace="AdminAPI">
             <SourceUri>https://localhost:5001/swagger/v1/swagger.yaml</SourceUri>
             <ClassName>{controller}Client</ClassName>
             <OutputPath>AdminClient.cs</OutputPath>
@@ -27,10 +29,13 @@
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="8.0.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.DataAnnotations.Validation" Version="3.2.0-rc1.20223.4" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.DataAnnotations.Validation"
+            Version="3.2.0-rc1.20223.4" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="8.0.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.0" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication"
+            Version="8.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer"
+            Version="8.0.0" PrivateAssets="all" />
         <PackageReference Include="Microsoft.Authentication.WebAssembly.Msal" Version="8.0.0" />
         <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
         <PackageReference Include="Microsoft.Extensions.Http.Resilience" Version="8.0.0" />
@@ -56,6 +61,7 @@
         <ProjectReference Include="..\Shell\Shell.csproj" />
         <ProjectReference Include="..\Services\Services.csproj" />
         <ProjectReference Include="..\..\Catalog\Catalog.Client\Catalog.Client.csproj" />
+        <ProjectReference Include="..\..\Sales\Sales.Client\Sales.Client.csproj" />
     </ItemGroup>
 
     <ItemGroup>

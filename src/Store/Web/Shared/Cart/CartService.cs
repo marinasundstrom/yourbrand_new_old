@@ -87,5 +87,14 @@ public sealed class CartService(YourBrand.StoreFront.ICartClient client) : ICart
 
     public IReadOnlyCollection<BlazorApp.Cart.CartItem> Items => _items;
 
+    public async Task Clear()
+    {
+        //await client.ClearAsync();
+
+        _items.Clear();
+
+        CartUpdated?.Invoke(this, EventArgs.Empty);
+    }
+
     public event EventHandler? CartUpdated;
 }

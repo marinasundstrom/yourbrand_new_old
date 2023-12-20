@@ -151,6 +151,18 @@ public sealed class RemoveCartItemQuantityConsumer(IMediator mediator) : IConsum
     }
 }
 
+public sealed class ClearCartConsumer(IMediator mediator) : IConsumer<ClearCart>
+{
+    public async Task Consume(ConsumeContext<ClearCart> context)
+    {
+        var cartId = context.Message.CartId;
+
+        var r = await mediator.Send(new Requests.ClearCart(cartId), context.CancellationToken);
+
+        await context.RespondAsync(new ClearCartResponse());
+    }
+}
+
 public static class Mappings
 {
     public static Cart Map(this Domain.Entities.Cart cart) => new()

@@ -86,6 +86,11 @@ public sealed class Cart
             Total += cartItem.Total;
         }
     }
+
+    public void Clear()
+    {
+        _cartItems.Clear();
+    }
 }
 
 public sealed class CartItem

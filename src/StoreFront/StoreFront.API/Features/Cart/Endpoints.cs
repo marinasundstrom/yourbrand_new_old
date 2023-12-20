@@ -18,7 +18,7 @@ public static class Endpoints
 
         var versionedApi = app.NewVersionedApi("Cart");
 
-        var cartGroup = versionedApi.MapGroup("/api/v{version:apiVersion}/cart")
+        var cartGroup = versionedApi.MapGroup("/v{version:apiVersion}/cart")
             .WithTags("Cart")
             .HasApiVersion(1, 0)
             .WithOpenApi()
@@ -38,6 +38,9 @@ public static class Endpoints
 
         cartGroup.MapDelete("/items/{cartItemId}", RemoveCartItem)
             .WithName($"Cart_{nameof(RemoveCartItem)}");
+
+        cartGroup.MapDelete("/items/", ClearCart)
+            .WithName($"Cart_{nameof(ClearCart)}");
 
         return app;
     }
@@ -116,6 +119,13 @@ public static class Endpoints
     private static async Task<Results<Ok, NotFound>> RemoveCartItem(string cartItemId, MassTransitCartsClient cartsClient, CancellationToken cancellationToken)
     {
         await cartsClient.RemoveCartItem("test", cartItemId, cancellationToken);
+
+        return TypedResults.Ok();
+    }
+
+    private static async Task<Results<Ok, NotFound>> ClearCart(MassTransitCartsClient cartsClient, CancellationToken cancellationToken)
+    {
+        await cartsClient.ClearCart("test", cancellationToken);
 
         return TypedResults.Ok();
     }
