@@ -136,8 +136,11 @@ public sealed record Checkout(
                 });
             }
 
+            const int OrderStatusOpen = 2;
+
             await _ordersClient.CreateOrderAsync(new CreateOrderRequest()
             {
+                Status = OrderStatusOpen,
                 CustomerId = customerId?.ToString(),
                 BillingDetails = new BillingDetails
                 {

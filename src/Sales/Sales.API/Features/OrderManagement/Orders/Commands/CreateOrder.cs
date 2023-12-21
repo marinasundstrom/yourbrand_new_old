@@ -1,4 +1,6 @@
-﻿using FluentValidation;
+﻿using Consul;
+
+using FluentValidation;
 
 using MediatR;
 
@@ -12,7 +14,7 @@ using Sales.API.Features.OrderManagement.Repositories;
 
 namespace Sales.API.Features.OrderManagement.Orders.Commands;
 
-public sealed record CreateOrder(string? CustomerId, BillingDetailsDto BillingDetails, ShippingDetailsDto? ShippingDetails, IEnumerable<CreateOrderItemDto> Items) : IRequest<Result<OrderDto>>
+public sealed record CreateOrder(int? Status, string? CustomerId, BillingDetailsDto BillingDetails, ShippingDetailsDto? ShippingDetails, IEnumerable<CreateOrderItemDto> Items) : IRequest<Result<OrderDto>>
 {
     public sealed class Validator : AbstractValidator<CreateOrder>
     {
@@ -50,7 +52,9 @@ public sealed record CreateOrder(string? CustomerId, BillingDetailsDto BillingDe
                 order.OrderNo = 1; // Order start number
             }
 
-            order.StatusId = 1;
+            const int OrderStatusDraft = 1;
+
+            order.StatusId = request.Status ?? OrderStatusDraft;
 
             order.CustomerId = request.CustomerId;
 

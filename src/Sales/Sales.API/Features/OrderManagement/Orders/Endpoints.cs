@@ -108,7 +108,7 @@ public static class Endpoints
 
     private static async Task<Results<Created<OrderDto>, NotFound>> CreateOrder(CreateOrderRequest request, IMediator mediator, LinkGenerator linkGenerator, CancellationToken cancellationToken)
     {
-        var result = await mediator.Send(new CreateOrder(request.CustomerId, request.BillingDetails, request.ShippingDetails, request.Items), cancellationToken);
+        var result = await mediator.Send(new CreateOrder(request.Status, request.CustomerId, request.BillingDetails, request.ShippingDetails, request.Items), cancellationToken);
 
         if (result.HasError(Errors.Orders.OrderNotFound))
         {

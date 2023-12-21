@@ -690,6 +690,10 @@ components:
       type: object
       additionalProperties: false
       properties:
+        status:
+          type: integer
+          format: int32
+          nullable: true
         customerId:
           type: string
           nullable: true
