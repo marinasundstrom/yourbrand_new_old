@@ -65,9 +65,12 @@
 
     async Task OnSubmit()
     {
+        var store = StoreProvider.CurrentStore;
+
         var product = await ProductsClient.CreateProductAsync(new CreateProductRequest()
             {
                 Name = Name,
+                StoreId = store.Id,
                 Description = Description,
                 CategoryId = Category.Id,
                 IsGroupedProduct = IsGroupedProduct,

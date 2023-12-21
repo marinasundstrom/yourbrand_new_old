@@ -118,7 +118,7 @@ public static partial class Endpoints
     private static async Task<Results<Ok<ProductDto>, BadRequest, ProblemHttpResult>> CreateProduct(CreateProductRequest request,
         IMediator mediator, CancellationToken cancellationToken)
     {
-        var result = await mediator.Send(new CreateProduct(request.Name, request.Description, request.CategoryId, request.IsGroupedProduct, request.Price, request.Handle), cancellationToken);
+        var result = await mediator.Send(new CreateProduct(request.Name, request.StoreId, request.Description, request.CategoryId, request.IsGroupedProduct, request.Price, request.Handle), cancellationToken);
 
         return result.IsSuccess ? TypedResults.Ok(result.GetValue()) : TypedResults.BadRequest();
     }
@@ -221,13 +221,14 @@ public static partial class Endpoints
     }
 }
 
-public sealed record CreateProductRequest(string Name, string Description, long CategoryId, bool IsGroupedProduct, decimal Price, string Handle)
+public sealed record CreateProductRequest(string Name, string StoreId, string Description, long CategoryId, bool IsGroupedProduct, decimal Price, string Handle)
 {
     public class CreateProductRequestValidator : AbstractValidator<CreateProductRequest>
     {
         public CreateProductRequestValidator()
         {
             RuleFor(p => p.Name).MaximumLength(60).NotEmpty();
+            RuleFor(p => p.StoreId).MaximumLength(255).NotEmpty();
             RuleFor(p => p.Description).MaximumLength(255).NotEmpty();
             RuleFor(p => p.CategoryId).GreaterThan(0);
             RuleFor(p => p.Handle).MaximumLength(60).NotEmpty();

@@ -2838,6 +2838,8 @@ components:
       properties:
         name:
           type: string
+        storeId:
+          type: string
         description:
           type: string
         categoryId:
