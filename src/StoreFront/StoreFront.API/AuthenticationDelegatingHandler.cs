@@ -77,7 +77,11 @@ public class AuthenticationDelegatingHandler : DelegatingHandler
                .WithClientSecret(configuration.GetValue<string>("AzureAd:StoreFront:ClientCredentials:ClientSecret"))
                .Build();
 
-        var c = app.AcquireTokenForClient(configuration.GetSection("AzureAd:StoreFront:Scopes").Get<string[]>());
+        var scopes = configuration.GetSection("AzureAd:StoreFront:Scopes").Get<string[]>();
+
+        Console.WriteLine(scopes.Length);
+
+        var c = app.AcquireTokenForClient(scopes);
         var x = await c.ExecuteAsync();
         return x.AccessToken;
     }
