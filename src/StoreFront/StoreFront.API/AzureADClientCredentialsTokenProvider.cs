@@ -1,11 +1,14 @@
 using Microsoft.Identity.Client;
 
-public class AzureClientCredentialsTokenProvider : ITokenProvider
+/// <summary>
+/// Provides token from Client Credentials in Azure AD.
+/// </summary>
+public class AzureADClientCredentialsTokenProvider : ITokenProvider
 {
     private readonly IConfiguration _configuration;
-    private readonly ILogger<AzureClientCredentialsTokenProvider> _logger;
+    private readonly ILogger<AzureADClientCredentialsTokenProvider> _logger;
 
-    public AzureClientCredentialsTokenProvider(IConfiguration configuration, ILogger<AzureClientCredentialsTokenProvider> logger)
+    public AzureADClientCredentialsTokenProvider(IConfiguration configuration, ILogger<AzureADClientCredentialsTokenProvider> logger)
     {
         _configuration = configuration;
         _logger = logger;

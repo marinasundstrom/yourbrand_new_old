@@ -119,7 +119,7 @@ AddClients(builder);
 
 if (builder.Environment.IsProduction())
 {
-    builder.Services.AddSingleton<ITokenProvider, AzureClientCredentialsTokenProvider>();
+    builder.Services.AddSingleton<ITokenProvider, AzureADClientCredentialsTokenProvider>();
 }
 else
 {

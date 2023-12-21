@@ -1,5 +1,8 @@
 using IdentityModel.Client;
 
+/// <summary>
+/// Provides token from Client Credentials in Identity Server.
+/// </summary>
 public class IdentityServerClientCredentialsTokenProvider : ITokenProvider
 {
     private readonly IConfiguration _configuration;
