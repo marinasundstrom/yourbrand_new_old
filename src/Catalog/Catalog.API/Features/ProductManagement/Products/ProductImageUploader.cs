@@ -25,13 +25,11 @@ public class ProductImageUploader(BlobServiceClient blobServiceClient, CatalogCo
         {
             string fileName = "placeholder.jpeg";
 
-            var connectionString = context.Database.GetConnectionString()!;
+            string? productImageUrlPath = configuration.GetValue<string>("ImagesUrlPath");
 
-            string cdnBaseUrl = (connectionString.Contains("localhost") || connectionString.Contains("mssql"))
-                ? configuration["CdnBaseUrl"]!
-                : "https://yourbrandstorage.blob.core.windows.net";
+            var path = $"products/{fileName}";
 
-            placeholderImageFileName = $"{cdnBaseUrl}/images/products/{fileName}";
+            placeholderImageFileName = string.Format(productImageUrlPath!, path); ;
         }
 
         return Task.FromResult(placeholderImageFileName);
@@ -56,12 +54,10 @@ public class ProductImageUploader(BlobServiceClient blobServiceClient, CatalogCo
 
         await blobClient.UploadAsync(stream, new BlobHttpHeaders { ContentType = contentType });
 
-        var connectionString = context.Database.GetConnectionString()!;
+        string? productImageUrlPath = configuration.GetValue<string>("ImagesUrlPath");
 
-        string cdnBaseUrl = (connectionString.Contains("localhost") || connectionString.Contains("mssql"))
-            ? configuration["CdnBaseUrl"]!
-            : "https://yourbrandstorage.blob.core.windows.net";
+        var path = $"products/{productId}/{fileName}";
 
-        return $"{cdnBaseUrl}/images/products/{productId}/{fileName}";
+        return string.Format(productImageUrlPath!, path);
     }
 }

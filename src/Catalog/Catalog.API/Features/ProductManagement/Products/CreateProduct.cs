@@ -8,7 +8,7 @@ namespace Catalog.API.Features.ProductManagement.Products;
 
 public sealed record CreateProduct(string Name, string Description, long CategoryId, bool IsGroupedProduct, decimal Price, string Handle) : IRequest<Result<ProductDto>>
 {
-    public sealed class Handler(IConfiguration configuration, CatalogContext catalogContext = default!) : IRequestHandler<CreateProduct, Result<ProductDto>>
+    public sealed class Handler(CatalogContext catalogContext, IProductImageUploader productImageUploader) : IRequestHandler<CreateProduct, Result<ProductDto>>
     {
         public async Task<Result<ProductDto>> Handle(CreateProduct request, CancellationToken cancellationToken)
         {
@@ -19,17 +19,11 @@ public sealed record CreateProduct(string Name, string Description, long Categor
                 return Result.Failure<ProductDto>(Errors.HandleAlreadyTaken);
             }
 
-            var connectionString = catalogContext.Database.GetConnectionString()!;
-
-            string cdnBaseUrl = (connectionString.Contains("localhost") || connectionString.Contains("mssql"))
-                ? configuration["CdnBaseUrl"]!
-                : "https://yourbrandstorage.blob.core.windows.net";
-
             var product = new Domain.Entities.Product()
             {
                 Name = request.Name,
                 Description = request.Description,
-                Image = $"{cdnBaseUrl}/images/products/placeholder.jpeg",
+                Image = await productImageUploader.GetPlaceholderImageUrl(),
                 HasVariants = request.IsGroupedProduct,
                 Price = request.Price,
                 Handle = request.Handle
