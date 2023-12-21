@@ -71,12 +71,13 @@ public class AuthenticationDelegatingHandler : DelegatingHandler
 
     async Task<string?> Production(IConfiguration configuration)
     {
-        IConfidentialClientApplication app = ConfidentialClientApplicationBuilder.Create(configuration.GetValue<string>("AzureAd:ClientId"))
+        IConfidentialClientApplication app = ConfidentialClientApplicationBuilder
+               .Create(configuration.GetValue<string>("AzureAd:ClientId"))
                .WithTenantId(configuration.GetValue<string>("AzureAd:TenantId"))
                .WithClientSecret(configuration.GetValue<string>("AzureAd:StoreFront:ClientCredentials:ClientSecret"))
                .Build();
 
-        var c = app.AcquireTokenForClient(configuration.GetSection("AzureAd:StoreFront:Scopes").Get<List<string>>());
+        var c = app.AcquireTokenForClient(configuration.GetSection("AzureAd:StoreFront:Scopes").Get<string[]>());
         var x = await c.ExecuteAsync();
         return x.AccessToken;
     }
