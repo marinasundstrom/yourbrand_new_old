@@ -40,7 +40,16 @@ public sealed record CreateOrder(string? CustomerId, BillingDetailsDto BillingDe
         public async Task<Result<OrderDto>> Handle(CreateOrder request, CancellationToken cancellationToken)
         {
             var order = new Order();
-            order.OrderNo = (await orderRepository.GetAll().MaxAsync(x => x.OrderNo)) + 1;
+
+            try
+            {
+                order.OrderNo = (await orderRepository.GetAll().MaxAsync(x => x.OrderNo)) + 1;
+            }
+            catch (InvalidOperationException e)
+            {
+                order.OrderNo = 1; // Order start number
+            }
+
             order.StatusId = 3;
 
             order.CustomerId = request.CustomerId;

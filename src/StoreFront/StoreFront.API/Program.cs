@@ -117,6 +117,15 @@ builder.Services
 
 AddClients(builder);
 
+if (builder.Environment.IsProduction())
+{
+    builder.Services.AddSingleton<ITokenProvider, AzureClientCredentialsTokenProvider>();
+}
+else
+{
+    builder.Services.AddSingleton<ITokenProvider, IdentityServerClientCredentialsTokenProvider>();
+}
+
 builder.Services.AddTransient<AuthenticationDelegatingHandler>();
 
 var app = builder.Build();
