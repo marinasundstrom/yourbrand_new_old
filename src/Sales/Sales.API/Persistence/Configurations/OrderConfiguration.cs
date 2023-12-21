@@ -13,10 +13,10 @@ public sealed class OrderConfiguration : IEntityTypeConfiguration<Order>
 
         //builder.HasKey(o => new { o.CompanyId , o.OrderNo });
 
-        builder
-            .HasMany(x => x.Items)
-            .WithOne(x => x.Order)
-            .OnDelete(DeleteBehavior.Cascade); // Causes dependent entity to be deleted
+        builder.HasMany(order => order.Items)
+            .WithOne(orderItem => orderItem.Order)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.ClientCascade);
 
         builder.OwnsOne(x => x.BillingDetails, x => x.OwnsOne(z => z.Address));
 
