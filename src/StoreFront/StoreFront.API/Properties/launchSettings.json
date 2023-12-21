@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "https": {
+    "Development": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
@@ -19,23 +19,18 @@
       },
       "dotnetRunMessages": true
     },
-    "http": {
+    "Production": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "http://localhost:5243",
+      "applicationUrl": "https://localhost:7174;http://localhost:5275",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
+        //"AZURE_CLIENT_ID": "",
+        //"AZURE_TENANT_ID": "",
+        //"AZURE_CLIENT_SECRET": "",
+        //"ASPNETCORE_ENVIRONMENT": "Production",
       },
       "dotnetRunMessages": true
-    },
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "launchUrl": "swagger",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
     }
   }
 }
