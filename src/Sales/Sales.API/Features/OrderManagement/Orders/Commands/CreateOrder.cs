@@ -50,7 +50,7 @@ public sealed record CreateOrder(string? CustomerId, BillingDetailsDto BillingDe
                 order.OrderNo = 1; // Order start number
             }
 
-            order.StatusId = 3;
+            order.StatusId = 1;
 
             order.CustomerId = request.CustomerId;
 
