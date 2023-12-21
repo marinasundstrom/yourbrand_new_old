@@ -16,8 +16,8 @@ public sealed record DeleteProduct(string IdOrHandle) : IRequest<Result>
             var isId = int.TryParse(request.IdOrHandle, out var id);
 
             var product = isId ?
-                await catalogContext.Products.FirstOrDefaultAsync(product => product.Id == id, cancellationToken)
-                : await catalogContext.Products.FirstOrDefaultAsync(product => product.Handle == request.IdOrHandle, cancellationToken);
+                await catalogContext.Products.IncludeBasics().FirstOrDefaultAsync(product => product.Id == id, cancellationToken)
+                : await catalogContext.Products.IncludeBasics().FirstOrDefaultAsync(product => product.Handle == request.IdOrHandle, cancellationToken);
 
             if (product is null)
             {
@@ -25,6 +25,8 @@ public sealed record DeleteProduct(string IdOrHandle) : IRequest<Result>
             }
 
             using var transaction = await catalogContext.Database.BeginTransactionAsync();
+
+            product.Category?.RemoveProduct(product);
 
             await catalogContext.ProductAttributes
                 .Where(x => x.ProductId == product.Id)
