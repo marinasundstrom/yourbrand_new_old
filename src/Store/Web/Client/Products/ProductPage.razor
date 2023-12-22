@@ -57,9 +57,8 @@ else
 
                 <BadgeContent>
                     <span class="translate-middle text-white bg-red border-0 p-2 fs-5" style="background: #e60c0c;">
-                        <text>-@(Math.Round((double)(((productViewModel.RegularPrice.GetValueOrDefault() -
-                            productViewModel.Price) /
-                            productViewModel.Price) * 100)))%</text>
+                        <text>-@(Math.Ceiling((productViewModel.Product.RegularPrice.GetValueOrDefault() - productViewModel.Product.Price) /
+                         productViewModel.Product.RegularPrice.GetValueOrDefault()  * 100))%</text>
                     </span>
                 </BadgeContent>
             </Badge>
