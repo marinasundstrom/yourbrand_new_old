@@ -29,13 +29,13 @@ public sealed class Cart
 
     public DateTimeOffset? Updated { get; set; }
 
-    public CartItem AddItem(string name, string? image, long? productId, string? productHandle, string description, decimal price, decimal? regularPrice, int quantity, string? data)
+    public CartItem AddItem(string name, string? image, long? productId, string? productHandle, string description, decimal price, double? vatRate, decimal? regularPrice, double? discountRate, int quantity, string? data)
     {
         var cartItem = _cartItems.FirstOrDefault(item => item.ProductId == productId && item.Data == data);
 
         if (cartItem is null)
         {
-            cartItem = new CartItem(name, image, productId, productHandle, description, price, regularPrice, quantity, data);
+            cartItem = new CartItem(name, image, productId, productHandle, description, price, vatRate, regularPrice, discountRate, quantity, data);
             _cartItems.Add(cartItem);
             Total += cartItem.Total;
         }
@@ -100,7 +100,7 @@ public sealed class CartItem
 
     }
 
-    public CartItem(string name, string? image, long? productId, string? productHandle, string description, decimal price, decimal? regularPrice, int quantity, string? data)
+    public CartItem(string name, string? image, long? productId, string? productHandle, string description, decimal price, double? vatRate, decimal? regularPrice, double? discountRate, int quantity, string? data)
     {
         Name = name;
         Image = image;
@@ -108,7 +108,9 @@ public sealed class CartItem
         ProductHandle = productHandle;
         Description = description;
         Price = price;
+        VatRate = vatRate;
         RegularPrice = regularPrice;
+        DiscountRate = discountRate;
         Quantity = quantity;
         Data = data;
     }
@@ -127,13 +129,19 @@ public sealed class CartItem
 
     public decimal Price { get; set; }
 
+    public double? VatRate { get; set; }
+
     public decimal? RegularPrice { get; set; }
+
+    public double? DiscountRate { get; set; }
 
     public double Quantity { get; set; }
 
     public decimal Total => Price * (decimal)Quantity;
 
     public string? Data { get; private set; }
+
+    //public string? Notes { get; set; }
 
     public void UpdateData(string? data)
     {

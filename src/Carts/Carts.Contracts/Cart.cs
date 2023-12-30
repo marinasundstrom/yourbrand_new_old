@@ -17,7 +17,9 @@ public sealed record CartItem
     public string? ProductHandle { get; init; }
     public string Description { get; init; }
     public decimal Price { get; init; }
+    public double? VatRate { get; init; }
     public decimal? RegularPrice { get; init; }
+    public double? DiscountRate { get; init; }
     public double Quantity { get; init; }
     public decimal Total { get; init; }
     public string? Data { get; init; }

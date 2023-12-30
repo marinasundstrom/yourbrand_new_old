@@ -18,7 +18,7 @@ public sealed class MassTransitCartsClient(
         return response.Message.Cart.Map();
     }
 
-    public async Task<CartItem> AddCartItem(string cartId, string name, string? image, long? productId, string productHandle, string description, decimal price, decimal? regularPrice, int quantity, string? data, CancellationToken cancellationToken = default)
+    public async Task<CartItem> AddCartItem(string cartId, string name, string? image, long? productId, string productHandle, string description, decimal price, double? vatRate, decimal? regularPrice, double? discountRate, int quantity, string? data, CancellationToken cancellationToken = default)
     {
         var request2 = new Carts.Contracts.AddCartItem
         {
@@ -29,7 +29,9 @@ public sealed class MassTransitCartsClient(
             ProductHandle = productHandle,
             Description = description,
             Price = price,
+            VatRate = vatRate,
             RegularPrice = regularPrice,
+            DiscountRate = discountRate,
             Quantity = quantity,
             Data = data
         };
@@ -106,5 +108,5 @@ public static class Mapper
         => new(cart.Id!, cart.Tag!, cart.Items.Select(cartItem => cartItem.Map()));
 
     public static CartItem Map(this Carts.Contracts.CartItem cartItem)
-        => new(cartItem.Id!, cartItem.Name!, cartItem.Image!, cartItem.ProductId, cartItem.ProductHandle, cartItem.Description!, cartItem.Price, cartItem.RegularPrice, (int)cartItem.Quantity, cartItem.Data);
+        => new(cartItem.Id!, cartItem.Name!, cartItem.Image!, cartItem.ProductId, cartItem.ProductHandle, cartItem.Description!, cartItem.Price, cartItem.VatRate, cartItem.RegularPrice, cartItem.DiscountRate, (int)cartItem.Quantity, cartItem.Data);
 }

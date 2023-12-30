@@ -105,7 +105,7 @@ public static class Endpoints
 
     private static async Task<Results<Created<CartItem>, NotFound>> AddCartItem(string id, AddCartItemRequest cartItemRequest, IMediator mediator = default!, LinkGenerator linkGenerator = default!, CancellationToken cancellationToken = default!)
     {
-        var result = await mediator.Send(new AddCartItem(id, cartItemRequest.Name, cartItemRequest.Image, cartItemRequest.ProductId, cartItemRequest.ProductHandle, cartItemRequest.Description, cartItemRequest.Price, cartItemRequest.RegularPrice, cartItemRequest.Quantity, cartItemRequest.Data), cancellationToken);
+        var result = await mediator.Send(new AddCartItem(id, cartItemRequest.Name, cartItemRequest.Image, cartItemRequest.ProductId, cartItemRequest.ProductHandle, cartItemRequest.Description, cartItemRequest.Price, cartItemRequest.VatRate, cartItemRequest.RegularPrice, cartItemRequest.DiscountRate, cartItemRequest.Quantity, cartItemRequest.Data), cancellationToken);
 
         if (result.HasError(Errors.CartNotFound))
         {
@@ -216,8 +216,8 @@ public static class Endpoints
 
         return TypedResults.Ok();
     }
+
+    public sealed record CreateCartRequest(string Tag);
+
+    public sealed record AddCartItemRequest(string Name, string? Image, long? ProductId, string? ProductHandle, string Description, decimal Price, double? VatRate, decimal? RegularPrice, double? DiscountRate, int Quantity, string? Data);
 }
-
-public sealed record CreateCartRequest(string Tag);
-
-public sealed record AddCartItemRequest(string Name, string? Image, long? ProductId, string? ProductHandle, string Description, decimal Price, decimal? RegularPrice, int Quantity, string? Data);

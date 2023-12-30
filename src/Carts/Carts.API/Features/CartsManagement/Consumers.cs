@@ -82,7 +82,9 @@ public sealed class AddCartItemConsumer(IMediator mediator) : IConsumer<AddCartI
             request.ProductHandle,
             request.Description,
             request.Price,
+            request.VatRate,
             request.RegularPrice,
+            request.DiscountRate,
             request.Quantity,
             request.Data
         ), context.CancellationToken);
@@ -182,7 +184,9 @@ public static class Mappings
         ProductHandle = cartItem.ProductHandle,
         Description = cartItem.Description,
         Price = cartItem.Price,
+        VatRate = cartItem.VatRate,
         RegularPrice = cartItem.RegularPrice,
+        DiscountRate = cartItem.DiscountRate,
         Quantity = cartItem.Quantity,
         Total = cartItem.Total,
         Data = cartItem.Data,
