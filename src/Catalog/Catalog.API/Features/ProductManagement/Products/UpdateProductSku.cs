@@ -27,21 +27,21 @@ public sealed record UpdateProductSku(string IdOrHandle, string Sku) : IRequest<
 
             var p = product;
 
-            var skuInUse = await catalogContext.Products.AnyAsync(product => product.Id != p.Id && product.SKU == request.Sku, cancellationToken);
+            var skuInUse = await catalogContext.Products.AnyAsync(product => product.Id != p.Id && product.Sku == request.Sku, cancellationToken);
 
             if (skuInUse)
             {
                 return Result.Failure(Errors.SkuAlreadyTaken);
             }
 
-            product.SKU = request.Sku;
+            product.Sku = request.Sku;
 
             await catalogContext.SaveChangesAsync(cancellationToken);
 
             await publishEndpoint.Publish(new Catalog.Contracts.ProductSkuUpdated
             {
                 ProductId = product.Id,
-                Sku = product.SKU
+                Sku = product.Sku
             });
 
             return Result.Success();

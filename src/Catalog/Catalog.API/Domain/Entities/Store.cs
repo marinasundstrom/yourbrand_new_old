@@ -17,5 +17,47 @@ public class Store : Entity<string>
 
     public Currency Currency { get; set; } = null!;
 
+    public CurrencyDisplayOptions CurrencyDisplayOptions { get; set; }
+
+    public PricingOptions PricingOptions { get; set; }
+
     public List<Product> Products { get; } = new List<Product>();
+}
+
+public class CurrencyDisplayOptions
+{
+    public bool IncludeVatInSalesPrice { get; set; } = false;
+    public int? RoundingDecimals { get; set; } = null;
+}
+
+public class PricingOptions
+{
+    public double ProfitMarginPercentage { get; set; } = 0.2;
+
+    public List<CategoryPricingOptions> CategoryPricingOptions { get; set; } = new List<CategoryPricingOptions>();
+}
+
+public class CategoryPricingOptions
+{
+    public string CategoryId { get; set; } = default!;
+    public double ProfitMarginRate { get; set; } = 0.2;
+}
+
+public class VatRate
+{
+    public int Id { get; set; }
+
+    public string Name { get; set; } = default!;
+
+    /// <summary>
+    /// Gets VAT
+    /// </summary>
+    /// <value></value>
+    public double Factor { get; set; } = 0.25;
+
+    /// <summary>
+    /// Removes VAT (Total * Factor2)
+    /// </summary>
+    /// <value></value>
+    public double Factor2 { get; set; } = 0.8;
 }

@@ -53,7 +53,7 @@
         {
             discountPrice = value;
             var discount = RegularPrice - discountPrice;
-            discountRate = (double)Math.Ceiling(discount / RegularPrice * 100);
+            discountRate = (double)(discount / RegularPrice * 100);
         }
 
         get => discountPrice;
@@ -67,7 +67,7 @@
         {
             discountRate = value;
             var dr = discountRate / 100;
-            discountPrice = Math.Ceiling(RegularPrice - (RegularPrice * (decimal)dr));
+            discountPrice = RegularPrice - (RegularPrice * (decimal)dr);
         }
 
         get => discountRate;

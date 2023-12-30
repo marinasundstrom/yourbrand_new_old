@@ -14,5 +14,9 @@ public class StoreConfiguration : IEntityTypeConfiguration<Store>
         builder.HasOne(x => x.Currency)
                 .WithMany()
                 .HasForeignKey("CurrencyCode");
+
+        builder.OwnsOne(x => x.CurrencyDisplayOptions);
+
+        builder.OwnsOne(x => x.PricingOptions, x => x.OwnsMany(z => z.CategoryPricingOptions));
     }
 }

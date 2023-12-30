@@ -17,6 +17,7 @@
 @inject IJSRuntime JSRuntime
 @inject RenderingContext RenderingContext
 @inject IToastService ToastService
+@using Core
 
 @using Blazored.Toast
 @using Blazored.Toast.Configuration
@@ -57,8 +58,9 @@ else
 
                 <BadgeContent>
                     <span class="translate-middle text-white bg-red border-0 p-2 fs-5" style="background: #e60c0c;">
-                        <text>-@(Math.Ceiling((productViewModel.Product.RegularPrice.GetValueOrDefault() - productViewModel.Product.Price) /
-                         productViewModel.Product.RegularPrice.GetValueOrDefault()  * 100))%</text>
+                        <text>
+                            -@((productViewModel.Variant ?? productViewModel.Product).DiscountRate * 100)%
+                        </text>
                     </span>
                 </BadgeContent>
             </Badge>
@@ -90,15 +92,20 @@ else
             {
                 <div class="mb-4" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
                     <meta itemprop="priceCurrency" content="@currency">
-                    <h5 class="price2" itemprop="price" content="@productViewModel.Price"
-                        style="display: inline-block; font-weight: 500; color: #ca0000; line-height: 0;">
-                        @(((decimal)productViewModel.Price).FormatCurrency(currency))</h5>
                     @if (productViewModel.RegularPrice is not null)
                     {
                         <h5 class="price2 text-muted"
-                            style="display: inline-block; text-decoration: line-through; color: gray !important; margin-left: 10px; line-height: 0;">
+                            style="display: inline-block; text-decoration: line-through; color: gray !important; line-height: 0; margin-right: 10px;">
                             @(((decimal?)productViewModel.RegularPrice)?.FormatCurrency(currency))</h5>
                     }
+                    <h5 class="price2" itemprop="price" content="@productViewModel.Price"
+                        style="display: inline-block; font-weight: 500; color: #ca0000; line-height: 0;">
+                        @(((decimal)productViewModel.Price).FormatCurrency(currency))</h5>
+                </div>
+
+                <div>Incl. @((productViewModel.Variant ??
+                 productViewModel.Product).Price.GetVatFromTotal(productViewModel.Product.VatRate.GetValueOrDefault()).FormatCurrency(currency))
+                    VAT
                 </div>
             }
             <p class="mt-3" itemprop="description">@productViewModel.Description</p>

@@ -46,13 +46,23 @@ public sealed class Product
 
     public string? Headline { get; set; }
 
-    public string? SKU { get; set; }
+    public string? Sku { get; set; }
 
-    public string? GTIN { get; set; }
+    public string? Gtin { get; set; }
 
     public decimal Price { get; set; }
 
+    //public decimal Vat { get; set; }
+
+    public double? VatRate { get; set; }
+
+    public decimal? Discount { get; set; }
+
+    public double? DiscountRate { get; set; }
+
     public decimal? RegularPrice { get; set; }
+
+    public decimal? PurchasePrice { get; set; }
 
     public string? Image { get; set; }
 

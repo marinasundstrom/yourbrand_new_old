@@ -20,7 +20,7 @@ public static class Endpoints
         productsGroup.MapGet("/", GetProductCategories)
             .WithName($"ProductCategories_{nameof(GetProductCategories)}");
 
-        // {*id} for Swagger
+        // {id} for Swagger
         productsGroup.MapGet("{*id}", GetProductCategoryById)
             .WithName($"ProductCategories_{nameof(GetProductCategoryById)}");
 

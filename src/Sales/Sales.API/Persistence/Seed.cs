@@ -8,7 +8,7 @@ namespace Sales.API.Persistence;
 
 public static class Seed
 {
-    public static async Task SeedData(SalesContext context)
+    public static async Task SeedData(SalesContext context, IConfiguration configuration)
     {
         Version1(context);
 

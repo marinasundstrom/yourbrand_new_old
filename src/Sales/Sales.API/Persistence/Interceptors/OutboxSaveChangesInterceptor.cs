@@ -25,7 +25,14 @@ public sealed class OutboxSaveChangesInterceptor : SaveChangesInterceptor
                         .Select(e => e.Entity);
 
         var domainEvents = entities
-            .SelectMany(e => e.DomainEvents)
+            .SelectMany(entity =>
+            {
+                var domainEvents = entity.DomainEvents;
+
+                entity.ClearDomainEvents();
+
+                return domainEvents;
+            })
             .OrderBy(e => e.Timestamp)
             .ToList();
 
@@ -33,7 +40,6 @@ public sealed class OutboxSaveChangesInterceptor : SaveChangesInterceptor
         {
             return new OutboxMessage()
             {
-                Id = Guid.NewGuid(),
                 OccurredOnUtc = DateTime.UtcNow,
                 Type = domainEvent.GetType().Name,
                 Content = JsonConvert.SerializeObject(

@@ -51,7 +51,7 @@ public class CartsApiFactory
             {
                 x.AddDelayedMessageScheduler();
 
-                x.AddConsumers(typeof(Sales.API.Features.OrderManagement.Consumers.GetCartsConsumer).Assembly);
+                x.AddConsumers(typeof(Sales.API.Features.OrderManagement.Orders.Mappings).Assembly);
 
                 x.UsingInMemory((context, cfg) =>
                 {

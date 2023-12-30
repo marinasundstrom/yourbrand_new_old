@@ -32,6 +32,8 @@ public sealed record RestoreProductRegularPrice(string IdOrHandle) : IRequest<Re
 
             product.Price = product.RegularPrice.GetValueOrDefault();
             product.RegularPrice = null;
+            product.DiscountRate = null;
+            product.Discount = null;
 
             await catalogContext.SaveChangesAsync(cancellationToken);
 

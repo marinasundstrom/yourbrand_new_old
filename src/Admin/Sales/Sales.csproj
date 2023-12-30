@@ -59,6 +59,7 @@
     <ProjectReference Include="..\Services\Services.csproj" />
     <ProjectReference Include="..\..\Catalog\Catalog.Client\Catalog.Client.csproj" />
     <ProjectReference Include="..\..\Sales\Sales.Client\Sales.Client.csproj" />
+    <ProjectReference Include="..\..\Core\Core.csproj" />
   </ItemGroup>
 
 </Project>

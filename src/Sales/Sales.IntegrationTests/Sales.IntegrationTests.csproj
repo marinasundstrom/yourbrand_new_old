@@ -33,6 +33,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Sales.API\Sales.API.csproj" />
     <ProjectReference Include="..\Sales.Contracts\Sales.Contracts.csproj" />
+    <ProjectReference Include="..\..\Core\Core.csproj" />
   </ItemGroup>
 
 </Project>

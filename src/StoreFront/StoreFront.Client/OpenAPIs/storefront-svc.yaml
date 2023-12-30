@@ -44,6 +44,16 @@ paths:
                 $ref: "#/components/schemas/CartItem"
         404:
           description: ""
+    delete:
+      tags:
+        - Cart
+        - Cart
+      operationId: Cart_ClearCart
+      responses:
+        200:
+          description: ""
+        404:
+          description: ""
   /v1/cart/items/{cartItemId}/quantity:
     put:
       tags:
@@ -645,9 +655,17 @@ components:
         price:
           type: number
           format: decimal
+        vatRate:
+          type: number
+          format: double
+          nullable: true
         regularPrice:
           type: number
           format: decimal
+          nullable: true
+        discountRate:
+          type: number
+          format: double
           nullable: true
         handle:
           type: string

@@ -4,6 +4,7 @@ using Catalog.API.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Catalog.API.Persistence.Migrations
 {
     [DbContext(typeof(CatalogContext))]
-    partial class CatalogContextModelSnapshot : ModelSnapshot
+    [Migration("20231226125133_AddDiscountPropertyToProduct")]
+    partial class AddDiscountPropertyToProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -389,6 +392,9 @@ namespace Catalog.API.Persistence.Migrations
                     b.Property<string>("StoreId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<decimal>("Vat")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<double?>("VatRate")
                         .HasColumnType("float");
 
@@ -627,29 +633,6 @@ namespace Catalog.API.Persistence.Migrations
                     b.HasIndex("CurrencyCode");
 
                     b.ToTable("Stores", (string)null);
-                });
-
-            modelBuilder.Entity("Catalog.API.Domain.Entities.VatRate", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<double>("Factor")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Factor2")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("VatRates", (string)null);
                 });
 
             modelBuilder.Entity("Catalog.API.Domain.Entities.ChoiceOption", b =>
@@ -984,9 +967,6 @@ namespace Catalog.API.Persistence.Migrations
                             b1.Property<string>("StoreId")
                                 .HasColumnType("nvarchar(450)");
 
-                            b1.Property<bool>("IncludeVatInSalesPrice")
-                                .HasColumnType("bit");
-
                             b1.Property<int?>("RoundingDecimals")
                                 .HasColumnType("int");
 
@@ -1012,34 +992,6 @@ namespace Catalog.API.Persistence.Migrations
 
                             b1.WithOwner()
                                 .HasForeignKey("StoreId");
-
-                            b1.OwnsMany("Catalog.API.Domain.Entities.CategoryPricingOptions", "CategoryPricingOptions", b2 =>
-                                {
-                                    b2.Property<string>("PricingOptionsStoreId")
-                                        .HasColumnType("nvarchar(450)");
-
-                                    b2.Property<int>("Id")
-                                        .ValueGeneratedOnAdd()
-                                        .HasColumnType("int");
-
-                                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b2.Property<int>("Id"));
-
-                                    b2.Property<string>("CategoryId")
-                                        .IsRequired()
-                                        .HasColumnType("nvarchar(max)");
-
-                                    b2.Property<double>("ProfitMarginRate")
-                                        .HasColumnType("float");
-
-                                    b2.HasKey("PricingOptionsStoreId", "Id");
-
-                                    b2.ToTable("CategoryPricingOptions");
-
-                                    b2.WithOwner()
-                                        .HasForeignKey("PricingOptionsStoreId");
-                                });
-
-                            b1.Navigation("CategoryPricingOptions");
                         });
 
                     b.Navigation("Currency");

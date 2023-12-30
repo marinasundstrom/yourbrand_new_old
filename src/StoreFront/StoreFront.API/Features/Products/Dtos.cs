@@ -4,7 +4,7 @@ using StoreFront.API.Features.Products.Categories;
 
 public sealed record Brand(long Id, string Name);
 
-public sealed record Product(long Id, string Name, Brand? Brand, ProductCategoryParent? Category, string? Image, string Description, decimal Price, decimal? RegularPrice, string Handle, bool HasVariants, IEnumerable<ProductAttribute> Attributes, IEnumerable<ProductOption> Options);
+public sealed record Product(long Id, string Name, Brand? Brand, ProductCategoryParent? Category, string? Image, string Description, decimal Price, double? VatRate, decimal? RegularPrice, double? DiscountRate, string Handle, bool HasVariants, IEnumerable<ProductAttribute> Attributes, IEnumerable<ProductOption> Options);
 
 public sealed record ProductAttribute(Attribute Attribute, AttributeValue? Value, bool ForVariant, bool IsMainAttribute);
 
@@ -41,7 +41,7 @@ public static class Mapper
         => new(brand.Id!, brand.Name!);
 
     public static Product Map(this YourBrand.Catalog.Product product)
-        => new(product.Id!, product.Name!, product.Brand?.Map(), product.Category?.ToParentDto3(), product.Image!, product.Description!, product.Price, product.RegularPrice, product.Handle, product.HasVariants, product.Attributes.Select(x => x.Map()), product.Options.Select(x => x.Map()));
+        => new(product.Id!, product.Name!, product.Brand?.Map(), product.Category?.ToParentDto3(), product.Image!, product.Description!, product.Price, product.VatRate, product.RegularPrice, product.DiscountRate, product.Handle, product.HasVariants, product.Attributes.Select(x => x.Map()), product.Options.Select(x => x.Map()));
 
     public static ProductAttribute Map(this YourBrand.Catalog.ProductAttribute attribute) => new(attribute.Attribute.Map(), attribute.Value?.Map(), attribute.ForVariant, attribute.IsMainAttribute);
 

@@ -1,5 +1,7 @@
 using Catalog.API.Persistence;
 
+using Core;
+
 using MassTransit;
 
 using MediatR;
@@ -32,6 +34,8 @@ public sealed record SetProductDiscountPrice(string IdOrHandle, decimal Discount
 
             product.RegularPrice = product.Price;
             product.Price = request.DiscountPrice;
+            product.DiscountRate = PriceCalculations.CalculateDiscountRate(product.Price, product.RegularPrice.GetValueOrDefault());
+            product.Discount = product.RegularPrice - product.Price;
 
             await catalogContext.SaveChangesAsync(cancellationToken);
 

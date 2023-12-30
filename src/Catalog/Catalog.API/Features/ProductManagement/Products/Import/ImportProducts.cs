@@ -61,7 +61,7 @@ public sealed record ImportProducts(Stream Stream) : IRequest<Result<ProductImpo
 
                     var productExists = _context.Products
                         .Where(x => x.Store == store)
-                        .Any(x => x.SKU == record.Sku || x.Handle == record.Handle);
+                        .Any(x => x.Sku == record.Sku || x.Handle == record.Handle);
 
                     if (productExists)
                     {
@@ -77,7 +77,7 @@ public sealed record ImportProducts(Stream Stream) : IRequest<Result<ProductImpo
 
                     products.Add(record.Sku, new Product(record.Name, productHandle)
                     {
-                        SKU = record.Sku,
+                        Sku = record.Sku,
                         Description = record.Description ?? string.Empty,
                         Image = record.Image,
                         Price = record.Price,
@@ -119,7 +119,7 @@ public sealed record ImportProducts(Stream Stream) : IRequest<Result<ProductImpo
                 }
                 catch (FileNotFoundException)
                 {
-                    diagnostics.Add($"Image \"{image}\" not found for SKU \"{product.SKU}\".");
+                    diagnostics.Add($"Image \"{image}\" not found for SKU \"{product.Sku}\".");
 
                     continue;
                 }
@@ -209,8 +209,8 @@ public sealed record ImportProducts(Stream Stream) : IRequest<Result<ProductImpo
             if (!products.TryGetValue(sku, out var product))
             {
                 product = await _context.Products
-                    .Where(x => x.SKU == sku)
-                    .FirstAsync(x => x.SKU == sku, cancellationToken);
+                    .Where(x => x.Sku == sku)
+                    .FirstAsync(x => x.Sku == sku, cancellationToken);
 
                 products.Add(sku, product);
             }

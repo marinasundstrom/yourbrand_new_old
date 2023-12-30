@@ -4,6 +4,8 @@ using Sales.API;
 using Sales.API.Features.OrderManagement.Domain.Events;
 using Sales.API.Features.OrderManagement.Domain.ValueObjects;
 
+using Core;
+
 namespace Sales.API.Features.OrderManagement.Domain.Entities;
 
 public class Order : AggregateRoot<string>, IAuditable

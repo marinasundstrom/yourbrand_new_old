@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
+using Core;
+
 using YourBrand.Sales;
 
 namespace YourBrand.Admin.Sales.OrderManagement;

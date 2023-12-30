@@ -21,8 +21,9 @@ public static class Seed2
         var connectionString = context.Database.GetConnectionString()!;
 
         cdnBaseUrl = (connectionString.Contains("localhost") || connectionString.Contains("mssql"))
-            ? configuration["CdnBaseUrl"]!
-            : "https://yourbrandstorage.blob.core.windows.net";
+            ? "https://localhost:7134/images/{0}"
+            : "https://yourbrandstorage.blob.core.windows.net/images/{0}";
+
 
         var currency = await context.Currencies.FirstOrDefaultAsync(x => x.Code == "SEK");
 
@@ -154,7 +155,7 @@ public static class Seed2
             Visibility = ProductVisibility.Listed,
             Brand = await context.Brands.FirstAsync(x => x.Handle == "my-brand"),
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
-            Image = $"{cdnBaseUrl}/images/products/placeholder.jpeg",
+            Image = string.Format(cdnBaseUrl, "products/placeholder.jpeg")
         };
 
         tshirts.AddProduct(product);
@@ -180,10 +181,10 @@ public static class Seed2
         var variantBlueSmall = new Product("Blue S", "tshirt-blue-small")
         {
             Description = "",
-            GTIN = "4345547457457",
+            Gtin = "4345547457457",
             Price = 120,
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
-            Image = $"{cdnBaseUrl}/images/products/placeholder.jpeg",
+            Image = string.Format(cdnBaseUrl, "products/placeholder.jpeg"),
         };
 
         variantBlueSmall.AddProductAttribute(new ProductAttribute
@@ -208,10 +209,10 @@ public static class Seed2
         var variantBlueMedium = new Product("Blue M", "tshirt-blue-medium")
         {
             Description = "",
-            GTIN = "543453454567",
+            Gtin = "543453454567",
             Price = 120,
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
-            Image = $"{cdnBaseUrl}/images/products/placeholder.jpeg",
+            Image = string.Format(cdnBaseUrl, "products/placeholder.jpeg"),
         };
 
         variantBlueMedium.AddProductAttribute(new ProductAttribute
@@ -234,10 +235,10 @@ public static class Seed2
         var variantBlueLarge = new Product("Blue L", "tshirt-blue-large")
         {
             Description = "",
-            GTIN = "6876345345345",
+            Gtin = "6876345345345",
             Price = 60,
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
-            Image = $"{cdnBaseUrl}/images/products/placeholder.jpeg",
+            Image = string.Format(cdnBaseUrl, "products/placeholder.jpeg"),
         };
 
         variantBlueLarge.AddProductAttribute(new ProductAttribute
@@ -262,10 +263,10 @@ public static class Seed2
         var variantRedSmall = new Product("Red S", "tshirt-red-small")
         {
             Description = "",
-            GTIN = "4345547457457",
+            Gtin = "4345547457457",
             Price = 120,
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
-            Image = $"{cdnBaseUrl}/images/products/placeholder.jpeg",
+            Image = string.Format(cdnBaseUrl, "products/placeholder.jpeg"),
         };
 
         variantRedSmall.AddProductAttribute(new ProductAttribute
@@ -288,10 +289,10 @@ public static class Seed2
         var variantRedMedium = new Product("Red M", "tshirt-red-medium")
         {
             Description = "",
-            GTIN = "543453454567",
+            Gtin = "543453454567",
             Price = 120,
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
-            Image = $"{cdnBaseUrl}/images/products/placeholder.jpeg",
+            Image = string.Format(cdnBaseUrl, "products/placeholder.jpeg"),
         };
 
         variantRedMedium.AddProductAttribute(new ProductAttribute
@@ -314,10 +315,10 @@ public static class Seed2
         var variantRedLarge = new Product("Red L", "tshirt-red-large")
         {
             Description = "",
-            GTIN = "6876345345345",
+            Gtin = "6876345345345",
             Price = 120,
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
-            Image = $"{cdnBaseUrl}/images/products/placeholder.jpeg",
+            Image = string.Format(cdnBaseUrl, "products/placeholder.jpeg"),
         };
 
         variantRedLarge.AddProductAttribute(new ProductAttribute
@@ -352,7 +353,7 @@ public static class Seed2
             Headline = "Dönnerkebab, nyfriterad pommes frites, sallad, och sås",
             Price = 89,
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
-            Image = $"{cdnBaseUrl}/images/products/placeholder.jpeg",
+            Image = string.Format(cdnBaseUrl, "products/placeholder.jpeg"),
         };
 
         food.AddProduct(product);
@@ -391,7 +392,7 @@ public static class Seed2
             Headline = "Vår fina stek med pommes och vår hemlagade bearnaise sås",
             Price = 179,
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
-            Image = $"{cdnBaseUrl}/images/products/placeholder.jpeg",
+            Image = string.Format(cdnBaseUrl, "products/placeholder.jpeg"),
         };
 
         food.AddProduct(product);
@@ -443,7 +444,7 @@ public static class Seed2
             Headline = "En korg med smårätter",
             Price = 179,
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
-            Image = $"{cdnBaseUrl}/images/products/placeholder.jpeg",
+            Image = string.Format(cdnBaseUrl, "products/placeholder.jpeg"),
         };
 
         food.AddProduct(product);
@@ -517,7 +518,7 @@ public static class Seed2
             Headline = "Custom pizza",
             Price = 40,
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
-            Image = $"{cdnBaseUrl}/images/products/placeholder.jpeg",
+            Image = string.Format(cdnBaseUrl, "products/placeholder.jpeg"),
         };
 
         food.AddProduct(product);
@@ -633,7 +634,7 @@ public static class Seed2
             Price = 52,
             Visibility = ProductVisibility.Listed,
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
-            Image = $"{cdnBaseUrl}/images/products/placeholder.jpeg",
+            Image = string.Format(cdnBaseUrl, "products/placeholder.jpeg"),
         };
 
         food.AddProduct(product);
