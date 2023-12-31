@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace YourBrand.Catalog.API.Features.ProductManagement.Products;
 
-public sealed record UpdateProductPrice(string IdOrHandle, decimal Price) : IRequest<Result>
+public sealed record UpdateProductVatRate(string IdOrHandle, double? VatRate) : IRequest<Result>
 {
-    public sealed class Handler(IPublishEndpoint publishEndpoint, CatalogContext catalogContext = default!) : IRequestHandler<UpdateProductPrice, Result>
+    public sealed class Handler(IPublishEndpoint publishEndpoint, CatalogContext catalogContext = default!) : IRequestHandler<UpdateProductVatRate, Result>
     {
-        public async Task<Result> Handle(UpdateProductPrice request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(UpdateProductVatRate request, CancellationToken cancellationToken)
         {
             var isId = int.TryParse(request.IdOrHandle, out var id);
 
@@ -25,23 +25,14 @@ public sealed record UpdateProductPrice(string IdOrHandle, decimal Price) : IReq
                 return Result.Failure(Errors.ProductNotFound);
             }
 
-            if (product.RegularPrice is not null)
-            {
-                var p = product.RegularPrice.GetValueOrDefault();
-                if (request.Price >= p)
-                {
-                    return Result.Failure(Errors.ProductPriceExceedsDiscountPrice);
-                }
-            }
-
-            product.Price = request.Price;
+            product.VatRate = request.VatRate;
 
             await catalogContext.SaveChangesAsync(cancellationToken);
 
-            await publishEndpoint.Publish(new Catalog.Contracts.ProductPriceUpdated
+            await publishEndpoint.Publish(new Catalog.Contracts.ProductVatRateUpdated
             {
                 ProductId = product.Id,
-                NewPrice = product.Price
+                NewVatRate = product.VatRate
             });
 
             return Result.Success();

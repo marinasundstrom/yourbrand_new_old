@@ -70,6 +70,10 @@
 
         <MudItem xs="12" sm="12" md="3">
             <MudPaper Elevation="2" Class="pa-4">
+                <div class="mb-4">
+                    <VatRateUpdateView Model="vatRateUpdateViewModel" />
+                </div>
+
                 <PriceUpdateView Model="priceUpdateViewModel" />
             </MudPaper>
         </MudItem>
@@ -126,6 +130,7 @@
     DetailsUpdateViewModel detailsUpdateViewModel;
     BrandUpdateViewModel brandUpdateViewModel;
     CategoryUpdateViewModel categoryUpdateViewModel;
+    VatRateUpdateViewModel vatRateUpdateViewModel;
     PriceUpdateViewModel priceUpdateViewModel;
     HandleUpdateViewModel handleUpdateViewModel;
     VisibilityUpdateViewModel visibilityUpdateViewModel;
@@ -188,6 +193,11 @@
         BrandsClient,
         Snackbar,
         StoreProvider);
+
+        vatRateUpdateViewModel = VatRateUpdateViewModel.Create(
+        product,
+        ProductsClient,
+        Snackbar);
 
         priceUpdateViewModel = PriceUpdateViewModel.Create(
         product,

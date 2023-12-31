@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace YourBrand.Catalog.API.Features.ProductManagement.Products;
 
-public sealed record CreateProduct(string Name, string StoreId, string Description, long CategoryId, bool IsGroupedProduct, decimal Price, string Handle) : IRequest<Result<ProductDto>>
+public sealed record CreateProduct(string Name, string StoreId, string Description, long CategoryId, bool IsGroupedProduct, decimal Price, double? VatRate, string Handle) : IRequest<Result<ProductDto>>
 {
     public sealed class Handler(CatalogContext catalogContext, IProductImageUploader productImageUploader) : IRequestHandler<CreateProduct, Result<ProductDto>>
     {
@@ -27,6 +27,7 @@ public sealed record CreateProduct(string Name, string StoreId, string Descripti
                 Image = await productImageUploader.GetPlaceholderImageUrl(),
                 HasVariants = request.IsGroupedProduct,
                 Price = request.Price,
+                VatRate = request.VatRate,
                 Handle = request.Handle
             };
 

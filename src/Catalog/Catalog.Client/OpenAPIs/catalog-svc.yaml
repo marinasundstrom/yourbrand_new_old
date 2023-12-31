@@ -1192,6 +1192,34 @@ paths:
           description: ""
       security:
         - JWT: []
+  /v1/products/{idOrHandle}/vatRate:
+    put:
+      tags:
+        - Products
+        - Products
+      operationId: Products_UpdateProductVatRate
+      parameters:
+        - name: idOrHandle
+          in: path
+          required: true
+          schema:
+            type: string
+          x-position: 1
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateProductVatRateRequest"
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ""
+        404:
+          description: ""
+      security:
+        - JWT: []
   /v1/products/{idOrHandle}/price/discount:
     post:
       tags:
@@ -2858,6 +2886,10 @@ components:
         price:
           type: number
           format: decimal
+        vatRate:
+          type: number
+          format: double
+          nullable: true
         handle:
           type: string
     UpdateProductDetailsRequest:
@@ -2875,6 +2907,14 @@ components:
         price:
           type: number
           format: decimal
+    UpdateProductVatRateRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        vatRate:
+          type: number
+          format: double
+          nullable: true
     SetProductDiscountPriceRequest:
       type: object
       additionalProperties: false

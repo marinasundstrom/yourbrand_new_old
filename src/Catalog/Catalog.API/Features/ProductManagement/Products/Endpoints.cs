@@ -59,6 +59,9 @@ public static partial class Endpoints
         group.MapPut("/{idOrHandle}/price", UpdateProductPrice)
             .WithName($"Products_{nameof(UpdateProductPrice)}");
 
+        group.MapPut("/{idOrHandle}/vatRate", UpdateProductVatRate)
+            .WithName($"Products_{nameof(UpdateProductVatRate)}");
+
         group.MapPost("/{idOrHandle}/price/discount", SetProductDiscountPrice)
             .WithName($"Products_{nameof(SetProductDiscountPrice)}");
 
@@ -118,7 +121,7 @@ public static partial class Endpoints
     private static async Task<Results<Ok<ProductDto>, BadRequest, ProblemHttpResult>> CreateProduct(CreateProductRequest request,
         IMediator mediator, CancellationToken cancellationToken)
     {
-        var result = await mediator.Send(new CreateProduct(request.Name, request.StoreId, request.Description, request.CategoryId, request.IsGroupedProduct, request.Price, request.Handle), cancellationToken);
+        var result = await mediator.Send(new CreateProduct(request.Name, request.StoreId, request.Description, request.CategoryId, request.IsGroupedProduct, request.Price, request.VatRate, request.Handle), cancellationToken);
 
         return result.IsSuccess ? TypedResults.Ok(result.GetValue()) : TypedResults.BadRequest();
     }
@@ -135,6 +138,14 @@ public static partial class Endpoints
         IMediator mediator, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new UpdateProductPrice(idOrHandle, request.Price), cancellationToken);
+
+        return result.IsSuccess ? TypedResults.Ok() : TypedResults.NotFound();
+    }
+
+    private static async Task<Results<Ok, NotFound>> UpdateProductVatRate(string idOrHandle, UpdateProductVatRateRequest request,
+        IMediator mediator, CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(new UpdateProductVatRate(idOrHandle, request.VatRate), cancellationToken);
 
         return result.IsSuccess ? TypedResults.Ok() : TypedResults.NotFound();
     }
@@ -221,7 +232,7 @@ public static partial class Endpoints
     }
 }
 
-public sealed record CreateProductRequest(string Name, string StoreId, string Description, long CategoryId, bool IsGroupedProduct, decimal Price, string Handle)
+public sealed record CreateProductRequest(string Name, string StoreId, string Description, long CategoryId, bool IsGroupedProduct, decimal Price, double? VatRate, string Handle)
 {
     public class CreateProductRequestValidator : AbstractValidator<CreateProductRequest>
     {
@@ -249,6 +260,8 @@ public sealed record UpdateProductDetailsRequest(string Name, string Description
 }
 
 public sealed record UpdateProductPriceRequest(decimal Price);
+
+public sealed record UpdateProductVatRateRequest(double? VatRate);
 
 public sealed record SetProductDiscountPriceRequest(decimal DiscountPrice);
 

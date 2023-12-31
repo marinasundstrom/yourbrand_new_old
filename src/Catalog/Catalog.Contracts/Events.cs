@@ -18,6 +18,14 @@ public sealed record ProductPriceUpdated
     public decimal? RegularPrice { get; init; }
 }
 
+public sealed record ProductVatRateUpdated
+{
+    public required long ProductId { get; init; }
+
+    public required double? NewVatRate { get; init; }
+}
+
+
 public sealed record ProductImageUpdated
 {
     public required long ProductId { get; init; }

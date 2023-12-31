@@ -210,6 +210,20 @@ public sealed class ProductPriceUpdatedConsumer(Persistence.CartsContext cartsCo
     }
 }
 
+public sealed class ProductVatRateUpdatedConsumer(Persistence.CartsContext cartsContext) : IConsumer<Catalog.Contracts.ProductVatRateUpdated>
+{
+    public async Task Consume(ConsumeContext<Catalog.Contracts.ProductVatRateUpdated> context)
+    {
+        var message = context.Message;
+
+        await cartsContext.CartItems
+            .Where(cartItem => cartItem.ProductId == message.ProductId)
+            .ExecuteUpdateAsync(s =>
+                s.SetProperty(e => e.VatRate, e => message.NewVatRate), context.CancellationToken);
+
+    }
+}
+
 public sealed class ProductDetailsUpdatedConsumer(Persistence.CartsContext cartsContext) : IConsumer<Catalog.Contracts.ProductDetailsUpdated>
 {
     public async Task Consume(ConsumeContext<Catalog.Contracts.ProductDetailsUpdated> context)

@@ -105,7 +105,8 @@ else
 
                 <div>Incl. @((productViewModel.Variant ??
                  productViewModel.Product).Price.GetVatFromTotal(productViewModel.Product.VatRate.GetValueOrDefault()).FormatCurrency(currency))
-                    VAT
+                    VAT (@((productViewModel.Variant ??
+                   productViewModel.Product).VatRate * 100)%)
                 </div>
             }
             <p class="mt-3" itemprop="description">@productViewModel.Description</p>

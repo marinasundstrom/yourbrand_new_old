@@ -24,11 +24,11 @@
                 <MudCheckBox Label="Is grouped product" Lines="5" @bind-Checked="IsGroupedProduct"
                     Variant="Variant.Outlined" For="() => IsGroupedProduct" Class="mb-4"></MudCheckBox>
 
-                @if (IsGroupedProduct)
-                {
-                    <MudNumericField Label="Price" @bind-Value="Price" Variant="Variant.Outlined" For="() => Price"
-                        Class="mb-4" Adornment="Adornment.End" AdornmentText="sek"></MudNumericField>
-                }
+                <MudNumericField Label="Price" @bind-Value="Price" Variant="Variant.Outlined" For="() => Price"
+                    Class="mb-4" Adornment="Adornment.End" AdornmentText="sek"></MudNumericField>
+
+                <MudNumericField Label="VAT Rate" @bind-Value="VatRate" Variant="Variant.Outlined"
+                    For="() => VatRate" Class="mb-4"></MudNumericField>
 
                 <MudTextField Label="Handle" @bind-Value="Handle" Placeholder="red-tshirt-medium"
                     HelperText="Unique identifier used in URLs etc" HelperTextOnFocus="true" Variant="Variant.Outlined"
@@ -58,7 +58,10 @@
     public bool IsGroupedProduct { get; set; }
 
     [Required]
-    public decimal Price { get; set; }
+    public decimal Price { get; set; } = 0;
+
+    [Range(0, 1)]
+    public double? VatRate { get; set; }
 
     [Required]
     public string Handle { get; set; }
@@ -75,6 +78,7 @@
                 CategoryId = Category.Id,
                 IsGroupedProduct = IsGroupedProduct,
                 Price = Price,
+                VatRate = VatRate,
                 Handle = Handle
             });
 

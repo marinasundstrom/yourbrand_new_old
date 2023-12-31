@@ -1,0 +1,13 @@
+<EditForm Model="@Model" OnValidSubmit="Model.UpdateVatRate">
+    <DataAnnotationsValidator />
+
+    <MudNumericField Label="VAT Rate" @bind-Value="Model.VatRate" Variant="Variant.Outlined" For="() => Model.VatRate">
+    </MudNumericField>
+    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Class="mt-4">Update VAT Rate</MudButton>
+</EditForm>
+
+@code
+{
+    [Parameter]
+    public VatRateUpdateViewModel Model { get; set; }
+}
