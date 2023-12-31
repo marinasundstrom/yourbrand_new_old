@@ -11,6 +11,7 @@
 @inject NavigationManager NavigationManager
 @* @inject Services.IAccessTokenProvider AccessTokenProvider *@
 @inject RenderingContext RenderingContext
+@implements IDisposable
 @using Core
 
 <AppPageTitle>Checkout</AppPageTitle>
@@ -211,6 +212,8 @@
 
     protected override async Task OnInitializedAsync()
     {
+        CartService.CartUpdated += OnCartUpdated;
+
         //if(RenderingContext.IsPrerendering) return;
 
         cart = await CartClient.GetCartAsync();
@@ -250,6 +253,20 @@
         }
 
         */
+    }
+
+    private async void OnCartUpdated(object? sender, EventArgs eventArgs) 
+    {
+        var cartItems = CartService.Items.ToList();
+        if(!cartItems.Any()) 
+        {
+            NavigationManager.NavigateTo("/");
+        }
+    }
+
+    public void Dispose() 
+    {
+        CartService.CartUpdated -= OnCartUpdated;
     }
 
     [Required]
