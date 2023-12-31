@@ -9,6 +9,8 @@ namespace YourBrand.StoreFront.API.Features.Products;
 
 public static class Endpoints
 {
+    private static string? storeId = null;
+
     public static IEndpointRouteBuilder MapProductsEndpoints(this IEndpointRouteBuilder app)
     {
         app.MapProductCategoriesEndpoints();
@@ -44,9 +46,15 @@ public static class Endpoints
         return app;
     }
 
-    private static async Task<Results<Ok<PagedResult<Product>>, NotFound>> GetProducts(int? page = 1, int? pageSize = 10, string? searchTerm = null, string? categoryPath = null, IProductsClient productsClient = default!, CancellationToken cancellationToken = default)
+    private static async Task<Results<Ok<PagedResult<Product>>, NotFound>> GetProducts(int? page = 1, int? pageSize = 10, string? searchTerm = null, string? categoryPath = null, IProductsClient productsClient = default!, IStoresClient storesClient = default!, CancellationToken cancellationToken = default)
     {
-        var results = await productsClient.GetProductsAsync(null, null, false, true, searchTerm, categoryPath, page, pageSize, null, null, cancellationToken);
+        if (storeId is null)
+        {
+            var store = await storesClient.GetStoreByIdAsync("my-store");
+            storeId = store.Id;
+        }
+
+        var results = await productsClient.GetProductsAsync(storeId, null, false, true, searchTerm, categoryPath, page, pageSize, null, null, cancellationToken);
         return results is not null ? TypedResults.Ok(
                 new PagedResult<Product>(results.Items.Select(x => x.Map()), results.Total)
         ) : TypedResults.NotFound();
