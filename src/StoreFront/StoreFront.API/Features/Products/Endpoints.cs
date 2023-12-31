@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
-using StoreFront.API.Features.Products.Categories;
+using YourBrand.StoreFront.API.Features.Products.Categories;
 
 using YourBrand.Catalog;
 
-namespace StoreFront.API.Features.Products;
+namespace YourBrand.StoreFront.API.Features.Products;
 
 public static class Endpoints
 {

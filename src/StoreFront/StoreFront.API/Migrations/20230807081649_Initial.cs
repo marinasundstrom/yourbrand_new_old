@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace StoreFront.API.Migrations
+namespace YourBrand.StoreFront.API.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration

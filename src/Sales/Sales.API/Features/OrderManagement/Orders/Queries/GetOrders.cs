@@ -2,13 +2,13 @@
 
 using Microsoft.EntityFrameworkCore;
 
-using Sales.API.Features.OrderManagement.Orders.Dtos;
-using Sales.API.Features.OrderManagement.Repositories;
-using Sales.API.Models;
+using YourBrand.Sales.API.Features.OrderManagement.Orders.Dtos;
+using YourBrand.Sales.API.Features.OrderManagement.Repositories;
+using YourBrand.Sales.API.Models;
 
 using YourBrand.Orders.Application.Common;
 
-namespace Sales.API.Features.OrderManagement.Orders.Queries;
+namespace YourBrand.Sales.API.Features.OrderManagement.Orders.Queries;
 
 public record GetOrders(int[]? Status, string? CustomerId, string? SSN, string? AssigneeId, int Page = 1, int PageSize = 10, string? SortBy = null, SortDirection? SortDirection = null) : IRequest<Result<PagedResult<OrderDto>>>
 {

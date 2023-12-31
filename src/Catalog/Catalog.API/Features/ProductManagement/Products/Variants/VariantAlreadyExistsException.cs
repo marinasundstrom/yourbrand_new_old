@@ -1,4 +1,4 @@
-﻿namespace Catalog.API.Features.ProductManagement;
+﻿namespace YourBrand.Catalog.API.Features.ProductManagement;
 
 using System;
 

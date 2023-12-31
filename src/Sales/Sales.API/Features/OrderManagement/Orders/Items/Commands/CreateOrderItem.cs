@@ -4,10 +4,10 @@ using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-using Sales.API.Features.OrderManagement.Orders.Dtos;
-using Sales.API.Features.OrderManagement.Repositories;
+using YourBrand.Sales.API.Features.OrderManagement.Orders.Dtos;
+using YourBrand.Sales.API.Features.OrderManagement.Repositories;
 
-namespace Sales.API.Features.OrderManagement.Orders.Items.Commands;
+namespace YourBrand.Sales.API.Features.OrderManagement.Orders.Items.Commands;
 
 public sealed record CreateOrderItem(string OrderId, string Description, string? ItemId, string? Unit, decimal UnitPrice, double VatRate, double Quantity, string? Notes) : IRequest<Result<OrderItemDto>>
 {

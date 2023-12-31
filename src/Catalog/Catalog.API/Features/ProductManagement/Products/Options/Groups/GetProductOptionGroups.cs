@@ -1,11 +1,11 @@
-using Catalog.API.Features.ProductManagement.Options;
-using Catalog.API.Persistence;
+using YourBrand.Catalog.API.Features.ProductManagement.Options;
+using YourBrand.Catalog.API.Persistence;
 
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Catalog.API.Features.ProductManagement.Products.Options.Groups;
+namespace YourBrand.Catalog.API.Features.ProductManagement.Products.Options.Groups;
 
 public record GetProductOptionGroups(long ProductId) : IRequest<IEnumerable<OptionGroupDto>>
 {

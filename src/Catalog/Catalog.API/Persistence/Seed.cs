@@ -1,8 +1,8 @@
-using Catalog.API.Domain.Entities;
+using YourBrand.Catalog.API.Domain.Entities;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Catalog.API.Persistence;
+namespace YourBrand.Catalog.API.Persistence;
 
 public static class Seed
 {

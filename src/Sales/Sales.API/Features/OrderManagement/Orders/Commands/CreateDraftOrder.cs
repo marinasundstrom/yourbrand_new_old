@@ -4,12 +4,12 @@ using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-using Sales.API.Features.OrderManagement.Domain.Entities;
-using Sales.API.Features.OrderManagement.Domain.Events;
-using Sales.API.Features.OrderManagement.Orders.Dtos;
-using Sales.API.Features.OrderManagement.Repositories;
+using YourBrand.Sales.API.Features.OrderManagement.Domain.Entities;
+using YourBrand.Sales.API.Features.OrderManagement.Domain.Events;
+using YourBrand.Sales.API.Features.OrderManagement.Orders.Dtos;
+using YourBrand.Sales.API.Features.OrderManagement.Repositories;
 
-namespace Sales.API.Features.OrderManagement.Orders.Commands;
+namespace YourBrand.Sales.API.Features.OrderManagement.Orders.Commands;
 
 public sealed record CreateDraftOrder() : IRequest<Result<OrderDto>>
 {

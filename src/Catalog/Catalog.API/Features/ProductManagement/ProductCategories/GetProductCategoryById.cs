@@ -1,12 +1,12 @@
 using System.Net;
 
-using Catalog.API.Persistence;
+using YourBrand.Catalog.API.Persistence;
 
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Catalog.API.Features.ProductManagement.ProductCategories;
+namespace YourBrand.Catalog.API.Features.ProductManagement.ProductCategories;
 
 public sealed record GetProductCategoryById(string IdOrPath) : IRequest<Result<ProductCategory>>
 {

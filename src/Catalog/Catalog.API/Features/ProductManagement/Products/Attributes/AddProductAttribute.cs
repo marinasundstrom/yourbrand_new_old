@@ -1,11 +1,11 @@
-using Catalog.API.Domain.Entities;
-using Catalog.API.Persistence;
+using YourBrand.Catalog.API.Domain.Entities;
+using YourBrand.Catalog.API.Persistence;
 
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Catalog.API.Features.ProductManagement.Products.Attributes;
+namespace YourBrand.Catalog.API.Features.ProductManagement.Products.Attributes;
 
 public record AddProductAttribute(long ProductId, string AttributeId, string ValueId, bool ForVariant, bool IsMainAttribute) : IRequest<ProductAttributeDto>
 {

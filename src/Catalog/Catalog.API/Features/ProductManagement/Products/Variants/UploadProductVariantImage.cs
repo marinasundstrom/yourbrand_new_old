@@ -1,10 +1,10 @@
-using Catalog.API.Persistence;
+using YourBrand.Catalog.API.Persistence;
 
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Catalog.API.Features.ProductManagement.Products.Variants;
+namespace YourBrand.Catalog.API.Features.ProductManagement.Products.Variants;
 
 public record UploadProductVariantImage(long ProductId, long VariantId, string FileName, Stream Stream) : IRequest<string?>
 {

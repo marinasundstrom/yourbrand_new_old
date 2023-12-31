@@ -1,4 +1,4 @@
-﻿namespace Carts.UnitTests;
+﻿namespace YourBrand.Carts.UnitTests;
 
 public class UnitTest1
 {

@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-using Sales.API.Persistence.Outbox;
+using YourBrand.Sales.API.Persistence.Outbox;
 
-namespace Sales.API.Persistence.Configurations;
+namespace YourBrand.Sales.API.Persistence.Configurations;
 
 public sealed class OutboxMessageConfiguration : IEntityTypeConfiguration<OutboxMessage>
 {

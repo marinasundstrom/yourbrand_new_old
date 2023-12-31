@@ -1,10 +1,10 @@
-using Catalog.API.Persistence;
+using YourBrand.Catalog.API.Persistence;
 
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Catalog.API.Features.ProductManagement.Products.Options.Groups;
+namespace YourBrand.Catalog.API.Features.ProductManagement.Products.Options.Groups;
 
 public record DeleteProductOptionGroup(long ProductId, string OptionGroupId) : IRequest
 {

@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace Carts.API.Domain.Entities;
+namespace YourBrand.Carts.API.Domain.Entities;
 
 public sealed class Cart
 {

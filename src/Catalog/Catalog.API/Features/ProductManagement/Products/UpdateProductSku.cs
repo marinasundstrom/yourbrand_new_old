@@ -1,4 +1,4 @@
-using Catalog.API.Persistence;
+using YourBrand.Catalog.API.Persistence;
 
 using MassTransit;
 
@@ -6,7 +6,7 @@ using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Catalog.API.Features.ProductManagement.Products;
+namespace YourBrand.Catalog.API.Features.ProductManagement.Products;
 
 public sealed record UpdateProductSku(string IdOrHandle, string Sku) : IRequest<Result>
 {

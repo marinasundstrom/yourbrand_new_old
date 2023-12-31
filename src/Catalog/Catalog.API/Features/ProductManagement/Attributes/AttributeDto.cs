@@ -1,4 +1,4 @@
-namespace Catalog.API.Features.ProductManagement.Attributes;
+namespace YourBrand.Catalog.API.Features.ProductManagement.Attributes;
 
 public record class AttributeDto(string Id, string Name, string? Description, AttributeGroupDto? Group, IEnumerable<AttributeValueDto> Values);
 

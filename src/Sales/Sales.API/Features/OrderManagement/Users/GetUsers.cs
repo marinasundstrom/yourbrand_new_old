@@ -2,12 +2,12 @@
 
 using Microsoft.EntityFrameworkCore;
 
-using Sales.API;
-using Sales.API.Features.OrderManagement.Orders;
-using Sales.API.Features.OrderManagement.Repositories;
-using Sales.API.Models;
+using YourBrand.Sales.API;
+using YourBrand.Sales.API.Features.OrderManagement.Orders;
+using YourBrand.Sales.API.Features.OrderManagement.Repositories;
+using YourBrand.Sales.API.Models;
 
-namespace Sales.API.Features.OrderManagement.Users;
+namespace YourBrand.Sales.API.Features.OrderManagement.Users;
 
 public record GetUsers(int Page = 1, int PageSize = 10, string? SearchTerm = null, string? SortBy = null, SortDirection? SortDirection = null) : IRequest<PagedResult<UserDto>>
 {

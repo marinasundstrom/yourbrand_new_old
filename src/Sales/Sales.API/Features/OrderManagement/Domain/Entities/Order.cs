@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 
-using Sales.API;
-using Sales.API.Features.OrderManagement.Domain.Events;
-using Sales.API.Features.OrderManagement.Domain.ValueObjects;
+using YourBrand.Sales.API;
+using YourBrand.Sales.API.Features.OrderManagement.Domain.Events;
+using YourBrand.Sales.API.Features.OrderManagement.Domain.ValueObjects;
 
 using Core;
 
-namespace Sales.API.Features.OrderManagement.Domain.Entities;
+namespace YourBrand.Sales.API.Features.OrderManagement.Domain.Entities;
 
 public class Order : AggregateRoot<string>, IAuditable
 {

@@ -1,11 +1,11 @@
-using Catalog.API.Model;
-using Catalog.API.Persistence;
+using YourBrand.Catalog.API.Model;
+using YourBrand.Catalog.API.Persistence;
 
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Catalog.API.Features.ProductManagement.Attributes;
+namespace YourBrand.Catalog.API.Features.ProductManagement.Attributes;
 
 public record GetAttributes(string[]? Ids = null, int Page = 1, int PageSize = 10, string? SearchString = null, string? SortBy = null, SortDirection? SortDirection = null) : IRequest<PagedResult<AttributeDto>>
 {

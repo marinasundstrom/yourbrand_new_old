@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Sales.API.Features.OrderManagement.Domain.Entities;
+namespace YourBrand.Sales.API.Features.OrderManagement.Domain.Entities;
 
 public abstract class Entity<TId> : IEquatable<Entity<TId>>, IHasDomainEvents
     where TId : notnull

@@ -1,4 +1,4 @@
-﻿namespace StoreFront.UnitTests;
+﻿namespace YourBrand.StoreFront.UnitTests;
 
 public class UnitTest1
 {

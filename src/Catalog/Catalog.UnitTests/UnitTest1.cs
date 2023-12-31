@@ -1,10 +1,10 @@
-﻿using Catalog.API.Domain;
-using Catalog.API.Domain.Entities;
-using Catalog.API.Features.ProductManagement.Products.Variants;
+﻿using YourBrand.Catalog.API.Domain;
+using YourBrand.Catalog.API.Domain.Entities;
+using YourBrand.Catalog.API.Features.ProductManagement.Products.Variants;
 
 using Core;
 
-namespace Catalog.UnitTests;
+namespace YourBrand.Catalog.UnitTests;
 
 public class UnitTest1
 {

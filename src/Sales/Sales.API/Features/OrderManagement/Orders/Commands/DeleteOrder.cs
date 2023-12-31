@@ -2,10 +2,10 @@
 
 using MediatR;
 
-using Sales.API.Features.OrderManagement.Domain.Events;
-using Sales.API.Features.OrderManagement.Repositories;
+using YourBrand.Sales.API.Features.OrderManagement.Domain.Events;
+using YourBrand.Sales.API.Features.OrderManagement.Repositories;
 
-namespace Sales.API.Features.OrderManagement.Orders.Commands;
+namespace YourBrand.Sales.API.Features.OrderManagement.Orders.Commands;
 
 public sealed record DeleteOrder(string Id) : IRequest<Result>
 {

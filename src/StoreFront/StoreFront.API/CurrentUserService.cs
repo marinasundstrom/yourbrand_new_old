@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 
 using Polly;
 
-namespace StoreFront.API;
+namespace YourBrand.StoreFront.API;
 
 public sealed class CurrentUserService : ICurrentUserService
 {

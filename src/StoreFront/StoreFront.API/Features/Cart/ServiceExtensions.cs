@@ -1,4 +1,4 @@
-namespace StoreFront.API.Features.Cart;
+namespace YourBrand.StoreFront.API.Features.Cart;
 
 public static class ServiceExtensions
 {

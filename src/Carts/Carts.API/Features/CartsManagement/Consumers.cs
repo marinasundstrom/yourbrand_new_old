@@ -1,4 +1,4 @@
-using Carts.Contracts;
+using YourBrand.Carts.Contracts;
 
 using MassTransit;
 
@@ -6,7 +6,7 @@ using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Carts.API.Features.CartsManagement.Consumers;
+namespace YourBrand.Carts.API.Features.CartsManagement.Consumers;
 
 public sealed class GetCartsConsumer(IMediator mediator) : IConsumer<GetCarts>
 {

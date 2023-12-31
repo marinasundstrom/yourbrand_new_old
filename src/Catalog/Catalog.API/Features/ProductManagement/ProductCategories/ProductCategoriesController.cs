@@ -1,12 +1,12 @@
 using Asp.Versioning;
 
-using Catalog.API.Persistence;
+using YourBrand.Catalog.API.Persistence;
 
 using MediatR;
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace Catalog.API.Features.ProductManagement.ProductCategories;
+namespace YourBrand.Catalog.API.Features.ProductManagement.ProductCategories;
 
 [ApiController]
 [ApiVersion("1")]

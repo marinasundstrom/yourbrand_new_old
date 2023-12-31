@@ -2,9 +2,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-using Sales.API.Features.OrderManagement.Domain.Entities;
+using YourBrand.Sales.API.Features.OrderManagement.Domain.Entities;
 
-namespace Sales.API.Persistence;
+namespace YourBrand.Sales.API.Persistence;
 
 public static class Seed
 {

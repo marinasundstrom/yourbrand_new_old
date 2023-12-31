@@ -1,4 +1,4 @@
-namespace Sales.API.Features.OrderManagement.Domain.Entities;
+namespace YourBrand.Sales.API.Features.OrderManagement.Domain.Entities;
 
 public class OrderItem : Entity<string>, IAuditable
 {

@@ -5,11 +5,11 @@ using Meziantou.Extensions.Logging.Xunit;
 
 using Microsoft.AspNetCore.Mvc.Testing;
 
-using Sales.Contracts;
+using YourBrand.Sales.Contracts;
 
 using Xunit.Abstractions;
 
-namespace Carts.IntegrationTests;
+namespace YourBrand.Carts.IntegrationTests;
 
 [Collection("Database collection")]
 public class CartsTest : IAsyncLifetime

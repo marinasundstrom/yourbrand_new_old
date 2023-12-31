@@ -1,8 +1,8 @@
-using Catalog.API.Domain.Entities;
+using YourBrand.Catalog.API.Domain.Entities;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Catalog.API.Features.ProductManagement.Products;
+namespace YourBrand.Catalog.API.Features.ProductManagement.Products;
 
 public static class ProductQueryExtensions
 {

@@ -1,6 +1,6 @@
-﻿namespace StoreFront.API.Features.Products;
+﻿namespace YourBrand.StoreFront.API.Features.Products;
 
-using StoreFront.API.Features.Products.Categories;
+using YourBrand.StoreFront.API.Features.Products.Categories;
 
 public sealed record Brand(long Id, string Name);
 

@@ -1,9 +1,9 @@
-using Catalog.API.Features.ProductManagement.Attributes;
-using Catalog.API.Features.ProductManagement.Options;
-using Catalog.API.Features.ProductManagement.ProductCategories;
-using Catalog.API.Features.ProductManagement.Products;
+using YourBrand.Catalog.API.Features.ProductManagement.Attributes;
+using YourBrand.Catalog.API.Features.ProductManagement.Options;
+using YourBrand.Catalog.API.Features.ProductManagement.ProductCategories;
+using YourBrand.Catalog.API.Features.ProductManagement.Products;
 
-namespace Catalog.API.Features.ProductManagement;
+namespace YourBrand.Catalog.API.Features.ProductManagement;
 
 public static class Endpoints
 {

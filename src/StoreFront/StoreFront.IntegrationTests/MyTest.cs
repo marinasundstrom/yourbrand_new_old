@@ -5,11 +5,11 @@ using Meziantou.Extensions.Logging.Xunit;
 
 using Microsoft.AspNetCore.Mvc.Testing;
 
-using StoreFront.Contracts;
+using YourBrand.StoreFront.Contracts;
 
 using Xunit.Abstractions;
 
-namespace StoreFront.IntegrationTests;
+namespace YourBrand.StoreFront.IntegrationTests;
 
 [Collection("Database collection")]
 public class MyTest : IAsyncLifetime

@@ -1,6 +1,6 @@
-﻿namespace Sales.API.Features.OrderManagement.Orders.Dtos;
+﻿namespace YourBrand.Sales.API.Features.OrderManagement.Orders.Dtos;
 
-using Sales.API.Features.OrderManagement.Users;
+using YourBrand.Sales.API.Features.OrderManagement.Users;
 
 public sealed record OrderDto(string Id, int OrderNo, DateTime Date, OrderStatusDto Status, UserDto? AssigneeId, string? CustomerId, string Currency, BillingDetailsDto? BillingDetails, ShippingDetailsDto? ShippingDetails, IEnumerable<OrderItemDto> Items, decimal SubTotal, decimal Vat, decimal Total, DateTimeOffset Created, UserDto? CreatedBy, DateTimeOffset? LastModified, UserDto? LastModifiedBy);
 

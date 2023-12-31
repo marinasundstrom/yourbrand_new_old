@@ -1,4 +1,4 @@
-﻿namespace StoreFront.API.Features.Checkout;
+﻿namespace YourBrand.StoreFront.API.Features.Checkout;
 
 public class BillingDetailsDto
 {

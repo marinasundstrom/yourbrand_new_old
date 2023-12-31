@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Catalog.API.Features.Brands;
+namespace YourBrand.Catalog.API.Features.Brands;
 
 public record BrandDto
 (

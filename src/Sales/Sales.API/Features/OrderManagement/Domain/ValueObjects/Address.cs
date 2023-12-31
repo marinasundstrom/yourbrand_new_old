@@ -1,8 +1,8 @@
-using Sales.API.Features.OrderManagement.Domain;
-using Sales.API.Features.OrderManagement.Domain.Entities;
-using Sales.API.Features.OrderManagement.Domain.Events;
+using YourBrand.Sales.API.Features.OrderManagement.Domain;
+using YourBrand.Sales.API.Features.OrderManagement.Domain.Entities;
+using YourBrand.Sales.API.Features.OrderManagement.Domain.Events;
 
-namespace Sales.API.Features.OrderManagement.Domain.ValueObjects;
+namespace YourBrand.Sales.API.Features.OrderManagement.Domain.ValueObjects;
 
 public record Address
 {

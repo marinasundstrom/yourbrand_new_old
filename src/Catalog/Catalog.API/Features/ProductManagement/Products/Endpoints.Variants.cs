@@ -1,9 +1,9 @@
 using Asp.Versioning.Builder;
 
-using Catalog.API.Domain.Entities;
-using Catalog.API.Features.ProductManagement.Attributes;
-using Catalog.API.Features.ProductManagement.Products.Variants;
-using Catalog.API.Model;
+using YourBrand.Catalog.API.Domain.Entities;
+using YourBrand.Catalog.API.Features.ProductManagement.Attributes;
+using YourBrand.Catalog.API.Features.ProductManagement.Products.Variants;
+using YourBrand.Catalog.API.Model;
 
 using FluentValidation;
 
@@ -11,7 +11,7 @@ using MediatR;
 
 using Microsoft.AspNetCore.Http.HttpResults;
 
-namespace Catalog.API.Features.ProductManagement.Products;
+namespace YourBrand.Catalog.API.Features.ProductManagement.Products;
 
 public static partial class Endpoints
 {

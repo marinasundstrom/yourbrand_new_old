@@ -1,9 +1,9 @@
-using Carts.API.Domain.Entities;
-using Carts.API.Persistence;
+using YourBrand.Carts.API.Domain.Entities;
+using YourBrand.Carts.API.Persistence;
 
 using MediatR;
 
-namespace Carts.API.Features.CartsManagement.Requests;
+namespace YourBrand.Carts.API.Features.CartsManagement.Requests;
 
 public sealed record CreateCart(string Tag) : IRequest<Result<Cart>>
 {

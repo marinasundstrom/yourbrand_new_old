@@ -1,4 +1,4 @@
-﻿namespace Sales.API.Features.OrderManagement.Domain.Exceptions;
+﻿namespace YourBrand.Sales.API.Features.OrderManagement.Domain.Exceptions;
 
 public class ApplicationException : Exception
 {

@@ -1,11 +1,11 @@
-using Catalog.API.Model;
-using Catalog.API.Persistence;
+using YourBrand.Catalog.API.Model;
+using YourBrand.Catalog.API.Persistence;
 
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Catalog.API.Features.ProductManagement.Products;
+namespace YourBrand.Catalog.API.Features.ProductManagement.Products;
 
 public sealed record GetProducts(string? StoreId = null, string? BrandIdOrHandle = null, bool IncludeUnlisted = false, bool GroupProducts = true, string? ProductCategoryIdOrPath = null, string? SearchTerm = null, int Page = 1, int PageSize = 10, string? SortBy = null, API.SortDirection? SortDirection = null) : IRequest<PagedResult<ProductDto>>
 {

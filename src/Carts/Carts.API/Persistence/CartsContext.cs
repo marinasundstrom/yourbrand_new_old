@@ -1,8 +1,8 @@
-using Carts.API.Domain.Entities;
+using YourBrand.Carts.API.Domain.Entities;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Carts.API.Persistence;
+namespace YourBrand.Carts.API.Persistence;
 
 public sealed class CartsContext : DbContext
 {

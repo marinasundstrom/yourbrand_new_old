@@ -1,14 +1,14 @@
-using Catalog.API.Domain.Entities;
-using Catalog.API.Features.Brands;
-using Catalog.API.Features.Currencies;
-using Catalog.API.Features.ProductManagement;
-using Catalog.API.Features.ProductManagement.Attributes;
-using Catalog.API.Features.ProductManagement.Options;
-using Catalog.API.Features.ProductManagement.ProductCategories;
-using Catalog.API.Features.ProductManagement.Products;
-using Catalog.API.Features.Stores;
+using YourBrand.Catalog.API.Domain.Entities;
+using YourBrand.Catalog.API.Features.Brands;
+using YourBrand.Catalog.API.Features.Currencies;
+using YourBrand.Catalog.API.Features.ProductManagement;
+using YourBrand.Catalog.API.Features.ProductManagement.Attributes;
+using YourBrand.Catalog.API.Features.ProductManagement.Options;
+using YourBrand.Catalog.API.Features.ProductManagement.ProductCategories;
+using YourBrand.Catalog.API.Features.ProductManagement.Products;
+using YourBrand.Catalog.API.Features.Stores;
 
-namespace Catalog.API.Features;
+namespace YourBrand.Catalog.API.Features;
 
 public static class Mappings
 {

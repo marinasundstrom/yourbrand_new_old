@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Catalog.API.Persistence.Migrations
+namespace YourBrand.Catalog.API.Persistence.Migrations
 {
     /// <inheritdoc />
     public partial class AddPriceFields : Migration

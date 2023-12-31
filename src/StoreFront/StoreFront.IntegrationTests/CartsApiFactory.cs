@@ -11,11 +11,11 @@ using Microsoft.EntityFrameworkCore;
 
 using Respawn;
 
-using StoreFront.API.Persistence;
+using YourBrand.StoreFront.API.Persistence;
 
 using Testcontainers.SqlEdge;
 
-namespace StoreFront.IntegrationTests;
+namespace YourBrand.StoreFront.IntegrationTests;
 
 public class StoreFrontApiFactory
     : WebApplicationFactory<Program>, IAsyncLifetime

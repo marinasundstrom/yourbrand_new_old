@@ -4,13 +4,13 @@ using MediatR;
 
 using Microsoft.Extensions.DependencyInjection;
 
-using Sales.API.Features.OrderManagement.Orders;
-using Sales.API.Infrastructure.Idempotence;
+using YourBrand.Sales.API.Features.OrderManagement.Orders;
+using YourBrand.Sales.API.Infrastructure.Idempotence;
 
 using YourBrand.Orders.Application.Behaviors;
 using YourBrand.Orders.Application.Common;
 
-namespace Sales.API.Features.OrderManagement;
+namespace YourBrand.Sales.API.Features.OrderManagement;
 
 public static class ServiceExtensions
 {

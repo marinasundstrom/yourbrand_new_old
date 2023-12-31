@@ -1,8 +1,8 @@
-﻿using Sales.API.Features.OrderManagement.Domain;
-using Sales.API.Features.OrderManagement.Domain.Entities;
-using Sales.API.Infrastructure.Services;
+﻿using YourBrand.Sales.API.Features.OrderManagement.Domain;
+using YourBrand.Sales.API.Features.OrderManagement.Domain.Entities;
+using YourBrand.Sales.API.Infrastructure.Services;
 
-namespace Sales.API.Persistence.Repositories.Mocks;
+namespace YourBrand.Sales.API.Persistence.Repositories.Mocks;
 
 public sealed class MockUnitOfWork : IUnitOfWork
 {

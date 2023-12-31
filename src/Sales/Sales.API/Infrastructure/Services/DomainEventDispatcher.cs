@@ -2,9 +2,9 @@
 
 using Microsoft.Extensions.Logging;
 
-using Sales.API.Features.OrderManagement.Domain;
+using YourBrand.Sales.API.Features.OrderManagement.Domain;
 
-namespace Sales.API.Infrastructure.Services;
+namespace YourBrand.Sales.API.Infrastructure.Services;
 
 sealed class DomainEventDispatcher : IDomainEventDispatcher
 {

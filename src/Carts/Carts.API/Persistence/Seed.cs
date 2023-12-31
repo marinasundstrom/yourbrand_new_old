@@ -1,11 +1,11 @@
-using Carts.API.Domain.Entities;
+using YourBrand.Carts.API.Domain.Entities;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace Carts.API.Persistence;
+namespace YourBrand.Carts.API.Persistence;
 
 public static class Seed
 {

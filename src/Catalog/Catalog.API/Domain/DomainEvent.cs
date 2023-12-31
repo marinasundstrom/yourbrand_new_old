@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Catalog.API.Domain
+namespace YourBrand.Catalog.API.Domain
 {
     public abstract record DomainEvent : INotification
     {

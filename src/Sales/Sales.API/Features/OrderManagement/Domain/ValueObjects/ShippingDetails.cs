@@ -1,4 +1,4 @@
-﻿namespace Sales.API.Features.OrderManagement.Domain.ValueObjects;
+﻿namespace YourBrand.Sales.API.Features.OrderManagement.Domain.ValueObjects;
 
 public record ShippingDetails
 {

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using YourBrand.Carts;
 using YourBrand.Catalog;
 
-namespace StoreFront.API.Features.Cart;
+namespace YourBrand.StoreFront.API.Features.Cart;
 
 public static class Endpoints
 {

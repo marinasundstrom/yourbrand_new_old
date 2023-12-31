@@ -2,9 +2,9 @@ using System.Linq.Expressions;
 
 using Microsoft.EntityFrameworkCore;
 
-using Sales.API.Features.OrderManagement.Domain.Entities;
+using YourBrand.Sales.API.Features.OrderManagement.Domain.Entities;
 
-namespace Sales.API.Persistence;
+namespace YourBrand.Sales.API.Persistence;
 
 public sealed class SalesContext : DbContext, IUnitOfWork, ISalesContext
 {

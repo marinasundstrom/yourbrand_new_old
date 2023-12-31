@@ -1,4 +1,4 @@
-namespace StoreFront.API;
+namespace YourBrand.StoreFront.API;
 
 public class AddressDto
 {

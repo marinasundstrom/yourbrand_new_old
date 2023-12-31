@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 
 using Newtonsoft.Json;
 
-using Sales.API.Features.OrderManagement.Domain.Entities;
-using Sales.API.Persistence.Outbox;
+using YourBrand.Sales.API.Features.OrderManagement.Domain.Entities;
+using YourBrand.Sales.API.Persistence.Outbox;
 
-namespace Sales.API.Persistence.Interceptors;
+namespace YourBrand.Sales.API.Persistence.Interceptors;
 
 public sealed class OutboxSaveChangesInterceptor : SaveChangesInterceptor
 {

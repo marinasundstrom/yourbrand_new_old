@@ -1,9 +1,9 @@
 using System.Globalization;
 using System.Reflection;
 
-using Catalog.API.Domain.Entities;
-using Catalog.API.Features.ProductManagement.Products;
-using Catalog.API.Persistence;
+using YourBrand.Catalog.API.Domain.Entities;
+using YourBrand.Catalog.API.Features.ProductManagement.Products;
+using YourBrand.Catalog.API.Persistence;
 
 using CsvHelper;
 using CsvHelper.Configuration;
@@ -13,7 +13,7 @@ using MediatR;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 
-namespace Catalog.API.Features.ProductManagement.Import;
+namespace YourBrand.Catalog.API.Features.ProductManagement.Import;
 
 public record ProductImportResult(IEnumerable<string> Diagnostics);
 

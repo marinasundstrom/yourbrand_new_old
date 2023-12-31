@@ -1,9 +1,10 @@
 ﻿using System;
+
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Carts.API.Migrations
+namespace YourBrand.Carts.API.Migrations
 {
     /// <inheritdoc />
     public partial class AddUpdatedProperties : Migration

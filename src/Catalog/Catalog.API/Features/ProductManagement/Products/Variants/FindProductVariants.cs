@@ -1,7 +1,7 @@
-using Catalog.API.Persistence;
+using YourBrand.Catalog.API.Persistence;
 
 using MediatR;
-namespace Catalog.API.Features.ProductManagement.Products.Variants;
+namespace YourBrand.Catalog.API.Features.ProductManagement.Products.Variants;
 
 public record FindProductVariants(string ProductIdOrHandle, Dictionary<string, string?> SelectedOptions) : IRequest<IEnumerable<ProductDto>>
 {

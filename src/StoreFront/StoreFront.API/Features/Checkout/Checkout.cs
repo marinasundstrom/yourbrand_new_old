@@ -3,11 +3,11 @@ using System.Text.Json;
 
 using MediatR;
 
-using StoreFront.API.Features.Cart;
+using YourBrand.StoreFront.API.Features.Cart;
 
 using YourBrand.Sales;
 
-namespace StoreFront.API.Features.Checkout;
+namespace YourBrand.StoreFront.API.Features.Checkout;
 
 public sealed record Checkout(
     BillingDetailsDto BillingDetails,

@@ -1,11 +1,11 @@
-﻿using Catalog.API.Common;
-using Catalog.API.Persistence;
+﻿using YourBrand.Catalog.API.Common;
+using YourBrand.Catalog.API.Persistence;
 
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Catalog.API.Features.Brands.Queries;
+namespace YourBrand.Catalog.API.Features.Brands.Queries;
 
 public sealed record GetBrandQuery(int Id) : IRequest<BrandDto?>
 {

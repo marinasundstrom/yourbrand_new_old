@@ -1,12 +1,12 @@
 using Asp.Versioning.Builder;
 
-using Catalog.API.Model;
+using YourBrand.Catalog.API.Model;
 
 using MediatR;
 
 using Microsoft.AspNetCore.Http.HttpResults;
 
-namespace Catalog.API.Features.ProductManagement.ProductCategories;
+namespace YourBrand.Catalog.API.Features.ProductManagement.ProductCategories;
 
 public static class Endpoints
 {

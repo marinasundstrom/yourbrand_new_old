@@ -1,11 +1,11 @@
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 
-using Catalog.API.Persistence;
+using YourBrand.Catalog.API.Persistence;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Catalog.API.Features.ProductManagement.Products;
+namespace YourBrand.Catalog.API.Features.ProductManagement.Products;
 
 public interface IProductImageUploader
 {

@@ -1,10 +1,10 @@
-using Catalog.API.Persistence;
+using YourBrand.Catalog.API.Persistence;
 
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Catalog.API.Features.ProductManagement.Attributes.Groups;
+namespace YourBrand.Catalog.API.Features.ProductManagement.Attributes.Groups;
 
 public record UpdateAttributeGroup(string Id, UpdateProductAttributeGroupData Data) : IRequest<AttributeGroupDto>
 {

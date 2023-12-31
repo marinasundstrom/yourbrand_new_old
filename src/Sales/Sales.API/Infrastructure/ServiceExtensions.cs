@@ -2,16 +2,16 @@
 
 using Quartz;
 
-using Sales.API.Infrastructure.BackgroundJobs;
-using Sales.API.Infrastructure.Idempotence;
-using Sales.API.Infrastructure.Services;
-using Sales.API.Persistence;
+using YourBrand.Sales.API.Infrastructure.BackgroundJobs;
+using YourBrand.Sales.API.Infrastructure.Idempotence;
+using YourBrand.Sales.API.Infrastructure.Services;
+using YourBrand.Sales.API.Persistence;
 
 using Scrutor;
 
 using YourBrand.Orders.Application.Common;
 
-namespace Sales.API.Infrastructure;
+namespace YourBrand.Sales.API.Infrastructure;
 
 public static class ServiceExtensions
 {

@@ -1,4 +1,4 @@
-namespace Sales.Contracts;
+namespace YourBrand.Sales.Contracts;
 
 public sealed record GetCarts
 {

@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Catalog.API.Persistence.Configurations;
+namespace YourBrand.Catalog.API.Persistence.Configurations;
 
 public class LanguageConfiguration : IEntityTypeConfiguration<Domain.Entities.Language>
 {

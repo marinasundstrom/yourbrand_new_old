@@ -1,4 +1,4 @@
-namespace Catalog.API.Features.ProductManagement.Products;
+namespace YourBrand.Catalog.API.Features.ProductManagement.Products;
 
 public static class ServicesExtensions
 {

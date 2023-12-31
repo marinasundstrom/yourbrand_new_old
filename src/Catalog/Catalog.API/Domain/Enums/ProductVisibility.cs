@@ -1,4 +1,4 @@
-﻿namespace Catalog.API.Domain.Enums;
+﻿namespace YourBrand.Catalog.API.Domain.Enums;
 
 public enum ProductVisibility
 {

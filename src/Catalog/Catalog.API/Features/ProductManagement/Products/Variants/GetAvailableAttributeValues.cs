@@ -1,6 +1,6 @@
-using Catalog.API.Domain.Entities;
-using Catalog.API.Features.ProductManagement.Attributes;
-using Catalog.API.Persistence;
+using YourBrand.Catalog.API.Domain.Entities;
+using YourBrand.Catalog.API.Features.ProductManagement.Attributes;
+using YourBrand.Catalog.API.Persistence;
 
 using MassTransit.Clients;
 
@@ -8,7 +8,7 @@ using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Catalog.API.Features.ProductManagement.Products.Variants;
+namespace YourBrand.Catalog.API.Features.ProductManagement.Products.Variants;
 
 public record GetAvailableAttributeValues(string ProductIdOrHandle, string AttributeId, IDictionary<string, string?> SelectedAttributeValues) : IRequest<IEnumerable<AttributeValueDto>>
 {

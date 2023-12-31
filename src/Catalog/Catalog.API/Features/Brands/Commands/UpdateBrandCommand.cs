@@ -1,10 +1,10 @@
-﻿using Catalog.API.Persistence;
+﻿using YourBrand.Catalog.API.Persistence;
 
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Catalog.API.Features.Brands.Commands;
+namespace YourBrand.Catalog.API.Features.Brands.Commands;
 
 public sealed record UpdateBrandCommand(int Id, string Name, string Handle) : IRequest
 {

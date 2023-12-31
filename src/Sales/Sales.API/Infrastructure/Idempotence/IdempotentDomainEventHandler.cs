@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 
-using Sales.API.Persistence;
-using Sales.API.Persistence.Outbox;
+using YourBrand.Sales.API.Persistence;
+using YourBrand.Sales.API.Persistence.Outbox;
 
 using YourBrand.Orders.Application.Common;
 
-namespace Sales.API.Infrastructure.Idempotence;
+namespace YourBrand.Sales.API.Infrastructure.Idempotence;
 
 public sealed class IdempotentDomainEventHandler<TDomainEvent> : IDomainEventHandler<TDomainEvent>
     where TDomainEvent : DomainEvent

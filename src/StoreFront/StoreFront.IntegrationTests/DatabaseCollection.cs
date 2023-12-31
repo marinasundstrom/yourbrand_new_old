@@ -1,4 +1,4 @@
-namespace StoreFront.IntegrationTests;
+namespace YourBrand.StoreFront.IntegrationTests;
 
 [CollectionDefinition("Database collection")]
 public class DatabaseCollection : ICollectionFixture<StoreFrontApiFactory>

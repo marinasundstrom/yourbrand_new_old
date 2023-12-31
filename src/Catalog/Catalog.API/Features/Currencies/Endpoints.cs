@@ -1,13 +1,13 @@
 
 using Asp.Versioning.Builder;
 
-using Catalog.API.Model;
+using YourBrand.Catalog.API.Model;
 
 using MediatR;
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace Catalog.API.Features.Currencies;
+namespace YourBrand.Catalog.API.Features.Currencies;
 
 public static class Endpoints
 {

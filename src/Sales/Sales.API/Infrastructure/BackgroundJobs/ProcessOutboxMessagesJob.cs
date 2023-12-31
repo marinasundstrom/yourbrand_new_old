@@ -10,10 +10,10 @@ using Polly.Retry;
 
 using Quartz;
 
-using Sales.API.Persistence;
-using Sales.API.Persistence.Outbox;
+using YourBrand.Sales.API.Persistence;
+using YourBrand.Sales.API.Persistence.Outbox;
 
-namespace Sales.API.Infrastructure.BackgroundJobs;
+namespace YourBrand.Sales.API.Infrastructure.BackgroundJobs;
 
 [DisallowConcurrentExecution]
 public sealed class ProcessOutboxMessagesJob : IJob

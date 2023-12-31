@@ -4,11 +4,11 @@ using System.Security.Claims;
 using Azure.Identity;
 using Azure.Storage.Blobs;
 
-using Catalog.API.Common;
-using Catalog.API.Features;
-using Catalog.API.Features.ProductManagement.Products;
-using Catalog.API.Features.ProductManagement.Products.Variants;
-using Catalog.API.Persistence;
+using YourBrand.Catalog.API.Common;
+using YourBrand.Catalog.API.Features;
+using YourBrand.Catalog.API.Features.ProductManagement.Products;
+using YourBrand.Catalog.API.Features.ProductManagement.Products.Variants;
+using YourBrand.Catalog.API.Persistence;
 
 using FluentValidation;
 

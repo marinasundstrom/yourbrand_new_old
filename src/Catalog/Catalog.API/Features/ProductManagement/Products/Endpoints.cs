@@ -1,14 +1,14 @@
 using Asp.Versioning.Builder;
 
-using Catalog.API.Features.Brands;
-using Catalog.API.Features.ProductManagement.Attributes;
-using Catalog.API.Features.ProductManagement.Import;
-using Catalog.API.Features.ProductManagement.Options;
-using Catalog.API.Features.ProductManagement.ProductCategories;
-using Catalog.API.Features.ProductManagement.Products.Attributes;
-using Catalog.API.Features.ProductManagement.Products.Options;
-using Catalog.API.Features.Stores;
-using Catalog.API.Model;
+using YourBrand.Catalog.API.Features.Brands;
+using YourBrand.Catalog.API.Features.ProductManagement.Attributes;
+using YourBrand.Catalog.API.Features.ProductManagement.Import;
+using YourBrand.Catalog.API.Features.ProductManagement.Options;
+using YourBrand.Catalog.API.Features.ProductManagement.ProductCategories;
+using YourBrand.Catalog.API.Features.ProductManagement.Products.Attributes;
+using YourBrand.Catalog.API.Features.ProductManagement.Products.Options;
+using YourBrand.Catalog.API.Features.Stores;
+using YourBrand.Catalog.API.Model;
 
 using FluentValidation;
 
@@ -20,7 +20,7 @@ using OpenTelemetry.Trace;
 
 using YourBrand.Extensions;
 
-namespace Catalog.API.Features.ProductManagement.Products;
+namespace YourBrand.Catalog.API.Features.ProductManagement.Products;
 
 public static partial class Endpoints
 {

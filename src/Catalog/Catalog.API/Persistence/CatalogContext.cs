@@ -1,9 +1,9 @@
-using Catalog.API.Domain.Entities;
-using Catalog.API.Model;
+using YourBrand.Catalog.API.Domain.Entities;
+using YourBrand.Catalog.API.Model;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Catalog.API.Persistence;
+namespace YourBrand.Catalog.API.Persistence;
 
 public sealed class CatalogContext : DbContext
 {

@@ -1,4 +1,4 @@
-namespace StoreFront.API.Domain.Entities;
+namespace YourBrand.StoreFront.API.Domain.Entities;
 
 public sealed class Cart
 {

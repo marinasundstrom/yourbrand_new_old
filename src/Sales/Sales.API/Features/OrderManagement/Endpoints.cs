@@ -1,7 +1,7 @@
-using Sales.API.Features.OrderManagement.Orders;
-using Sales.API.Features.OrderManagement.Orders.Statuses;
+using YourBrand.Sales.API.Features.OrderManagement.Orders;
+using YourBrand.Sales.API.Features.OrderManagement.Orders.Statuses;
 
-namespace Sales.API.Features.OrderManagement;
+namespace YourBrand.Sales.API.Features.OrderManagement;
 
 public static class Endpoints
 {

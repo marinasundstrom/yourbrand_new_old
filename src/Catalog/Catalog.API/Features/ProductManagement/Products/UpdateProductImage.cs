@@ -1,7 +1,7 @@
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 
-using Catalog.API.Persistence;
+using YourBrand.Catalog.API.Persistence;
 
 using MassTransit;
 
@@ -9,7 +9,7 @@ using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Catalog.API.Features.ProductManagement.Products;
+namespace YourBrand.Catalog.API.Features.ProductManagement.Products;
 
 public sealed record UpdateProductImage(string IdOrHandle, Stream Stream, string FileName, string ContentType) : IRequest<Result<string>>
 {

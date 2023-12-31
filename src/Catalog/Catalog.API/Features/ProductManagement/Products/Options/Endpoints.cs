@@ -1,10 +1,10 @@
 
 using Asp.Versioning.Builder;
 
-using Catalog.API.Features.ProductManagement.Options;
-using Catalog.API.Features.ProductManagement.Products.Options;
-using Catalog.API.Features.ProductManagement.Products.Options.Groups;
-using Catalog.API.Model;
+using YourBrand.Catalog.API.Features.ProductManagement.Options;
+using YourBrand.Catalog.API.Features.ProductManagement.Products.Options;
+using YourBrand.Catalog.API.Features.ProductManagement.Products.Options.Groups;
+using YourBrand.Catalog.API.Model;
 
 using MediatR;
 
@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Catalog.API.Features.ProductManagement.Products.Options;
+namespace YourBrand.Catalog.API.Features.ProductManagement.Products.Options;
 
 public static class Endpoints
 {

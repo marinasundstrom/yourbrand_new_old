@@ -11,11 +11,11 @@ using Microsoft.EntityFrameworkCore;
 
 using Respawn;
 
-using Sales.API.Persistence;
+using YourBrand.Sales.API.Persistence;
 
 using Testcontainers.SqlEdge;
 
-namespace Carts.IntegrationTests;
+namespace YourBrand.Carts.IntegrationTests;
 
 public class CartsApiFactory
     : WebApplicationFactory<Program>, IAsyncLifetime

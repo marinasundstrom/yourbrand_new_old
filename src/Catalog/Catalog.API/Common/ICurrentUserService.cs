@@ -1,3 +1,3 @@
-namespace Catalog.API.Common;
+namespace YourBrand.Catalog.API.Common;
 
 public interface ICurrentUserService { }

@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.SignalR;
 
-using Sales.API.Features.OrderManagement.Orders.Dtos;
+using YourBrand.Sales.API.Features.OrderManagement.Orders.Dtos;
 
 using YourBrand.Orders.Application.Services;
 
-namespace Sales.API.Features.OrderManagement.Orders;
+namespace YourBrand.Sales.API.Features.OrderManagement.Orders;
 
 public class OrderNotificationService : IOrderNotificationService
 {

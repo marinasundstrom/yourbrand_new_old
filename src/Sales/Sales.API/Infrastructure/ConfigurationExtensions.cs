@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-using Sales.API.Infrastructure;
+using YourBrand.Sales.API.Infrastructure;
 
-namespace Sales.API.Infrastructure;
+namespace YourBrand.Sales.API.Infrastructure;
 
 public static class ConfigurationExtensions
 {

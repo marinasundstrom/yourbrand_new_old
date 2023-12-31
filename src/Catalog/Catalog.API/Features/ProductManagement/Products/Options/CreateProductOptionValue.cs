@@ -1,12 +1,12 @@
-using Catalog.API.Domain.Entities;
-using Catalog.API.Features.ProductManagement.Options;
-using Catalog.API.Persistence;
+using YourBrand.Catalog.API.Domain.Entities;
+using YourBrand.Catalog.API.Features.ProductManagement.Options;
+using YourBrand.Catalog.API.Persistence;
 
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Catalog.API.Features.ProductManagement.Products.Options;
+namespace YourBrand.Catalog.API.Features.ProductManagement.Products.Options;
 
 public record CreateProductOptionValue(long ProductId, string OptionId, CreateProductOptionValueData Data) : IRequest<OptionValueDto>
 {

@@ -1,7 +1,7 @@
 ﻿using Azure.Identity;
 
-using Carts.API.Features.CartsManagement;
-using Carts.API.Persistence;
+using YourBrand.Carts.API.Features.CartsManagement;
+using YourBrand.Carts.API.Persistence;
 
 using HealthChecks.UI.Client;
 

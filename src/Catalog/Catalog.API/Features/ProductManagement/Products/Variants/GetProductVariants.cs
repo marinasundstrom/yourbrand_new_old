@@ -1,12 +1,12 @@
-using Catalog.API.Domain.Entities;
-using Catalog.API.Model;
-using Catalog.API.Persistence;
+using YourBrand.Catalog.API.Domain.Entities;
+using YourBrand.Catalog.API.Model;
+using YourBrand.Catalog.API.Persistence;
 
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Catalog.API.Features.ProductManagement.Products.Variants;
+namespace YourBrand.Catalog.API.Features.ProductManagement.Products.Variants;
 
 public record GetProductVariants(string ProductIdOrHandle, int Page = 1, int PageSize = 10, string? SearchString = null, string? SortBy = null, SortDirection? SortDirection = null) : IRequest<PagedResult<Catalog.API.Features.ProductManagement.Products.ProductDto>>
 {

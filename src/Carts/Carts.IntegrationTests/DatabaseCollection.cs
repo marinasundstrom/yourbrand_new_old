@@ -1,4 +1,4 @@
-namespace Carts.IntegrationTests;
+namespace YourBrand.Carts.IntegrationTests;
 
 [CollectionDefinition("Database collection")]
 public class DatabaseCollection : ICollectionFixture<CartsApiFactory>

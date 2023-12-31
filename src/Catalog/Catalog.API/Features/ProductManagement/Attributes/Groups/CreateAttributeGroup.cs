@@ -1,9 +1,9 @@
-using Catalog.API.Domain.Entities;
-using Catalog.API.Persistence;
+using YourBrand.Catalog.API.Domain.Entities;
+using YourBrand.Catalog.API.Persistence;
 
 using MediatR;
 
-namespace Catalog.API.Features.ProductManagement.Attributes.Groups;
+namespace YourBrand.Catalog.API.Features.ProductManagement.Attributes.Groups;
 
 public record CreateAttributeGroup(CreateProductAttributeGroupData Data) : IRequest<AttributeGroupDto>
 {

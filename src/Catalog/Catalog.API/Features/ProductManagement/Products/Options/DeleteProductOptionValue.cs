@@ -1,11 +1,11 @@
-using Catalog.API.Domain.Entities;
-using Catalog.API.Persistence;
+using YourBrand.Catalog.API.Domain.Entities;
+using YourBrand.Catalog.API.Persistence;
 
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Catalog.API.Features.ProductManagement.Products.Options;
+namespace YourBrand.Catalog.API.Features.ProductManagement.Products.Options;
 
 public record DeleteProductOptionValue(long ProductId, string OptionId, string ValueId) : IRequest
 {

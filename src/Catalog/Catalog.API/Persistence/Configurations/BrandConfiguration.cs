@@ -1,9 +1,9 @@
-using Catalog.API.Domain.Entities;
+using YourBrand.Catalog.API.Domain.Entities;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Catalog.API.Persistence.Configurations;
+namespace YourBrand.Catalog.API.Persistence.Configurations;
 
 public class BrandConfiguration : IEntityTypeConfiguration<Brand>
 {

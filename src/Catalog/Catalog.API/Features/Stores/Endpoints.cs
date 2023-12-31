@@ -1,15 +1,15 @@
 
 using Asp.Versioning.Builder;
 
-using Catalog.API.Features.Stores.Commands;
-using Catalog.API.Features.Stores.Queries;
-using Catalog.API.Model;
+using YourBrand.Catalog.API.Features.Stores.Commands;
+using YourBrand.Catalog.API.Features.Stores.Queries;
+using YourBrand.Catalog.API.Model;
 
 using MediatR;
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace Catalog.API.Features.Stores;
+namespace YourBrand.Catalog.API.Features.Stores;
 
 public static class Endpoints
 {

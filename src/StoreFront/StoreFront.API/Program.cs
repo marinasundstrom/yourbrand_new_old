@@ -1,8 +1,8 @@
 ﻿using Azure.Identity;
 
-using Carts;
+using YourBrand.Carts;
 
-using Catalog;
+using YourBrand.Catalog;
 
 using HealthChecks.UI.Client;
 
@@ -18,18 +18,18 @@ using Microsoft.Identity.Client;
 using Steeltoe.Common.Http.Discovery;
 using Steeltoe.Discovery.Client;
 
-using StoreFront.API;
-using StoreFront.API.Features.Cart;
-using StoreFront.API.Features.Products.Categories;
-using StoreFront.API.Features.Products;
-using StoreFront.API.Persistence;
+using YourBrand.StoreFront.API;
+using YourBrand.StoreFront.API.Features.Cart;
+using YourBrand.StoreFront.API.Features.Products.Categories;
+using YourBrand.StoreFront.API.Features.Products;
+using YourBrand.StoreFront.API.Persistence;
 
 using YourBrand;
 using YourBrand.Carts;
 using YourBrand.Catalog;
 using YourBrand.Extensions;
 using YourBrand.Sales;
-using StoreFront.API.Features.Checkout;
+using YourBrand.StoreFront.API.Features.Checkout;
 
 string ServiceName = "StoreFront.API";
 

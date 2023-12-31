@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using YourBrand.Carts;
 using YourBrand.Catalog;
 
-namespace StoreFront.API.Features.Checkout;
+namespace YourBrand.StoreFront.API.Features.Checkout;
 
 public static class Endpoints
 {

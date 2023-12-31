@@ -1,10 +1,10 @@
-using Catalog.API.Persistence;
+using YourBrand.Catalog.API.Persistence;
 
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Catalog.API.Features.ProductManagement.Products.Attributes;
+namespace YourBrand.Catalog.API.Features.ProductManagement.Products.Attributes;
 
 public record GetProductAttributes(long ProductId) : IRequest<IEnumerable<ProductAttributeDto>>
 {

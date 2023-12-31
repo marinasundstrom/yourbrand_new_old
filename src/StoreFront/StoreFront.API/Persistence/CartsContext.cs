@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 
-using StoreFront.API.Domain.Entities;
+using YourBrand.StoreFront.API.Domain.Entities;
 
-namespace StoreFront.API.Persistence;
+namespace YourBrand.StoreFront.API.Persistence;
 
 public sealed class StoreFrontContext : DbContext
 {

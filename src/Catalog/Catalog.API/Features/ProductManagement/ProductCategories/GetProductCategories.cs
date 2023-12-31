@@ -1,11 +1,11 @@
-using Catalog.API.Model;
-using Catalog.API.Persistence;
+using YourBrand.Catalog.API.Model;
+using YourBrand.Catalog.API.Persistence;
 
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Catalog.API.Features.ProductManagement.ProductCategories;
+namespace YourBrand.Catalog.API.Features.ProductManagement.ProductCategories;
 
 public sealed record GetProductCategories(string? StoreId, long? ParentGroupId, bool IncludeWithUnlistedProducts, bool IncludeHidden,
     int Page = 1, int PageSize = 10, string? SearchTerm = null, string? SortBy = null, SortDirection? SortDirection = null) : IRequest<PagedResult<ProductCategory>>

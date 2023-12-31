@@ -1,10 +1,10 @@
-﻿using Catalog.API.Persistence;
+﻿using YourBrand.Catalog.API.Persistence;
 
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Catalog.API.Features.Stores.Commands;
+namespace YourBrand.Catalog.API.Features.Stores.Commands;
 
 public sealed record UpdateStoreCommand(string Id, string Name, string Handle, string Currency) : IRequest
 {

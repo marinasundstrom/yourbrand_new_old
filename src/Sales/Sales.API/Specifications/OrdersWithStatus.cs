@@ -1,8 +1,8 @@
 ﻿using System;
 
-using Sales.API.Features.OrderManagement.Domain.Entities;
+using YourBrand.Sales.API.Features.OrderManagement.Domain.Entities;
 
-namespace Sales.API.Features.OrderManagement.Domain.Specifications;
+namespace YourBrand.Sales.API.Features.OrderManagement.Domain.Specifications;
 
 public class OrdersWithStatus : BaseSpecification<Order>
 {

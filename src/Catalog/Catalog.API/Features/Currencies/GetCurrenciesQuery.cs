@@ -1,14 +1,14 @@
-﻿using Catalog.API;
-using Catalog.API.Common;
-using Catalog.API.Features.Currencies;
-using Catalog.API.Model;
-using Catalog.API.Persistence;
+﻿using YourBrand.Catalog.API;
+using YourBrand.Catalog.API.Common;
+using YourBrand.Catalog.API.Features.Currencies;
+using YourBrand.Catalog.API.Model;
+using YourBrand.Catalog.API.Persistence;
 
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Catalog.API.Features.Currencies;
+namespace YourBrand.Catalog.API.Features.Currencies;
 
 public sealed record GetCurrenciesQuery(int Page = 0, int PageSize = 10, string? SearchString = null, string? SortBy = null, API.SortDirection? SortDirection = null) : IRequest<PagedResult<CurrencyDto>>
 {

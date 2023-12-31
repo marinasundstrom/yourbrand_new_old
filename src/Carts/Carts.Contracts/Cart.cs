@@ -1,4 +1,4 @@
-namespace Carts.Contracts;
+namespace YourBrand.Carts.Contracts;
 
 public sealed record Cart
 {

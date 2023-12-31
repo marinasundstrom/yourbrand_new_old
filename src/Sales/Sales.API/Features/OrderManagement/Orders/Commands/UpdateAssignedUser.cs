@@ -2,10 +2,10 @@ using FluentValidation;
 
 using MediatR;
 
-using Sales.API.Features.OrderManagement.Orders.Dtos;
-using Sales.API.Features.OrderManagement.Repositories;
+using YourBrand.Sales.API.Features.OrderManagement.Orders.Dtos;
+using YourBrand.Sales.API.Features.OrderManagement.Repositories;
 
-namespace Sales.API.Features.OrderManagement.Orders.Commands;
+namespace YourBrand.Sales.API.Features.OrderManagement.Orders.Commands;
 
 public sealed record UpdateAssignedUser(string Id, string? UserId) : IRequest<Result>
 {

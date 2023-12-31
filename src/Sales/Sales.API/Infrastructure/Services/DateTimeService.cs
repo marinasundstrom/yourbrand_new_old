@@ -1,4 +1,4 @@
-﻿namespace Sales.API.Infrastructure.Services;
+﻿namespace YourBrand.Sales.API.Infrastructure.Services;
 
 sealed class DateTimeService : IDateTime
 {

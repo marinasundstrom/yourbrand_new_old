@@ -2,10 +2,10 @@
 
 using MediatR;
 
-using Sales.API.Features.OrderManagement.Orders.Dtos;
-using Sales.API.Features.OrderManagement.Repositories;
+using YourBrand.Sales.API.Features.OrderManagement.Orders.Dtos;
+using YourBrand.Sales.API.Features.OrderManagement.Repositories;
 
-namespace Sales.API.Features.OrderManagement.Orders.Queries;
+namespace YourBrand.Sales.API.Features.OrderManagement.Orders.Queries;
 
 public record GetOrderById(string Id) : IRequest<Result<OrderDto>>
 {

@@ -1,9 +1,9 @@
-using Catalog.API.Domain.Entities;
-using Catalog.API.Domain.Enums;
+using YourBrand.Catalog.API.Domain.Entities;
+using YourBrand.Catalog.API.Domain.Enums;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Catalog.API.Persistence;
+namespace YourBrand.Catalog.API.Persistence;
 
 public static class Seed2
 {

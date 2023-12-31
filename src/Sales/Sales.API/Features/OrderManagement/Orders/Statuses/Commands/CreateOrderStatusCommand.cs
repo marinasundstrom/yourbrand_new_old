@@ -2,9 +2,9 @@
 
 using Microsoft.EntityFrameworkCore;
 
-using Sales.API.Features.OrderManagement.Orders.Dtos;
+using YourBrand.Sales.API.Features.OrderManagement.Orders.Dtos;
 
-namespace Sales.API.Features.OrderManagement.Orders.Statuses.Commands;
+namespace YourBrand.Sales.API.Features.OrderManagement.Orders.Statuses.Commands;
 
 public record CreateOrderStatusCommand(string Name, string Handle, string? Description) : IRequest<OrderStatusDto>
 {

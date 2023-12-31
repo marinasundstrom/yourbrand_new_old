@@ -1,14 +1,14 @@
-﻿using Catalog.API;
-using Catalog.API.Common;
-using Catalog.API.Features.Stores;
-using Catalog.API.Model;
-using Catalog.API.Persistence;
+﻿using YourBrand.Catalog.API;
+using YourBrand.Catalog.API.Common;
+using YourBrand.Catalog.API.Features.Stores;
+using YourBrand.Catalog.API.Model;
+using YourBrand.Catalog.API.Persistence;
 
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Catalog.API.Features.Stores.Queries;
+namespace YourBrand.Catalog.API.Features.Stores.Queries;
 
 public sealed record GetStoresQuery(int Page = 0, int PageSize = 10, string? SearchString = null, string? SortBy = null, API.SortDirection? SortDirection = null) : IRequest<PagedResult<StoreDto>>
 {

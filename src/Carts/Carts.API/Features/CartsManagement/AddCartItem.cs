@@ -1,11 +1,11 @@
-using Carts.API.Domain.Entities;
-using Carts.API.Persistence;
+using YourBrand.Carts.API.Domain.Entities;
+using YourBrand.Carts.API.Persistence;
 
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Carts.API.Features.CartsManagement.Requests;
+namespace YourBrand.Carts.API.Features.CartsManagement.Requests;
 
 public sealed record AddCartItem(string CartId, string Name, string? Image, long? ProductId, string? ProductHandle, string Description, decimal Price, double? VatRate, decimal? RegularPrice, double? DiscountRate, int Quantity, string? Data) : IRequest<Result<CartItem>>
 {

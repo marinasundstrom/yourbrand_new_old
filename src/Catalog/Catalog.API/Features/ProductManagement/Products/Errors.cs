@@ -3,7 +3,7 @@ using System.Globalization;
 
 using MassTransit.Transports;
 
-namespace Catalog.API.Features.ProductManagement.Products;
+namespace YourBrand.Catalog.API.Features.ProductManagement.Products;
 
 public static class Errors
 {

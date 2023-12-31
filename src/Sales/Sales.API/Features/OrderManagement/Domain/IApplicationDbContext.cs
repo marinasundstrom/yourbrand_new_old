@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-using Sales.API.Features.OrderManagement.Domain.Entities;
+using YourBrand.Sales.API.Features.OrderManagement.Domain.Entities;
 
-namespace Sales.API.Features.OrderManagement.Domain;
+namespace YourBrand.Sales.API.Features.OrderManagement.Domain;
 
 public interface ISalesContext
 {

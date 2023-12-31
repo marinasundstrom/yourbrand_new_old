@@ -1,11 +1,11 @@
-using Carts.API.Domain.Entities;
-using Carts.API.Persistence;
+using YourBrand.Carts.API.Domain.Entities;
+using YourBrand.Carts.API.Persistence;
 
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Carts.API.Features.CartsManagement.Requests;
+namespace YourBrand.Carts.API.Features.CartsManagement.Requests;
 
 public sealed record GetCarts(int Page = 1, int PageSize = 2) : IRequest<Result<PagedResult<Cart>>>
 {

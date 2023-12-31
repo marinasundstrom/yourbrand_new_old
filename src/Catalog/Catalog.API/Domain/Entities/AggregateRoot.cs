@@ -1,4 +1,4 @@
-namespace Catalog.API.Domain.Entities;
+namespace YourBrand.Catalog.API.Domain.Entities;
 
 public abstract class AggregateRoot<TId> : Entity<TId>
     where TId : notnull

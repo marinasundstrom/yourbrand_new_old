@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 using YourBrand.Catalog;
 
-namespace StoreFront.API.Features.Products.Categories;
+namespace YourBrand.StoreFront.API.Features.Products.Categories;
 
 public static class Endpoints
 {

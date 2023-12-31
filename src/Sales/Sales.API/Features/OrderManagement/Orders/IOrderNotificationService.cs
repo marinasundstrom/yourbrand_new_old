@@ -1,6 +1,6 @@
-using Sales.API.Features.OrderManagement.Orders.Dtos;
+using YourBrand.Sales.API.Features.OrderManagement.Orders.Dtos;
 
-namespace Sales.API.Features.OrderManagement.Orders;
+namespace YourBrand.Sales.API.Features.OrderManagement.Orders;
 
 public interface IOrderNotificationService
 {

@@ -1,9 +1,9 @@
-﻿using Sales.API.Features.OrderManagement.Domain.Entities;
-using Sales.API.Features.OrderManagement.Domain.ValueObjects;
-using Sales.API.Features.OrderManagement.Orders.Dtos;
-using Sales.API.Features.OrderManagement.Users;
+﻿using YourBrand.Sales.API.Features.OrderManagement.Domain.Entities;
+using YourBrand.Sales.API.Features.OrderManagement.Domain.ValueObjects;
+using YourBrand.Sales.API.Features.OrderManagement.Orders.Dtos;
+using YourBrand.Sales.API.Features.OrderManagement.Users;
 
-namespace Sales.API.Features.OrderManagement.Orders;
+namespace YourBrand.Sales.API.Features.OrderManagement.Orders;
 
 public static class Mappings
 {

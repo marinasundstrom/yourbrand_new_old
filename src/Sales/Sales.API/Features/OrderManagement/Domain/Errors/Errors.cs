@@ -1,4 +1,4 @@
-﻿namespace Sales.API.Features.OrderManagement.Domain;
+﻿namespace YourBrand.Sales.API.Features.OrderManagement.Domain;
 
 public static class Errors
 {

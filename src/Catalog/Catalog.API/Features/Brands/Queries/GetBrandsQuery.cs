@@ -1,13 +1,13 @@
-﻿using Catalog.API.Common;
-using Catalog.API.Domain.Entities;
-using Catalog.API.Model;
-using Catalog.API.Persistence;
+﻿using YourBrand.Catalog.API.Common;
+using YourBrand.Catalog.API.Domain.Entities;
+using YourBrand.Catalog.API.Model;
+using YourBrand.Catalog.API.Persistence;
 
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Catalog.API.Features.Brands.Queries;
+namespace YourBrand.Catalog.API.Features.Brands.Queries;
 
 public sealed record GetBrandsQuery(int Page = 0, int PageSize = 10, string? SearchString = null, string? SortBy = null, API.SortDirection? SortDirection = null) : IRequest<PagedResult<BrandDto>>
 {

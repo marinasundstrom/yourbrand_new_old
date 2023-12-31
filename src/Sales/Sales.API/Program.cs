@@ -7,11 +7,11 @@ using MassTransit;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 
-using Sales.API.Features;
-using Sales.API.Features.OrderManagement;
-using Sales.API.Features.OrderManagement.Orders;
-using Sales.API.Infrastructure;
-using Sales.API.Persistence;
+using YourBrand.Sales.API.Features;
+using YourBrand.Sales.API.Features.OrderManagement;
+using YourBrand.Sales.API.Features.OrderManagement.Orders;
+using YourBrand.Sales.API.Infrastructure;
+using YourBrand.Sales.API.Persistence;
 
 using Steeltoe.Discovery.Client;
 

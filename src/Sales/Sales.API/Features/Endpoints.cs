@@ -1,6 +1,6 @@
-using Sales.API.Features.OrderManagement;
+using YourBrand.Sales.API.Features.OrderManagement;
 
-namespace Sales.API.Features;
+namespace YourBrand.Sales.API.Features;
 
 public static class Endpoints
 {

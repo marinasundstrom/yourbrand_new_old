@@ -1,6 +1,6 @@
-using Catalog.API.Domain.Enums;
+using YourBrand.Catalog.API.Domain.Enums;
 
-namespace Catalog.API.Domain.Entities;
+namespace YourBrand.Catalog.API.Domain.Entities;
 
 public sealed class Product
 {

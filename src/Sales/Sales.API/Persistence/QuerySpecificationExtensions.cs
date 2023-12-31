@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-using Sales.API.Features.OrderManagement.Domain.Specifications;
+using YourBrand.Sales.API.Features.OrderManagement.Domain.Specifications;
 
-namespace Sales.API.Persistence;
+namespace YourBrand.Sales.API.Persistence;
 
 public static class QuerySpecificationExtensions
 {

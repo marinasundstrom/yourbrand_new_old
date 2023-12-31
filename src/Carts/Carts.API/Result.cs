@@ -1,4 +1,4 @@
-namespace Carts.API;
+namespace YourBrand.Carts.API;
 
 public record Error(string Id, string Title, string Detail);
 

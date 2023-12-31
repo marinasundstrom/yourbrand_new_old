@@ -3,7 +3,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Catalog.API.Features.ProductManagement;
+namespace YourBrand.Catalog.API.Features.ProductManagement;
 
 [ApiController]
 [Route("api/products")]

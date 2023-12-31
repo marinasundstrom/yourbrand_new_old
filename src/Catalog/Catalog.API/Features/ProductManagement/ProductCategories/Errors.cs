@@ -1,4 +1,4 @@
-namespace Catalog.API.Features.ProductManagement.ProductCategories;
+namespace YourBrand.Catalog.API.Features.ProductManagement.ProductCategories;
 
 public static class Errors
 {

@@ -1,5 +1,5 @@
 
-using Carts.API.Persistence;
+using YourBrand.Carts.API.Persistence;
 
 using DotNet.Testcontainers.Builders;
 
@@ -15,7 +15,7 @@ using Respawn;
 
 using Testcontainers.SqlEdge;
 
-namespace Carts.IntegrationTests;
+namespace YourBrand.Carts.IntegrationTests;
 
 public class CartsApiFactory
     : WebApplicationFactory<Program>, IAsyncLifetime

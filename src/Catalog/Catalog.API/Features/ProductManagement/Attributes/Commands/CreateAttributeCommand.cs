@@ -1,11 +1,11 @@
-﻿using Catalog.API.Domain.Entities;
-using Catalog.API.Persistence;
+﻿using YourBrand.Catalog.API.Domain.Entities;
+using YourBrand.Catalog.API.Persistence;
 
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Catalog.API.Features.ProductManagement.Attributes;
+namespace YourBrand.Catalog.API.Features.ProductManagement.Attributes;
 
 public record CreateAttributeCommand(string Name, string? Description, string? GroupId, IEnumerable<CreateProductAttributeValueData> Values) : IRequest<AttributeDto>
 {

@@ -3,9 +3,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-using StoreFront.API.Domain.Entities;
+using YourBrand.StoreFront.API.Domain.Entities;
 
-namespace StoreFront.API.Persistence;
+namespace YourBrand.StoreFront.API.Persistence;
 
 public static class Seed
 {

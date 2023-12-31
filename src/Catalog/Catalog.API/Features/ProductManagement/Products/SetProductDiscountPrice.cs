@@ -1,4 +1,4 @@
-using Catalog.API.Persistence;
+using YourBrand.Catalog.API.Persistence;
 
 using Core;
 
@@ -8,7 +8,7 @@ using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Catalog.API.Features.ProductManagement.Products;
+namespace YourBrand.Catalog.API.Features.ProductManagement.Products;
 
 public sealed record SetProductDiscountPrice(string IdOrHandle, decimal DiscountPrice) : IRequest<Result>
 {

@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-using Sales.API.Features.OrderManagement.Domain.Entities;
-using Sales.API.Features.OrderManagement.Domain.Specifications;
-using Sales.API.Features.OrderManagement.Repositories;
-using Sales.API.Persistence;
+using YourBrand.Sales.API.Features.OrderManagement.Domain.Entities;
+using YourBrand.Sales.API.Features.OrderManagement.Domain.Specifications;
+using YourBrand.Sales.API.Features.OrderManagement.Repositories;
+using YourBrand.Sales.API.Persistence;
 
-namespace Sales.API.Persistence.Repositories.Mocks;
+namespace YourBrand.Sales.API.Persistence.Repositories.Mocks;
 
 public sealed class OrderRepository : IOrderRepository
 {

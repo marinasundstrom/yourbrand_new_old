@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Sales.API.Features.OrderManagement.Domain;
+namespace YourBrand.Sales.API.Features.OrderManagement.Domain;
 
 public abstract record DomainEvent : INotification
 {

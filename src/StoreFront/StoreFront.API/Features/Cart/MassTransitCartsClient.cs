@@ -1,6 +1,6 @@
 using MassTransit;
 
-namespace StoreFront.API.Features.Cart;
+namespace YourBrand.StoreFront.API.Features.Cart;
 
 public sealed class MassTransitCartsClient(
     IRequestClient<Carts.Contracts.GetCartById> getCartByIdClient,

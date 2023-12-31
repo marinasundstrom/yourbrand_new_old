@@ -1,13 +1,13 @@
-﻿using Catalog.API;
-using Catalog.API.Common;
-using Catalog.API.Features.Stores;
-using Catalog.API.Persistence;
+﻿using YourBrand.Catalog.API;
+using YourBrand.Catalog.API.Common;
+using YourBrand.Catalog.API.Features.Stores;
+using YourBrand.Catalog.API.Persistence;
 
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Catalog.API.Features.Stores.Queries;
+namespace YourBrand.Catalog.API.Features.Stores.Queries;
 
 public sealed record GetStoreQuery(string IdOrHandle) : IRequest<StoreDto?>
 {

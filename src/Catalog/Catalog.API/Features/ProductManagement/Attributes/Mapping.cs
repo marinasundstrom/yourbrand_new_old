@@ -1,4 +1,4 @@
-namespace Catalog.API.Features.ProductManagement.Attributes;
+namespace YourBrand.Catalog.API.Features.ProductManagement.Attributes;
 
 public static class Mapping
 {

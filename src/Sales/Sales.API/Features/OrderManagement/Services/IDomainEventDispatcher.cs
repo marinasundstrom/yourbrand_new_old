@@ -1,4 +1,4 @@
-﻿using Sales.API.Features.OrderManagement.Domain;
+﻿using YourBrand.Sales.API.Features.OrderManagement.Domain;
 
 namespace YourBrand.Orders.Application.Services;
 

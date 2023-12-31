@@ -1,4 +1,4 @@
-﻿namespace Catalog.API.Domain.Entities;
+﻿namespace YourBrand.Catalog.API.Domain.Entities;
 
 using System.ComponentModel.DataAnnotations.Schema;
 

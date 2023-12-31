@@ -2,11 +2,11 @@
 
 using Microsoft.EntityFrameworkCore;
 
-using Sales.API.Features.OrderManagement.Orders.Dtos;
+using YourBrand.Sales.API.Features.OrderManagement.Orders.Dtos;
 
 using YourBrand.Orders.Application.Services;
 
-namespace Sales.API.Features.OrderManagement.Orders.Statuses.Commands;
+namespace YourBrand.Sales.API.Features.OrderManagement.Orders.Statuses.Commands;
 
 public record DeleteOrderStatusCommand(int Id) : IRequest
 {

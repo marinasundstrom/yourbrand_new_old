@@ -1,9 +1,9 @@
-﻿using Catalog.API.Persistence;
+﻿using YourBrand.Catalog.API.Persistence;
 
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
-namespace Catalog.API.Features.Brands.Commands;
+namespace YourBrand.Catalog.API.Features.Brands.Commands;
 
 public sealed record CreateBrandCommand(string Name, string Handle) : IRequest<BrandDto>
 {

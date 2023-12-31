@@ -1,4 +1,4 @@
-namespace StoreFront.Contracts;
+namespace YourBrand.StoreFront.Contracts;
 
 public sealed record GetStoreFront
 {

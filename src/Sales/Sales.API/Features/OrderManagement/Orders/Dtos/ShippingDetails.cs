@@ -1,4 +1,4 @@
-﻿namespace Sales.API.Features.OrderManagement.Orders.Dtos;
+﻿namespace YourBrand.Sales.API.Features.OrderManagement.Orders.Dtos;
 
 public class ShippingDetailsDto
 {

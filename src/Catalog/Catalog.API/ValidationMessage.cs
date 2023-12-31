@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Catalog.API;
+namespace YourBrand.Catalog.API;
 
 public class ValidationFilter<T> : IEndpointFilter
 {

@@ -2,7 +2,7 @@
 
 using YourBrand.Orders.Application;
 
-namespace Sales.API.Features.OrderManagement.Orders.Dtos;
+namespace YourBrand.Sales.API.Features.OrderManagement.Orders.Dtos;
 
 public record OrderStatusDto
 (

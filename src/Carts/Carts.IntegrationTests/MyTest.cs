@@ -1,4 +1,4 @@
-using Carts.Contracts;
+using YourBrand.Carts.Contracts;
 
 using MassTransit;
 using MassTransit.Testing;
@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 
 using Xunit.Abstractions;
 
-namespace Carts.IntegrationTests;
+namespace YourBrand.Carts.IntegrationTests;
 
 [Collection("Database collection")]
 public class MyTest : IAsyncLifetime
