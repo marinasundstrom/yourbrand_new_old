@@ -92,15 +92,15 @@ else
             {
                 <div class="mb-4" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
                     <meta itemprop="priceCurrency" content="@currency">
-                    @if (productViewModel.RegularPrice is not null)
-                    {
-                        <h5 class="price2 text-muted"
-                            style="display: inline-block; text-decoration: line-through; color: gray !important; line-height: 0; margin-right: 10px;">
-                            @(((decimal?)productViewModel.RegularPrice)?.FormatCurrency(currency))</h5>
-                    }
                     <h5 class="price2" itemprop="price" content="@productViewModel.Price"
                         style="display: inline-block; font-weight: 500; color: #ca0000; line-height: 0;">
                         @(((decimal)productViewModel.Price).FormatCurrency(currency))</h5>
+                    @if (productViewModel.RegularPrice is not null)
+                    {
+                        <h5 class="price2 text-muted"
+                            style="display: inline-block; text-decoration: line-through; color: gray !important; line-height: 0; margin-left: 10px;">
+                            @(((decimal?)productViewModel.RegularPrice)?.FormatCurrency(currency))</h5>
+                    }
                 </div>
 
                 <div>Incl. @((productViewModel.Variant ??

@@ -19,6 +19,11 @@ public static class PriceCalculations
 
     public static decimal GetSubTotal(this decimal total, double vatRate)
     {
+        if (vatRate == 0)
+        {
+            return total;
+        }
+
         if (vatRate == 0.25)
         {
             return total * 0.8m;

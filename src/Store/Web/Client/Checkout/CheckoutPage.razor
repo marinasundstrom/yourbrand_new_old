@@ -44,11 +44,11 @@
                 <div class="list-group-item">
                 <li class="d-flex justify-content-between">
                     <span>Total</span>
-                    <strong>@cart.Items.Sum(x => x.Total).ToString("c")</strong>
+                    <strong>@cart.Items.Sum(x => x.Total).FormatCurrency("SEK")</strong>
                 </li>
                 <li class="d-flex justify-content-between mt-2">
                     <small>VAT incl.</small>
-                    <small>@((cart.Items.Sum(x => x.Total).GetVatFromTotal(0.25)).ToString("c"))</small>
+                    <small>@((cart.Items.Sum(x => x.Total.GetVatFromTotal(x.VatRate.GetValueOrDefault()))).FormatCurrency("SEK"))</small>
                 </li>
         </div>
         </ul>

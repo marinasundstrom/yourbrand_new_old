@@ -32,13 +32,13 @@
         <div class="card-footer">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
+                    <span class="price" content="@Product.Price"
+                        style="display: inline-block; font-weight: 500; color: #ca0000; line-height: 0; ">@(((decimal)Product.Price).FormatCurrency(currency))</span>
                     @if (Product.RegularPrice is not null)
                     {
                         <span class="price text-muted"
-                            style="display: inline-block; text-decoration: line-through; color: gray !important; line-height: 0; margin-right: 10px;">@(((decimal?)Product.RegularPrice)?.FormatCurrency(currency))</span>
+                            style="display: inline-block; text-decoration: line-through; color: gray !important; line-height: 0; margin-left: 10px;">@(((decimal?)Product.RegularPrice)?.FormatCurrency(currency))</span>
                     }
-                    <span class="price" content="@Product.Price"
-                        style="display: inline-block; font-weight: 500; color: #ca0000; line-height: 0; ">@(((decimal)Product.Price).FormatCurrency(currency))</span>
                 </div>
                 <div>
                     <button class="btn btn-lg btn-primary" @onclick="AddItemToCart"><i class="bi bi-basket" /></button>

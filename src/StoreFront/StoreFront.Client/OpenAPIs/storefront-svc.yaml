@@ -485,9 +485,17 @@ components:
         price:
           type: number
           format: decimal
+        vatRate:
+          type: number
+          format: double
+          nullable: true
         regularPrice:
           type: number
           format: decimal
+          nullable: true
+        discountRate:
+          type: number
+          format: double
           nullable: true
         quantity:
           type: integer

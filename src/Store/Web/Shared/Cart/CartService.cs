@@ -1,3 +1,5 @@
+using System.Security.Cryptography.X509Certificates;
+
 using YourBrand.StoreFront;
 
 namespace BlazorApp.Cart;
@@ -17,7 +19,7 @@ public sealed class CartService(YourBrand.StoreFront.ICartClient client) : ICart
     public async Task<IEnumerable<BlazorApp.Cart.CartItem>> GetCartItemsAsync(CancellationToken cancellationToken = default)
     {
         var cart = await client.GetCartAsync(cancellationToken);
-        return cart.Items!.Select(x => new BlazorApp.Cart.CartItem(x.Id!, x.Name!, x.Image!, x.ProductId, x.ProductHandle, x.Description!, (decimal)x.Price, (decimal?)x.RegularPrice, (int)x.Quantity, x.Data));
+        return cart.Items!.Select(x => new BlazorApp.Cart.CartItem(x.Id!, x.Name!, x.Image!, x.ProductId, x.ProductHandle, x.Description!, (decimal)x.Price, x.VatRate, (decimal?)x.RegularPrice, x.DiscountRate, (int)x.Quantity, x.Data));
     }
 
     public async Task AddCartItem(string name, string? image, long? productId, string? productHandle, string description, decimal price, decimal? regularPrice, int quantity, string? data = null)
@@ -37,7 +39,7 @@ public sealed class CartService(YourBrand.StoreFront.ICartClient client) : ICart
         }
         else
         {
-            cartItem = new BlazorApp.Cart.CartItem(ci.Id, name, image, productId, productHandle, description, price, regularPrice, quantity, data);
+            cartItem = new BlazorApp.Cart.CartItem(ci.Id, name, image, productId, productHandle, description, price, ci.VatRate, regularPrice, ci.DiscountRate, quantity, data);
 
             _items.Add(cartItem);
         }

@@ -77,7 +77,7 @@ else
                             </li>
                             <li class="d-flex justify-content-between mt-2">
                                 <small class="me-5">VAT incl.</small>
-                                <small>@((cartItems.Sum(x => x.Total).GetVatFromTotal(0.25)).FormatCurrency(Currency))</small>
+                                <small>@((cartItems.Sum(x => x.Total.GetVatFromTotal(x.VatRate.GetValueOrDefault()))).FormatCurrency(Currency))</small>
                             </li>
                         </div>
                     </li>
