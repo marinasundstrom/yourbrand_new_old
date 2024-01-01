@@ -183,6 +183,7 @@ public static class Seed2
             Description = "",
             Gtin = "4345547457457",
             Price = 120,
+            VatRate = 0.25,
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
             Image = string.Format(cdnBaseUrl, "products/placeholder.jpeg"),
         };
@@ -211,6 +212,7 @@ public static class Seed2
             Description = "",
             Gtin = "543453454567",
             Price = 120,
+            VatRate = 0.25,
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
             Image = string.Format(cdnBaseUrl, "products/placeholder.jpeg"),
         };
@@ -237,6 +239,7 @@ public static class Seed2
             Description = "",
             Gtin = "6876345345345",
             Price = 60,
+            VatRate = 0.25,
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
             Image = string.Format(cdnBaseUrl, "products/placeholder.jpeg"),
         };
@@ -265,6 +268,7 @@ public static class Seed2
             Description = "",
             Gtin = "4345547457457",
             Price = 120,
+            VatRate = 0.25,
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
             Image = string.Format(cdnBaseUrl, "products/placeholder.jpeg"),
         };
@@ -291,6 +295,7 @@ public static class Seed2
             Description = "",
             Gtin = "543453454567",
             Price = 120,
+            VatRate = 0.25,
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
             Image = string.Format(cdnBaseUrl, "products/placeholder.jpeg"),
         };
@@ -317,6 +322,7 @@ public static class Seed2
             Description = "",
             Gtin = "6876345345345",
             Price = 120,
+            VatRate = 0.25,
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
             Image = string.Format(cdnBaseUrl, "products/placeholder.jpeg"),
         };
@@ -352,6 +358,7 @@ public static class Seed2
             Description = "",
             Headline = "Dönnerkebab, nyfriterad pommes frites, sallad, och sås",
             Price = 89,
+            VatRate = 0.12,
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
             Image = string.Format(cdnBaseUrl, "products/placeholder.jpeg"),
         };
@@ -391,6 +398,7 @@ public static class Seed2
             Description = "",
             Headline = "Vår fina stek med pommes och vår hemlagade bearnaise sås",
             Price = 179,
+            VatRate = 0.12,
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
             Image = string.Format(cdnBaseUrl, "products/placeholder.jpeg"),
         };
@@ -443,6 +451,7 @@ public static class Seed2
             Description = "",
             Headline = "En korg med smårätter",
             Price = 179,
+            VatRate = 0.12,
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
             Image = string.Format(cdnBaseUrl, "products/placeholder.jpeg"),
         };
@@ -517,6 +526,7 @@ public static class Seed2
             Description = "",
             Headline = "Custom pizza",
             Price = 40,
+            VatRate = 0.12,
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
             Image = string.Format(cdnBaseUrl, "products/placeholder.jpeg"),
         };
@@ -632,6 +642,7 @@ public static class Seed2
             Description = "",
             Headline = "Din egna sallad",
             Price = 52,
+            VatRate = 0.12,
             Visibility = ProductVisibility.Listed,
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
             Image = string.Format(cdnBaseUrl, "products/placeholder.jpeg"),
