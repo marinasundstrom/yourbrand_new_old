@@ -84,6 +84,8 @@ public sealed class NumericalValueOption : Option
     public int? MaxNumericalValue { get; set; }
 
     public int? DefaultNumericalValue { get; set; }
+
+    public decimal? Price { get; set; }
 }
 
 public sealed class TextValueOption : Option

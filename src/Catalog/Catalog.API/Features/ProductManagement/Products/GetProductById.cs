@@ -23,6 +23,10 @@ public sealed record GetProductById(string IdOrHandle) : IRequest<Result<Product
                 await query.FirstOrDefaultAsync(product => product.Id == id, cancellationToken)
                 : await query.FirstOrDefaultAsync(product => product.Handle == request.IdOrHandle, cancellationToken);
 
+            var price = product.GetOptionPrice();
+
+            Console.WriteLine(price);
+
             return product is null
                 ? Result.Failure<ProductDto>(Errors.ProductNotFound)
                 : Result.Success(product.ToDto());

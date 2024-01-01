@@ -53,6 +53,7 @@ public record UpdateProductOption(long ProductId, string OptionId, UpdateProduct
                     numericalValue.MinNumericalValue = request.Data.MinNumericalValue;
                     numericalValue.MaxNumericalValue = request.Data.MaxNumericalValue;
                     numericalValue.DefaultNumericalValue = request.Data.DefaultNumericalValue;
+                    numericalValue.Price = request.Data.Price;
                 }
             }
             else if (option.OptionType == Domain.Enums.OptionType.TextValue)

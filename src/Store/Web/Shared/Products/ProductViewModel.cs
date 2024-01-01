@@ -43,6 +43,10 @@ public class ProductViewModel
                 + OptionGroups.SelectMany(x => x.Options)
                 .Where(x => x.IsSelected || x.SelectedValueId is not null)
                 .Select(x => x.Price.GetValueOrDefault() + (x.Values.FirstOrDefault(x3 => x3.Id == x?.SelectedValueId)?.Price ?? 0))
+                .Sum()
+                 + OptionGroups.SelectMany(x => x.Options)
+                .Where(x => x.OptionType == OptionType.NumericalValue)
+                .Select(x => x.Price.GetValueOrDefault() * x.NumericalValue.GetValueOrDefault())
                 .Sum();
 
     public decimal? RegularPrice => Product?.RegularPrice; // ?.Amount;

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using YourBrand.Catalog.API.Persistence;
 
@@ -11,9 +12,11 @@ using YourBrand.Catalog.API.Persistence;
 namespace YourBrand.Catalog.API.Persistence.Migrations
 {
     [DbContext(typeof(CatalogContext))]
-    partial class CatalogContextModelSnapshot : ModelSnapshot
+    [Migration("20240101124923_AddPriceToNumericalValueOption")]
+    partial class AddPriceToNumericalValueOption
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -307,8 +310,7 @@ namespace YourBrand.Catalog.API.Persistence.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<decimal?>("Price")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("Price");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("SKU")
                         .HasColumnType("nvarchar(max)")
@@ -679,9 +681,7 @@ namespace YourBrand.Catalog.API.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal?>("Price")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("Price");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasDiscriminator().HasValue(2);
                 });
@@ -694,13 +694,17 @@ namespace YourBrand.Catalog.API.Persistence.Migrations
                         .HasColumnType("bit");
 
                     b.Property<decimal?>("Price")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("Price");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("SKU")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("InventoryProductId");
+
+                    b.ToTable("Options", t =>
+                        {
+                            t.Property("Price")
+                                .HasColumnName("SelectableOption_Price");
+                        });
 
                     b.HasDiscriminator().HasValue(0);
                 });

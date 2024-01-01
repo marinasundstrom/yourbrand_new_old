@@ -142,4 +142,69 @@ public sealed class Product
     {
         _options.Remove(option);
     }
+
+    public (decimal price, decimal? regularPrice) GetOptionPrice()
+    {
+        var price = 0m;
+        var regularPrice = 0m;
+
+        List<string> optionTexts = new List<string>();
+
+        foreach (var productOption in ProductOptions)
+        {
+            var option = productOption.Option;
+
+            if (option is SelectableOption selectableOption)
+            {
+                var isSelected = selectableOption.IsSelected;
+
+                if (!isSelected)
+                {
+                    optionTexts.Add($"No {option.Name}");
+
+                    continue;
+                }
+
+                if (isSelected)
+                {
+                    price += selectableOption.Price.GetValueOrDefault();
+                    regularPrice += selectableOption.Price.GetValueOrDefault();
+
+                    if (selectableOption.Price is not null)
+                    {
+                        optionTexts.Add($"{selectableOption.Name} (+{selectableOption.Price?.ToString("c")})");
+                    }
+                    else
+                    {
+                        optionTexts.Add(selectableOption.Name);
+                    }
+                }
+            }
+            else if (option is ChoiceOption { DefaultValue: not null } choiceOption)
+            {
+                var value = choiceOption.DefaultValue;
+
+                price += value.Price.GetValueOrDefault();
+                regularPrice += value.Price.GetValueOrDefault();
+
+                if (value.Price is not null)
+                {
+                    optionTexts.Add($"{value.Name} (+{value.Price?.ToString("c")})");
+                }
+                else
+                {
+                    optionTexts.Add(value.Name);
+                }
+            }
+            else if (option is NumericalValueOption numericalValueOption)
+            {
+                price += numericalValueOption.Price.GetValueOrDefault() * numericalValueOption.DefaultNumericalValue.GetValueOrDefault();
+                regularPrice += numericalValueOption.Price.GetValueOrDefault() * numericalValueOption.DefaultNumericalValue.GetValueOrDefault();
+
+                optionTexts.Add($"{numericalValueOption.DefaultNumericalValue} {option.Name}");
+            }
+        }
+
+        return (price, regularPrice);
+    }
 }

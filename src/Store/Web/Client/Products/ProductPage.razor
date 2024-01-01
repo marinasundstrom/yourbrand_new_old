@@ -264,7 +264,8 @@ else
                                                 type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
                                                 placeholder="Enter value" min="@itemOption.MinNumericalValue" step="1"
                                                 max="@itemOption.MaxNumericalValue" />
-                                            <label for="exampleInputEmail1">@itemOption.Name</label>
+                                            <label for="exampleInputEmail1">@itemOption.Name
+                            (@itemOption.NumericalValue x @itemOption.Price?.FormatCurrency(currency))</label>
                                         }
                                         else if (itemOption.OptionType == OptionType.TextValue)
                                         {

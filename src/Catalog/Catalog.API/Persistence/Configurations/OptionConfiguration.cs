@@ -31,3 +31,19 @@ public class ChoiceOptionConfiguration : IEntityTypeConfiguration<ChoiceOption>
         builder.HasOne(p => p.DefaultValue);
     }
 }
+
+public class SelectableOptionConfiguration : IEntityTypeConfiguration<SelectableOption>
+{
+    public void Configure(EntityTypeBuilder<SelectableOption> builder)
+    {
+        builder.Property(x => x.Price).HasColumnName(nameof(SelectableOption.Price));
+    }
+}
+
+public class NumericalValueOptionConfiguration : IEntityTypeConfiguration<NumericalValueOption>
+{
+    public void Configure(EntityTypeBuilder<NumericalValueOption> builder)
+    {
+        builder.Property(x => x.Price).HasColumnName(nameof(NumericalValueOption.Price));
+    }
+}
