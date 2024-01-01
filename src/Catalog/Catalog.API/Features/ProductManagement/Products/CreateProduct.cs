@@ -3,6 +3,7 @@ using YourBrand.Catalog.API.Persistence;
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
+using YourBrand.Catalog.API.Features.ProductManagement.Products.Images;
 
 namespace YourBrand.Catalog.API.Features.ProductManagement.Products;
 

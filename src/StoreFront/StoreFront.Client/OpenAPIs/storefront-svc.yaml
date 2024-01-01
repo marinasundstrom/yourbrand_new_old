@@ -658,6 +658,10 @@ components:
         image:
           type: string
           nullable: true
+        images:
+          type: array
+          items:
+            $ref: "#/components/schemas/ProductImage"
         description:
           type: string
         price:
@@ -695,6 +699,20 @@ components:
           type: integer
           format: int64
         name:
+          type: string
+    ProductImage:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+          nullable: true
+        text:
+          type: string
+          nullable: true
+        url:
           type: string
     ProductAttribute:
       type: object

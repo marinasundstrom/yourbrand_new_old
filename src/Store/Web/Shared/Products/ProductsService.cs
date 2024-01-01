@@ -48,7 +48,9 @@ public sealed class ProductsService(IProductsClient productsClient) : IProductsS
 public static class Mapper
 {
     public static Product Map(this YourBrand.StoreFront.Product product)
-        => new(product.Id!, product.Name!, product.Category?.ToParentDto2(), product.Image!, product.Description!, product.Price, product.VatRate, product.RegularPrice, product.DiscountRate, product.Handle, product.HasVariants, product.Attributes.Select(x => x.Map()), product.Options.Select(x => x.Map()));
+        => new(product.Id!, product.Name!, product.Category?.ToParentDto2(), product.Image!, product.Images.Select(x => x.Map()), product.Description!, product.Price, product.VatRate, product.RegularPrice, product.DiscountRate, product.Handle, product.HasVariants, product.Attributes.Select(x => x.Map()), product.Options.Select(x => x.Map()));
+
+    public static ProductImage Map(this YourBrand.StoreFront.ProductImage image) => new(image.Id, image.Title, image.Text, image.Url);
 
     public static ProductAttribute Map(this YourBrand.StoreFront.ProductAttribute attribute) => new(attribute.Attribute.Map(), attribute.Value?.Map(), attribute.ForVariant, attribute.IsMainAttribute);
 

@@ -33,7 +33,13 @@ public class ProductViewModel
 
     public string Description => Variant?.Description ?? Product?.Description ?? string.Empty;
 
-    public string Image => Variant?.Image ?? Product?.Image ?? string.Empty;
+    string? _image;
+
+    public string Image
+    {
+        get => _image ?? Variant?.Image ?? Product?.Image ?? string.Empty;
+        set => _image = value;
+    }
 
     //public string Currency => (Variant?.Price ?? Product!.Price)!.Currency;
 
@@ -405,5 +411,10 @@ public class ProductViewModel
         public bool? IsSelected { get; set; }
 
         public string? SelectedValueId { get; set; }
+    }
+
+    public void SelectImage(ProductImage productImage)
+    {
+        Image = productImage.Url;
     }
 }

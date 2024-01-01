@@ -37,6 +37,7 @@ public static class Mappings
             product.RegularPrice,
             product.DiscountRate,
             product.Image,
+            product.Images.Select(x => x.ToDto()),
             product.Handle,
             product.Sku,
             product.HasVariants,
@@ -58,6 +59,10 @@ public static class Mappings
                 item.Handle);
     }
 
+    public static ProductImageDto ToDto(this Domain.Entities.ProductImage x)
+    {
+        return new ProductImageDto(x.Id, x.Title, x.Text, x.Url);
+    }
 
     public static ProductAttributeDto ToDto(this Domain.Entities.ProductAttribute x)
     {

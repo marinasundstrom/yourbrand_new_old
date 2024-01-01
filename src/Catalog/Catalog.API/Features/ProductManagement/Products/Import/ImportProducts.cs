@@ -12,6 +12,7 @@ using MediatR;
 
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
+using YourBrand.Catalog.API.Features.ProductManagement.Products.Images;
 
 namespace YourBrand.Catalog.API.Features.ProductManagement.Import;
 

@@ -1,3 +1,5 @@
+using YourBrand.Catalog.API.Features.ProductManagement.Products.Images;
+
 namespace YourBrand.Catalog.API.Features.ProductManagement.Products;
 
 public static class ServicesExtensions

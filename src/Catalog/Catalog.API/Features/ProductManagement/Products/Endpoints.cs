@@ -19,6 +19,8 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using OpenTelemetry.Trace;
 
 using YourBrand.Extensions;
+using YourBrand.Catalog.API.Features.ProductManagement.Products.Images;
+using Microsoft.AspNetCore.Mvc;
 
 namespace YourBrand.Catalog.API.Features.ProductManagement.Products;
 
@@ -68,9 +70,15 @@ public static partial class Endpoints
         group.MapPost("/{idOrHandle}/price/restore", RestoreProductRegularPrice)
             .WithName($"Products_{nameof(RestoreProductRegularPrice)}");
 
-        group.MapPost("/{idOrHandle}/image", UploadProductImage)
+        group.MapPost("/{idOrHandle}/images", UploadProductImage)
             .WithName($"Products_{nameof(UploadProductImage)}")
             .DisableAntiforgery();
+
+        group.MapPut("/{idOrHandle}/images/{productImageId}", UpdateProductImage)
+            .WithName($"Products_{nameof(UpdateProductImage)}");
+
+        group.MapDelete("/{idOrHandle}/images/{productImageId}", DeleteProductImage)
+            .WithName($"Products_{nameof(DeleteProductImage)}");
 
         group.MapPut("/{idOrHandle}/handle", UpdateProductHandle)
             .AddEndpointFilter<ValidationFilter<UpdateProductHandleRequest>>()
@@ -166,10 +174,27 @@ public static partial class Endpoints
         return result.IsSuccess ? TypedResults.Ok() : TypedResults.NotFound();
     }
 
-    private static async Task<Results<Ok<string>, NotFound>> UploadProductImage(string idOrHandle, IFormFile file,
+    private static async Task<Results<Ok<ProductImageDto>, NotFound>> UploadProductImage(string idOrHandle, IFormFile file,
         IMediator mediator, CancellationToken cancellationToken)
     {
-        var result = await mediator.Send(new UpdateProductImage(idOrHandle, file.OpenReadStream(), file.FileName, file.ContentType), cancellationToken);
+        var result = await mediator.Send(new UploadProductImage(idOrHandle, file.OpenReadStream(), file.FileName, file.ContentType), cancellationToken);
+
+        return result.IsSuccess ? TypedResults.Ok(result.GetValue()) : TypedResults.NotFound();
+    }
+
+    private static async Task<Results<Ok<ProductImageDto>, NotFound>> UpdateProductImage(string idOrHandle, string productImageId, UpdateProductImageData data,
+        IMediator mediator, CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(new UpdateProductImage(idOrHandle, productImageId, data.Title, data.Text), cancellationToken);
+
+        return result.IsSuccess ? TypedResults.Ok(result.GetValue()) : TypedResults.NotFound();
+    }
+
+
+    private static async Task<Results<Ok<string>, NotFound>> DeleteProductImage(string idOrHandle, string productImageId,
+        IMediator mediator, CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(new DeleteProductImage(idOrHandle, productImageId), cancellationToken);
 
         return result.IsSuccess ? TypedResults.Ok(result.GetValue()) : TypedResults.NotFound();
     }
@@ -307,6 +332,7 @@ public sealed record ProductDto(
     decimal? RegularPrice,
     double? DiscountRate,
     string? Image,
+    IEnumerable<ProductImageDto> Images,
     string Handle,
     string? Sku,
     bool HasVariants,
@@ -341,3 +367,9 @@ public sealed record UpdateProductSkuRequest(string Sku)
         }
     }
 }
+
+public record class ProductImageDto(string Id, string Title, string? Text, string Url);
+
+public record class CreateProductImageData(string? Title, string? Text);
+
+public record class UpdateProductImageData(string? Title, string? Text);

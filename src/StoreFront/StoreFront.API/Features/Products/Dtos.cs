@@ -4,7 +4,9 @@ using YourBrand.StoreFront.API.Features.Products.Categories;
 
 public sealed record Brand(long Id, string Name);
 
-public sealed record Product(long Id, string Name, Brand? Brand, ProductCategoryParent? Category, string? Image, string Description, decimal Price, double? VatRate, decimal? RegularPrice, double? DiscountRate, string Handle, bool HasVariants, IEnumerable<ProductAttribute> Attributes, IEnumerable<ProductOption> Options);
+public sealed record Product(long Id, string Name, Brand? Brand, ProductCategoryParent? Category, string? Image, IEnumerable<ProductImage> Images, string Description, decimal Price, double? VatRate, decimal? RegularPrice, double? DiscountRate, string Handle, bool HasVariants, IEnumerable<ProductAttribute> Attributes, IEnumerable<ProductOption> Options);
+
+public sealed record ProductImage(string Id, string? Title, string? Text, string Url);
 
 public sealed record ProductAttribute(Attribute Attribute, AttributeValue? Value, bool ForVariant, bool IsMainAttribute);
 
@@ -41,9 +43,11 @@ public static class Mapper
         => new(brand.Id!, brand.Name!);
 
     public static Product Map(this YourBrand.Catalog.Product product)
-        => new(product.Id!, product.Name!, product.Brand?.Map(), product.Category?.ToParentDto3(), product.Image!, product.Description!, product.Price, product.VatRate, product.RegularPrice, product.DiscountRate, product.Handle, product.HasVariants, product.Attributes.Select(x => x.Map()), product.Options.Select(x => x.Map()));
+        => new(product.Id!, product.Name!, product.Brand?.Map(), product.Category?.ToParentDto3(), product.Image!, product.Images.Select(x => x.Map()), product.Description!, product.Price, product.VatRate, product.RegularPrice, product.DiscountRate, product.Handle, product.HasVariants, product.Attributes.Select(x => x.Map()), product.Options.Select(x => x.Map()));
 
     public static ProductAttribute Map(this YourBrand.Catalog.ProductAttribute attribute) => new(attribute.Attribute.Map(), attribute.Value?.Map(), attribute.ForVariant, attribute.IsMainAttribute);
+
+    public static ProductImage Map(this YourBrand.Catalog.ProductImage image) => new(image.Id, image.Title, image.Text, image.Url);
 
     public static Attribute Map(this YourBrand.Catalog.Attribute attribute) => new(attribute.Id, attribute.Name, attribute.Description, attribute.Group?.Map(), attribute.Values.Select(x => x.Map()).ToList());
 

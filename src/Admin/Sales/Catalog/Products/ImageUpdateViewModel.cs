@@ -27,7 +27,9 @@ public class ImageUpdateViewModel(IProductsClient productsClient, ISnackbar snac
     {
         try
         {
-            Image = await productsClient.UploadProductImageAsync(ProductId.ToString(), new FileParameter(file.OpenReadStream(3 * 1000000), file.Name));
+            var productImage = await productsClient.UploadProductImageAsync(ProductId.ToString(), new FileParameter(file.OpenReadStream(3 * 1000000), file.Name));
+
+            Image = productImage.Url;
 
             snackbar.Add("Image was updated", Severity.Info);
         }

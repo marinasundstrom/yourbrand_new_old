@@ -5,7 +5,7 @@ using YourBrand.Catalog.API.Persistence;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace YourBrand.Catalog.API.Features.ProductManagement.Products;
+namespace YourBrand.Catalog.API.Features.ProductManagement.Products.Images;
 
 public interface IProductImageUploader
 {

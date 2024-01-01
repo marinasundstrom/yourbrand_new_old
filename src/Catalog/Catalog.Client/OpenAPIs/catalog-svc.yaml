@@ -1276,7 +1276,7 @@ paths:
           description: ""
       security:
         - JWT: []
-  /v1/products/{idOrHandle}/image:
+  /v1/products/{idOrHandle}/images:
     post:
       tags:
         - Products
@@ -1298,6 +1298,73 @@ paths:
                 file:
                   type: string
                   format: binary
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductImage"
+        404:
+          description: ""
+      security:
+        - JWT: []
+  /v1/products/{idOrHandle}/images/{productImageId}:
+    put:
+      tags:
+        - Products
+        - Products
+      operationId: Products_UpdateProductImage
+      parameters:
+        - name: idOrHandle
+          in: path
+          required: true
+          schema:
+            type: string
+          x-position: 1
+        - name: productImageId
+          in: path
+          required: true
+          schema:
+            type: string
+          x-position: 2
+      requestBody:
+        x-name: data
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateProductImageData"
+        required: true
+        x-position: 3
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductImage"
+        404:
+          description: ""
+      security:
+        - JWT: []
+    delete:
+      tags:
+        - Products
+        - Products
+      operationId: Products_DeleteProductImage
+      parameters:
+        - name: idOrHandle
+          in: path
+          required: true
+          schema:
+            type: string
+          x-position: 1
+        - name: productImageId
+          in: path
+          required: true
+          schema:
+            type: string
+          x-position: 2
       responses:
         200:
           description: ""
@@ -2270,6 +2337,10 @@ components:
         image:
           type: string
           nullable: true
+        images:
+          type: array
+          items:
+            $ref: "#/components/schemas/ProductImage"
         handle:
           type: string
         sku:
@@ -2396,6 +2467,19 @@ components:
         handle:
           type: string
         path:
+          type: string
+    ProductImage:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        text:
+          type: string
+          nullable: true
+        url:
           type: string
     ProductVisibility:
       type: integer
@@ -2925,6 +3009,16 @@ components:
     RestoreProductRegularPriceReguest:
       type: object
       additionalProperties: false
+    UpdateProductImageData:
+      type: object
+      additionalProperties: false
+      properties:
+        title:
+          type: string
+          nullable: true
+        text:
+          type: string
+          nullable: true
     UpdateProductHandleRequest:
       type: object
       additionalProperties: false

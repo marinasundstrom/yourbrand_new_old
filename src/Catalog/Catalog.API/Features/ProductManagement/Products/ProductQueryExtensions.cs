@@ -10,6 +10,7 @@ public static class ProductQueryExtensions
     {
         return source
                 .IncludeBasics()
+                .IncludeImages()
                 .IncludeAttributes()
                 .IncludeOptions();
     }
@@ -26,6 +27,12 @@ public static class ProductQueryExtensions
                 .Include(pv => pv.Brand)
                 .Include(pv => pv.Category)
                     .ThenInclude(pv => pv!.Parent);
+    }
+
+    public static IQueryable<Product> IncludeImages(this IQueryable<Product> source)
+    {
+        return source
+                .Include(pv => pv.Images);
     }
 
     public static IQueryable<Product> IncludeAttributes(this IQueryable<Product> source)

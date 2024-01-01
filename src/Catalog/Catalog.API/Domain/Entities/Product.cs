@@ -18,6 +18,8 @@ public sealed class Product
 
     readonly List<ProductVariantOption> _productVariantOptions = new List<ProductVariantOption>();
 
+    readonly List<ProductImage> _images = new List<ProductImage>();
+
     public Product() { }
 
     public Product(string name, string handle)
@@ -65,6 +67,12 @@ public sealed class Product
     public decimal? PurchasePrice { get; set; }
 
     public string? Image { get; set; }
+
+    public IReadOnlyCollection<ProductImage> Images => _images;
+
+    public void AddImage(ProductImage productImage) => _images.Add(productImage);
+
+    public void RemoveImage(ProductImage productImage) => _images.Remove(productImage);
 
     public string Handle { get; set; } = default!;
 
