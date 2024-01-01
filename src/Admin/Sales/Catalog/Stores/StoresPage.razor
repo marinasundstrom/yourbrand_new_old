@@ -127,7 +127,7 @@
 
     async Task DeleteStore(Store store)
     {
-        var modalResult = await DialogService.ShowMessageBox("Delete the store?", "The store will be deleted.\nThis cannot be undone.", yesText: "Delete", noText: "No");
+        var modalResult = await DialogService.ShowMessageBox("Delete the store?", "The store will be deleted.\nThis can't be undone.", yesText: "Delete", noText: "No");
         if (!modalResult.GetValueOrDefault())
         {
             return;

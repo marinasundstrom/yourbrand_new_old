@@ -7,13 +7,13 @@
 
 <AppPageTitle>Products</AppPageTitle>
 
-@if (item is null)
+@if (product is null)
 {
     <span>Loading...</span>
 }
 else
 {
-    <AppPageTitle>@item.Name (@item.Id)</AppPageTitle>
+    <AppPageTitle>@product.Name (@product.Id)</AppPageTitle>
 
     <MudText Typo="Typo.h3" Align="Align.Center" Class="mb-12">Option Groups</MudText>
 
@@ -45,7 +45,7 @@ else
 
 @code
 {
-    Product? item;
+    Product? product;
     List<OptionGroup>? optionGroups;
 
     [Parameter]
@@ -53,7 +53,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        item = await ProductsClient.GetProductByIdAsync(ProductId.ToString());
+        product = await ProductsClient.GetProductByIdAsync(ProductId.ToString());
         optionGroups = (await ProductOptionsClient.GetProductOptionGroupsAsync(ProductId.GetValueOrDefault())).ToList();
     }
 
@@ -90,7 +90,7 @@ else
 
     async Task DeleteGroup(OptionGroup optionGroup)
     {
-        var modalResult = await DialogService.ShowMessageBox("Delete the group?", "The group will be deleted, but the options will remain.\nThis cannot be undone.", yesText: "Delete", noText: "No");
+        var modalResult = await DialogService.ShowMessageBox("Delete the group?", "The group will be deleted, but the options will remain.\nThis can't be undone.", yesText: "Delete", noText: "No");
         if (!modalResult.GetValueOrDefault())
 
         {
