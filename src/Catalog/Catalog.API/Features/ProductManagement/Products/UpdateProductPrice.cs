@@ -5,6 +5,7 @@ using MassTransit;
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
+using Core;
 
 namespace YourBrand.Catalog.API.Features.ProductManagement.Products;
 
@@ -36,12 +37,19 @@ public sealed record UpdateProductPrice(string IdOrHandle, decimal Price) : IReq
 
             product.Price = request.Price;
 
+            if (product.RegularPrice is not null)
+            {
+                product.DiscountRate = PriceCalculations.CalculateDiscountRate(product.Price, product.RegularPrice.GetValueOrDefault());
+                product.Discount = product.RegularPrice - product.Price;
+            }
+
             await catalogContext.SaveChangesAsync(cancellationToken);
 
             await publishEndpoint.Publish(new Catalog.Contracts.ProductPriceUpdated
             {
                 ProductId = product.Id,
-                NewPrice = product.Price
+                NewPrice = product.Price,
+                DiscountRate = product.DiscountRate
             });
 
             return Result.Success();

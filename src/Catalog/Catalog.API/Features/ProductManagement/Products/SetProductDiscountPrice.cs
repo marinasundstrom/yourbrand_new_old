@@ -43,7 +43,8 @@ public sealed record SetProductDiscountPrice(string IdOrHandle, decimal Discount
             {
                 ProductId = product.Id,
                 NewPrice = product.Price,
-                RegularPrice = product.RegularPrice
+                RegularPrice = product.RegularPrice,
+                DiscountRate = product.DiscountRate
             });
 
             return Result.Success();

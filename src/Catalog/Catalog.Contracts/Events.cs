@@ -16,6 +16,8 @@ public sealed record ProductPriceUpdated
     public required decimal NewPrice { get; init; }
 
     public decimal? RegularPrice { get; init; }
+
+    public double? DiscountRate { get; init; }
 }
 
 public sealed record ProductVatRateUpdated
