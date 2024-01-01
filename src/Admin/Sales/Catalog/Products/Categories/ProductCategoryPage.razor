@@ -184,6 +184,8 @@ else
         if (result.Canceled) return;
 
         productCategories.Add((ProductCategory)result.Data);
+
+        await table.ReloadServerData();
     }
 
     async Task UpdateCategory(ProductCategory productCategory)

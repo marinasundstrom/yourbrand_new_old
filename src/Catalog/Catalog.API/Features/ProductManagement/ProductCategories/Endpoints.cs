@@ -78,7 +78,7 @@ public static class Endpoints
     private static async Task<Results<Ok<ProductCategory>, BadRequest, ProblemHttpResult>> CreateProductCategory(CreateProductCategoryRequest request,
         IMediator mediator, CancellationToken cancellationToken)
     {
-        var result = await mediator.Send(new CreateProductCategory(request.Name, request.Description, request.ParentCategoryId, request.Handle), cancellationToken);
+        var result = await mediator.Send(new CreateProductCategory(request.Name, request.Description, request.ParentCategoryId, request.Handle, request.StoreId), cancellationToken);
 
         return result.IsSuccess ? TypedResults.Ok(result.GetValue()) : TypedResults.BadRequest();
     }
@@ -100,7 +100,7 @@ public static class Endpoints
     }
 }
 
-public sealed record CreateProductCategoryRequest(string Name, string Description, long ParentCategoryId, string Handle);
+public sealed record CreateProductCategoryRequest(string Name, string Description, long? ParentCategoryId, string Handle, string? StoreId);
 
 public sealed record UpdateProductCategoryDetailsRequest(string Name, string Description);
 

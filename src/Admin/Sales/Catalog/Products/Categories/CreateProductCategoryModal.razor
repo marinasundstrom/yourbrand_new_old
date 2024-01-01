@@ -2,7 +2,9 @@
 @inject IProductsClient ProductsClient
 @inject IProductCategoriesClient ProductCategoriesClient
 @inject IDialogService DialogService
+@inject IStoreProvider StoreProvider
 @using YourBrand.Catalog
+@using YourBrand.Admin.Services
 
 <EditForm Model="@this" OnValidSubmit="OnSubmit">
     <DataAnnotationsValidator />
@@ -42,15 +44,18 @@
 
     public string? Description { get; set; }
 
-    [Parameter] public long ParentCategoryId { get; set; }
+    [Parameter] public long? ParentCategoryId { get; set; }
 
     async Task OnSubmit()
     {
+        var store = StoreProvider.CurrentStore;
+
         CreateProductCategoryRequest data = new()
             {
                 Name = Name,
                 Handle = Handle,
                 Description = Description,
+                StoreId = store.Id,
                 ParentCategoryId = parentCategory?.Id ?? ParentCategoryId
             };
         var result = await ProductCategoriesClient.CreateProductCategoryAsync(data);
