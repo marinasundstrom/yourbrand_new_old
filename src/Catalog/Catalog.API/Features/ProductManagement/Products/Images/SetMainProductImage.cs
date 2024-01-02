@@ -34,7 +34,7 @@ public sealed record SetMainProductImage(string IdOrHandle, string ProductImageI
             await publishEndpoint.Publish(new Catalog.Contracts.ProductImageUpdated
             {
                 ProductId = product.Id,
-                ImageUrl = product.Image
+                ImageUrl = product.Image.Url
             });
 
             return Result.Success(productImage.ToDto());

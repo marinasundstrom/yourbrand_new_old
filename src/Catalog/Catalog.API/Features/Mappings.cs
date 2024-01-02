@@ -36,7 +36,7 @@ public static class Mappings
             product.VatRate,
             product.RegularPrice,
             product.DiscountRate,
-            product.Image,
+            product.Image?.ToDto(),
             product.Images.Select(x => x.ToDto()),
             product.Handle,
             product.Sku,
@@ -55,7 +55,7 @@ public static class Mappings
                 item.Description,
                 item.Price,
                 item.RegularPrice,
-                item.Image,
+                item.Image?.ToDto(),
                 item.Handle);
     }
 

@@ -4,6 +4,7 @@ using YourBrand.Catalog.API.Persistence;
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
+using YourBrand.Catalog.API.Features.ProductManagement.Products.Images;
 namespace YourBrand.Catalog.API.Features.ProductManagement.Products.Variants;
 
 public record CreateProductVariant(long ProductId, CreateProductVariantData Data) : IRequest<ProductDto>
@@ -12,12 +13,14 @@ public record CreateProductVariant(long ProductId, CreateProductVariantData Data
     {
         private readonly CatalogContext _context;
         private readonly ProductVariantsService _productVariantsService;
+        private readonly IProductImageUploader _productImageUploader;
         private readonly IConfiguration _configuration;
 
-        public Handler(CatalogContext context, ProductVariantsService productVariantsService, IConfiguration configuration)
+        public Handler(CatalogContext context, ProductVariantsService productVariantsService, IProductImageUploader productImageUploader, IConfiguration configuration)
         {
             _context = context;
             _productVariantsService = productVariantsService;
+            _productImageUploader = productImageUploader;
             _configuration = configuration;
         }
 
@@ -62,9 +65,12 @@ public record CreateProductVariant(long ProductId, CreateProductVariantData Data
                 Handle = request.Data.Handle,
                 Description = request.Data.Description ?? string.Empty,
                 Price = request.Data.Price,
-                Image = $"{cdnBaseUrl}/images/products/placeholder.jpeg",
                 CategoryId = product.ParentProductId
             };
+
+            var image = new ProductImage("Placeholder", string.Empty, await _productImageUploader.GetPlaceholderImageUrl());
+            variant.AddImage(image);
+            variant.Image = image;
 
             foreach (var value in request.Data.Attributes)
             {

@@ -215,7 +215,7 @@ namespace Client.Products
 
             var productId = (productViewModel?.Variant?.Id ?? productViewModel?.Product?.Id);
 
-            await CartService.AddCartItem(product.Name, product.Image, productId, product.Handle, product.Description,
+            await CartService.AddCartItem(product.Name, product.Image.Url, productId, product.Handle, product.Description,
                 productViewModel.Total, product.RegularPrice, quantity, Serialize());
 
             ToastService.ShowInfo($"{productViewModel.Name} was added to your basket");

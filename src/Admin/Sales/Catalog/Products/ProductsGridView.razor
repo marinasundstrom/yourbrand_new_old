@@ -20,7 +20,7 @@ else
             <MudItem xs="12" sm="6" md="4" lg="4" @key="@item.Id">
                 <a href="/products/@item.Id/edit">
                     <MudCard Elevation="25">
-                        <MudCardMedia Image="@item.Image" Height="200" />
+                        <MudCardMedia Image="@item.Image.Url" Height="200" />
 
                         <MudCardContent>
                             <MudText Typo="Typo.h5">@item.Name</MudText>

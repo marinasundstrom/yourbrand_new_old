@@ -74,7 +74,8 @@ else
                         var img = image;
 
                         <img @onclick="() => { productViewModel.SelectImage(img); StateHasChanged(); }"
-                            class="bd-placeholder-img card-img-top img-border-rounded shadow mt-4 me-3" itemprop="image"
+                            class="bd-placeholder-img card-img-top img-border-rounded mt-4 me-3 @(img.Url == productViewModel.Image ? "shadow" : "shadow-sm" )"
+                            itemprop="image"
                             style="cursor: pointer; height: 80px; width: 80px; object-fit: cover; aspect-ratio: 1 / 1;"
                             src="@image.Url" alt="@image.Text" />
                     }
@@ -159,7 +160,7 @@ else
                 @onclick="async () => await SelectVariant(v2!)" @onclick:preventDefault> *@
                             @if ((v2?.Image ?? productViewModel.Product.Image) is not null)
                             {
-                                <img src="@(v2?.Image ?? productViewModel.Product.Image)" height="100%" width="100%"
+                                <img src="@(v2?.Image?.Url ?? productViewModel.Product.Image.Url)" height="100%" width="100%"
                                     style="object-fit: contain;" alt="@v2!.Name" />
                             }
                             else

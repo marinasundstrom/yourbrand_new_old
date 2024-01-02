@@ -18,6 +18,16 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.HasIndex(p => p.Handle);
 
         builder
+            .HasOne(p => p.Image)
+            .WithMany()
+            .HasForeignKey(x => x.ImageId)
+            .IsRequired(false);
+
+        builder
+            .HasMany(p => p.Images)
+            .WithOne(x => x.Product);
+
+        builder
             .HasMany(p => p.Options)
             .WithMany(p => p.Products)
             .UsingEntity<ProductOption>();

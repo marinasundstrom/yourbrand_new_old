@@ -80,7 +80,7 @@ public sealed record ImportProducts(Stream Stream) : IRequest<Result<ProductImpo
                     {
                         Sku = record.Sku,
                         Description = record.Description ?? string.Empty,
-                        Image = record.Image,
+                        //Image = record.Image,
                         Price = record.Price,
                         RegularPrice = record.RegularPrice,
                         Category = category,
@@ -101,14 +101,14 @@ public sealed record ImportProducts(Stream Stream) : IRequest<Result<ProductImpo
 
             foreach (var product in products.Select(x => x.Value))
             {
-                if (string.IsNullOrEmpty(product.Image))
+                if (product.Image is null)
                 {
                     continue;
                 }
 
-                var image = string.IsNullOrEmpty(product.Image) ? null : Path.Combine(ArchiveDirPath, product.Image!);
+                var image = product.Image is null ? null : Path.Combine(ArchiveDirPath, product.Image.Url!);
 
-                var fileName = product.Image;
+                var fileName = product.Image.Url;
 
                 await _productImageUploader.TryDeleteProductImage(product.Id, fileName);
 
@@ -139,7 +139,9 @@ public sealed record ImportProducts(Stream Stream) : IRequest<Result<ProductImpo
                         path = await _productImageUploader.GetPlaceholderImageUrl();
                     }
 
-                    product.Image = path;
+                    var image2 = new ProductImage("Image", string.Empty, path);
+                    product.AddImage(image2);
+                    product.Image = image2;
 
                     File.Delete(image!);
                 }

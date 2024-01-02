@@ -17,6 +17,8 @@ public static class Seed
             ? configuration["CdnBaseUrl"]!
             : "https://yourbrandstorage.blob.core.windows.net";
 
+        ProductImage? image;
+
         var pastries = new ProductCategory()
         {
             Name = "Pastries",
@@ -70,9 +72,12 @@ public static class Seed
             Description = "Small biscuit",
             Price = 10,
             RegularPrice = null,
-            Image = $"{cdnBaseUrl}/images/products/biscotti.jpeg",
             Handle = "biscotti"
         };
+
+        image = new ProductImage("Biscotti", string.Empty, $"{cdnBaseUrl}/images/products/biscotti.jpeg");
+        biscotti.AddImage(image);
+        biscotti.Image = image;
 
         pastries.AddProduct(biscotti);
 
@@ -84,9 +89,12 @@ public static class Seed
             Description = "Freshly brewed coffee",
             Price = 32,
             RegularPrice = null,
-            Image = $"{cdnBaseUrl}/images/products/coffee.jpeg",
             Handle = "brewed-coffe"
         };
+
+        image = new ProductImage("Signature Brew", string.Empty, $"{cdnBaseUrl}/images/products/coffee.jpeg");
+        signatureBrewed.AddImage(image);
+        signatureBrewed.Image = image;
 
         coffee.AddProduct(signatureBrewed);
 
@@ -98,9 +106,12 @@ public static class Seed
             Description = "Freshly ground espresso coffee with steamed milk",
             Price = 32,
             RegularPrice = 42,
-            Image = $"{cdnBaseUrl}/images/products/caffe-latte.jpeg",
             Handle = "caffe-latte"
         };
+
+        image = new ProductImage("Caffe Latte", string.Empty, $"{cdnBaseUrl}/images/products/caffe-latte.jpeg");
+        caffeLatte.AddImage(image);
+        caffeLatte.Image = image;
 
         coffee.AddProduct(caffeLatte);
 
@@ -112,9 +123,12 @@ public static class Seed
             Description = "Newly baked cinnamon rolls",
             Price = 22,
             RegularPrice = null,
-            Image = $"{cdnBaseUrl}/images/products/cinnamon-roll.jpeg",
             Handle = "cinnamon-roll"
         };
+
+        image = new ProductImage("Cinnamon Roll", string.Empty, $"{cdnBaseUrl}/images/products/cinnamon-roll.jpeg");
+        cinnamonRoll.AddImage(image);
+        cinnamonRoll.Image = image;
 
         pastries.AddProduct(cinnamonRoll);
 
@@ -126,9 +140,12 @@ public static class Seed
             Description = "Single shot espresso",
             Price = 32,
             RegularPrice = null,
-            Image = $"{cdnBaseUrl}/images/products/espresso.jpeg",
             Handle = "espresso"
         };
+
+        image = new ProductImage("Espresso", string.Empty, $"{cdnBaseUrl}/images/products/espresso.jpeg");
+        espresso.AddImage(image);
+        espresso.Image = image;
 
         coffee.AddProduct(espresso);
 
@@ -140,9 +157,12 @@ public static class Seed
             Description = "Our fabulous milkshake",
             Price = 52,
             RegularPrice = null,
-            Image = $"{cdnBaseUrl}/images/products/milkshake.jpeg",
             Handle = "milkshake"
         };
+
+        image = new ProductImage("Milkshake", string.Empty, $"{cdnBaseUrl}/images/products/milkshake.jpeg");
+        milkshake.AddImage(image);
+        milkshake.Image = image;
 
         otherDrinks.AddProduct(milkshake);
 
@@ -154,9 +174,12 @@ public static class Seed
             Description = "Caffe Latte with chocolate syrup",
             Price = 32,
             RegularPrice = null,
-            Image = $"{cdnBaseUrl}/images/products/mocca-latte.jpeg",
             Handle = "mocca-latte"
         };
+
+        image = new ProductImage("Mocca Latter", string.Empty, $"{cdnBaseUrl}/images/products/mocca-latte.jpeg");
+        moccaLatte.AddImage(image);
+        moccaLatte.Image = image;
 
         coffee.AddProduct(moccaLatte);
 
@@ -168,9 +191,12 @@ public static class Seed
             Description = "Test",
             Price = 15,
             RegularPrice = null,
-            Image = $"{cdnBaseUrl}/images/products/apple-pie.jpeg",
             Handle = "apple-pie"
         };
+
+        image = new ProductImage("Apple Pie", string.Empty, $"{cdnBaseUrl}/images/products/apple-pie.jpeg");
+        applePie.AddImage(image);
+        applePie.Image = image;
 
         pastries.AddProduct(applePie);
 

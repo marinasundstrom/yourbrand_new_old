@@ -13,6 +13,8 @@ public static class Seed2
     private static ProductCategory? tshirts;
     private static ProductCategory? clothes;
 
+    private static ProductImage? PlaceholderImage;
+
     public static async Task SeedData(CatalogContext context, IConfiguration configuration)
     {
         //await context.Database.EnsureDeletedAsync();
@@ -24,6 +26,9 @@ public static class Seed2
             ? "https://localhost:7134/images/{0}"
             : "https://yourbrandstorage.blob.core.windows.net/images/{0}";
 
+        PlaceholderImage = new ProductImage("Placeholder", string.Empty, string.Format(cdnBaseUrl, "placeholder.jpeg"));
+
+        context.Set<ProductImage>().Add(PlaceholderImage);
 
         var currency = await context.Currencies.FirstOrDefaultAsync(x => x.Code == "SEK");
 
@@ -155,7 +160,7 @@ public static class Seed2
             Visibility = ProductVisibility.Listed,
             Brand = await context.Brands.FirstAsync(x => x.Handle == "my-brand"),
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
-            Image = string.Format(cdnBaseUrl, "products/placeholder.jpeg")
+            Image = PlaceholderImage
         };
 
         tshirts.AddProduct(product);
@@ -185,7 +190,7 @@ public static class Seed2
             Price = 120,
             VatRate = 0.25,
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
-            Image = string.Format(cdnBaseUrl, "products/placeholder.jpeg"),
+            Image = PlaceholderImage,
         };
 
         variantBlueSmall.AddProductAttribute(new ProductAttribute
@@ -214,7 +219,7 @@ public static class Seed2
             Price = 120,
             VatRate = 0.25,
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
-            Image = string.Format(cdnBaseUrl, "products/placeholder.jpeg"),
+            Image = PlaceholderImage,
         };
 
         variantBlueMedium.AddProductAttribute(new ProductAttribute
@@ -241,7 +246,7 @@ public static class Seed2
             Price = 60,
             VatRate = 0.25,
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
-            Image = string.Format(cdnBaseUrl, "products/placeholder.jpeg"),
+            Image = PlaceholderImage,
         };
 
         variantBlueLarge.AddProductAttribute(new ProductAttribute
@@ -270,7 +275,7 @@ public static class Seed2
             Price = 120,
             VatRate = 0.25,
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
-            Image = string.Format(cdnBaseUrl, "products/placeholder.jpeg"),
+            Image = PlaceholderImage,
         };
 
         variantRedSmall.AddProductAttribute(new ProductAttribute
@@ -297,7 +302,7 @@ public static class Seed2
             Price = 120,
             VatRate = 0.25,
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
-            Image = string.Format(cdnBaseUrl, "products/placeholder.jpeg"),
+            Image = PlaceholderImage,
         };
 
         variantRedMedium.AddProductAttribute(new ProductAttribute
@@ -324,7 +329,7 @@ public static class Seed2
             Price = 120,
             VatRate = 0.25,
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
-            Image = string.Format(cdnBaseUrl, "products/placeholder.jpeg"),
+            Image = PlaceholderImage,
         };
 
         variantRedLarge.AddProductAttribute(new ProductAttribute
@@ -360,7 +365,7 @@ public static class Seed2
             Price = 89,
             VatRate = 0.12,
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
-            Image = string.Format(cdnBaseUrl, "products/placeholder.jpeg"),
+            Image = PlaceholderImage,
         };
 
         food.AddProduct(product);
@@ -400,7 +405,7 @@ public static class Seed2
             Price = 179,
             VatRate = 0.12,
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
-            Image = string.Format(cdnBaseUrl, "products/placeholder.jpeg"),
+            Image = PlaceholderImage,
         };
 
         food.AddProduct(product);
@@ -453,7 +458,7 @@ public static class Seed2
             Price = 179,
             VatRate = 0.12,
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
-            Image = string.Format(cdnBaseUrl, "products/placeholder.jpeg"),
+            Image = PlaceholderImage,
         };
 
         food.AddProduct(product);
@@ -528,7 +533,7 @@ public static class Seed2
             Price = 40,
             VatRate = 0.12,
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
-            Image = string.Format(cdnBaseUrl, "products/placeholder.jpeg"),
+            Image = PlaceholderImage,
         };
 
         food.AddProduct(product);
@@ -645,7 +650,7 @@ public static class Seed2
             VatRate = 0.12,
             Visibility = ProductVisibility.Listed,
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
-            Image = string.Format(cdnBaseUrl, "products/placeholder.jpeg"),
+            Image = PlaceholderImage,
         };
 
         food.AddProduct(product);

@@ -5,14 +5,15 @@ using MassTransit;
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
+using YourBrand.Catalog.API.Domain.Entities;
 
 namespace YourBrand.Catalog.API.Features.ProductManagement.Products.Images;
 
-public sealed record DeleteProductImage(string IdOrHandle, string ProductImageId) : IRequest<Result<string>>
+public sealed record DeleteProductImage(string IdOrHandle, string ProductImageId) : IRequest<Result<ProductImageDto>>
 {
-    public sealed class Handler(IProductImageUploader productImageUploader, IPublishEndpoint publishEndpoint, CatalogContext catalogContext = default!) : IRequestHandler<DeleteProductImage, Result<string>>
+    public sealed class Handler(IProductImageUploader productImageUploader, IPublishEndpoint publishEndpoint, CatalogContext catalogContext = default!) : IRequestHandler<DeleteProductImage, Result<ProductImageDto>>
     {
-        public async Task<Result<string>> Handle(DeleteProductImage request, CancellationToken cancellationToken)
+        public async Task<Result<ProductImageDto>> Handle(DeleteProductImage request, CancellationToken cancellationToken)
         {
             var isId = int.TryParse(request.IdOrHandle, out var id);
 
@@ -22,7 +23,7 @@ public sealed record DeleteProductImage(string IdOrHandle, string ProductImageId
 
             if (product is null)
             {
-                return Result.Failure<string>(Errors.ProductNotFound);
+                return Result.Failure<ProductImageDto>(Errors.ProductNotFound);
             }
 
             var productImage = product.Images.FirstOrDefault(x => x.Id == request.ProductImageId);
@@ -36,10 +37,10 @@ public sealed record DeleteProductImage(string IdOrHandle, string ProductImageId
             await publishEndpoint.Publish(new Catalog.Contracts.ProductImageUpdated
             {
                 ProductId = product.Id,
-                ImageUrl = product.Image
+                ImageUrl = product.Image.Url
             });
 
-            return Result.Success(product.Image);
+            return Result.Success(product.Image.ToDto());
         }
     }
 }

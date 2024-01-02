@@ -66,7 +66,9 @@ public sealed class Product
 
     public decimal? PurchasePrice { get; set; }
 
-    public string? Image { get; set; }
+    public ProductImage? Image { get; set; }
+
+    public string? ImageId { get; set; }
 
     public IReadOnlyCollection<ProductImage> Images => _images;
 

@@ -4,6 +4,7 @@ using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 using YourBrand.Catalog.API.Features.ProductManagement.Products.Images;
+using YourBrand.Catalog.API.Domain.Entities;
 
 namespace YourBrand.Catalog.API.Features.ProductManagement.Products;
 
@@ -25,12 +26,14 @@ public sealed record CreateProduct(string Name, string StoreId, string Descripti
                 Name = request.Name,
                 StoreId = request.StoreId,
                 Description = request.Description,
-                Image = await productImageUploader.GetPlaceholderImageUrl(),
                 HasVariants = request.IsGroupedProduct,
                 Price = request.Price,
                 VatRate = request.VatRate,
                 Handle = request.Handle
             };
+
+            var image = new ProductImage("Placeholder", string.Empty, await productImageUploader.GetPlaceholderImageUrl());
+            product.AddImage(image);
 
             var category = await catalogContext.ProductCategories
                 .Include(x => x.Parent)
@@ -39,6 +42,10 @@ public sealed record CreateProduct(string Name, string StoreId, string Descripti
             category.AddProduct(product);
 
             catalogContext.Products.Add(product);
+
+            await catalogContext.SaveChangesAsync(cancellationToken);
+
+            product.Image = image;
 
             await catalogContext.SaveChangesAsync(cancellationToken);
 

@@ -1377,7 +1377,7 @@ paths:
           content:
             application/json:
               schema:
-                type: string
+                $ref: "#/components/schemas/ProductImage"
         404:
           description: ""
       security:
@@ -2379,8 +2379,9 @@ components:
           format: double
           nullable: true
         image:
-          type: string
           nullable: true
+          oneOf:
+            - $ref: "#/components/schemas/ProductImage"
         images:
           type: array
           items:
@@ -2483,8 +2484,9 @@ components:
           format: decimal
           nullable: true
         image:
-          type: string
           nullable: true
+          oneOf:
+            - $ref: "#/components/schemas/ProductImage"
         handle:
           type: string
     ProductCategory:

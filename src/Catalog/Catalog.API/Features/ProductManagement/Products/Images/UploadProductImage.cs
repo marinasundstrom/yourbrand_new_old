@@ -31,14 +31,14 @@ public sealed record UploadProductImage(string IdOrHandle, Stream Stream, string
 
             var imageUrl = await productImageUploader.UploadProductImage(product.Id, request.FileName, request.Stream, request.ContentType);
 
-            if (request.SetMainImage)
-            {
-                product.Image = imageUrl;
-            }
-
             var image = new Domain.Entities.ProductImage(request.FileName, string.Empty, imageUrl);
 
             product.AddImage(image);
+
+            if (request.SetMainImage)
+            {
+                product.Image = image;
+            }
 
             await catalogContext.SaveChangesAsync(cancellationToken);
 
@@ -47,7 +47,7 @@ public sealed record UploadProductImage(string IdOrHandle, Stream Stream, string
                 await publishEndpoint.Publish(new Catalog.Contracts.ProductImageUpdated
                 {
                     ProductId = product.Id,
-                    ImageUrl = product.Image
+                    ImageUrl = product.Image.Url
                 });
             }
 

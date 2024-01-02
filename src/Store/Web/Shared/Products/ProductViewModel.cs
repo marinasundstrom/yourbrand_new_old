@@ -37,7 +37,7 @@ public class ProductViewModel
 
     public string Image
     {
-        get => _image ?? Variant?.Image ?? Product?.Image ?? string.Empty;
+        get => _image ?? Variant?.Image?.Url ?? Product?.Image?.Url ?? string.Empty;
         set => _image = value;
     }
 

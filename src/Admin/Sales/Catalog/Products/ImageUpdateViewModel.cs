@@ -15,7 +15,7 @@ public class ImageUpdateViewModel(IProductsClient productsClient, ISnackbar snac
         return new(productsClient, snackbar)
         {
             ProductId = product.Id,
-            Image = product.Image
+            Image = product.Image.Url
         };
     }
 

@@ -656,8 +656,9 @@ components:
           oneOf:
             - $ref: "#/components/schemas/ProductCategoryParent"
         image:
-          type: string
           nullable: true
+          oneOf:
+            - $ref: "#/components/schemas/ProductImage"
         images:
           type: array
           items:

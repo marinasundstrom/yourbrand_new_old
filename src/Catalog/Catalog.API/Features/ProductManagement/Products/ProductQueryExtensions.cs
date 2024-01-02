@@ -32,6 +32,7 @@ public static class ProductQueryExtensions
     public static IQueryable<Product> IncludeImages(this IQueryable<Product> source)
     {
         return source
+                .Include(pv => pv.Image)
                 .Include(pv => pv.Images);
     }
 

@@ -86,7 +86,7 @@ public static class Endpoints
         var (price, regularPrice) = priceCalculator.CalculatePrice(product, data);
 
         var cartItem = await cartsClient.AddCartItem(
-            "test", product.Name, product.Image, request.ProductId, product.Handle, product.Description, price, product.VatRate, regularPrice, product.DiscountRate, request.Quantity, data, cancellationToken);
+            "test", product.Name, product.Image?.Url, request.ProductId, product.Handle, product.Description, price, product.VatRate, regularPrice, product.DiscountRate, request.Quantity, data, cancellationToken);
 
         return cartItem is not null ? TypedResults.Ok(cartItem) : TypedResults.NotFound();
     }

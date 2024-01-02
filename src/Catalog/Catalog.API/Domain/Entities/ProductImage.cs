@@ -18,9 +18,9 @@ public class ProductImage
 
     public string? StoreId { get; set; }
 
-    public Product Product { get; set; } = default!;
+    public Product? Product { get; set; } = default!;
 
-    public long ProductId { get; set; }
+    public long? ProductId { get; set; }
 
     public string Title { get; set; }
 

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using YourBrand.Catalog.API.Persistence;
 
@@ -11,9 +12,11 @@ using YourBrand.Catalog.API.Persistence;
 namespace YourBrand.Catalog.API.Persistence.Migrations
 {
     [DbContext(typeof(CatalogContext))]
-    partial class CatalogContextModelSnapshot : ModelSnapshot
+    [Migration("20240102142957_UpdateProductImage")]
+    partial class UpdateProductImage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -525,7 +528,7 @@ namespace YourBrand.Catalog.API.Persistence.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<long?>("ProductId")
+                    b.Property<long>("ProductId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("StoreId")
@@ -967,7 +970,9 @@ namespace YourBrand.Catalog.API.Persistence.Migrations
                 {
                     b.HasOne("YourBrand.Catalog.API.Domain.Entities.Product", "Product")
                         .WithMany("Images")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("YourBrand.Catalog.API.Domain.Entities.Store", "Store")
                         .WithMany()

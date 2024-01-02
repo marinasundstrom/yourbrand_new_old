@@ -201,7 +201,7 @@ public static partial class Endpoints
         return result.IsSuccess ? TypedResults.Ok(result.GetValue()) : TypedResults.NotFound();
     }
 
-    private static async Task<Results<Ok<string>, NotFound>> DeleteProductImage(string idOrHandle, string productImageId,
+    private static async Task<Results<Ok<ProductImageDto>, NotFound>> DeleteProductImage(string idOrHandle, string productImageId,
         IMediator mediator, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new DeleteProductImage(idOrHandle, productImageId), cancellationToken);
@@ -341,7 +341,7 @@ public sealed record ProductDto(
     double? VatRate,
     decimal? RegularPrice,
     double? DiscountRate,
-    string? Image,
+    ProductImageDto? Image,
     IEnumerable<ProductImageDto> Images,
     string Handle,
     string? Sku,
@@ -358,7 +358,7 @@ public record class ParentProductDto(
     string Description,
     decimal Price,
     decimal? RegularPrice,
-    string? Image,
+    ProductImageDto? Image,
     string Handle);
 
 public record class ProductAttributeDto(
