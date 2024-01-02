@@ -54,8 +54,7 @@ else
                 <Badge BadgeClass="top-0 start-100" BadgeStyle="" IsVisible="@(productViewModel.RegularPrice is not null)">
                     <ChildContent>
                         <img class="bd-placeholder-img card-img-top img-border-rounded shadow" itemprop="image"
-                            style="object-fit: cover; aspect-ratio: 1 / 1;" src="@productViewModel.Image"
-                            alt="@image.Text" />
+                            style="object-fit: cover; aspect-ratio: 1 / 1;" src="@productViewModel.Image" />
                     </ChildContent>
 
                     <BadgeContent>
@@ -69,13 +68,13 @@ else
             </div>
             @if (productViewModel.Product.Images.Count() > 1)
             {
-                <div class="row container mt-4">
+                <div class="row container">
                     @foreach (var image in productViewModel.Product.Images)
                     {
                         var img = image;
 
                         <img @onclick="() => { productViewModel.SelectImage(img); StateHasChanged(); }"
-                            class="bd-placeholder-img card-img-top img-border-rounded shadow me-3" itemprop="image"
+                            class="bd-placeholder-img card-img-top img-border-rounded shadow mt-4 me-3" itemprop="image"
                             style="cursor: pointer; height: 80px; width: 80px; object-fit: cover; aspect-ratio: 1 / 1;"
                             src="@image.Url" alt="@image.Text" />
                     }

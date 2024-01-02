@@ -1289,6 +1289,12 @@ paths:
           schema:
             type: string
           x-position: 1
+        - name: setMainImage
+          in: query
+          schema:
+            type: boolean
+            default: false
+          x-position: 2
       requestBody:
         content:
           multipart/form-data:
@@ -1372,6 +1378,44 @@ paths:
             application/json:
               schema:
                 type: string
+        404:
+          description: ""
+      security:
+        - JWT: []
+  /v1/products/{idOrHandle}/images/{productImageId}/setMainImage:
+    put:
+      tags:
+        - Products
+        - Products
+      operationId: Products_SetMainProductImage
+      parameters:
+        - name: idOrHandle
+          in: path
+          required: true
+          schema:
+            type: string
+          x-position: 1
+        - name: productImageId
+          in: path
+          required: true
+          schema:
+            type: string
+          x-position: 2
+      requestBody:
+        x-name: data
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SetMainProductImageData"
+        required: true
+        x-position: 3
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductImage"
         404:
           description: ""
       security:
@@ -3019,6 +3063,9 @@ components:
         text:
           type: string
           nullable: true
+    SetMainProductImageData:
+      type: object
+      additionalProperties: false
     UpdateProductHandleRequest:
       type: object
       additionalProperties: false

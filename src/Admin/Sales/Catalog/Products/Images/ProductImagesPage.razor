@@ -69,11 +69,13 @@ else
     {
         try
         {
-            var productImage = await ProductsClient.UploadProductImageAsync(ProductId.ToString(), new FileParameter(file.OpenReadStream(3 * 1000000), file.Name));
+            var productImage = await ProductsClient.UploadProductImageAsync(ProductId.ToString(), false, new FileParameter(file.OpenReadStream(3 * 1000000), file.Name));
 
             productImages.Add(productImage);
 
             Snackbar.Add("Image was updated", Severity.Info);
+
+            await UpdateProductImage(productImage);
         }
         catch
         {

@@ -77,6 +77,9 @@ public static partial class Endpoints
         group.MapPut("/{idOrHandle}/images/{productImageId}", UpdateProductImage)
             .WithName($"Products_{nameof(UpdateProductImage)}");
 
+        group.MapPut("/{idOrHandle}/images/{productImageId}/setMainImage", SetMainProductImage)
+            .WithName($"Products_{nameof(SetMainProductImage)}");
+
         group.MapDelete("/{idOrHandle}/images/{productImageId}", DeleteProductImage)
             .WithName($"Products_{nameof(DeleteProductImage)}");
 
@@ -174,10 +177,10 @@ public static partial class Endpoints
         return result.IsSuccess ? TypedResults.Ok() : TypedResults.NotFound();
     }
 
-    private static async Task<Results<Ok<ProductImageDto>, NotFound>> UploadProductImage(string idOrHandle, IFormFile file,
-        IMediator mediator, CancellationToken cancellationToken)
+    private static async Task<Results<Ok<ProductImageDto>, NotFound>> UploadProductImage(string idOrHandle, bool setMainImage = false, IFormFile file = default!,
+        IMediator mediator = default!, CancellationToken cancellationToken = default!)
     {
-        var result = await mediator.Send(new UploadProductImage(idOrHandle, file.OpenReadStream(), file.FileName, file.ContentType), cancellationToken);
+        var result = await mediator.Send(new UploadProductImage(idOrHandle, file.OpenReadStream(), file.FileName, file.ContentType, setMainImage), cancellationToken);
 
         return result.IsSuccess ? TypedResults.Ok(result.GetValue()) : TypedResults.NotFound();
     }
@@ -190,6 +193,13 @@ public static partial class Endpoints
         return result.IsSuccess ? TypedResults.Ok(result.GetValue()) : TypedResults.NotFound();
     }
 
+    private static async Task<Results<Ok<ProductImageDto>, NotFound>> SetMainProductImage(string idOrHandle, string productImageId, SetMainProductImageData data,
+        IMediator mediator, CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(new SetMainProductImage(idOrHandle, productImageId), cancellationToken);
+
+        return result.IsSuccess ? TypedResults.Ok(result.GetValue()) : TypedResults.NotFound();
+    }
 
     private static async Task<Results<Ok<string>, NotFound>> DeleteProductImage(string idOrHandle, string productImageId,
         IMediator mediator, CancellationToken cancellationToken)
@@ -373,3 +383,5 @@ public record class ProductImageDto(string Id, string Title, string? Text, strin
 public record class CreateProductImageData(string? Title, string? Text);
 
 public record class UpdateProductImageData(string? Title, string? Text);
+
+public record class SetMainProductImageData();

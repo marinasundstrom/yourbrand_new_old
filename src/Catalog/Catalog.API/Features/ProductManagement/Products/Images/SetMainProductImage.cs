@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace YourBrand.Catalog.API.Features.ProductManagement.Products.Images;
 
-public sealed record UpdateProductImage(string IdOrHandle, string ProductImageId, string? Title, string? Text) : IRequest<Result<ProductImageDto>>
+public sealed record SetMainProductImage(string IdOrHandle, string ProductImageId) : IRequest<Result<ProductImageDto>>
 {
-    public sealed class Handler(IProductImageUploader productImageUploader, IPublishEndpoint publishEndpoint, CatalogContext catalogContext = default!) : IRequestHandler<UpdateProductImage, Result<ProductImageDto>>
+    public sealed class Handler(IProductImageUploader productImageUploader, IPublishEndpoint publishEndpoint, CatalogContext catalogContext = default!) : IRequestHandler<SetMainProductImage, Result<ProductImageDto>>
     {
-        public async Task<Result<ProductImageDto>> Handle(UpdateProductImage request, CancellationToken cancellationToken)
+        public async Task<Result<ProductImageDto>> Handle(SetMainProductImage request, CancellationToken cancellationToken)
         {
             var isId = int.TryParse(request.IdOrHandle, out var id);
 
@@ -27,18 +27,15 @@ public sealed record UpdateProductImage(string IdOrHandle, string ProductImageId
 
             var productImage = product.Images.First(x => x.Id == request.ProductImageId);
 
-            productImage.Title = request.Title;
-            productImage.Text = request.Text;
+            product.Image = product.Image;
 
             await catalogContext.SaveChangesAsync(cancellationToken);
 
-            /*
             await publishEndpoint.Publish(new Catalog.Contracts.ProductImageUpdated
             {
                 ProductId = product.Id,
                 ImageUrl = product.Image
             });
-            */
 
             return Result.Success(productImage.ToDto());
         }
