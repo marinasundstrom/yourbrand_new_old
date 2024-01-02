@@ -76,18 +76,25 @@ public sealed record ImportProducts(Stream Stream) : IRequest<Result<ProductImpo
 
                     var parentProduct = string.IsNullOrEmpty(record.ParentSku) ? null : await GetProduct(store, record.ParentSku, cancellationToken);
 
-                    products.Add(record.Sku, new Product(record.Name, productHandle)
+                    var product = new Product(record.Name, productHandle)
                     {
                         Sku = record.Sku,
                         Description = record.Description ?? string.Empty,
                         //Image = record.Image,
-                        Price = record.Price,
-                        RegularPrice = record.RegularPrice,
                         Category = category,
                         Parent = parentProduct,
                         Store = store,
                         Visibility = record.Listed.GetValueOrDefault() ? Domain.Enums.ProductVisibility.Listed : Domain.Enums.ProductVisibility.Unlisted
-                    });
+                    };
+
+                    if (record.RegularPrice is not null)
+                    {
+                        product.SetPrice(record.RegularPrice.GetValueOrDefault());
+                    }
+
+                    product.SetDiscountPrice(record.Price);
+
+                    products.Add(record.Sku, product);
 
                     category.IncrementProductsCount();
                 }

@@ -27,10 +27,11 @@ public sealed record CreateProduct(string Name, string StoreId, string Descripti
                 StoreId = request.StoreId,
                 Description = request.Description,
                 HasVariants = request.IsGroupedProduct,
-                Price = request.Price,
                 VatRate = request.VatRate,
                 Handle = request.Handle
             };
+
+            product.SetPrice(request.Price);
 
             var image = new ProductImage("Placeholder", string.Empty, await productImageUploader.GetPlaceholderImageUrl());
             product.AddImage(image);

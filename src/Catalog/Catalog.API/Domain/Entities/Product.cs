@@ -1,24 +1,28 @@
+using Core;
+
 using YourBrand.Catalog.API.Domain.Enums;
 
 namespace YourBrand.Catalog.API.Domain.Entities;
 
 public sealed class Product
 {
-    readonly List<ProductAttribute> _productAttributes = new List<ProductAttribute>();
+    readonly HashSet<ProductAttribute> _productAttributes = new HashSet<ProductAttribute>();
 
-    readonly List<AttributeGroup> _attributeGroups = new List<AttributeGroup>();
+    readonly HashSet<AttributeGroup> _attributeGroups = new HashSet<AttributeGroup>();
 
-    readonly List<Product> _variants = new List<Product>();
+    readonly HashSet<Product> _variants = new HashSet<Product>();
 
-    readonly List<Option> _options = new List<Option>();
+    readonly HashSet<Option> _options = new HashSet<Option>();
 
-    readonly List<ProductOption> _productOptions = new List<ProductOption>();
+    readonly HashSet<ProductOption> _productOptions = new HashSet<ProductOption>();
 
-    readonly List<OptionGroup> _optionGroups = new List<OptionGroup>();
+    readonly HashSet<OptionGroup> _optionGroups = new HashSet<OptionGroup>();
 
-    readonly List<ProductVariantOption> _productVariantOptions = new List<ProductVariantOption>();
+    readonly HashSet<ProductVariantOption> _productVariantOptions = new HashSet<ProductVariantOption>();
 
-    readonly List<ProductImage> _images = new List<ProductImage>();
+    readonly HashSet<ProductImage> _images = new HashSet<ProductImage>();
+    private decimal _price;
+    private decimal? _regularPrice;
 
     public Product() { }
 
@@ -52,17 +56,41 @@ public sealed class Product
 
     public string? Gtin { get; set; }
 
-    public decimal Price { get; set; }
+    public decimal Price
+    {
+        get => _price;
+        set
+        {
+            if (RegularPrice is not null && value >= RegularPrice.GetValueOrDefault())
+            {
+                throw new Exception("Price can not be greater than or equal to Regular Price");
+            }
+
+            _price = value;
+        }
+    }
 
     //public decimal Vat { get; set; }
 
     public double? VatRate { get; set; }
 
-    public decimal? Discount { get; set; }
+    public decimal? Discount { get; private set; }
 
-    public double? DiscountRate { get; set; }
+    public double? DiscountRate { get; private set; }
 
-    public decimal? RegularPrice { get; set; }
+    public decimal? RegularPrice
+    {
+        get => _regularPrice;
+        set
+        {
+            if (value is not null && value < Price)
+            {
+                throw new Exception("Regular Price can not be less than or equal to Price");
+            }
+
+            _regularPrice = value;
+        }
+    }
 
     public decimal? PurchasePrice { get; set; }
 
@@ -100,7 +128,7 @@ public sealed class Product
 
     public ProductVisibility Visibility { get; set; }
 
-    public List<ProductVariantOption> ProductVariantOptions { get; } = new List<ProductVariantOption>();
+    public IReadOnlyCollection<ProductVariantOption> ProductVariantOptions => _productVariantOptions;
 
     public void AddVariant(Product variant)
     {
@@ -153,12 +181,10 @@ public sealed class Product
         _options.Remove(option);
     }
 
-    public (decimal price, decimal? regularPrice) GetOptionPrice()
+    public (decimal price, decimal? regularPrice) GetTotalOptionsPrice()
     {
         var price = 0m;
         var regularPrice = 0m;
-
-        List<string> optionTexts = new List<string>();
 
         foreach (var productOption in ProductOptions)
         {
@@ -170,8 +196,6 @@ public sealed class Product
 
                 if (!isSelected)
                 {
-                    optionTexts.Add($"No {option.Name}");
-
                     continue;
                 }
 
@@ -179,15 +203,6 @@ public sealed class Product
                 {
                     price += selectableOption.Price.GetValueOrDefault();
                     regularPrice += selectableOption.Price.GetValueOrDefault();
-
-                    if (selectableOption.Price is not null)
-                    {
-                        optionTexts.Add($"{selectableOption.Name} (+{selectableOption.Price?.ToString("c")})");
-                    }
-                    else
-                    {
-                        optionTexts.Add(selectableOption.Name);
-                    }
                 }
             }
             else if (option is ChoiceOption { DefaultValue: not null } choiceOption)
@@ -196,25 +211,45 @@ public sealed class Product
 
                 price += value.Price.GetValueOrDefault();
                 regularPrice += value.Price.GetValueOrDefault();
-
-                if (value.Price is not null)
-                {
-                    optionTexts.Add($"{value.Name} (+{value.Price?.ToString("c")})");
-                }
-                else
-                {
-                    optionTexts.Add(value.Name);
-                }
             }
             else if (option is NumericalValueOption numericalValueOption)
             {
                 price += numericalValueOption.Price.GetValueOrDefault() * numericalValueOption.DefaultNumericalValue.GetValueOrDefault();
                 regularPrice += numericalValueOption.Price.GetValueOrDefault() * numericalValueOption.DefaultNumericalValue.GetValueOrDefault();
-
-                optionTexts.Add($"{numericalValueOption.DefaultNumericalValue} {option.Name}");
             }
         }
 
         return (price, regularPrice);
+    }
+
+    public void SetPrice(decimal price)
+    {
+        Price = price;
+
+        if (RegularPrice is not null)
+        {
+            DiscountRate = PriceCalculations.CalculateDiscountRate(Price, RegularPrice.GetValueOrDefault());
+            Discount = RegularPrice - Price;
+        }
+    }
+
+    public void SetDiscountPrice(decimal discountPrice)
+    {
+        var originalPrice = Price;
+
+        Price = discountPrice;
+        RegularPrice = originalPrice;
+        DiscountRate = PriceCalculations.CalculateDiscountRate(Price, RegularPrice.GetValueOrDefault());
+        Discount = RegularPrice - Price;
+    }
+
+    public void RestoreRegularPrice()
+    {
+        var regularPrice = RegularPrice.GetValueOrDefault();
+
+        RegularPrice = null;
+        Price = regularPrice;
+        DiscountRate = null;
+        Discount = null;
     }
 }

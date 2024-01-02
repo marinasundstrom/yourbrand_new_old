@@ -64,9 +64,10 @@ public record CreateProductVariant(long ProductId, CreateProductVariantData Data
                 Name = request.Data.Name,
                 Handle = request.Data.Handle,
                 Description = request.Data.Description ?? string.Empty,
-                Price = request.Data.Price,
                 CategoryId = product.ParentId
             };
+
+            variant.SetPrice(request.Data.Price);
 
             var image = new ProductImage("Placeholder", string.Empty, await _productImageUploader.GetPlaceholderImageUrl());
             variant.AddImage(image);

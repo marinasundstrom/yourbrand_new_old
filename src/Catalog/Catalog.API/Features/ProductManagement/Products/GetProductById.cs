@@ -23,7 +23,7 @@ public sealed record GetProductById(string IdOrHandle) : IRequest<Result<Product
                 await query.FirstOrDefaultAsync(product => product.Id == id, cancellationToken)
                 : await query.FirstOrDefaultAsync(product => product.Handle == request.IdOrHandle, cancellationToken);
 
-            var price = product.GetOptionPrice();
+            var price = product.GetTotalOptionsPrice();
 
             Console.WriteLine(price);
 

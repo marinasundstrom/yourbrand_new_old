@@ -32,10 +32,7 @@ public sealed record SetProductDiscountPrice(string IdOrHandle, decimal Discount
                 return Result.Failure(Errors.ProductAlreadyDiscounted);
             }
 
-            product.RegularPrice = product.Price;
-            product.Price = request.DiscountPrice;
-            product.DiscountRate = PriceCalculations.CalculateDiscountRate(product.Price, product.RegularPrice.GetValueOrDefault());
-            product.Discount = product.RegularPrice - product.Price;
+            product.SetDiscountPrice(request.DiscountPrice);
 
             await catalogContext.SaveChangesAsync(cancellationToken);
 

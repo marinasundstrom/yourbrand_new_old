@@ -35,13 +35,7 @@ public sealed record UpdateProductPrice(string IdOrHandle, decimal Price) : IReq
                 }
             }
 
-            product.Price = request.Price;
-
-            if (product.RegularPrice is not null)
-            {
-                product.DiscountRate = PriceCalculations.CalculateDiscountRate(product.Price, product.RegularPrice.GetValueOrDefault());
-                product.Discount = product.RegularPrice - product.Price;
-            }
+            product.SetPrice(request.Price);
 
             await catalogContext.SaveChangesAsync(cancellationToken);
 

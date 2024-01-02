@@ -658,6 +658,8 @@ public static class Seed2
             Image = PlaceholderImage,
         };
 
+        product.SetPrice(52);
+
         food.AddProduct(product);
 
         context.Products.Add(product);

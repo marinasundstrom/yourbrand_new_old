@@ -2,6 +2,8 @@ namespace YourBrand.Catalog.API.Domain.Entities;
 
 public class Store : Entity<string>
 {
+    readonly HashSet<Product> _products = new HashSet<Product>();
+
     protected Store() { }
 
     public Store(string name, string handle, Currency currency) : base(Guid.NewGuid().ToString())
@@ -21,7 +23,9 @@ public class Store : Entity<string>
 
     public PricingOptions PricingOptions { get; set; }
 
-    public List<Product> Products { get; } = new List<Product>();
+    public IReadOnlyCollection<Product> Products => _products;
+
+    public void AddProduct(Product product) => _products.Add(product);
 }
 
 public class CurrencyDisplayOptions

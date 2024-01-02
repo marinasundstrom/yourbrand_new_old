@@ -45,8 +45,8 @@ public record UpdateProductVariant(long ProductId, long ProductVariantId, Update
 
             variant.Name = request.Data.Name;
             variant.Description = request.Data.Description;
-            variant.Price = request.Data.Price;
-            variant.RegularPrice = request.Data.RegularPrice;
+            //variant.Price = request.Data.Price;
+            //variant.RegularPrice = request.Data.RegularPrice;
 
             foreach (var v in request.Data.Attributes)
             {

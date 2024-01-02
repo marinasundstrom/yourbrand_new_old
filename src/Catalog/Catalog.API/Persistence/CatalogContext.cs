@@ -63,4 +63,6 @@ public sealed class CatalogContext : DbContext
     public DbSet<OptionValue> OptionValues { get; set; } = null!;
 
     public DbSet<Currency> Currencies { get; set; } = null!;
+
+    public DbSet<VatRate> VatRates { get; set; } = null!;
 }
