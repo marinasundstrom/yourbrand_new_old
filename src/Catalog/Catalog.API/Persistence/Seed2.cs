@@ -53,6 +53,11 @@ public static class Seed2
             context.Brands.Add(brand ??= new Brand("My brand", "my-brand"));
         }
 
+        context.Set<VatRate>().AddRange(
+            new VatRate("25%", 1.25, 0.8),
+            new VatRate("12%", 1.12, 0.89),
+            new VatRate("6%", 1.06, 0.95));
+
         await context.SaveChangesAsync();
 
         clothes = await context.ProductCategories.FirstOrDefaultAsync(x => x.Handle == "clothes");

@@ -19,6 +19,13 @@ public static class Seed
 
         ProductImage? image;
 
+        context.Set<VatRate>().AddRange(
+            new VatRate("25%", 1.25, 0.8),
+            new VatRate("12%", 1.12, 0.89),
+            new VatRate("6%", 1.06, 0.95));
+
+        await context.SaveChangesAsync();
+
         var pastries = new ProductCategory()
         {
             Name = "Pastries",

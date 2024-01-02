@@ -42,22 +42,3 @@ public class CategoryPricingOptions
     public string CategoryId { get; set; } = default!;
     public double ProfitMarginRate { get; set; } = 0.2;
 }
-
-public class VatRate
-{
-    public int Id { get; set; }
-
-    public string Name { get; set; } = default!;
-
-    /// <summary>
-    /// Gets VAT
-    /// </summary>
-    /// <value></value>
-    public double Factor { get; set; } = 0.25;
-
-    /// <summary>
-    /// Removes VAT (Total * Factor2)
-    /// </summary>
-    /// <value></value>
-    public double Factor2 { get; set; } = 0.8;
-}
