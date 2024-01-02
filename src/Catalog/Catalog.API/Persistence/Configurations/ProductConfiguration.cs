@@ -45,9 +45,9 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         */
 
         builder
-            .HasOne(x => x.ParentProduct)
+            .HasOne(x => x.Parent)
             .WithMany(x => x.Variants)
-            .HasForeignKey(x => x.ParentProductId)
+            .HasForeignKey(x => x.ParentId)
             .OnDelete(DeleteBehavior.NoAction);
 
         builder

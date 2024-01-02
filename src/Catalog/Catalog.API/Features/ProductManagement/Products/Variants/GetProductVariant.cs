@@ -30,8 +30,8 @@ public record GetProductVariant(string ProductIdOrHandle, string ProductVariantI
                 .AsQueryable();
 
             query = isProductId ?
-                query.Where(pv => pv.ParentProduct!.Id == productId)
-                : query.Where(pv => pv.ParentProduct!.Handle == request.ProductIdOrHandle);
+                query.Where(pv => pv.Parent!.Id == productId)
+                : query.Where(pv => pv.Parent!.Handle == request.ProductIdOrHandle);
 
             var productVariant = isProductVariantId ?
                 await query.FirstOrDefaultAsync(pv => pv!.Handle == request.ProductVariantIdOrHandle, cancellationToken)

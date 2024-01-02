@@ -26,8 +26,8 @@ public class ProductVariantsService
             .TagWith(nameof(FindVariants));
 
         query = isProductId ?
-            query.Where(pv => pv.ParentProduct!.Id == productId)
-            : query.Where(pv => pv.ParentProduct!.Handle == productIdOrHandle);
+            query.Where(pv => pv.Parent!.Id == productId)
+            : query.Where(pv => pv.Parent!.Handle == productIdOrHandle);
 
         if (productVariantIdOrHandle is not null)
         {
@@ -67,8 +67,8 @@ public class ProductVariantsService
             .AsQueryable();
 
         query = isProductId ?
-            query.Where(pv => pv.ParentProduct!.Id == productId)
-            : query.Where(pv => pv.ParentProduct!.Handle == productIdOrHandle);
+            query.Where(pv => pv.Parent!.Id == productId)
+            : query.Where(pv => pv.Parent!.Handle == productIdOrHandle);
 
         IEnumerable<Product> variants = await query.ToArrayAsync(cancellationToken);
 

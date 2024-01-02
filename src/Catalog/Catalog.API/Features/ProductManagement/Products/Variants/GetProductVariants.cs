@@ -26,8 +26,8 @@ public record GetProductVariants(string ProductIdOrHandle, int Page = 1, int Pag
             var query = _context.Products.AsQueryable();
 
             query = isProductId ?
-                query.Where(pv => pv.ParentProduct!.Id == productId)
-                : query.Where(pv => pv.ParentProduct!.Handle == request.ProductIdOrHandle);
+                query.Where(pv => pv.Parent!.Id == productId)
+                : query.Where(pv => pv.Parent!.Handle == request.ProductIdOrHandle);
 
             query = query
                 .OrderBy(x => x.Id)

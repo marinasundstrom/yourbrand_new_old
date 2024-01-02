@@ -82,9 +82,9 @@ public sealed class Product
 
     public bool HasVariants { get; set; } = false;
 
-    public Product? ParentProduct { get; set; }
+    public Product? Parent { get; set; }
 
-    public long? ParentProductId { get; set; }
+    public long? ParentId { get; set; }
 
     public IReadOnlyCollection<ProductAttribute> ProductAttributes => _productAttributes;
 

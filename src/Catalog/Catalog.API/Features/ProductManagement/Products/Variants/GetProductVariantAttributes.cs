@@ -26,8 +26,8 @@ public record GetProductVariantAttributes(long ProductId, long ProductVariantId)
                 .Include(pv => pv.Attribute)
                 //.ThenInclude(o => o.DefaultValue)
                 .Include(pv => pv.Product)
-                .ThenInclude(p => p.ParentProduct)
-                .Where(pv => pv.Product.ParentProduct!.Id == request.ProductId && pv.Product.Id == request.ProductVariantId)
+                .ThenInclude(p => p.Parent)
+                .Where(pv => pv.Product.Parent!.Id == request.ProductId && pv.Product.Id == request.ProductVariantId)
                 .ToArrayAsync();
 
             return variantOptionValues.Select(x => x.ToDto());

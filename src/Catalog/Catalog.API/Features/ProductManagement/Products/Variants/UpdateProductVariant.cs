@@ -31,7 +31,7 @@ public record UpdateProductVariant(long ProductId, long ProductVariantId, Update
 
             var product = await _context.Products
                 .AsSplitQuery()
-                .Include(pv => pv.ParentProduct)
+                .Include(pv => pv.Parent)
                     .ThenInclude(pv => pv!.Category)
                 .Include(pv => pv.Variants)
                     .ThenInclude(o => o.ProductAttributes)

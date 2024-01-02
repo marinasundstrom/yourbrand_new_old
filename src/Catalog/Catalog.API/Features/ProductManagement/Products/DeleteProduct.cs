@@ -41,7 +41,7 @@ public sealed record DeleteProduct(string IdOrHandle) : IRequest<Result>
                 .ExecuteDeleteAsync(cancellationToken);
 
             await catalogContext.Products
-                .Where(x => x.ParentProductId == product.Id)
+                .Where(x => x.ParentId == product.Id)
                 .ExecuteDeleteAsync(cancellationToken);
 
             await catalogContext.ProductVariantOptions

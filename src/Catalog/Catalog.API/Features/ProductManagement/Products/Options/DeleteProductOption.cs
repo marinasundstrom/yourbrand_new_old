@@ -32,7 +32,7 @@ public record DeleteProductOption(long ProductId, string OptionId) : IRequest
             if (product.HasVariants)
             {
                 var variants = await _context.Products
-                    .Where(x => x.ParentProductId == product.Id)
+                    .Where(x => x.ParentId == product.Id)
                     .Include(x => x.ProductOptions.Where(z => z.OptionId == option.Id))
                     .ToArrayAsync(cancellationToken);
 

@@ -30,7 +30,7 @@ public static class Mappings
             product.Store?.ToDto(),
             product.Brand?.ToDto(),
             product.Category?.ToProductCategory2(),
-            product.ParentProduct?.ToParentProductDto(),
+            product.Parent?.ToParentProductDto(),
             product.Description,
             product.Price,
             product.VatRate,

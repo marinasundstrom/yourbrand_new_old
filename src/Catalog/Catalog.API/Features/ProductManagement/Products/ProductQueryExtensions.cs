@@ -21,7 +21,7 @@ public static class ProductQueryExtensions
                 .Include(pv => pv.Store)
                     .ThenInclude(pv => pv.Currency)
                 .Include(pv => pv.Brand)
-                .Include(pv => pv.ParentProduct)
+                .Include(pv => pv.Parent)
                     .ThenInclude(pv => pv!.Category)
                     .ThenInclude(pv => pv!.Parent)
                 .Include(pv => pv.Brand)

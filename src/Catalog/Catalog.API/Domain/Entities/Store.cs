@@ -32,7 +32,9 @@ public class CurrencyDisplayOptions
 
 public class PricingOptions
 {
-    public double ProfitMarginPercentage { get; set; } = 0.2;
+    public VatRate? DefaultVatRate { get; set; }
+
+    public double ProfitMarginRate { get; set; } = 0.2;
 
     public List<CategoryPricingOptions> CategoryPricingOptions { get; set; } = new List<CategoryPricingOptions>();
 }

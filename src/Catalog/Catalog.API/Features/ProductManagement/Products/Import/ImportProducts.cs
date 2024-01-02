@@ -84,7 +84,7 @@ public sealed record ImportProducts(Stream Stream) : IRequest<Result<ProductImpo
                         Price = record.Price,
                         RegularPrice = record.RegularPrice,
                         Category = category,
-                        ParentProduct = parentProduct,
+                        Parent = parentProduct,
                         Store = store,
                         Visibility = record.Listed.GetValueOrDefault() ? Domain.Enums.ProductVisibility.Listed : Domain.Enums.ProductVisibility.Unlisted
                     });

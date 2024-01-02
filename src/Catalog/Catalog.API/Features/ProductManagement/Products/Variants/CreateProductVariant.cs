@@ -43,7 +43,7 @@ public record CreateProductVariant(long ProductId, CreateProductVariantData Data
 
             var product = await _context.Products
                 .AsSplitQuery()
-                .Include(pv => pv.ParentProduct)
+                .Include(pv => pv.Parent)
                     .ThenInclude(pv => pv!.Category)
                 .Include(pv => pv.Variants)
                     .ThenInclude(o => o.ProductAttributes)
@@ -65,7 +65,7 @@ public record CreateProductVariant(long ProductId, CreateProductVariantData Data
                 Handle = request.Data.Handle,
                 Description = request.Data.Description ?? string.Empty,
                 Price = request.Data.Price,
-                CategoryId = product.ParentProductId
+                CategoryId = product.ParentId
             };
 
             var image = new ProductImage("Placeholder", string.Empty, await _productImageUploader.GetPlaceholderImageUrl());

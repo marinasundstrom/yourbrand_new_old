@@ -21,7 +21,7 @@ public record AddProductAttribute(long ProductId, string AttributeId, string Val
         public async Task<ProductAttributeDto> Handle(AddProductAttribute request, CancellationToken cancellationToken)
         {
             var product = await _context.Products
-                .Include(x => x.ParentProduct)
+                .Include(x => x.Parent)
                 .ThenInclude(x => x!.ProductAttributes)
                 .ThenInclude(x => x.Attribute)
                 .FirstAsync(product => product.Id == request.ProductId, cancellationToken);
@@ -34,9 +34,9 @@ public record AddProductAttribute(long ProductId, string AttributeId, string Val
                 .First();
 
             ProductAttribute? parentProductAttribute = null;
-            if (product.ParentProduct is not null)
+            if (product.Parent is not null)
             {
-                parentProductAttribute = product.ParentProduct.ProductAttributes.FirstOrDefault(x => x.AttributeId == attribute.Id);
+                parentProductAttribute = product.Parent.ProductAttributes.FirstOrDefault(x => x.AttributeId == attribute.Id);
             }
 
             Domain.Entities.ProductAttribute productAttribute = new()

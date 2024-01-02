@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using YourBrand.Catalog.API.Persistence;
 
@@ -11,9 +12,11 @@ using YourBrand.Catalog.API.Persistence;
 namespace YourBrand.Catalog.API.Persistence.Migrations
 {
     [DbContext(typeof(CatalogContext))]
-    partial class CatalogContextModelSnapshot : ModelSnapshot
+    [Migration("20240102162510_UpdateStoreModel")]
+    partial class UpdateStoreModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -113,14 +116,9 @@ namespace YourBrand.Catalog.API.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ParentId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("Handle");
-
-                    b.HasIndex("ParentId");
 
                     b.ToTable("Brands", (string)null);
                 });
@@ -377,7 +375,7 @@ namespace YourBrand.Catalog.API.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("ParentId")
+                    b.Property<long?>("ParentProductId")
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("Price")
@@ -411,7 +409,7 @@ namespace YourBrand.Catalog.API.Persistence.Migrations
 
                     b.HasIndex("ImageId");
 
-                    b.HasIndex("ParentId");
+                    b.HasIndex("ParentProductId");
 
                     b.HasIndex("StoreId");
 
@@ -794,15 +792,6 @@ namespace YourBrand.Catalog.API.Persistence.Migrations
                     b.Navigation("Attribute");
                 });
 
-            modelBuilder.Entity("YourBrand.Catalog.API.Domain.Entities.Brand", b =>
-                {
-                    b.HasOne("YourBrand.Catalog.API.Domain.Entities.Brand", "Parent")
-                        .WithMany("SubBrands")
-                        .HasForeignKey("ParentId");
-
-                    b.Navigation("Parent");
-                });
-
             modelBuilder.Entity("YourBrand.Catalog.API.Domain.Entities.Country", b =>
                 {
                     b.HasOne("YourBrand.Catalog.API.Domain.Entities.Continent", "Continent")
@@ -898,9 +887,9 @@ namespace YourBrand.Catalog.API.Persistence.Migrations
                         .WithMany()
                         .HasForeignKey("ImageId");
 
-                    b.HasOne("YourBrand.Catalog.API.Domain.Entities.Product", "Parent")
+                    b.HasOne("YourBrand.Catalog.API.Domain.Entities.Product", "ParentProduct")
                         .WithMany("Variants")
-                        .HasForeignKey("ParentId")
+                        .HasForeignKey("ParentProductId")
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("YourBrand.Catalog.API.Domain.Entities.Store", "Store")
@@ -913,7 +902,7 @@ namespace YourBrand.Catalog.API.Persistence.Migrations
 
                     b.Navigation("Image");
 
-                    b.Navigation("Parent");
+                    b.Navigation("ParentProduct");
 
                     b.Navigation("Store");
                 });
@@ -1162,11 +1151,6 @@ namespace YourBrand.Catalog.API.Persistence.Migrations
             modelBuilder.Entity("YourBrand.Catalog.API.Domain.Entities.AttributeValue", b =>
                 {
                     b.Navigation("ProductAttributes");
-                });
-
-            modelBuilder.Entity("YourBrand.Catalog.API.Domain.Entities.Brand", b =>
-                {
-                    b.Navigation("SubBrands");
                 });
 
             modelBuilder.Entity("YourBrand.Catalog.API.Domain.Entities.Country", b =>

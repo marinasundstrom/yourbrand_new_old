@@ -52,7 +52,7 @@ public sealed record GetProducts(string? StoreId = null, string? BrandIdOrHandle
 
             if (request.GroupProducts)
             {
-                query = query.Where(x => x.ParentProductId == null);
+                query = query.Where(x => x.ParentId == null);
             }
 
             if (!string.IsNullOrEmpty(request.SearchTerm))

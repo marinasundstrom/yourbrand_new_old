@@ -87,7 +87,7 @@ public record CreateProductOption(long ProductId, CreateProductOptionData Data) 
             if (product.HasVariants)
             {
                 var variants = await _context.Products
-                    .Where(x => x.ParentProductId == product.Id)
+                    .Where(x => x.ParentId == product.Id)
                     .Include(x => x.Options)
                     .ToArrayAsync(cancellationToken);
 
