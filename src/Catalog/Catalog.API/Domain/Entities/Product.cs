@@ -59,7 +59,7 @@ public sealed class Product
     public decimal Price
     {
         get => _price;
-        set
+        internal set
         {
             if (RegularPrice is not null && value >= RegularPrice.GetValueOrDefault())
             {
@@ -81,7 +81,7 @@ public sealed class Product
     public decimal? RegularPrice
     {
         get => _regularPrice;
-        set
+        internal set
         {
             if (value is not null && value < Price)
             {
