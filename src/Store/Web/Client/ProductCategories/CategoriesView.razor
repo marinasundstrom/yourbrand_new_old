@@ -45,8 +45,6 @@
         path = new Uri(NavigationManager.Uri).LocalPath[1..];
         path = path.Substring(path.IndexOf("/") + 1);
 
-        Console.WriteLine(path);
-
         if (!ApplicationState.TryTakeFromJson<BlazorApp.ProductCategories.ProductCategoryTreeRootDto>(
         "categoryTree", out var restored))
         {
@@ -76,8 +74,6 @@
     {
         path = new Uri(NavigationManager.Uri).LocalPath[1..];
         path = path.Substring(path.IndexOf("/") + 1);
-
-        Console.WriteLine("Tree" + path);
     }
 
     void IDisposable.Dispose()

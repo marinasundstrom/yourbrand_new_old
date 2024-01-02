@@ -72,8 +72,6 @@ public sealed class CartService(YourBrand.StoreFront.ICartClient client) : ICart
             _items.Remove(cartItem);
         }
 
-        Console.WriteLine(cartItem.Id);
-
         CartUpdated?.Invoke(this, EventArgs.Empty);
     }
 

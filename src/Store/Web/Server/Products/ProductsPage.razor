@@ -4,7 +4,8 @@
 
 <AppPageTitle>@(categoryName is null ? "Products" : categoryName)</AppPageTitle>
 
-<Client.Products.ProductsView Page="Page" PageSize="PageSize" SearchTerm="@SearchTerm" Path="@Path" @rendermode="@RenderMode.InteractiveAuto" />
+<Client.Products.ProductsView Page="Page" PageSize="PageSize" SearchTerm="@SearchTerm" Path="@Path"
+    @rendermode="@RenderMode.InteractiveAuto" />
 
 @code {
     string? categoryName = null;
@@ -27,14 +28,10 @@
         Page ??= 1;
         PageSize ??= 6;
 
-        Console.WriteLine(Path);
-
         if (!string.IsNullOrEmpty(Path))
         {
             // Encode
             var encodedPath = Uri.EscapeDataString(Path);
-
-            Console.WriteLine(encodedPath);
 
             var category = await ProductCategoryService.GetProductCategoryById(encodedPath);
 

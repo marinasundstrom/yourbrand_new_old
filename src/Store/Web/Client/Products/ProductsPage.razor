@@ -29,14 +29,12 @@
         Page ??= 1;
         PageSize ??= 6;
 
-        Console.WriteLine(Path);
-
         if (!string.IsNullOrEmpty(Path))
         {
             // Encode
             var encodedPath = Uri.EscapeDataString(Path);
 
-            Console.WriteLine(encodedPath);
+            //Console.WriteLine(encodedPath);
 
             var category = await ProductCategoryService.GetProductCategoryById(encodedPath);
 

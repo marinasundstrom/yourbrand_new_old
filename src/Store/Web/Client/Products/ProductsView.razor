@@ -157,7 +157,6 @@
     protected override async Task OnInitializedAsync()
     {
         NavigationManager.LocationChanged += OnLocationChanged;
-        //Console.WriteLine(Path);
 
         persistingSubscription =
         ApplicationState.RegisterOnPersisting(PersistData);
@@ -212,7 +211,7 @@
     {
         // TODO: Wait for fix
 
-        Console.WriteLine("Foo: " + Path);
+        //Console.WriteLine("Foo: " + Path);
 
         //Page = 1;
 
