@@ -1,4 +1,4 @@
-# Entra (Azure AD)
+# Service auth with Entra (Azure AD)
 
 For more general info about service auth, check [this](/docs/service-auth.md).
 
@@ -31,10 +31,23 @@ These correspond to applications, or services, in this solution.
 
 ### Catalog
 
-
-
 ### StoreFront
 
 This is a public frontend API.
 
 The StoreFront service obtains Access Token in return for a Client Secret at startup that is used to access the Catalog Service, among other services.
+
+### Configuration
+
+``appsettings.Production.json``
+
+```json
+{
+    "AzureAd": {
+        "Instance": "https://login.microsoftonline.com/",
+        "ClientId": "6aebaf1f-7160-4a72-bb48-034e661e8c7b",
+        "TenantId": "common",
+        "Audience": "api://6aebaf1f-7160-4a72-bb48-034e661e8c7b"
+    },
+}
+``````
