@@ -19,9 +19,16 @@ using Steeltoe.Discovery.Client;
 using YourBrand;
 using YourBrand.Extensions;
 
+using Serilog;
+using YourBrand.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
 string ServiceName = builder.Configuration["ServiceName"];
+
+builder.Host.UseSerilog((ctx, cfg) => cfg.ReadFrom.Configuration(builder.Configuration)
+                        .Enrich.WithProperty("Application", ServiceName)
+                        .Enrich.WithProperty("Environment", ctx.HostingEnvironment.EnvironmentName));
 
 if (builder.Environment.IsDevelopment())
 {
@@ -112,6 +119,8 @@ builder.Services
 
 var app = builder.Build();
 
+app.UseSerilogRequestLogging();
+
 app.MapObservability();
 
 // Configure the HTTP request pipeline.
@@ -149,7 +158,7 @@ try
         //await context.Database.MigrateAsync();
 
         //await context.Database.EnsureDeletedAsync();
-        //await context.Database.EnsureCreatedAsync();
+        await context.Database.EnsureCreatedAsync();
 
         if (args.Contains("--seed"))
         {
