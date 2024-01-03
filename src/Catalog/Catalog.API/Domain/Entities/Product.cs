@@ -34,19 +34,20 @@ public sealed class Product
 
     public long Id { get; private set; }
 
-    public Store? Store { get; set; }
+    public Store? Store { get; internal set; }
 
-    public string? StoreId { get; set; }
+    public string? StoreId { get; private set; }
 
     public Brand? Brand { get; set; }
 
+    public int? BrandId { get; set; }
+
     public string Name { get; set; } = default!;
 
-    public ProductCategory? Category { get; set; }
+    public ProductCategory? Category { get; internal set; }
 
-    public long? CategoryId { get; set; }
+    public long? CategoryId { get; private set; }
 
-    public int? BrandId { get; set; }
 
     public string Description { get; set; } = default!;
 
@@ -110,9 +111,9 @@ public sealed class Product
 
     public bool HasVariants { get; set; } = false;
 
-    public Product? Parent { get; set; }
+    public Product? Parent { get; internal set; }
 
-    public long? ParentId { get; set; }
+    public long? ParentId { get; internal set; }
 
     public IReadOnlyCollection<ProductAttribute> ProductAttributes => _productAttributes;
 
@@ -133,7 +134,9 @@ public sealed class Product
     public void AddVariant(Product variant)
     {
         _variants.Add(variant);
+        variant.Store = this.Store;
         variant.Category = this.Category;
+        variant.Parent = this;
     }
 
     public void RemoveVariant(Product variant)

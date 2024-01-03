@@ -13,9 +13,10 @@ public class UnitTest1
     {
         Product product = new("", "")
         {
-            Price = 100,
             VatRate = 0.25
         };
+
+        product.SetPrice(100);
 
         var subTotal = product.Price.GetSubTotal(product.VatRate.GetValueOrDefault());
         var vat = product.Price.GetVatFromTotal(product.VatRate.GetValueOrDefault());
@@ -28,9 +29,10 @@ public class UnitTest1
     {
         Product product = new("", "")
         {
-            Price = 90,
             VatRate = 0.12
         };
+
+        product.SetPrice(99);
 
         var subTotal = product.Price.GetSubTotal(product.VatRate.GetValueOrDefault());
         var vat = product.Price.GetVatFromTotal(product.VatRate.GetValueOrDefault());

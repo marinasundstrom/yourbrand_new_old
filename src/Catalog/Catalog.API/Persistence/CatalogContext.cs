@@ -31,6 +31,7 @@ public sealed class CatalogContext : DbContext
 
     public DbSet<ProductCategory> ProductCategories { get; set; } = default!;
 
+    public DbSet<ProductImage> ProductImages { get; set; } = default!;
 
     public DbSet<Brand> Brands { get; set; } = null!;
 

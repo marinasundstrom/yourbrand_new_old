@@ -39,6 +39,7 @@ public sealed class ProductCategory
             throw new InvalidOperationException("Can not add products.");
         }
 
+        product.Store = Store;
         product.Category = this;
         _products.Add(product);
 

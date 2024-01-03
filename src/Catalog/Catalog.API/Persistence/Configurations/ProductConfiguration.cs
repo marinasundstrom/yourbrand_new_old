@@ -21,11 +21,13 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
             .HasOne(p => p.Image)
             .WithMany()
             .HasForeignKey(x => x.ImageId)
-            .IsRequired(false);
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.SetNull); ;
 
         builder
             .HasMany(p => p.Images)
-            .WithOne(x => x.Product);
+            .WithOne(x => x.Product)
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder
             .HasMany(p => p.Options)

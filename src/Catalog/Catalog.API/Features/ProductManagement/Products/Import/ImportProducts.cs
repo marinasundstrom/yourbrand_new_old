@@ -81,7 +81,6 @@ public sealed record ImportProducts(Stream Stream) : IRequest<Result<ProductImpo
                         Sku = record.Sku,
                         Description = record.Description ?? string.Empty,
                         //Image = record.Image,
-                        Category = category,
                         Parent = parentProduct,
                         Store = store,
                         Visibility = record.Listed.GetValueOrDefault() ? Domain.Enums.ProductVisibility.Listed : Domain.Enums.ProductVisibility.Unlisted
@@ -96,7 +95,7 @@ public sealed record ImportProducts(Stream Stream) : IRequest<Result<ProductImpo
 
                     products.Add(record.Sku, product);
 
-                    category.IncrementProductsCount();
+                    category.AddProduct(product);
                 }
             }
 

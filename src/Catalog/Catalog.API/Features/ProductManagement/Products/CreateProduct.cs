@@ -21,10 +21,11 @@ public sealed record CreateProduct(string Name, string StoreId, string Descripti
                 return Result.Failure<ProductDto>(Errors.HandleAlreadyTaken);
             }
 
+            var store = await catalogContext.Stores.FirstAsync(x => x.Id == request.StoreId);
+
             var product = new Domain.Entities.Product()
             {
                 Name = request.Name,
-                StoreId = request.StoreId,
                 Description = request.Description,
                 HasVariants = request.IsGroupedProduct,
                 VatRate = request.VatRate,
@@ -38,11 +39,13 @@ public sealed record CreateProduct(string Name, string StoreId, string Descripti
 
             var category = await catalogContext.ProductCategories
                 .Include(x => x.Parent)
+                .Include(x => x.Store)
+                .ThenInclude(x => x.Currency)
                 .FirstAsync(x => x.Id == request.CategoryId, cancellationToken);
 
             category.AddProduct(product);
 
-            catalogContext.Products.Add(product);
+            store.AddProduct(product);
 
             await catalogContext.SaveChangesAsync(cancellationToken);
 

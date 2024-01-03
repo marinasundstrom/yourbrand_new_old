@@ -28,7 +28,7 @@ public static class Seed2
 
         PlaceholderImage = new ProductImage("Placeholder", string.Empty, string.Format(cdnBaseUrl, "placeholder.jpeg"));
 
-        context.Set<ProductImage>().Add(PlaceholderImage);
+        context.ProductImages.Add(PlaceholderImage);
 
         var currency = await context.Currencies.FirstOrDefaultAsync(x => x.Code == "SEK");
 

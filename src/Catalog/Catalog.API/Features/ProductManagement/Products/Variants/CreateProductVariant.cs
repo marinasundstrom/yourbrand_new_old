@@ -43,14 +43,15 @@ public record CreateProductVariant(long ProductId, CreateProductVariantData Data
 
             var product = await _context.Products
                 .AsSplitQuery()
-                .Include(pv => pv.Parent)
-                    .ThenInclude(pv => pv!.Category)
-                .Include(pv => pv.Variants)
-                    .ThenInclude(o => o.ProductAttributes)
-                    .ThenInclude(o => o.Attribute)
-                .Include(pv => pv.Variants)
-                    .ThenInclude(o => o.ProductAttributes)
-                    .ThenInclude(o => o.Value)
+                .IncludeAll()
+                // .Include(pv => pv.Parent)
+                //     .ThenInclude(pv => pv!.Category)
+                // .Include(pv => pv.Variants)
+                //     .ThenInclude(o => o.ProductAttributes)
+                //     .ThenInclude(o => o.Attribute)
+                // .Include(pv => pv.Variants)
+                //     .ThenInclude(o => o.ProductAttributes)
+                //     .ThenInclude(o => o.Value)
                 .FirstAsync(x => x.Id == request.ProductId);
 
             var connectionString = _context.Database.GetConnectionString()!;
@@ -63,15 +64,15 @@ public record CreateProductVariant(long ProductId, CreateProductVariantData Data
             {
                 Name = request.Data.Name,
                 Handle = request.Data.Handle,
-                Description = request.Data.Description ?? string.Empty,
-                CategoryId = product.ParentId
+                Description = request.Data.Description ?? string.Empty
             };
+
+            product.AddVariant(variant);
 
             variant.SetPrice(request.Data.Price);
 
             var image = new ProductImage("Placeholder", string.Empty, await _productImageUploader.GetPlaceholderImageUrl());
             variant.AddImage(image);
-            variant.Image = image;
 
             foreach (var value in request.Data.Attributes)
             {
@@ -91,6 +92,14 @@ public record CreateProductVariant(long ProductId, CreateProductVariantData Data
             product.AddVariant(variant);
 
             await _context.SaveChangesAsync();
+
+            variant.Image = image;
+
+            await _context.SaveChangesAsync();
+
+            //var p = await _context.Products
+            //    .IncludeAll()
+            //    .FirstAsync(x => x.Id == variant.Id, cancellationToken);
 
             return variant.ToDto();
         }

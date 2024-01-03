@@ -26,6 +26,8 @@ public sealed record DeleteProduct(string IdOrHandle) : IRequest<Result>
 
             using var transaction = await catalogContext.Database.BeginTransactionAsync();
 
+            await catalogContext.SaveChangesAsync(cancellationToken);
+
             product.Category?.RemoveProduct(product);
 
             await catalogContext.ProductAttributes
@@ -63,6 +65,12 @@ public sealed record DeleteProduct(string IdOrHandle) : IRequest<Result>
             await catalogContext.OptionGroups
                 .Where(x => x.Product!.Id == product.Id)
                 .ExecuteDeleteAsync(cancellationToken);
+
+            /*
+            await catalogContext.ProductImages
+                .Where(x => x.Product!.Id == product.Id)
+                .ExecuteDeleteAsync(cancellationToken);
+            */
 
             catalogContext.Products.Remove(product);
 
