@@ -62,11 +62,6 @@ builder.Services
 
 builder.Services.AddObservability("Sales.API", "1.0", builder.Configuration);
 
-/*
-builder.Services.AddSqlServer<AppDbContext>(
-    builder.Configuration.GetValue<string>("yourbrand:carts-svc:db:connectionstring"),
-    c => c.EnableRetryOnFailure());*/
-
 builder.Services.AddMassTransit(x =>
 {
     x.SetKebabCaseEndpointNameFormatter();
@@ -102,7 +97,7 @@ builder.Services.AddMassTransit(x =>
 builder.Services.AddSignalR();
 
 builder.Services
-    .AddPresentation()
+    //.AddPresentation()
     .AddApplication()
     .AddInfrastructure(builder.Configuration)
     .AddPersistence(builder.Configuration);
