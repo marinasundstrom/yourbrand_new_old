@@ -66,11 +66,9 @@ public sealed record DeleteProduct(string IdOrHandle) : IRequest<Result>
                 .Where(x => x.Product!.Id == product.Id)
                 .ExecuteDeleteAsync(cancellationToken);
 
-            /*
             await catalogContext.ProductImages
                 .Where(x => x.Product!.Id == product.Id)
                 .ExecuteDeleteAsync(cancellationToken);
-            */
 
             catalogContext.Products.Remove(product);
 
