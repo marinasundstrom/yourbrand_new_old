@@ -73,11 +73,13 @@ else
                     {
                         var img = image;
 
-                        <img @onclick="() => { productViewModel.SelectImage(img); StateHasChanged(); }"
-                            class="bd-placeholder-img card-img-top img-border-rounded mt-4 me-3 @(img.Url == productViewModel.Image ? "shadow" : "shadow-sm" )"
-                            itemprop="image"
-                            style="cursor: pointer; height: 80px; width: 80px; object-fit: cover; aspect-ratio: 1 / 1;"
-                            src="@image.Url" alt="@image.Text" />
+                        <div class="bd-placeholder-img card-img-top img-border-rounded mt-4 me-3"
+                            style="display: inline-block; width: auto; padding: 0;">
+                            <img @onclick="() => { productViewModel.SelectImage(img); StateHasChanged(); }"
+                                class="@(img.Url == productViewModel.Image ? "shadow" : "shadow-sm" )" itemprop="image"
+                                style="cursor: pointer; height: 80px; width: 80px; object-fit: cover; aspect-ratio: 1 / 1;"
+                                src="@image.Url" alt="@image.Text" />
+                        </div>
                     }
                 </div>
             }
