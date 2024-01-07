@@ -29,7 +29,7 @@
                     Class="mb-4" Adornment="Adornment.End" AdornmentText="sek"></MudNumericField>
 
                 <MudSelect Label="VAT Rate" @bind-Value="VatRate" Variant="Variant.Outlined" For="() => VatRate"
-                    ToStringFunc="x => x?.Name" Class="mb-4">
+                    ToStringFunc="@((x) => x?.Name ?? "None")" Class="mb-4">
                     <MudSelectItem Value="@((YourBrand.Catalog.VatRate?)null)">None</MudSelectItem>
                     @foreach (var vatRate in (VatRates ?? Array.Empty<YourBrand.Catalog.VatRate>()))
                     {

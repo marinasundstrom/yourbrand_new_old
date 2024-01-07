@@ -2,7 +2,7 @@
     <DataAnnotationsValidator />
 
     <MudSelect Label="VAT Rate" @bind-Value="Model.VatRate" Variant="Variant.Outlined" For="() => Model.VatRate"
-        ToStringFunc="x => x?.Name" Class="mb-4">
+        ToStringFunc="@((x) => x?.Name ?? "None")" Class="mb-4">
         <MudSelectItem Value="@((YourBrand.Catalog.VatRate?)null)">None</MudSelectItem>
         @foreach (var vatRate in (Model.VatRates ?? Array.Empty<YourBrand.Catalog.VatRate>()))
         {
