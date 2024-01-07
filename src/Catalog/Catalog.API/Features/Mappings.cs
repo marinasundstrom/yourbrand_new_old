@@ -83,6 +83,6 @@ public static class Mappings
 
     public static VatRateDto ToDto(this Domain.Entities.VatRate vatRate)
     {
-        return new(vatRate.Id, vatRate.Name, vatRate.Factor, vatRate.Factor2);
+        return new(vatRate.Id, vatRate.Name, vatRate.Rate, vatRate.Factor, vatRate.Factor2);
     }
 }
