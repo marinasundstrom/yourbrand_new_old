@@ -54,9 +54,9 @@ public static class Seed2
         }
 
         context.Set<VatRate>().AddRange(
-            new VatRate("25%", 1.25, 0.8),
-            new VatRate("12%", 1.12, 0.89),
-            new VatRate("6%", 1.06, 0.95));
+            new VatRate("25%", 0.25, 1.25, 0.8),
+            new VatRate("12%", 0.12, 1.12, 0.89),
+            new VatRate("6%", 0.06, 1.06, 0.94));
 
         await context.SaveChangesAsync();
 

@@ -4,9 +4,10 @@ public class VatRate
 {
     internal VatRate() { }
 
-    public VatRate(string name, double factor, double factor2)
+    public VatRate(string name, double rate, double factor, double factor2)
     {
         Name = name;
+        Rate = rate;
         Factor = factor;
         Factor2 = factor2;
     }
