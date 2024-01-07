@@ -38,7 +38,7 @@ public class PricingOptions
 {
     public VatRate? DefaultVatRate { get; set; }
 
-    public double ProfitMarginRate { get; set; } = 0.2;
+    public double? ProfitMarginRate { get; set; } = 0.2;
 
     public List<CategoryPricingOptions> CategoryPricingOptions { get; set; } = new List<CategoryPricingOptions>();
 }
@@ -46,5 +46,8 @@ public class PricingOptions
 public class CategoryPricingOptions
 {
     public string CategoryId { get; set; } = default!;
-    public double ProfitMarginRate { get; set; } = 0.2;
+
+    public VatRate? DefaultVatRate { get; set; }
+
+    public double ProfitMarginRate { get; set; }
 }
