@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace YourBrand.Catalog.API.Features.Brands.Queries;
 
-public sealed record GetBrandsQuery(int Page = 0, int PageSize = 10, string? SearchString = null, string? SortBy = null, API.SortDirection? SortDirection = null) : IRequest<PagedResult<BrandDto>>
+public sealed record GetBrandsQuery(int Page = 1, int PageSize = 10, string? SearchString = null, string? SortBy = null, API.SortDirection? SortDirection = null) : IRequest<PagedResult<BrandDto>>
 {
     sealed class GetBrandsQueryHandler : IRequestHandler<GetBrandsQuery, PagedResult<BrandDto>>
     {
@@ -49,7 +49,7 @@ public sealed record GetBrandsQuery(int Page = 0, int PageSize = 10, string? Sea
             }
 
             var items = await result
-                .Skip((request.Page) * request.PageSize)
+                .Skip((request.Page - 1) * request.PageSize)
                 .Take(request.PageSize)
                 .ToArrayAsync(cancellationToken);
 

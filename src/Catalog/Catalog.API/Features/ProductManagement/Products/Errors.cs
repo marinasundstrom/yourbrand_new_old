@@ -20,4 +20,6 @@ public static class Errors
     public readonly static Error SkuAlreadyTaken = new("sku-already-taken", "SKU already taken", "");
 
     public readonly static Error BrandNotFound = new("brand-not-found", "Brand not found", "");
+
+    public readonly static Error VatRateNotFound = new("vatrate-not-found", "VAT Rate not found", "");
 }

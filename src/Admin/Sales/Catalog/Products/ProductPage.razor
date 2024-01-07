@@ -9,6 +9,7 @@
 @using System.ComponentModel.DataAnnotations
 @inject IProductsClient ProductsClient
 @inject IProductCategoriesClient ProductCategoriesClient
+@inject IVatRatesClient VatRatesClient
 @inject IBrandsClient BrandsClient
 @inject ISnackbar Snackbar
 @inject NavigationManager NavigationManager
@@ -200,6 +201,7 @@
         vatRateUpdateViewModel = VatRateUpdateViewModel.Create(
         product,
         ProductsClient,
+        VatRatesClient,
         Snackbar);
 
         priceUpdateViewModel = PriceUpdateViewModel.Create(

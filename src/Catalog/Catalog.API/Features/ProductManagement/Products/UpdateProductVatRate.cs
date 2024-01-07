@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace YourBrand.Catalog.API.Features.ProductManagement.Products;
 
-public sealed record UpdateProductVatRate(string IdOrHandle, double? VatRate) : IRequest<Result>
+public sealed record UpdateProductVatRate(string IdOrHandle, int? VatRateId) : IRequest<Result>
 {
     public sealed class Handler(IPublishEndpoint publishEndpoint, CatalogContext catalogContext = default!) : IRequestHandler<UpdateProductVatRate, Result>
     {
@@ -25,7 +25,24 @@ public sealed record UpdateProductVatRate(string IdOrHandle, double? VatRate) : 
                 return Result.Failure(Errors.ProductNotFound);
             }
 
-            product.VatRate = request.VatRate;
+            if (request.VatRateId is not null)
+            {
+                var vatRate = await catalogContext.VatRates
+                    .FirstOrDefaultAsync(x => x.Id == request.VatRateId, cancellationToken);
+
+                if (vatRate is null)
+                {
+                    return Result.Failure(Errors.VatRateNotFound);
+                }
+
+                product.VatRate = vatRate.Rate;
+                product.VatRateId = request.VatRateId;
+            }
+            else
+            {
+                product.VatRate = null;
+                product.VatRateId = null;
+            }
 
             await catalogContext.SaveChangesAsync(cancellationToken);
 

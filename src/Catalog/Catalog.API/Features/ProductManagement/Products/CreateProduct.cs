@@ -8,7 +8,7 @@ using YourBrand.Catalog.API.Domain.Entities;
 
 namespace YourBrand.Catalog.API.Features.ProductManagement.Products;
 
-public sealed record CreateProduct(string Name, string StoreId, string Description, long CategoryId, bool IsGroupedProduct, decimal Price, double? VatRate, string Handle) : IRequest<Result<ProductDto>>
+public sealed record CreateProduct(string Name, string StoreId, string Description, long CategoryId, bool IsGroupedProduct, decimal Price, int? VatRateId, string Handle) : IRequest<Result<ProductDto>>
 {
     public sealed class Handler(CatalogContext catalogContext, IProductImageUploader productImageUploader) : IRequestHandler<CreateProduct, Result<ProductDto>>
     {
@@ -28,9 +28,22 @@ public sealed record CreateProduct(string Name, string StoreId, string Descripti
                 Name = request.Name,
                 Description = request.Description,
                 HasVariants = request.IsGroupedProduct,
-                VatRate = request.VatRate,
                 Handle = request.Handle
             };
+
+            if (request.VatRateId is not null)
+            {
+                var vatRate = await catalogContext.VatRates
+                 .FirstOrDefaultAsync(x => x.Id == request.VatRateId, cancellationToken);
+
+                if (vatRate is null)
+                {
+                    return Result.Failure<ProductDto>(Errors.VatRateNotFound);
+                }
+
+                product.VatRate = vatRate.Rate;
+                product.VatRateId = request.VatRateId;
+            }
 
             product.SetPrice(request.Price);
 

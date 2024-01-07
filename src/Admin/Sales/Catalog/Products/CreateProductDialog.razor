@@ -3,6 +3,7 @@
 @using System.ComponentModel.DataAnnotations
 @inject IProductsClient ProductsClient
 @inject IProductCategoriesClient ProductCategoriesClient
+@inject IVatRatesClient VatRatesClient
 @inject ISnackbar Snackbar
 @inject IStoreProvider StoreProvider
 
@@ -27,8 +28,14 @@
                 <MudNumericField Label="Price" @bind-Value="Price" Variant="Variant.Outlined" For="() => Price"
                     Class="mb-4" Adornment="Adornment.End" AdornmentText="sek"></MudNumericField>
 
-                <MudNumericField Label="VAT Rate" @bind-Value="VatRate" Variant="Variant.Outlined"
-                    For="() => VatRate" Class="mb-4"></MudNumericField>
+                <MudSelect Label="VAT Rate" @bind-Value="VatRate" Variant="Variant.Outlined" For="() => VatRate"
+                    ToStringFunc="x => x?.Name" Class="mb-4">
+                    <MudSelectItem Value="@((YourBrand.Catalog.VatRate?)null)">None</MudSelectItem>
+                    @foreach (var vatRate in (VatRates ?? Array.Empty<YourBrand.Catalog.VatRate>()))
+                    {
+                        <MudSelectItem Value="@vatRate">@vatRate.Name</MudSelectItem>
+                    }
+                </MudSelect>
 
                 <MudTextField Label="Handle" @bind-Value="Handle" Placeholder="red-tshirt-medium"
                     HelperText="Unique identifier used in URLs etc" HelperTextOnFocus="true" Variant="Variant.Outlined"
@@ -60,11 +67,18 @@
     [Required]
     public decimal Price { get; set; } = 0;
 
-    [Range(0, 1)]
-    public double? VatRate { get; set; }
+    public VatRate? VatRate { get; set; }
+
+    public IEnumerable<VatRate> VatRates { get; set; }
 
     [Required]
     public string Handle { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await VatRatesClient.GetVatRatesAsync(null, null, null, null, null);
+        VatRates = result.Items;
+    }
 
     async Task OnSubmit()
     {
@@ -78,7 +92,7 @@
                 CategoryId = Category.Id,
                 IsGroupedProduct = IsGroupedProduct,
                 Price = Price,
-                VatRate = VatRate,
+                VatRateId = VatRate.Id,
                 Handle = Handle
             });
 

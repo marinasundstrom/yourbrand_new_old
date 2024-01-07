@@ -75,6 +75,8 @@ public sealed class Product
 
     public double? VatRate { get; set; }
 
+    public int? VatRateId { get; set; }
+
     public decimal? Discount { get; private set; }
 
     public double? DiscountRate { get; private set; }

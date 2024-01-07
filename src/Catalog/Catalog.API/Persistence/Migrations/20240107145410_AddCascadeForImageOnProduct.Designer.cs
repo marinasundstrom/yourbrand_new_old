@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using YourBrand.Catalog.API.Persistence;
 
@@ -11,9 +12,11 @@ using YourBrand.Catalog.API.Persistence;
 namespace YourBrand.Catalog.API.Persistence.Migrations
 {
     [DbContext(typeof(CatalogContext))]
-    partial class CatalogContextModelSnapshot : ModelSnapshot
+    [Migration("20240107145410_AddCascadeForImageOnProduct")]
+    partial class AddCascadeForImageOnProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -398,9 +401,6 @@ namespace YourBrand.Catalog.API.Persistence.Migrations
                     b.Property<double?>("VatRate")
                         .HasColumnType("float");
 
-                    b.Property<int?>("VatRateId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Visibility")
                         .HasColumnType("int");
 
@@ -688,9 +688,6 @@ namespace YourBrand.Catalog.API.Persistence.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Rate")
-                        .HasColumnType("float");
 
                     b.HasKey("Id");
 

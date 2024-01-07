@@ -6,17 +6,30 @@ using YourBrand.Catalog;
 
 namespace YourBrand.Admin.Sales.Catalog.Products;
 
-public class VatRateUpdateViewModel(IProductsClient productsClient, ISnackbar snackbar)
+public class VatRateUpdateViewModel(IProductsClient productsClient, IVatRatesClient vatRatesClient, ISnackbar snackbar)
 {
-    public static VatRateUpdateViewModel Create(Product product, IProductsClient productsClient, ISnackbar snackbar)
+    public static VatRateUpdateViewModel Create(Product product, IProductsClient productsClient, IVatRatesClient vatRatesClient, ISnackbar snackbar)
     {
-        return new(productsClient, snackbar)
+        return new(productsClient, vatRatesClient, snackbar)
         {
             ProductId = product.Id,
-            VatRate = product.VatRate
+            VatRateId = product.VatRateId
         };
     }
-    public double? VatRate { get; set; }
+
+    public async Task InitializeAsync()
+    {
+        var result = await vatRatesClient.GetVatRatesAsync(null, null, null, null, null);
+        VatRates = result.Items;
+
+        VatRate = VatRates.FirstOrDefault(x => x.Id == VatRateId);
+    }
+
+    public int? VatRateId { get; set; }
+
+    public VatRate? VatRate { get; set; }
+
+    public IEnumerable<VatRate> VatRates { get; set; }
 
     public long ProductId { get; private set; }
 
@@ -26,7 +39,7 @@ public class VatRateUpdateViewModel(IProductsClient productsClient, ISnackbar sn
         {
             await productsClient.UpdateProductVatRateAsync(ProductId.ToString(), new UpdateProductVatRateRequest()
             {
-                VatRate = VatRate
+                VatRateId = VatRate?.Id
             });
 
             snackbar.Add("Vat Rate was updated", Severity.Info);

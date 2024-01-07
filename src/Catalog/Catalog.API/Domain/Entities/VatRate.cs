@@ -15,11 +15,13 @@ public class VatRate
 
     public string Name { get; set; } = default!;
 
+    public double Rate { get; set; }
+
     /// <summary>
-    /// Gets VAT
+    /// Adds VAT (Total * Factor)
     /// </summary>
     /// <value></value>
-    public double Factor { get; set; } = 0.25;
+    public double Factor { get; set; } = 1.25;
 
     /// <summary>
     /// Removes VAT (Total * Factor2)

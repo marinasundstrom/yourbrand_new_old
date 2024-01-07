@@ -27,7 +27,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder
             .HasMany(p => p.Images)
             .WithOne(x => x.Product)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.ClientCascade);
 
         builder
             .HasMany(p => p.Options)

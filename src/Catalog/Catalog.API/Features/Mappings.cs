@@ -7,6 +7,7 @@ using YourBrand.Catalog.API.Features.ProductManagement.Options;
 using YourBrand.Catalog.API.Features.ProductManagement.ProductCategories;
 using YourBrand.Catalog.API.Features.ProductManagement.Products;
 using YourBrand.Catalog.API.Features.Stores;
+using YourBrand.Catalog.API.Features.VatRates;
 
 namespace YourBrand.Catalog.API.Features;
 
@@ -34,6 +35,7 @@ public static class Mappings
             product.Description,
             product.Price,
             product.VatRate,
+            product.VatRateId,
             product.RegularPrice,
             product.DiscountRate,
             product.Image?.ToDto(),
@@ -77,5 +79,10 @@ public static class Mappings
     public static CurrencyDto ToDto(this Domain.Entities.Currency currency)
     {
         return new(currency.Code, currency.Name, currency.Symbol);
+    }
+
+    public static VatRateDto ToDto(this Domain.Entities.VatRate vatRate)
+    {
+        return new(vatRate.Id, vatRate.Name, vatRate.Factor, vatRate.Factor2);
     }
 }

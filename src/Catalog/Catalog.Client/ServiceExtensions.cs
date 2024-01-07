@@ -47,6 +47,9 @@ public static class ServiceExtensions
         services.AddHttpClient<ICurrenciesClient>("CatalogAPI")
             .AddTypedClient<ICurrenciesClient>((http, sp) => new YourBrand.Catalog.CurrenciesClient(http));
 
+        services.AddHttpClient<IVatRatesClient>("CatalogAPI")
+            .AddTypedClient<IVatRatesClient>((http, sp) => new YourBrand.Catalog.VatRatesClient(http));
+
         return services;
     }
 }
