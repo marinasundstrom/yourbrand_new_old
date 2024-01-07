@@ -73,7 +73,7 @@ public static class OpenApiExtensions
                 var name = $"v{description.ApiVersion}";
                 var url = $"/swagger/v{GetApiVersion(description)}/swagger.yaml";
 
-                options.SwaggerRoutes.Add(new SwaggerUi3Route(name, url));
+                options.SwaggerRoutes.Add(new SwaggerUiRoute(name, url));
             }
         });
 
