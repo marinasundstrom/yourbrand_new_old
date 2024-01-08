@@ -3,6 +3,7 @@ using BlazorApp;
 using BlazorApp.Cart;
 using BlazorApp.ProductCategories;
 using BlazorApp.Products;
+using BlazorApp.Brands;
 
 using Blazored.Toast;
 
@@ -40,7 +41,8 @@ clientBuilder =>
 builder.Services
     .AddProductsServices()
     .AddProductCategoriesServices()
-    .AddCartServices();
+    .AddCartServices()
+    .AddBrandsServices();
 
 builder.Services.AddBlazoredToast();
 

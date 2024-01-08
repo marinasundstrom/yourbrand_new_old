@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace YourBrand.Catalog.API.Features.Brands.Queries;
 
-public sealed record GetBrandsQuery(int Page = 1, int PageSize = 10, string? SearchString = null, string? SortBy = null, API.SortDirection? SortDirection = null) : IRequest<PagedResult<BrandDto>>
+public sealed record GetBrandsQuery(string? ProductCategoryIdOrPath, int Page = 1, int PageSize = 10, string? SearchString = null, string? SortBy = null, API.SortDirection? SortDirection = null) : IRequest<PagedResult<BrandDto>>
 {
     sealed class GetBrandsQueryHandler : IRequestHandler<GetBrandsQuery, PagedResult<BrandDto>>
     {
@@ -31,6 +31,15 @@ public sealed record GetBrandsQuery(int Page = 1, int PageSize = 10, string? Sea
                      //.OrderBy(o => o.Created)
                      .AsNoTracking()
                      .AsQueryable();
+
+            if (!string.IsNullOrEmpty(request.ProductCategoryIdOrPath))
+            {
+                bool isProductCategoryId = long.TryParse(request.ProductCategoryIdOrPath, out var categoryId);
+
+                result = isProductCategoryId
+                            ? result.Where(brand => _context.Products.Any(p => p.BrandId == brand.Id && p.CategoryId == categoryId))
+                            : result.Where(brand => _context.Products.Any(p => p.BrandId == brand.Id && p.Category!.Path.StartsWith(request.ProductCategoryIdOrPath)));
+            }
 
             if (request.SearchString is not null)
             {

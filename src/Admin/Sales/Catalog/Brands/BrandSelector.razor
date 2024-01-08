@@ -58,7 +58,7 @@
         try
         {
         */
-        var results = await BrandsClient.GetBrandsAsync(1, 10, text, null, null);
+        var results = await BrandsClient.GetBrandsAsync(null, 1, 10, text, null, null);
         return results.Items;
 
         /*

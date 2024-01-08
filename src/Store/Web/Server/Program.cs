@@ -9,6 +9,7 @@ using BlazorApp.Data;
 using BlazorApp.Extensions;
 using BlazorApp.ProductCategories;
 using BlazorApp.Products;
+using BlazorApp.Brands;
 
 using Blazored.Toast;
 
@@ -79,7 +80,8 @@ AddClients(builder);
 builder.Services
     .AddProductsServices()
     .AddProductCategoriesServices()
-    .AddCartServices();
+    .AddCartServices()
+    .AddBrandsServices();
 
 if (builder.Environment.IsProduction())
 {

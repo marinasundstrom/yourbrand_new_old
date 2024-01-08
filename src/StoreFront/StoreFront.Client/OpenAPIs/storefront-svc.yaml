@@ -221,6 +221,12 @@ paths:
         - Products
       operationId: Products_GetProducts
       parameters:
+        - name: brandIdOrHandle
+          in: query
+          schema:
+            type: string
+            nullable: true
+          x-position: 1
         - name: page
           in: query
           schema:
@@ -228,7 +234,7 @@ paths:
             format: int32
             default: 1
             nullable: true
-          x-position: 1
+          x-position: 2
         - name: pageSize
           in: query
           schema:
@@ -236,19 +242,19 @@ paths:
             format: int32
             default: 10
             nullable: true
-          x-position: 2
+          x-position: 3
         - name: searchTerm
           in: query
           schema:
             type: string
             nullable: true
-          x-position: 3
+          x-position: 4
         - name: categoryPath
           in: query
           schema:
             type: string
             nullable: true
-          x-position: 4
+          x-position: 5
       responses:
         200:
           description: ""
@@ -447,6 +453,50 @@ paths:
         x-position: 1
       responses:
         200:
+          description: ""
+  /v1/brands:
+    get:
+      tags:
+        - Brands
+        - Brands
+      operationId: Brands_GetBrands
+      parameters:
+        - name: productCategoryId
+          in: query
+          schema:
+            type: string
+            nullable: true
+          x-position: 1
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: 1
+            nullable: true
+          x-position: 2
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            nullable: true
+          x-position: 3
+        - name: searchTerm
+          in: query
+          schema:
+            type: string
+            nullable: true
+          x-position: 4
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PagedResultOfBrand"
+        404:
           description: ""
 components:
   schemas:
@@ -954,6 +1004,17 @@ components:
           nullable: true
         address:
           $ref: "#/components/schemas/Address"
+    PagedResultOfBrand:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Brand"
+        total:
+          type: integer
+          format: int32
   securitySchemes:
     JWT:
       type: apiKey

@@ -23,6 +23,7 @@ using YourBrand.StoreFront.API.Features.Cart;
 using YourBrand.StoreFront.API.Features.Products.Categories;
 using YourBrand.StoreFront.API.Features.Products;
 using YourBrand.StoreFront.API.Persistence;
+using YourBrand.StoreFront.API.Features.Brands;
 
 using YourBrand;
 using YourBrand.Carts;
@@ -146,7 +147,8 @@ app.UseCors();
 
 app.MapCartEndpoints()
     .MapProductsEndpoints()
-    .MapCheckoutEndpoints();
+    .MapCheckoutEndpoints()
+    .MapBrandsEndpoints();
 
 app.MapHealthChecks("/healthz", new HealthCheckOptions()
 {

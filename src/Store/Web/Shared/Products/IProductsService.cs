@@ -3,7 +3,7 @@ namespace BlazorApp.Products;
 
 public interface IProductsService
 {
-    Task<PagedResult<Product>> GetProducts(int? page = 1, int? pageSize = 10, string? searchTerm = null, string? categoryPath = null, CancellationToken cancellationToken = default);
+    Task<PagedResult<Product>> GetProducts(string? brandIdOrHandle = null, int? page = 1, int? pageSize = 10, string? searchTerm = null, string? categoryPath = null, CancellationToken cancellationToken = default);
 
     Task<Product> GetProductById(string productIdOrHandle, CancellationToken cancellationToken = default);
 
@@ -15,5 +15,3 @@ public interface IProductsService
 
     Task<IEnumerable<AttributeValue>> GetAvailableProductVariantAttributesValues(string productIdOrHandle, string attributeId, Dictionary<string, string?> selectedAttributeValues, CancellationToken cancellationToken = default);
 }
-
-public sealed record PagedResult<T>(IEnumerable<T> Items, int Total);

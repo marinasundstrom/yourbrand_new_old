@@ -6,7 +6,7 @@
 
 <AppPageTitle>@(categoryName is null ? "Products" : categoryName)</AppPageTitle>
 
-<Client.Products.ProductsView Page="Page" PageSize="PageSize" SearchTerm="@SearchTerm" Path="@Path" />
+<Client.Products.ProductsView Page="Page" PageSize="PageSize" SearchTerm="@SearchTerm" Path="@Path" BrandId="@Brand" />
 
 @code {
     string? categoryName = null;
@@ -23,6 +23,9 @@
 
     [Parameter]
     public string? Path { get; set; }
+
+    [SupplyParameterFromQuery]
+    public string? Brand { get; set; }
 
     protected override async Task OnInitializedAsync()
     {

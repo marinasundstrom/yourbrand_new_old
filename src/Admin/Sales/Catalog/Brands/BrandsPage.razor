@@ -58,7 +58,7 @@
     {
         try
         {
-            var results = await BrandsClient.GetBrandsAsync(state.Page + 1, state.PageSize, searchString, state.SortDirection == MudBlazor.SortDirection.None ? null : state.SortLabel, state.SortDirection == MudBlazor.SortDirection.None ? null : (state.SortDirection == MudBlazor.SortDirection.Ascending ? YourBrand.Catalog.SortDirection.Asc : YourBrand.Catalog.SortDirection.Desc));
+            var results = await BrandsClient.GetBrandsAsync(null, state.Page + 1, state.PageSize, searchString, state.SortDirection == MudBlazor.SortDirection.None ? null : state.SortLabel, state.SortDirection == MudBlazor.SortDirection.None ? null : (state.SortDirection == MudBlazor.SortDirection.Ascending ? YourBrand.Catalog.SortDirection.Asc : YourBrand.Catalog.SortDirection.Desc));
             return new TableData<Brand> { Items = results.Items, TotalItems = results.Total };
         }
         /*catch (ApiException exc)

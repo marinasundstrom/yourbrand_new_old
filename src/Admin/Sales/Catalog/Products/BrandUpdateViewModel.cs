@@ -27,7 +27,7 @@ public class BrandUpdateViewModel(IProductsClient productsClient, IBrandsClient 
     {
         var store = storeProvider.CurrentStore;
 
-        var result = await brandsClient.GetBrandsAsync(1, 20, value, null, null);
+        var result = await brandsClient.GetBrandsAsync(null, 1, 20, value, null, null);
 
         return result.Items;
     }

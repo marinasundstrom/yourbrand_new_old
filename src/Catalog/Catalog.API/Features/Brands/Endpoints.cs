@@ -41,9 +41,9 @@ public static class Endpoints
         return app;
     }
 
-    public static async Task<PagedResult<BrandDto>> GetBrands(int page = 1, int pageSize = 10, string? searchString = null, string? sortBy = null, API.SortDirection? sortDirection = null, IMediator mediator = default, CancellationToken cancellationToken = default)
+    public static async Task<PagedResult<BrandDto>> GetBrands(string? productCategoryId = null, int page = 1, int pageSize = 10, string? searchString = null, string? sortBy = null, API.SortDirection? sortDirection = null, IMediator mediator = default, CancellationToken cancellationToken = default)
     {
-        return await mediator.Send(new GetBrandsQuery(page, pageSize, searchString, sortBy, sortDirection), cancellationToken);
+        return await mediator.Send(new GetBrandsQuery(productCategoryId, page, pageSize, searchString, sortBy, sortDirection), cancellationToken);
     }
 
     public static async Task<BrandDto?> GetBrandById(int id, IMediator mediator, CancellationToken cancellationToken)
