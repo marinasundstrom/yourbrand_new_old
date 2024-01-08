@@ -14,7 +14,8 @@ public class PriceUpdateViewModel(IProductsClient productsClient, IDialogService
         {
             ProductId = product.Id,
             Price = product.Price,
-            RegularPrice = product.RegularPrice
+            RegularPrice = product.RegularPrice,
+            DiscountRate = product.DiscountRate
         };
     }
 
@@ -22,6 +23,8 @@ public class PriceUpdateViewModel(IProductsClient productsClient, IDialogService
     public decimal Price { get; set; }
 
     public decimal? RegularPrice { get; set; }
+
+    public double? DiscountRate { get; set; }
 
     public long ProductId { get; private set; }
 
@@ -58,7 +61,11 @@ public class PriceUpdateViewModel(IProductsClient productsClient, IDialogService
         }
 
         RegularPrice = Price;
-        Price = (decimal)r.Data;
+
+        (decimal newPrice, double discountRate) = ((decimal newPrice, double discountRate))r.Data;
+
+        Price = newPrice;
+        DiscountRate = discountRate;
     }
 
     public async Task RestoreRegularPrice()
@@ -67,5 +74,6 @@ public class PriceUpdateViewModel(IProductsClient productsClient, IDialogService
 
         Price = RegularPrice.GetValueOrDefault();
         RegularPrice = null;
+        DiscountRate = null;
     }
 }

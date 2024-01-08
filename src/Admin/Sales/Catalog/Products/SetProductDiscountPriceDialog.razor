@@ -81,7 +81,7 @@
                 DiscountPrice = DiscountPrice
             });
 
-        MudDialog.Close(DiscountPrice);
+        MudDialog.Close((DiscountPrice, DiscountRate / 100));
     }
 
     void Cancel() => MudDialog.Close(DialogResult.Cancel());

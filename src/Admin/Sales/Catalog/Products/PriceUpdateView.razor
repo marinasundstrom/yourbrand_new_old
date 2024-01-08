@@ -2,7 +2,8 @@
     <DataAnnotationsValidator />
 
     <MudNumericField Label="Price" @bind-Value="Model.Price" Variant="Variant.Outlined" For="() => Model.Price"
-        Adornment="Adornment.End" AdornmentText="sek"></MudNumericField>
+        Adornment="Adornment.End" AdornmentText="sek"
+        HelperText="@(Model.RegularPrice is null ? null : $"-{Model.DiscountRate * 100}%")"></MudNumericField>
     @if (Model.RegularPrice is not null)
     {
         <MudField Label="Regular Price" Variant="Variant.Outlined" Class="mt-4" Adornment="Adornment.End"
