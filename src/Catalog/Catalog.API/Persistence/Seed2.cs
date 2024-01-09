@@ -162,7 +162,7 @@ public static class Seed2
             Description = "",
             Headline = "T-shirt i olika färger",
             HasVariants = true,
-            Visibility = ProductVisibility.Listed,
+            ListingState = ProductListingState.Listed,
             Brand = await context.Brands.FirstAsync(x => x.Handle == "my-brand"),
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
             Image = PlaceholderImage
@@ -653,7 +653,7 @@ public static class Seed2
             Headline = "Din egna sallad",
             Price = 52,
             VatRate = 0.12,
-            Visibility = ProductVisibility.Listed,
+            ListingState = ProductListingState.Listed,
             Store = await context.Stores.FirstAsync(x => x.Handle == "my-store"),
             Image = PlaceholderImage,
         };

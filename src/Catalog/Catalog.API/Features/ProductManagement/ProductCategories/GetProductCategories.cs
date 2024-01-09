@@ -37,7 +37,7 @@ public sealed record GetProductCategories(string? StoreId, long? ParentGroupId, 
             if (doNotIncludeWithUnlisted)
             {
                 query = query.Where(x => x.Products.Any()
-                && !x.Products.All(z => z.Visibility == Domain.Enums.ProductVisibility.Unlisted));
+                && !x.Products.All(z => z.ListingState == Domain.Enums.ProductListingState.Unlisted));
             }
 
             if (!string.IsNullOrEmpty(request.SearchTerm))

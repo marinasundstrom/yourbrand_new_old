@@ -43,7 +43,7 @@ public static class Mappings
             product.Handle,
             product.Sku,
             product.HasVariants,
-            (ProductVisibility)product.Visibility,
+            (ProductListingState)product.ListingState,
             product.ProductAttributes.Select(x => x.ToDto()),
             product.ProductOptions.Select(x => x.ToDto()));
     }

@@ -42,14 +42,14 @@ public sealed record ProductHandleUpdated
     public required string Handle { get; init; }
 }
 
-public sealed record ProductVisibilityUpdated
+public sealed record ProductListingStateUpdated
 {
     public required long ProductId { get; init; }
 
-    public required ProductVisibility Visibility { get; init; }
+    public required ProductListingState ListingState { get; init; }
 }
 
-public enum ProductVisibility
+public enum ProductListingState
 {
     Unlisted,
     Listed

@@ -24,103 +24,103 @@
 
 @if (loaded)
 {
-    <MudBreadcrumbs Items="_items" Class="ps-0"></MudBreadcrumbs>
+        <MudBreadcrumbs Items="_items" Class="ps-0"></MudBreadcrumbs>
 
-    <AppPageTitle>@detailsUpdateViewModel.Name</AppPageTitle>
+        <AppPageTitle>@detailsUpdateViewModel.Name</AppPageTitle>
 
-    <MudText Typo="Typo.h3" GutterBottom="true">@detailsUpdateViewModel.Name</MudText>
+        <MudText Typo="Typo.h3" GutterBottom="true">@detailsUpdateViewModel.Name</MudText>
 
-    <MudGrid>
-        <MudItem xs="12" sm="6" md="4">
-            <ImageUpdateView Model="imageUpdateViewModel" />
-        </MudItem>
+        <MudGrid>
+            <MudItem xs="12" sm="6" md="4">
+                <ImageUpdateView Model="imageUpdateViewModel" />
+            </MudItem>
 
-        <MudItem xs="12" sm="12" md="6">
-            <MudPaper Elevation="2" Class="pa-4">
-                <DetailsUpdateView @key="detailsUpdateViewModel.ProductId" Model="@detailsUpdateViewModel" />
-            </MudPaper>
-        </MudItem>
+            <MudItem xs="12" sm="12" md="6">
+                <MudPaper Elevation="2" Class="pa-4">
+                    <DetailsUpdateView @key="detailsUpdateViewModel.ProductId" Model="@detailsUpdateViewModel" />
+                </MudPaper>
+            </MudItem>
 
-        <MudItem xs="12" sm="12" md="12">
-            <MudExpansionPanels MultiExpansion="true">
-                <MudExpansionPanel MaxHeight="350">
-                    <TitleContent>
-                        <div class="d-flex justify-start flex-grow-1 gap-1">
-                            <MudText Typo="Typo.h6" Class="mt-2">Description</MudText>
-                            <MudIconButton Icon="@Icons.Material.Filled.Add" OnClick="() => {}" />
-                        </div>
-                        <MudSpacer />
-                    </TitleContent>
+            <MudItem xs="12" sm="12" md="12">
+                <MudExpansionPanels MultiExpansion="true">
+                    <MudExpansionPanel MaxHeight="350">
+                        <TitleContent>
+                            <div class="d-flex justify-start flex-grow-1 gap-1">
+                                <MudText Typo="Typo.h6" Class="mt-2">Description</MudText>
+                                <MudIconButton Icon="@Icons.Material.Filled.Add" OnClick="() => {}" />
+                            </div>
+                            <MudSpacer />
+                        </TitleContent>
 
                     @* <Editor @ref="editorRef" @bind-Value="empty" Options="@options" Change="MarkdownChanged" /> *@
-                </MudExpansionPanel>
-            </MudExpansionPanels>
-        </MudItem>
+                    </MudExpansionPanel>
+                </MudExpansionPanels>
+            </MudItem>
 
         @if (product.Parent is null)
         {
-            <MudItem xs="12" sm="12" md="3">
-                <MudPaper Elevation="2" Class="pa-4">
-                    <BrandUpdateView Model="brandUpdateViewModel" />
-                </MudPaper>
-            </MudItem>
+                    <MudItem xs="12" sm="12" md="3">
+                        <MudPaper Elevation="2" Class="pa-4">
+                            <BrandUpdateView Model="brandUpdateViewModel" />
+                        </MudPaper>
+                    </MudItem>
 
-            <MudItem xs="12" sm="12" md="3">
-                <MudPaper Elevation="2" Class="pa-4">
-                    <CategoryUpdateView Model="categoryUpdateViewModel" />
-                </MudPaper>
-            </MudItem>
+                    <MudItem xs="12" sm="12" md="3">
+                        <MudPaper Elevation="2" Class="pa-4">
+                            <CategoryUpdateView Model="categoryUpdateViewModel" />
+                        </MudPaper>
+                    </MudItem>
         }
 
-        <MudItem xs="12" sm="12" md="3">
-            <MudPaper Elevation="2" Class="pa-4">
-                <div class="mb-4">
-                    <VatRateUpdateView Model="vatRateUpdateViewModel" />
-                </div>
+            <MudItem xs="12" sm="12" md="3">
+                <MudPaper Elevation="2" Class="pa-4">
+                    <div class="mb-4">
+                        <VatRateUpdateView Model="vatRateUpdateViewModel" />
+                    </div>
 
-                <PriceUpdateView Model="priceUpdateViewModel" />
-            </MudPaper>
-        </MudItem>
+                    <PriceUpdateView Model="priceUpdateViewModel" />
+                </MudPaper>
+            </MudItem>
 
-        <MudItem xs="12" sm="12" md="3">
-            <MudPaper Elevation="2" Class="pa-4">
-                <HandleUpdateView Model="handleUpdateViewModel" />
-            </MudPaper>
-        </MudItem>
+            <MudItem xs="12" sm="12" md="3">
+                <MudPaper Elevation="2" Class="pa-4">
+                    <HandleUpdateView Model="handleUpdateViewModel" />
+                </MudPaper>
+            </MudItem>
 
-        <MudItem xs="12" sm="12" md="3">
-            <MudPaper Elevation="2" Class="pa-4">
-                <VisibilityUpdateView Model="visibilityUpdateViewModel" />
-            </MudPaper>
-        </MudItem>
+            <MudItem xs="12" sm="12" md="3">
+                <MudPaper Elevation="2" Class="pa-4">
+                    <ListingStateUpdateView Model="visibilityUpdateViewModel" />
+                </MudPaper>
+            </MudItem>
 
-        <MudItem xs="12" sm="12" md="3">
-            <MudPaper Elevation="2" Class="pa-4">
-                <SkuUpdateView Model="skuUpdateViewModel" />
-            </MudPaper>
-        </MudItem>
+            <MudItem xs="12" sm="12" md="3">
+                <MudPaper Elevation="2" Class="pa-4">
+                    <SkuUpdateView Model="skuUpdateViewModel" />
+                </MudPaper>
+            </MudItem>
 
-        <MudItem xs="12" sm="12" md="12">
-            <ProductAttributesView @key="product.Id" ProductId="product.Id" HasVariants="product.HasVariants" />
-        </MudItem>
-
-        <MudItem xs="12" sm="12" md="12">
-            <ProductOptionsView @key="product.Id" ProductId="product.Id" ProductOptions="product.Options.ToList()" />
-        </MudItem>
-
-        @if (product.Parent is null)
-        {
             <MudItem xs="12" sm="12" md="12">
-                <VariantView @key="product.Id" ProductId="product.Id" Product="product" />
+                <ProductAttributesView @key="product.Id" ProductId="product.Id" HasVariants="product.HasVariants" />
             </MudItem>
+
+            <MudItem xs="12" sm="12" md="12">
+                <ProductOptionsView @key="product.Id" ProductId="product.Id" ProductOptions="product.Options.ToList()" />
+            </MudItem>
+
+        @if (product.Parent is null)
+        {
+                    <MudItem xs="12" sm="12" md="12">
+                        <VariantView @key="product.Id" ProductId="product.Id" Product="product" />
+                    </MudItem>
         }
 
-        <MudItem xs="12" sm="12" md="12">
-            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Delete" Color="Color.Error"
-                OnClick="DeleteProduct">Delete product</MudButton>
-        </MudItem>
+            <MudItem xs="12" sm="12" md="12">
+                <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Delete" Color="Color.Error"
+                    OnClick="DeleteProduct">Delete product</MudButton>
+            </MudItem>
 
-    </MudGrid>
+        </MudGrid>
 }
 
 @code
@@ -137,7 +137,7 @@
     VatRateUpdateViewModel vatRateUpdateViewModel;
     PriceUpdateViewModel priceUpdateViewModel;
     HandleUpdateViewModel handleUpdateViewModel;
-    VisibilityUpdateViewModel visibilityUpdateViewModel;
+    ListingStateUpdateViewModel visibilityUpdateViewModel;
     SkuUpdateViewModel skuUpdateViewModel;
 
     private List<BreadcrumbItem> _items = new List<BreadcrumbItem>();
@@ -215,7 +215,7 @@
         ProductsClient,
         Snackbar);
 
-        visibilityUpdateViewModel = VisibilityUpdateViewModel.Create(
+        visibilityUpdateViewModel = ListingStateUpdateViewModel.Create(
         product,
         ProductsClient,
         Snackbar);

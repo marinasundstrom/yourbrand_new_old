@@ -37,7 +37,7 @@ public sealed record GetProducts(string? StoreId = null, string? BrandIdOrHandle
 
             if (!request.IncludeUnlisted)
             {
-                query = query.Where(x => x.Visibility == Domain.Enums.ProductVisibility.Listed);
+                query = query.Where(x => x.ListingState == Domain.Enums.ProductListingState.Listed);
             }
 
             if (!string.IsNullOrEmpty(request.ProductCategoryIdOrPath))

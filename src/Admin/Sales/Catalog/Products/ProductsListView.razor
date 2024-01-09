@@ -43,7 +43,7 @@
                         <MudTableSortLabel SortLabel="RegularPrice" T="Product">Regular Price</MudTableSortLabel>
                     </MudTh>
                     <MudTh>
-                        <MudTableSortLabel SortLabel="Visibility" T="Product">Visibility</MudTableSortLabel>
+                        <MudTableSortLabel SortLabel="ListingState" T="Product">Listed</MudTableSortLabel>
                     </MudTh>
                     <MudTh></MudTh>
                 </HeaderContent>
@@ -74,7 +74,7 @@
                         @* <MudTd DataLabel="Handle">@context.Handle</MudTd> *@
                         <MudTd DataLabel="Price">@context.Price.FormatCurrency(store.Currency.Code)</MudTd>
                         <MudTd DataLabel="Compare At Price">@context.RegularPrice?.FormatCurrency(store.Currency.Code)</MudTd>
-                        <MudTd DataLabel="Visibility">@context.Visibility</MudTd>
+                        <MudTd DataLabel="Listed">@(context.ListingState == 0 ? "No" : "Yes")</MudTd>
                         <MudTd>
                             <MudIconButton Icon="@Icons.Material.Filled.Send" Size="Size.Small" Class="me-2" Href="@($"/products/{context.Id}")" />
                             <MudIconButton Icon="@Icons.Material.Filled.Edit" Size="Size.Small" Href="@($"/products/{context.Id}/edit")" />

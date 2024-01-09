@@ -83,7 +83,7 @@ public sealed record ImportProducts(Stream Stream) : IRequest<Result<ProductImpo
                         //Image = record.Image,
                         Parent = parentProduct,
                         Store = store,
-                        Visibility = record.Listed.GetValueOrDefault() ? Domain.Enums.ProductVisibility.Listed : Domain.Enums.ProductVisibility.Unlisted
+                        ListingState = record.Listed.GetValueOrDefault() ? Domain.Enums.ProductListingState.Listed : Domain.Enums.ProductListingState.Unlisted
                     };
 
                     if (record.RegularPrice is not null)

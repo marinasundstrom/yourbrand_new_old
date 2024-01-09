@@ -6,29 +6,29 @@ using YourBrand.Catalog;
 
 namespace YourBrand.Admin.Sales.Catalog.Products;
 
-public class VisibilityUpdateViewModel(IProductsClient productsClient, ISnackbar snackbar)
+public class ListingStateUpdateViewModel(IProductsClient productsClient, ISnackbar snackbar)
 {
-    public static VisibilityUpdateViewModel Create(Product product, IProductsClient productsClient, ISnackbar snackbar)
+    public static ListingStateUpdateViewModel Create(Product product, IProductsClient productsClient, ISnackbar snackbar)
     {
         return new(productsClient, snackbar)
         {
             ProductId = product.Id,
-            Visibility = product.Visibility
+            ListingState = product.ListingState
         };
     }
 
     [Required]
-    public ProductVisibility Visibility { get; set; }
+    public ProductListingState ListingState { get; set; }
 
     public long ProductId { get; private set; }
 
-    public async Task UpdateVisibility()
+    public async Task UpdateListingState()
     {
         try
         {
-            await productsClient.UpdateProductVisibilityAsync(ProductId.ToString(), new UpdateProductVisibilityRequest()
+            await productsClient.UpdateProductListingStateAsync(ProductId.ToString(), new UpdateProductListingStateRequest()
             {
-                Visibility = Visibility
+                ListingState = ListingState
             });
 
             snackbar.Add("Visibility was updated", Severity.Info);

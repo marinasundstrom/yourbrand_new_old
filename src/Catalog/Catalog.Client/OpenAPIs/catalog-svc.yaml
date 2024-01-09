@@ -1532,12 +1532,12 @@ paths:
           description: ""
       security:
         - JWT: []
-  /v1/products/{idOrHandle}/visibility:
+  /v1/products/{idOrHandle}/listingState:
     put:
       tags:
         - Products
         - Products
-      operationId: Products_UpdateProductVisibility
+      operationId: Products_UpdateProductListingState
       parameters:
         - name: idOrHandle
           in: path
@@ -1550,7 +1550,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UpdateProductVisibilityRequest"
+              $ref: "#/components/schemas/UpdateProductListingStateRequest"
         required: true
         x-position: 2
       responses:
@@ -2482,8 +2482,8 @@ components:
           nullable: true
         hasVariants:
           type: boolean
-        visibility:
-          $ref: "#/components/schemas/ProductVisibility"
+        listingState:
+          $ref: "#/components/schemas/ProductListingState"
         attributes:
           type: array
           items:
@@ -2616,7 +2616,7 @@ components:
           nullable: true
         url:
           type: string
-    ProductVisibility:
+    ProductListingState:
       type: integer
       description: ""
       x-enumNames:
@@ -3169,12 +3169,12 @@ components:
       properties:
         sku:
           type: string
-    UpdateProductVisibilityRequest:
+    UpdateProductListingStateRequest:
       type: object
       additionalProperties: false
       properties:
-        visibility:
-          $ref: "#/components/schemas/ProductVisibility"
+        listingState:
+          $ref: "#/components/schemas/ProductListingState"
     UpdateProductCategoryRequest:
       type: object
       additionalProperties: false

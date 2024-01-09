@@ -91,9 +91,9 @@ public static partial class Endpoints
             .AddEndpointFilter<ValidationFilter<UpdateProductSkuRequest>>()
             .WithName($"Products_{nameof(UpdateProductSku)}");
 
-        group.MapPut("/{idOrHandle}/visibility", UpdateProductVisibility)
-            .AddEndpointFilter<ValidationFilter<UpdateProductVisibilityRequest>>()
-            .WithName($"Products_{nameof(UpdateProductVisibility)}");
+        group.MapPut("/{idOrHandle}/listingState", UpdateProductListingState)
+            .AddEndpointFilter<ValidationFilter<UpdateProductListingStateRequest>>()
+            .WithName($"Products_{nameof(UpdateProductListingState)}");
 
         group.MapPut("/{idOrHandle}/category", UpdateProductCategory)
             .AddEndpointFilter<ValidationFilter<CreateProductCategoryRequest>>()
@@ -225,10 +225,10 @@ public static partial class Endpoints
         return result.IsSuccess ? TypedResults.Ok() : TypedResults.NotFound();
     }
 
-    private static async Task<Results<Ok, NotFound, ProblemHttpResult>> UpdateProductVisibility(string idOrHandle, UpdateProductVisibilityRequest request,
+    private static async Task<Results<Ok, NotFound, ProblemHttpResult>> UpdateProductListingState(string idOrHandle, UpdateProductListingStateRequest request,
         IMediator mediator, CancellationToken cancellationToken)
     {
-        var result = await mediator.Send(new UpdateProductVisibility(idOrHandle, request.Visibility), cancellationToken);
+        var result = await mediator.Send(new UpdateProductListingState(idOrHandle, request.ListingState), cancellationToken);
 
         return result.IsSuccess ? TypedResults.Ok() : TypedResults.NotFound();
     }
@@ -314,7 +314,7 @@ public sealed record UpdateProductHandleRequest(string Handle)
     }
 }
 
-public sealed record UpdateProductVisibilityRequest(ProductVisibility Visibility);
+public sealed record UpdateProductListingStateRequest(ProductListingState ListingState);
 
 public sealed record UpdateProductCategoryRequest(long ProductCategoryId)
 {
@@ -347,7 +347,7 @@ public sealed record ProductDto(
     string Handle,
     string? Sku,
     bool HasVariants,
-    ProductVisibility Visibility,
+    ProductListingState ListingState,
     IEnumerable<ProductAttributeDto> Attributes,
     IEnumerable<ProductOptionDto> Options
 );

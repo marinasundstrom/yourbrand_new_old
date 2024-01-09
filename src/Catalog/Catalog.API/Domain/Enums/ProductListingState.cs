@@ -1,6 +1,6 @@
 ﻿namespace YourBrand.Catalog.API.Domain.Enums;
 
-public enum ProductVisibility
+public enum ProductListingState
 {
     Unlisted,
     Listed

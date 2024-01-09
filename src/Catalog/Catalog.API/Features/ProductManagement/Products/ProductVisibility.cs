@@ -1,3 +1,3 @@
 namespace YourBrand.Catalog.API.Features.ProductManagement;
 
-public enum ProductVisibility { Unlisted, Listed }
+public enum ProductListingState { Unlisted, Listed }

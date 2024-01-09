@@ -129,7 +129,7 @@ public sealed class Product
 
     public IReadOnlyCollection<OptionGroup> OptionGroups => _optionGroups;
 
-    public ProductVisibility Visibility { get; set; }
+    public ProductListingState ListingState { get; set; }
 
     public IReadOnlyCollection<ProductVariantOption> ProductVariantOptions => _productVariantOptions;
 
