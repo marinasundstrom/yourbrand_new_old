@@ -14,16 +14,18 @@ namespace YourBrand.Extensions;
 
 public static class OpenApiExtensions
 {
-    public static IServiceCollection AddOpenApi(this IServiceCollection services, string documentTitle)
+    readonly static IEnumerable<ApiVersion> apiVersionDescriptions = [
+        new(1, 0),
+        new(2, 0)
+    ];
+
+    public static IServiceCollection AddOpenApi(this IServiceCollection services, string documentTitle, IEnumerable<ApiVersion>? apiVersions = null)
     {
         services.AddEndpointsApiExplorer();
 
-        IEnumerable<ApiVersion> apiVersionDescriptions = [
-            new(1, 0),
-            new(2, 0)
-        ];
+        apiVersions ??= apiVersionDescriptions;
 
-        foreach (var apiVersion in apiVersionDescriptions)
+        foreach (var apiVersion in apiVersions)
         {
             services.AddOpenApiDocument(config =>
             {
@@ -33,7 +35,7 @@ public static class OpenApiExtensions
                     document.Info.Title = documentTitle;
                     document.Info.Version = $"v{GetApiVersion(apiVersion)}";
                 };
-                config.ApiGroupNames = new[] { GetApiVersion(apiVersion) };
+                config.ApiGroupNames = [GetApiVersion(apiVersion)];
 
                 config.SchemaSettings.DefaultReferenceTypeNullHandling = ReferenceTypeNullHandling.NotNull;
                 config.SchemaSettings.SchemaNameGenerator = new CustomSchemaNameGenerator();
