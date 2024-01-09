@@ -17,6 +17,7 @@ using Steeltoe.Discovery.Client;
 
 using YourBrand;
 using YourBrand.Extensions;
+using YourBrand.Sales.API;
 
 string ServiceName = "Sales.API";
 
@@ -53,7 +54,7 @@ if (builder.Environment.IsProduction())
 // Add services to the container.
 
 builder.Services
-    .AddOpenApi(ServiceName)
+    .AddOpenApi(ServiceName, ApiVersions.All)
     .AddApiVersioningServices();
 
 builder.Services.AddObservability("Sales.API", "1.0", builder.Configuration);

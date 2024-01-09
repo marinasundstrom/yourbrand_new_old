@@ -1,16 +1,9 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-
-using Azure.Identity;
+﻿using Azure.Identity;
 
 using HealthChecks.UI.Client;
 
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
-using Microsoft.AspNetCore.Server.HttpSys;
-using Microsoft.IdentityModel.Tokens;
 
 using MudBlazor.Services;
 
@@ -66,7 +59,7 @@ builder.Services.AddRazorComponents()
 AddClients(builder);
 
 builder.Services
-    .AddOpenApi(serviceName)
+    .AddOpenApi(serviceName, ApiVersions.All)
     .AddApiVersioningServices();
 
 builder.Services.AddObservability(serviceName, serviceVersion, builder.Configuration);

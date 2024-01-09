@@ -19,7 +19,7 @@ public static class Endpoints
 
         var productsGroup = versionedApi.MapGroup("/v{version:apiVersion}/products")
             .WithTags("Products")
-            .HasApiVersion(1, 0)
+            .HasApiVersion(ApiVersions.V1)
             .WithOpenApi()
             .RequireCors();
 

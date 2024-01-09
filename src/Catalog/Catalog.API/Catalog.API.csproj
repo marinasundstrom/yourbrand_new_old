@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>preview</LangVersion>
     <UserSecretsId>9aa40c94-e1be-447e-9130-49bf3a5d6740</UserSecretsId>
+    <RootNamespace>YourBrand.Catalog.API</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup>

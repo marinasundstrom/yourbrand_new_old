@@ -23,7 +23,7 @@ public static partial class Endpoints
 
         var group = versionedApi.MapGroup("/v{version:apiVersion}/products")
             .WithTags("Products")
-            .HasApiVersion(1, 0)
+            .HasApiVersion(ApiVersions.V1)
             .WithOpenApi()
             .RequireAuthorization();
 

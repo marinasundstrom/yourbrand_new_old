@@ -20,7 +20,7 @@ public static class Endpoints
 
         var cartGroup = versionedApi.MapGroup("/v{version:apiVersion}/cart")
             .WithTags("Cart")
-            .HasApiVersion(1, 0)
+            .HasApiVersion(ApiVersions.V1)
             .WithOpenApi()
             .RequireCors();
 

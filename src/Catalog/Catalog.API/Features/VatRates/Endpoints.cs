@@ -17,7 +17,7 @@ public static class Endpoints
 
         var group = versionedApi.MapGroup("/v{version:apiVersion}/vatRates")
             .WithTags("VatRates")
-            .HasApiVersion(1, 0)
+            .HasApiVersion(ApiVersions.V1)
             .WithOpenApi()
             .RequireAuthorization();
 

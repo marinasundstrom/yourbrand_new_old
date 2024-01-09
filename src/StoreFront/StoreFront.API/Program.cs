@@ -6,28 +6,21 @@ using YourBrand.Catalog;
 
 using HealthChecks.UI.Client;
 
-using IdentityModel.Client;
-
 using MassTransit;
 
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Http.Resilience;
-using Microsoft.Identity.Client;
 
 using Steeltoe.Common.Http.Discovery;
 using Steeltoe.Discovery.Client;
 
 using YourBrand.StoreFront.API;
 using YourBrand.StoreFront.API.Features.Cart;
-using YourBrand.StoreFront.API.Features.Products.Categories;
 using YourBrand.StoreFront.API.Features.Products;
 using YourBrand.StoreFront.API.Persistence;
 using YourBrand.StoreFront.API.Features.Brands;
 
 using YourBrand;
-using YourBrand.Carts;
-using YourBrand.Catalog;
 using YourBrand.Extensions;
 using YourBrand.Sales;
 using YourBrand.StoreFront.API.Features.Checkout;
@@ -65,7 +58,7 @@ if (builder.Environment.IsProduction())
 // Add services to the container.
 
 builder.Services
-    .AddOpenApi(ServiceName)
+    .AddOpenApi(ServiceName, ApiVersions.All)
     .AddApiVersioningServices();
 
 builder.Services.AddObservability("StoreFront.API", "1.0", builder.Configuration);

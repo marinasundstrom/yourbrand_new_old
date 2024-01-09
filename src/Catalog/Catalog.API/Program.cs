@@ -1,7 +1,4 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-
-using Azure.Identity;
+﻿using Azure.Identity;
 using Azure.Storage.Blobs;
 
 using YourBrand.Catalog.API.Common;
@@ -15,17 +12,15 @@ using FluentValidation;
 using HealthChecks.UI.Client;
 
 using MassTransit;
-
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Azure;
-using Microsoft.IdentityModel.Tokens;
 
 using Steeltoe.Discovery.Client;
 
 using YourBrand;
 using YourBrand.Extensions;
+using YourBrand.Catalog.API;
 
 string ServiceName = "Catalog.API";
 
@@ -87,7 +82,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers();
 
 builder.Services
-    .AddOpenApi(ServiceName)
+    .AddOpenApi(ServiceName, ApiVersions.All)
     .AddApiVersioningServices();
 
 builder.Services.AddProductsServices();

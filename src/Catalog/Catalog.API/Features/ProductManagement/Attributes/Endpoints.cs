@@ -23,7 +23,7 @@ public static class Endpoints
 
         var group = versionedApi.MapGroup("/v{version:apiVersion}/attributes")
             .WithTags("Attributes")
-            .HasApiVersion(1, 0)
+            .HasApiVersion(ApiVersions.V1)
             .WithOpenApi();
 
         group.MapGet("/", GetAttributes)
