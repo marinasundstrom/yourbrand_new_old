@@ -1,7 +1,5 @@
 ﻿using System.Net.Mail;
 
-using Microsoft.Extensions.Logging;
-
 namespace YourBrand.YourService.API.Infrastructure.Services;
 
 public class EmailService : IEmailService

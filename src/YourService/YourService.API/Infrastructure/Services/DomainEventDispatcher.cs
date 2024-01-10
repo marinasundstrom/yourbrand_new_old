@@ -1,9 +1,5 @@
 ﻿using MediatR;
 
-using Microsoft.Extensions.Logging;
-
-using YourBrand.YourService.API.Domain;
-
 namespace YourBrand.YourService.API.Infrastructure.Services;
 
 sealed class DomainEventDispatcher : IDomainEventDispatcher

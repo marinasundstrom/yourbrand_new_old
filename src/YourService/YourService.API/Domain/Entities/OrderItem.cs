@@ -33,6 +33,8 @@ public class OrderItem : Entity<string>, IAuditable
 
     public string? Notes { get; set; }
 
+    //public string? CustomData { get; set; }
+
     public User? CreatedBy { get; set; }
 
     public string? CreatedById { get; set; }

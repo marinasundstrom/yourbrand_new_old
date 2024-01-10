@@ -1,16 +1,4 @@
-﻿using FluentValidation;
-
-using MediatR;
-
-using Microsoft.Extensions.DependencyInjection;
-
-using YourBrand.YourService.API.Features.OrderManagement.Orders;
-using YourBrand.YourService.API.Infrastructure.Idempotence;
-
-using YourBrand.YourService.API.Behaviors;
-using YourBrand.YourService.API.Common;
-
-namespace YourBrand.YourService.API.Features.OrderManagement;
+﻿namespace YourBrand.YourService.API.Features.OrderManagement;
 
 public static class ServiceExtensions
 {

@@ -7,10 +7,6 @@ using YourBrand.YourService.API.Infrastructure.Idempotence;
 using YourBrand.YourService.API.Infrastructure.Services;
 using YourBrand.YourService.API.Persistence;
 
-using Scrutor;
-
-using YourBrand.YourService.API.Common;
-
 namespace YourBrand.YourService.API.Infrastructure;
 
 public static class ServiceExtensions

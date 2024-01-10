@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-
-using YourBrand.YourService.API.Infrastructure;
+﻿using YourBrand.YourService.API.Infrastructure;
 
 namespace YourBrand.YourService.API.Infrastructure;
 

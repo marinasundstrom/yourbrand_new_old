@@ -1,5 +1,3 @@
-using Azure;
-
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
