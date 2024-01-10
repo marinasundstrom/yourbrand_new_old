@@ -9,8 +9,6 @@ using Microsoft.EntityFrameworkCore;
 
 using YourBrand.YourService.API;
 using YourBrand.YourService.API.Features;
-using YourBrand.YourService.API.Features.OrderManagement;
-using YourBrand.YourService.API.Features.OrderManagement.Orders;
 using YourBrand.YourService.API.Infrastructure;
 using YourBrand.YourService.API.Persistence;
 
@@ -55,6 +53,10 @@ if (builder.Environment.IsProduction())
 }
 
 // Add services to the container.
+
+var all = ApiVersions.All;
+
+Console.WriteLine(all.Count());
 
 builder.Services
     .AddOpenApi(ServiceName, ApiVersions.All)
@@ -134,7 +136,7 @@ app.UseAuthorization();
 
 app.MapFeaturesEndpoints();
 
-app.MapHubsForApp();
+//app.MapHubsForApp();
 
 app.MapHealthChecks("/healthz", new HealthCheckOptions()
 {

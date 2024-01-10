@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-using YourBrand.YourService.API.Features.OrderManagement.Repositories;
+using YourBrand.YourService.API.Repositories;
 using YourBrand.YourService.API.Persistence.Interceptors;
 using YourBrand.YourService.API.Persistence.Repositories;
 using YourBrand.YourService.API.Persistence.Repositories.Mocks;
@@ -51,7 +51,7 @@ public static class ServiceExtensions
 
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<AppDbContext>());
 
-        services.AddScoped<IOrderRepository, OrderRepository>();
+        services.AddScoped<ITodoRepository, TodoRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
     }
 }

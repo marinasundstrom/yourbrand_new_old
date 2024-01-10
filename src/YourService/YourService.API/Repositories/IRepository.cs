@@ -2,7 +2,7 @@
 
 using YourBrand.YourService.API.Domain.Specifications;
 
-namespace YourBrand.YourService.API.Features.OrderManagement.Repositories;
+namespace YourBrand.YourService.API.Repositories;
 
 public interface IRepository<T, TId>
     where T : AggregateRoot<TId>

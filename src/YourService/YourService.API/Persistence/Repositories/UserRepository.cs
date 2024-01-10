@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 
 using YourBrand.YourService.API.Domain.Entities;
 using YourBrand.YourService.API.Domain.Specifications;
-using YourBrand.YourService.API.Features.OrderManagement.Repositories;
+using YourBrand.YourService.API.Repositories;
 
 namespace YourBrand.YourService.API.Persistence.Repositories.Mocks;
 

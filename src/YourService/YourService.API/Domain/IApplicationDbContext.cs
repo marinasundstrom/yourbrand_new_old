@@ -7,7 +7,7 @@ namespace YourBrand.YourService.API.Domain;
 
 public interface IAppDbContext
 {
-    DbSet<OrderStatus> OrderStatuses { get; }
+    DbSet<Todo> Todos { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }
