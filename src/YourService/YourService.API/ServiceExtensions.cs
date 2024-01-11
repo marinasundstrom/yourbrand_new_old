@@ -4,6 +4,7 @@ using MediatR;
 
 using YourBrand.YourService.API.Behaviors;
 using YourBrand.YourService.API.Common;
+using YourBrand.YourService.API.Features;
 
 namespace YourBrand.YourService.API;
 
@@ -22,7 +23,7 @@ public static class ServiceExtensions
 
         services.AddValidatorsFromAssembly(typeof(ServiceExtensions).Assembly);
 
-        //services.AddOrderManagement();
+        services.AddFeatures();
 
         return services;
     }

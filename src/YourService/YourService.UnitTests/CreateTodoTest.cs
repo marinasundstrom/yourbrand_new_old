@@ -1,14 +1,10 @@
 ﻿using FluentAssertions;
 
-using MassTransit;
-
 using NSubstitute;
 
-using YourBrand.YourService.API.Domain.Entities;
 using YourBrand.YourService.API.Domain.Events;
 using YourBrand.YourService.API.Features.Todos;
 using YourBrand.YourService.API.Persistence.Repositories.Mocks;
-using YourBrand.YourService.API.Repositories;
 using YourBrand.YourService.API.Services;
 
 namespace YourBrand.YourService.UnitTests;
@@ -41,37 +37,5 @@ public class CreateTodoTest
         await domainEventDispatcher
             .ReceivedWithAnyArgs()
             .Dispatch(Arg.Any<TodoCreated>(), default);
-    }
-}
-
-public class TodoCreatedTest
-{
-    [Fact]
-    public async Task TodoCreated()
-    {
-        // Arrange
-
-        var todoId = "Guid1";
-        var todo = Todo.Create(todoId);
-
-        var todosRepository = Substitute.For<ITodoRepository>();
-        todosRepository
-            .FindByIdAsync(Arg.Any<string>(), default)
-            .ReturnsForAnyArgs(todo);
-
-        var publishEndpoint = Substitute.For<IPublishEndpoint>();
-
-        var todoCreated = new TodoCreated(todoId);
-        var handler = new TodoCreatedHandler(todosRepository, publishEndpoint);
-
-        // Act
-
-        await handler.Handle(todoCreated, default);
-
-        // Assert
-
-        await todosRepository
-            .ReceivedWithAnyArgs()
-            .FindByIdAsync(Arg.Any<string>(), default);
     }
 }

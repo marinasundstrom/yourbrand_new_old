@@ -1,6 +1,5 @@
 ﻿using HealthChecks.UI.Client;
 
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 
 using YourBrand.YourService.API;
@@ -14,16 +13,24 @@ using YourBrand;
 using YourBrand.Extensions;
 
 using Serilog;
+using MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
 
 string ServiceName = builder.Configuration["ServiceName"]!;
 string ServiceVersion = "1.0";
 
+// Add services to container
+
 builder.Host.UseSerilog((ctx, cfg) => cfg.ReadFrom.Configuration(builder.Configuration)
                         .Enrich.WithProperty("Application", ServiceName)
                         .Enrich.WithProperty("Environment", ctx.HostingEnvironment.EnvironmentName));
 
+builder.Services
+    .AddOpenApi(ServiceName, ApiVersions.All)
+    .AddApiVersioningServices();
+
+builder.Services.AddObservability(ServiceName, ServiceVersion, builder.Configuration);
 
 builder.Services.AddProblemDetails();
 
@@ -44,23 +51,17 @@ if (builder.Environment.IsProduction())
     builder.Configuration.AddAzureKeyVault(builder.Configuration);
 }
 
-// Add services to the container.
-
-builder.Services
-    .AddOpenApi(ServiceName, ApiVersions.All)
-    .AddApiVersioningServices();
-
-builder.Services.AddObservability(ServiceName, ServiceVersion, builder.Configuration);
-
-builder.Services.AddServiceBus(x =>
+builder.Services.AddServiceBus(bus =>
 {
+    // bus.AddConsumersFromNamespaceContaining<>();
+
     if (builder.Environment.IsDevelopment())
     {
-        x.UsingRabbitMQ(builder.Configuration);
+        bus.UsingRabbitMQ(builder.Configuration);
     }
     else
     {
-        x.UsingAzureServiceBus(builder.Configuration);
+        bus.UsingAzureServiceBus(builder.Configuration);
     }
 });
 
@@ -79,9 +80,7 @@ builder.Services.AddAuthenticationServices(builder.Configuration);
 
 builder.Services.AddAuthorization();
 
-builder.Services
-    .AddHealthChecks()
-    .AddDbContextCheck<ApplicationDbContext>();
+builder.Services.AddHealthChecksServices<ApplicationDbContext>();
 
 //builder.Services.AddTransient<ExceptionHandlingMiddleware>();
 
@@ -114,13 +113,7 @@ app.UseAuthorization();
 
 app.MapFeaturesEndpoints();
 
-//app.MapHubsForApp();
-
-app.MapHealthChecks("/healthz", new HealthCheckOptions()
-{
-    Predicate = _ => true,
-    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-});
+app.MapHealthChecks();
 
 try
 {

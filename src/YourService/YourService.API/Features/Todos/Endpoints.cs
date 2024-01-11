@@ -32,6 +32,8 @@ public static class Endpoints
             .Produces<TodoDto>(StatusCodes.Status200OK)
             .AddEndpointFilter<ValidationFilter<CreateTodoRequest>>();
 
+        app.MapHub<TodosHub>("/hubs/todos");
+
         return app;
     }
 
