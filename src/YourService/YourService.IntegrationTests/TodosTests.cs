@@ -9,7 +9,7 @@ using YourBrand.YourService.Contracts;
 
 using Xunit.Abstractions;
 
-namespace YourBrand.Carts.IntegrationTests;
+namespace YourBrand.YourService.IntegrationTests;
 
 [Collection("Database collection")]
 public class CartsTest : IAsyncLifetime

@@ -2,18 +2,19 @@
 
 using NSubstitute;
 
+using YourBrand.YourService.API.Domain.Entities;
 using YourBrand.YourService.API.Domain.Events;
 using YourBrand.YourService.API.Features.Todos;
 using YourBrand.YourService.API.Persistence.Repositories.Mocks;
 using YourBrand.YourService.API.Repositories;
 using YourBrand.YourService.API.Services;
 
-namespace YourBrand.Carts.UnitTests;
+namespace YourBrand.YourService.UnitTests;
 
-public class UnitTest1
+public class CreateTodoTest
 {
     [Fact]
-    public async Task Test1()
+    public async Task TodoItemIsCreated()
     {
         // Arrange
 
@@ -38,5 +39,35 @@ public class UnitTest1
         await domainEventDispatcher
             .ReceivedWithAnyArgs()
             .Dispatch(Arg.Any<TodoCreated>(), default);
+    }
+}
+
+public class TodoCreatedTest
+{
+    [Fact]
+    public async Task TodoCreated()
+    {
+        // Arrange
+
+        var todoId = "Guid1";
+        var todo = Todo.Create(todoId);
+
+        var todosRepository = Substitute.For<ITodoRepository>();
+        todosRepository
+            .FindByIdAsync(Arg.Any<string>(), default)
+            .ReturnsForAnyArgs(todo);
+
+        var todoCreated = new TodoCreated(todoId);
+        var handler = new TodoCreatedHandler(todosRepository);
+
+        // Act
+
+        await handler.Handle(todoCreated, default);
+
+        // Assert
+
+        await todosRepository
+            .ReceivedWithAnyArgs()
+            .FindByIdAsync(Arg.Any<string>(), default);
     }
 }

@@ -15,7 +15,7 @@ using YourBrand.YourService.API.Persistence;
 
 using Testcontainers.SqlEdge;
 
-namespace YourBrand.Carts.IntegrationTests;
+namespace YourBrand.YourService.IntegrationTests;
 
 public class CartsApiFactory
     : WebApplicationFactory<Program>, IAsyncLifetime

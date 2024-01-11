@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 
 using Xunit.Abstractions;
 
-namespace YourBrand.Carts.IntegrationTests;
+namespace YourBrand.YourService.IntegrationTests;
 
 public static class WebApplicationFactoryExtensions
 {
