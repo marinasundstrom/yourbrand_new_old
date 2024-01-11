@@ -5,7 +5,7 @@ using YourBrand.YourService.API.Domain.Entities;
 
 namespace YourBrand.YourService.API.Domain;
 
-public interface IAppDbContext
+public interface IApplicationDbContext
 {
     DbSet<Todo> Todos { get; }
 

@@ -9,10 +9,10 @@ namespace YourBrand.YourService.API.Infrastructure.Idempotence;
 
 public class IdempotentDomainEventPublisher : INotificationPublisher
 {
-    private readonly AppDbContext dbContext;
+    private readonly ApplicationDbContext dbContext;
 
     public IdempotentDomainEventPublisher(
-        AppDbContext dbContext)
+        ApplicationDbContext dbContext)
     {
         this.dbContext = dbContext;
     }

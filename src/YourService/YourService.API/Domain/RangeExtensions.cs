@@ -1,6 +1,6 @@
 ﻿namespace YourBrand.YourService.API.Domain;
 
-public static class Extensions
+public static class RangeExtensions
 {
     public static bool AddRange<T>(this HashSet<T> source, IEnumerable<T> items)
     {

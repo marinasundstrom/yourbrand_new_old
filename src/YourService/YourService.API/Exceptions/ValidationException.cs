@@ -1,4 +1,4 @@
-﻿namespace YourBrand.YourService.Exceptions;
+﻿namespace YourBrand.YourService.API.Exceptions;
 
 public class ValidationException : Exception
 {

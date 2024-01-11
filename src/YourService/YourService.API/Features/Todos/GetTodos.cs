@@ -48,7 +48,7 @@ public record GetTodos(int Page = 1, int PageSize = 10, string? SearchTerm = nul
                 .Take(request.PageSize).AsQueryable()
                 .ToArrayAsync(cancellationToken);
 
-            return new PagedResult<TodoDto>(todos.Select(todo => new TodoDto(todo.Id, todo.Text)), totalCount);
+            return new PagedResult<TodoDto>(todos.Select(todo => todo.ToDto()), totalCount);
         }
     }
 }

@@ -2,7 +2,7 @@
 
 using MediatR;
 
-using ValidationException = YourBrand.YourService.Exceptions.ValidationException;
+using ValidationException = YourBrand.YourService.API.Exceptions.ValidationException;
 
 namespace YourBrand.YourService.API.Behaviors;
 

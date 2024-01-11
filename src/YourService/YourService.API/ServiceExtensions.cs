@@ -3,6 +3,7 @@ using FluentValidation;
 using MediatR;
 
 using YourBrand.YourService.API.Behaviors;
+using YourBrand.YourService.API.Common;
 
 namespace YourBrand.YourService.API;
 
@@ -22,6 +23,20 @@ public static class ServiceExtensions
         services.AddValidatorsFromAssembly(typeof(ServiceExtensions).Assembly);
 
         //services.AddOrderManagement();
+
+        return services;
+    }
+
+    public static IServiceCollection AddTenantService(this IServiceCollection services)
+    {
+        services.AddScoped<ITenantService, TenantService>();
+
+        return services;
+    }
+
+    public static IServiceCollection AddCurrentUserService(this IServiceCollection services)
+    {
+        services.AddScoped<ICurrentUserService, CurrentUserService>();
 
         return services;
     }

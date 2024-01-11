@@ -10,7 +10,7 @@ namespace YourBrand.YourService.API.Domain.Entities;
 
 public class Todo : AggregateRoot<string>, IAuditable
 {
-    public Todo(string text) : base(Guid.NewGuid().ToString())
+    private Todo(string text) : base(Guid.NewGuid().ToString())
     {
         Text = text;
     }
@@ -28,4 +28,11 @@ public class Todo : AggregateRoot<string>, IAuditable
     public string? LastModifiedById { get; set; }
 
     public DateTimeOffset? LastModified { get; set; }
+
+    public static Todo Create(string text)
+    {
+        var todo = new Todo(text);
+        todo.AddDomainEvent(new TodoCreated(todo.Id));
+        return todo;
+    }
 }

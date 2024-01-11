@@ -1,8 +1,4 @@
-﻿using Azure.Identity;
-
-using HealthChecks.UI.Client;
-
-using MassTransit;
+﻿using HealthChecks.UI.Client;
 
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
@@ -18,22 +14,18 @@ using YourBrand;
 using YourBrand.Extensions;
 
 using Serilog;
-using YourBrand.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-string ServiceName = builder.Configuration["ServiceName"];
+string ServiceName = builder.Configuration["ServiceName"]!;
+string ServiceVersion = "1.0";
 
 builder.Host.UseSerilog((ctx, cfg) => cfg.ReadFrom.Configuration(builder.Configuration)
                         .Enrich.WithProperty("Application", ServiceName)
                         .Enrich.WithProperty("Environment", ctx.HostingEnvironment.EnvironmentName));
 
-if (builder.Environment.IsDevelopment())
-{
-    builder.Services.AddDiscoveryClient();
-}
 
-string GetCartsExpire20 = nameof(GetCartsExpire20);
+builder.Services.AddProblemDetails();
 
 builder.Services.AddOutputCache(options =>
 {
@@ -42,59 +34,20 @@ builder.Services.AddOutputCache(options =>
 
 if (builder.Environment.IsProduction())
 {
-    builder.Configuration.AddAzureAppConfiguration(options =>
-        options.Connect(
-            new Uri($"https://{builder.Configuration["Azure:AppConfig:Name"]}.azconfig.io"),
-            new DefaultAzureCredential()));
+    builder.Services.AddDiscoveryClient();
 
-    builder.Configuration.AddAzureKeyVault(
-        new Uri($"https://{builder.Configuration["Azure:KeyVault:Name"]}.vault.azure.net/"),
-        new DefaultAzureCredential());
+    builder.Configuration.AddAzureConfiguration(builder.Configuration);
 }
 
 // Add services to the container.
-
-var all = ApiVersions.All;
-
-Console.WriteLine(all.Count());
 
 builder.Services
     .AddOpenApi(ServiceName, ApiVersions.All)
     .AddApiVersioningServices();
 
-builder.Services.AddObservability("Sales.API", "1.0", builder.Configuration);
+builder.Services.AddObservability(ServiceName, ServiceVersion, builder.Configuration);
 
-builder.Services.AddMassTransit(x =>
-{
-    x.SetKebabCaseEndpointNameFormatter();
-
-    x.AddConsumers(typeof(Program).Assembly);
-
-    if (builder.Environment.IsProduction())
-    {
-        x.UsingAzureServiceBus((context, cfg) =>
-        {
-            cfg.Host($"sb://{builder.Configuration["Azure:ServiceBus:Namespace"]}.servicebus.windows.net");
-
-            cfg.ConfigureEndpoints(context);
-        });
-    }
-    else
-    {
-        x.UsingRabbitMq((context, cfg) =>
-        {
-            var rabbitmqHost = builder.Configuration["RABBITMQ_HOST"] ?? "localhost";
-
-            cfg.Host(rabbitmqHost, "/", h =>
-            {
-                h.Username("guest");
-                h.Password("guest");
-            });
-
-            cfg.ConfigureEndpoints(context);
-        });
-    }
-});
+builder.Services.AddServiceBus(builder.Configuration, builder.Environment);
 
 builder.Services.AddSignalR();
 
@@ -104,7 +57,8 @@ builder.Services
     .AddInfrastructure(builder.Configuration)
     .AddPersistence(builder.Configuration);
 
-builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+builder.Services.AddTenantService();
+builder.Services.AddCurrentUserService();
 
 builder.Services.AddAuthenticationServices(builder.Configuration);
 
@@ -112,21 +66,30 @@ builder.Services.AddAuthorization();
 
 builder.Services
     .AddHealthChecks()
-    .AddDbContextCheck<AppDbContext>();
+    .AddDbContextCheck<ApplicationDbContext>();
+
+//builder.Services.AddTransient<ExceptionHandlingMiddleware>();
 
 var app = builder.Build();
+
+// Configure the HTTP request pipeline.
 
 app.UseSerilogRequestLogging();
 
 app.MapObservability();
 
-// Configure the HTTP request pipeline.
+app.UseExceptionHandler();
+app.UseStatusCodePages();
+
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseOpenApi();
 }
 
 app.UseOutputCache();
+
+//app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 
@@ -149,7 +112,7 @@ try
     using (var scope = app.Services.CreateScope())
     {
         var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-        var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
 
         //await context.Database.MigrateAsync();
@@ -171,7 +134,7 @@ catch (Exception e)
 
 await app.RunAsync();
 
-static async Task SeedData(AppDbContext context, IConfiguration configuration, ILogger<Program> logger)
+static async Task SeedData(ApplicationDbContext context, IConfiguration configuration, ILogger<Program> logger)
 {
     try
     {

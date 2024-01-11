@@ -21,7 +21,7 @@ public static class Endpoints
             .WithName($"Users{nameof(GetUsers)}")
             .Produces<PagedResult<UserDto>>(StatusCodes.Status200OK);
 
-        group.MapGet("/UserInfo", GetUserInfo)
+        group.MapGet("/userInfo", GetUserInfo)
             .WithName($"Users_{nameof(GetUserInfo)}")
             .Produces<UserInfoDto>(StatusCodes.Status200OK);
 

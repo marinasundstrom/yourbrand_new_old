@@ -9,13 +9,11 @@ namespace YourBrand.YourService.API.Persistence.Repositories.Mocks;
 
 public sealed class TodoRepository : ITodoRepository
 {
-    readonly AppDbContext context;
     readonly DbSet<Todo> dbSet;
 
-    public TodoRepository(AppDbContext context)
+    public TodoRepository(ApplicationDbContext context)
     {
-        this.context = context;
-        this.dbSet = context.Set<Todo>();
+        dbSet = context.Set<Todo>();
     }
 
     public IQueryable<Todo> GetAll()

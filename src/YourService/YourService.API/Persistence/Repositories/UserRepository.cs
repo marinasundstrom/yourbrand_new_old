@@ -8,10 +8,10 @@ namespace YourBrand.YourService.API.Persistence.Repositories.Mocks;
 
 public sealed class UserRepository : IUserRepository
 {
-    readonly AppDbContext context;
+    readonly ApplicationDbContext context;
     readonly DbSet<User> dbSet;
 
-    public UserRepository(AppDbContext context)
+    public UserRepository(ApplicationDbContext context)
     {
         this.context = context;
         this.dbSet = context.Set<User>();

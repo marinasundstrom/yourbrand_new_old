@@ -37,11 +37,11 @@ public class CartsApiFactory
         {
             var descriptor = services.Single(
         d => d.ServiceType ==
-            typeof(DbContextOptions<AppDbContext>));
+            typeof(DbContextOptions<ApplicationDbContext>));
 
             services.Remove(descriptor);
 
-            services.AddDbContext<AppDbContext>((sp, options) =>
+            services.AddDbContext<ApplicationDbContext>((sp, options) =>
             {
                 var connectionString = _dbContainer.GetConnectionString().Replace("master", CartsDbName);
                 options.UseSqlServer(connectionString);
@@ -66,7 +66,7 @@ public class CartsApiFactory
             using (var scope = sp.CreateScope())
             {
                 var scopedServices = scope.ServiceProvider;
-                var db = scopedServices.GetRequiredService<AppDbContext>();
+                var db = scopedServices.GetRequiredService<ApplicationDbContext>();
                 var configuration = scopedServices.GetRequiredService<IConfiguration>();
 
                 db.Database.EnsureDeleted();

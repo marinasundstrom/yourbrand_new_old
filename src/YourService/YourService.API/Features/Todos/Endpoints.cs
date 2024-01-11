@@ -1,3 +1,5 @@
+using FluentValidation;
+
 using MassTransit;
 
 using MediatR;
@@ -22,8 +24,13 @@ public static class Endpoints
             .WithOpenApi();
 
         group.MapGet("/", GetTodos)
-            .WithName($"Users{nameof(GetTodos)}")
+            .WithName($"Todos_{nameof(GetTodos)}")
             .Produces<PagedResult<TodoDto>>(StatusCodes.Status200OK);
+
+        group.MapPost("/", CreateTodo)
+            .WithName($"Todos_{nameof(CreateTodo)}")
+            .Produces<TodoDto>(StatusCodes.Status200OK)
+            .AddEndpointFilter<ValidationFilter<CreateTodoRequest>>();
 
         return app;
     }
@@ -32,5 +39,17 @@ public static class Endpoints
         IMediator mediator = default!, CancellationToken cancellationToken = default)
         => await mediator.Send(new GetTodos(page, pageSize, searchTerm, sortBy, sortDirection), cancellationToken);
 
+    public static async Task<TodoDto> CreateTodo(CreateTodoRequest request, IMediator mediator = default!, CancellationToken cancellationToken = default)
+        => (await mediator.Send(new CreateTodo(request.Text), cancellationToken)).GetValue();
+}
 
+public record CreateTodoRequest(string Text)
+{
+    public class CreateTodoRequestValidator : AbstractValidator<CreateTodoRequest>
+    {
+        public CreateTodoRequestValidator()
+        {
+            RuleFor(p => p.Text).MaximumLength(120).NotEmpty();
+        }
+    }
 }

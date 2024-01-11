@@ -2,14 +2,20 @@ using System.Linq.Expressions;
 
 using Microsoft.EntityFrameworkCore;
 
+using YourBrand.YourService.API.Common;
 using YourBrand.YourService.API.Domain.Entities;
 
 namespace YourBrand.YourService.API.Persistence;
 
-public sealed class AppDbContext : DbContext, IUnitOfWork, IAppDbContext
+public sealed class ApplicationDbContext : DbContext, IUnitOfWork, IApplicationDbContext
 {
-    public AppDbContext(
-        DbContextOptions<AppDbContext> options) : base(options) { }
+    private readonly string? _tenantId;
+
+    public ApplicationDbContext(
+        DbContextOptions<ApplicationDbContext> options, ITenantService tenantService) : base(options)
+    {
+        _tenantId = tenantService.TenantId;
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -17,7 +23,19 @@ public sealed class AppDbContext : DbContext, IUnitOfWork, IAppDbContext
 
         ApplySoftDeleteQueryFilter(modelBuilder);
 
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+
+        ConfigTenantFilter(modelBuilder);
+    }
+
+    private void ConfigTenantFilter(ModelBuilder modelBuilder)
+    {
+        /*
+        modelBuilder.Entity<IHasTenant>(entity =>
+        {
+            entity.HasQueryFilter(e => e.TenantId == _tenantId && e.Deleted == null);
+        });
+        */
     }
 
     private static void ApplySoftDeleteQueryFilter(ModelBuilder modelBuilder)

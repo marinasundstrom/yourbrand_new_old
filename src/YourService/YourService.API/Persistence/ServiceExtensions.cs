@@ -20,7 +20,7 @@ public static class ServiceExtensions
 
 
 
-        services.AddDbContext<AppDbContext>((sp, options) =>
+        services.AddDbContext<ApplicationDbContext>((sp, options) =>
         {
             options.UseSqlServer(connectionString!, o => o.EnableRetryOnFailure());
 
@@ -35,7 +35,7 @@ public static class ServiceExtensions
 #endif
         });
 
-        services.AddScoped<IAppDbContext>(sp => sp.GetRequiredService<AppDbContext>());
+        services.AddScoped<IApplicationDbContext>(sp => sp.GetRequiredService<ApplicationDbContext>());
 
         services.AddScoped<AuditableEntitySaveChangesInterceptor>();
         services.AddScoped<OutboxSaveChangesInterceptor>();
@@ -49,7 +49,7 @@ public static class ServiceExtensions
     {
         // TODO: Automate this
 
-        services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<AppDbContext>());
+        services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ApplicationDbContext>());
 
         services.AddScoped<ITodoRepository, TodoRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
