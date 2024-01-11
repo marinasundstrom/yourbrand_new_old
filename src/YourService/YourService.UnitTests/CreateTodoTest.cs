@@ -1,5 +1,7 @@
 ﻿using FluentAssertions;
 
+using MassTransit;
+
 using NSubstitute;
 
 using YourBrand.YourService.API.Domain.Entities;
@@ -57,8 +59,10 @@ public class TodoCreatedTest
             .FindByIdAsync(Arg.Any<string>(), default)
             .ReturnsForAnyArgs(todo);
 
+        var publishEndpoint = Substitute.For<IPublishEndpoint>();
+
         var todoCreated = new TodoCreated(todoId);
-        var handler = new TodoCreatedHandler(todosRepository);
+        var handler = new TodoCreatedHandler(todosRepository, publishEndpoint);
 
         // Act
 
