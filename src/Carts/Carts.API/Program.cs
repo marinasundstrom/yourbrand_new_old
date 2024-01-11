@@ -95,7 +95,7 @@ builder.Services.AddMassTransit(x =>
 });
 
 builder.Services
-    .AddHealthChecks()
+    .AddHealthChecksServices()
     .AddDbContextCheck<CartsContext>();
 
 var app = builder.Build();

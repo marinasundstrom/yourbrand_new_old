@@ -106,7 +106,7 @@ builder.Services.AddMassTransit(x =>
 });
 
 builder.Services
-    .AddHealthChecks()
+    .AddHealthChecksServices()
     .AddDbContextCheck<StoreFrontContext>();
 
 AddClients(builder);

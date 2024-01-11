@@ -127,7 +127,7 @@ builder.Services.AddMassTransit(x =>
 });
 
 builder.Services
-    .AddHealthChecks()
+    .AddHealthChecksServices()
     .AddDbContextCheck<CatalogContext>();
 
 builder.Services.AddScoped<ProductVariantsService>();

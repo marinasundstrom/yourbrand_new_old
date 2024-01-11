@@ -65,7 +65,7 @@ builder.Services
 builder.Services.AddObservability(serviceName, serviceVersion, builder.Configuration);
 
 builder.Services
-    .AddHealthChecks();
+    .AddHealthChecksServices();
 //    .AddDbContextCheck<ApplicationDbContext>();
 
 

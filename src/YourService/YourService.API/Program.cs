@@ -80,7 +80,9 @@ builder.Services.AddAuthenticationServices(builder.Configuration);
 
 builder.Services.AddAuthorization();
 
-builder.Services.AddHealthChecksServices<ApplicationDbContext>();
+builder.Services
+    .AddHealthChecksServices()
+    .AddDbContextCheck<ApplicationDbContext>();
 
 //builder.Services.AddTransient<ExceptionHandlingMiddleware>();
 

@@ -111,7 +111,7 @@ builder.Services.AddAuthenticationServices(builder.Configuration);
 builder.Services.AddAuthorization();
 
 builder.Services
-    .AddHealthChecks()
+    .AddHealthChecksServices()
     .AddDbContextCheck<SalesContext>();
 
 var app = builder.Build();
