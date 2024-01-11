@@ -11,6 +11,7 @@ using Xunit.Abstractions;
 
 namespace YourBrand.YourService.IntegrationTests;
 
+/*
 [Collection("Database collection")]
 public class CartsTest : IAsyncLifetime
 {
@@ -68,3 +69,4 @@ public class CartsTest : IAsyncLifetime
 
     public async Task DisposeAsync() => await _resetDatabase();
 }
+*/

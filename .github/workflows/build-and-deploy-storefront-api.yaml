@@ -15,6 +15,7 @@ on:
     - "src/StoreFront/StoreFront.API/**"
     - "src/StoreFront/StoreFront.UnitTests/**"
     - "src/StoreFront/StoreFront.IntegrationTests/**"
+    - "src/Extensions/**"
   
 jobs:
   build-and-deploy:

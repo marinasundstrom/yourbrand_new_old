@@ -32,11 +32,16 @@ builder.Services.AddOutputCache(options =>
     options.AddGetProductsPolicy();
 });
 
-if (builder.Environment.IsProduction())
+if (builder.Environment.IsDevelopment())
 {
     builder.Services.AddDiscoveryClient();
+}
 
-    builder.Configuration.AddAzureConfiguration(builder.Configuration);
+if (builder.Environment.IsProduction())
+{
+    builder.Configuration.AddAzureAppConfiguration(builder.Configuration);
+
+    builder.Configuration.AddAzureKeyVault(builder.Configuration);
 }
 
 // Add services to the container.
@@ -47,7 +52,17 @@ builder.Services
 
 builder.Services.AddObservability(ServiceName, ServiceVersion, builder.Configuration);
 
-builder.Services.AddServiceBus(builder.Configuration, builder.Environment);
+builder.Services.AddServiceBus(x =>
+{
+    if (builder.Environment.IsDevelopment())
+    {
+        x.UsingRabbitMQ(builder.Configuration);
+    }
+    else
+    {
+        x.UsingAzureServiceBus(builder.Configuration);
+    }
+});
 
 builder.Services.AddSignalR();
 

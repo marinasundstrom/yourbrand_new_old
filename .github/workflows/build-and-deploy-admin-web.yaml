@@ -8,7 +8,8 @@ on:
     paths:
     - "src/Admin/**"
     - "src/Catalog/Catalog.Client/**"
-  
+    - "src/Extensions/**"
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest

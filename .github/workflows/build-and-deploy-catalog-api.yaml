@@ -15,6 +15,7 @@ on:
     - "src/Catalog/Catalog.API/**"
     - "src/Catalog/Catalog.UnitTests/**"
     - "src/Catalog/Catalog.IntegrationTests/**"
+    - "src/Extensions/**"
     
 jobs:
   build-and-deploy:

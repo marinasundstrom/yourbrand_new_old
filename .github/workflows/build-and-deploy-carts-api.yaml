@@ -15,6 +15,7 @@ on:
     - "src/Carts/Carts.API/**"
     - "src/Carts/Carts.UnitTests/**"
     - "src/Carts/Carts.IntegrationTests/**"
+    - "src/Extensions/**"
   
 jobs:
   build-and-deploy:

@@ -15,6 +15,7 @@ on:
     - "src/Sales/Sales.API/**"
     - "src/Sales/Sales.UnitTests/**"
     - "src/Sales/Sales.IntegrationTests/**"
+    - "src/Extensions/**"
     
 jobs:
   build-and-deploy:

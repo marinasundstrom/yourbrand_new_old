@@ -16,6 +16,7 @@ on:
     - "src/Catalog/Catalog.Client/**"
     - "src/Carts/Carts.Client/**"
     - "src/StoreFront/StoreFront.Client/**"
+    - "src/Extensions/**"
   
 jobs:
   build-and-deploy:
