@@ -86,13 +86,14 @@ public class CustomWebApplicationFactory
             }
         });
 
-        builder.UseEnvironment("Development");
+        builder.UseEnvironment("Test");
 
         builder.ConfigureTestServices(services =>
         {
-            services.AddAuthentication("TestScheme")
-                .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>(
-                    "TestScheme", options => { });
+            services.Configure<TestAuthHandlerOptions>(options => options.DefaultUserId = DefaultUserId);
+
+            services.AddAuthentication(TestAuthHandler.AuthenticationScheme)
+                .AddScheme<TestAuthHandlerOptions, TestAuthHandler>(TestAuthHandler.AuthenticationScheme, options => { });
         });
     }
 

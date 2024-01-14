@@ -9,6 +9,7 @@ using YourBrand.YourService.Contracts;
 
 using Xunit.Abstractions;
 using System.Net.Http.Headers;
+using FluentAssertions;
 
 namespace YourBrand.YourService.IntegrationTests;
 
@@ -44,8 +45,13 @@ public class MyTest : IAsyncLifetime
     {
         // Arrange
 
+        var client = _factory.CreateClient(new WebApplicationFactoryClientOptions
+        {
+            AllowAutoRedirect = false
+        });
+
         // Act
-        var response = await HttpClient.GetAsync("/v1/todos");
+        var response = await client.GetAsync("/v1/todos");
         var str = await response.Content.ReadAsStringAsync();
 
         Console.WriteLine(str);
@@ -58,16 +64,44 @@ public class MyTest : IAsyncLifetime
     {
         // Arrange
 
-        HttpClient.DefaultRequestHeaders.Authorization =
-            new AuthenticationHeaderValue("TestScheme");
+        var client = _factory.CreateClient(new WebApplicationFactoryClientOptions
+        {
+            AllowAutoRedirect = false
+        });
+
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Test");
 
         // Act
-        var response = await HttpClient.PostAsJsonAsync("/v1/todos", new { Text = "Test" });
+        var response = await client.PostAsJsonAsync("/v1/todos", new { Text = "Test" });
         var str = await response.Content.ReadAsStringAsync();
 
         Console.WriteLine(str);
 
         // Assert
+    }
+
+    [Fact]
+    public async Task CreateTodo_Unauthorized_Fails()
+    {
+        // Arrange
+
+        var client = _factory.CreateClient(new WebApplicationFactoryClientOptions
+        {
+            AllowAutoRedirect = false
+        });
+
+        //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Test");
+
+        // Act
+        Func<Task> act = async () =>
+        {
+            var response = await client.PostAsJsonAsync("/v1/todos", new { Text = "Test" });
+            response.EnsureSuccessStatusCode();
+        };
+
+        // Assert
+
+        await act.Should().ThrowAsync<HttpRequestException>();
     }
 
 

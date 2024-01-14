@@ -59,7 +59,7 @@ builder.Services.AddServiceBus(bus =>
     {
         bus.UsingRabbitMQ(builder.Configuration);
     }
-    else
+    else if (builder.Environment.IsProduction())
     {
         bus.UsingAzureServiceBus(builder.Configuration);
     }
@@ -76,7 +76,14 @@ builder.Services
 builder.Services.AddTenantService();
 builder.Services.AddCurrentUserService();
 
-builder.Services.AddAuthenticationServices(builder.Configuration);
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddAuthentication_IdentityServer(builder.Configuration);
+}
+else if (builder.Environment.IsProduction())
+{
+    builder.Services.AddAuthentication_Entra(builder.Configuration);
+}
 
 builder.Services.AddAuthorization();
 

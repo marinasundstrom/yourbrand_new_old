@@ -20,13 +20,13 @@ public static class AuthenticationExtensions
 
         if (isDev)
         {
-            return Dev(services, configuration);
+            return AddAuthentication_IdentityServer(services, configuration);
         }
 
-        return Production(services, configuration);
+        return AddAuthentication_Entra(services, configuration);
     }
 
-    private static IServiceCollection Production(IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddAuthentication_Entra(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddMicrosoftIdentityWebApi(configuration.GetSection("AzureAd"));
@@ -34,7 +34,7 @@ public static class AuthenticationExtensions
         return services;
     }
 
-    private static IServiceCollection Dev(IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddAuthentication_IdentityServer(this IServiceCollection services, IConfiguration configuration)
     {
 #if DEBUG
         IdentityModelEventSource.ShowPII = true;

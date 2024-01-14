@@ -25,7 +25,8 @@ public static class Endpoints
 
         group.MapGet("/", GetTodos)
             .WithName($"Todos_{nameof(GetTodos)}")
-            .Produces<PagedResult<TodoDto>>(StatusCodes.Status200OK);
+            .Produces<PagedResult<TodoDto>>(StatusCodes.Status200OK)
+            .RequireAuthorization();
 
         group.MapPost("/", CreateTodo)
             .WithName($"Todos_{nameof(CreateTodo)}")
