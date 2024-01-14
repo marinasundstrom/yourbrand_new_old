@@ -17,26 +17,15 @@ public static class ServiceExtensions
         services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
         services.AddScoped<IEmailService, EmailService>();
 
-        //services.AddScoped<IdempotentDomainEventPublisher>();
+        DecorateDomainEventHandlers(services);
 
-        foreach (var reg in services.Where(reg => reg.ServiceType.Name.Contains("INotificationHandler")).ToList())
-        {
-            var notificationHandlerType = reg.ServiceType!;
-            var notificationHandlerImplType = reg.ImplementationType!;
+        SetUpProcessOutboxMessagesJob(services);
 
-            var requestType = notificationHandlerType.GetGenericArguments().FirstOrDefault();
+        return services;
+    }
 
-            if (!notificationHandlerImplType.Name.Contains("IdempotentDomainEventHandler")) continue;
-
-            services.Remove(reg);
-        }
-
-        try
-        {
-            services.Decorate(typeof(INotificationHandler<>), typeof(IdempotentDomainEventHandler<>));
-        }
-        catch { }
-
+    private static void SetUpProcessOutboxMessagesJob(IServiceCollection services)
+    {
         services.AddQuartz(configure =>
         {
             var jobKey = new JobKey(nameof(ProcessOutboxMessagesJob));
@@ -52,7 +41,34 @@ public static class ServiceExtensions
         });
 
         services.AddQuartzHostedService();
+    }
 
-        return services;
+    private static void DecorateDomainEventHandlers(IServiceCollection services)
+    {
+        RemoveFaultyDomainEventHandlerRegistrations(services);
+
+        try
+        {
+            services.Decorate(typeof(INotificationHandler<>), typeof(IdempotentDomainEventHandler<>));
+        }
+        catch { }
+    }
+
+    private static void RemoveFaultyDomainEventHandlerRegistrations(IServiceCollection services)
+    {
+        // This removes registrations between INotificationHandler<T> to IdempotentDomainEventHandler<T>. This was not a problem before MediatR 12.0.
+        // An alternative would be to put IdempotentDomainEventHandler in a library separate from Application logic, so that MediatR doesn't register that implementation as a real handler.
+
+        foreach (var reg in services.Where(reg => reg.ServiceType.Name.Contains("INotificationHandler")).ToList())
+        {
+            var notificationHandlerType = reg.ServiceType!;
+            var notificationHandlerImplType = reg.ImplementationType!;
+
+            var requestType = notificationHandlerType.GetGenericArguments().FirstOrDefault();
+
+            if (!notificationHandlerImplType.Name.Contains("IdempotentDomainEventHandler")) continue;
+
+            services.Remove(reg);
+        }
     }
 }

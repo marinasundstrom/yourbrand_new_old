@@ -21,7 +21,7 @@ public class MyTest : IAsyncLifetime
     public HttpClient HttpClient { get; private set; }
     public ITestHarness Harness { get; private set; }
 
-    public MyTest(YourServiceApiFactory factory, ITestOutputHelper testOutputHelper)
+    public MyTest(CustomWebApplicationFactory factory, ITestOutputHelper testOutputHelper)
     {
         _factory = factory.WithTestLogging(testOutputHelper);
 

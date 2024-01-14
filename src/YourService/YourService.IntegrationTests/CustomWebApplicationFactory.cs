@@ -18,7 +18,7 @@ using Microsoft.AspNetCore.Authentication;
 
 namespace YourBrand.YourService.IntegrationTests;
 
-public class YourServiceApiFactory
+public class CustomWebApplicationFactory
     : WebApplicationFactory<Program>, IAsyncLifetime
 {
     private const string DbName = "yourbrand-service-db";
