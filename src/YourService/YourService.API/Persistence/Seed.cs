@@ -1,10 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-
-using YourBrand.YourService.API.Domain.Entities;
-
-namespace YourBrand.YourService.API.Persistence;
+﻿namespace YourBrand.YourService.API.Persistence;
 
 public static class Seed
 {

@@ -30,7 +30,8 @@ public static class Endpoints
         group.MapPost("/", CreateTodo)
             .WithName($"Todos_{nameof(CreateTodo)}")
             .Produces<TodoDto>(StatusCodes.Status200OK)
-            .AddEndpointFilter<ValidationFilter<CreateTodoRequest>>();
+            .AddEndpointFilter<ValidationFilter<CreateTodoRequest>>()
+            .RequireAuthorization();
 
         app.MapHub<TodosHub>("/hubs/todos");
 

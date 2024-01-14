@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using YourBrand.YourService.Contracts;
 
 using Xunit.Abstractions;
+using System.Net.Http.Headers;
 
 namespace YourBrand.YourService.IntegrationTests;
 
@@ -20,7 +21,7 @@ public class MyTest : IAsyncLifetime
     public HttpClient HttpClient { get; private set; }
     public ITestHarness Harness { get; private set; }
 
-    public MyTest(CartsApiFactory factory, ITestOutputHelper testOutputHelper)
+    public MyTest(YourServiceApiFactory factory, ITestOutputHelper testOutputHelper)
     {
         _factory = factory.WithTestLogging(testOutputHelper);
 
@@ -39,16 +40,36 @@ public class MyTest : IAsyncLifetime
     }
 
     [Fact]
-    public async Task GetCarts()
+    public async Task GetTodos()
     {
         // Arrange
 
-
         // Act
-        var result = await HttpClient.GetStringAsync("/api/carts");
+        var response = await HttpClient.GetAsync("/v1/todos");
+        var str = await response.Content.ReadAsStringAsync();
+
+        Console.WriteLine(str);
 
         // Assert
     }
+
+    [Fact]
+    public async Task CreateTodo()
+    {
+        // Arrange
+
+        HttpClient.DefaultRequestHeaders.Authorization =
+            new AuthenticationHeaderValue("TestScheme");
+
+        // Act
+        var response = await HttpClient.PostAsJsonAsync("/v1/todos", new { Text = "Test" });
+        var str = await response.Content.ReadAsStringAsync();
+
+        Console.WriteLine(str);
+
+        // Assert
+    }
+
 
     public async Task DisposeAsync() => await _resetDatabase();
 }

@@ -14,13 +14,14 @@ using Respawn;
 using YourBrand.YourService.API.Persistence;
 
 using Testcontainers.SqlEdge;
+using Microsoft.AspNetCore.Authentication;
 
 namespace YourBrand.YourService.IntegrationTests;
 
-public class CartsApiFactory
+public class YourServiceApiFactory
     : WebApplicationFactory<Program>, IAsyncLifetime
 {
-    private const string CartsDbName = "yourbrand-carts-db";
+    private const string DbName = "yourbrand-service-db";
     private const string DbServerName = "yourbrand-test-sqlserver";
     static readonly SqlEdgeContainer _dbContainer = new SqlEdgeBuilder()
         .WithImage("mcr.microsoft.com/azure-sql-edge:1.0.7")
@@ -30,6 +31,8 @@ public class CartsApiFactory
         .Build();
     private SqlConnection _dbConnection;
     private Respawner _respawner;
+
+    public string DefaultUserId { get; set; } = "1";
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
@@ -43,7 +46,7 @@ public class CartsApiFactory
 
             services.AddDbContext<ApplicationDbContext>((sp, options) =>
             {
-                var connectionString = _dbContainer.GetConnectionString().Replace("master", CartsDbName);
+                var connectionString = _dbContainer.GetConnectionString().Replace("master", DbName);
                 options.UseSqlServer(connectionString);
             });
 
@@ -51,7 +54,7 @@ public class CartsApiFactory
             {
                 x.AddDelayedMessageScheduler();
 
-                x.AddConsumers(typeof(YourService.API.Features.Endpoints).Assembly);
+                x.AddConsumers(typeof(API.Features.Endpoints).Assembly);
 
                 x.UsingInMemory((context, cfg) =>
                 {
@@ -87,14 +90,18 @@ public class CartsApiFactory
 
         builder.ConfigureTestServices(services =>
         {
-
+            services.AddAuthentication("TestScheme")
+                .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>(
+                    "TestScheme", options => { });
         });
     }
 
     public async Task InitializeAsync()
     {
         await _dbContainer.StartAsync();
+
         _dbConnection = new SqlConnection(_dbContainer.GetConnectionString().Replace("Database=master;", string.Empty));
+
         await InitializeRespawner();
     }
 
