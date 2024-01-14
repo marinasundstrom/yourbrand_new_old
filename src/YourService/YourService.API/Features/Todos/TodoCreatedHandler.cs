@@ -23,11 +23,11 @@ public sealed class TodoCreatedHandler(
             throw new Exception();
         }
 
-        await todosClient.TodoCreated(todo.ToDto());
-
         await publishEndpoint.Publish(new Contracts.TodoCreated
         {
             TodoId = todo.Id
         });
+
+        await todosClient.TodoCreated(todo.ToDto());
     }
 }
