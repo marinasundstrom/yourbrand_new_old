@@ -1,3 +1,5 @@
+using System.Reflection;
+
 using Asp.Versioning;
 
 namespace BlazorApp;
@@ -9,8 +11,8 @@ public static class ApiVersions
     static IEnumerable<ApiVersion>? _all;
 
     public static IEnumerable<ApiVersion> All => _all
-        ??= typeof(ApiVersion)
-        .GetFields(System.Reflection.BindingFlags.Static)
+        ??= typeof(ApiVersions)
+        .GetFields(BindingFlags.Static | BindingFlags.Public)
         .Where(x => x.FieldType == typeof(ApiVersion)).Select(x => (ApiVersion)x.GetValue(null)!)
         .ToList().AsEnumerable();
 }
