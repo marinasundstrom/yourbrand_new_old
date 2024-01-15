@@ -17,24 +17,26 @@ public static class ServiceExtensions
     {
         DecorateDomainEventHandlers(services);
 
-        SetUpProcessOutboxMessagesJob(services);
+        SetUpProcessOutboxMessagesJob(services, configuration);
 
         services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
 
         return services;
     }
 
-    private static void SetUpProcessOutboxMessagesJob(IServiceCollection services)
+    private static void SetUpProcessOutboxMessagesJob(IServiceCollection services, IConfiguration configuration)
     {
         services.AddQuartz(configure =>
         {
             var jobKey = new JobKey(nameof(ProcessOutboxMessagesJob));
 
+            int interval = configuration.GetValue<int?>("ProcessOutboxMessagesJob:Interval") ?? 10;
+
             configure
                 .AddJob<ProcessOutboxMessagesJob>(jobKey)
                 .AddTrigger(trigger => trigger.ForJob(jobKey)
                     .WithSimpleSchedule(schedule => schedule
-                        .WithIntervalInSeconds(10)
+                        .WithIntervalInSeconds(interval)
                         .RepeatForever()));
 
             configure.UseMicrosoftDependencyInjectionJobFactory();
