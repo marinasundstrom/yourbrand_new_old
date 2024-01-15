@@ -27,7 +27,7 @@ public sealed class OutboxSaveChangesInterceptor : SaveChangesInterceptor
         var domainEvents = entities
             .SelectMany(entity =>
             {
-                var domainEvents = entity.DomainEvents;
+                var domainEvents = entity.DomainEvents.ToList();
 
                 entity.ClearDomainEvents();
 
@@ -35,6 +35,11 @@ public sealed class OutboxSaveChangesInterceptor : SaveChangesInterceptor
             })
             .OrderBy(e => e.Timestamp)
             .ToList();
+
+        if (domainEvents.Count == 0)
+        {
+            return await base.SavingChangesAsync(eventData, result, cancellationToken);
+        }
 
         var outboxMessages = domainEvents.Select(domainEvent =>
         {
