@@ -3,7 +3,6 @@ using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 
 using YourBrand.Domain.Persistence;
-using YourBrand.Domain.Persistence.Interceptors;
 using YourBrand.YourService.API.Common;
 using YourBrand.YourService.API.Domain.Entities;
 
@@ -14,8 +13,8 @@ public sealed class ApplicationDbContext : DomainDbContext, IApplicationDbContex
     private readonly string? _tenantId;
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,
-        ITenantService tenantService, OutboxSaveChangesInterceptor outboxSaveChangesInterceptor)
-        : base(options, outboxSaveChangesInterceptor)
+        ITenantService tenantService)
+        : base(options)
     {
         _tenantId = tenantService.TenantId;
     }
