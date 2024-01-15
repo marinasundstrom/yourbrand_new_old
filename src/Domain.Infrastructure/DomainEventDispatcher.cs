@@ -1,6 +1,8 @@
-﻿using MediatR;
+using MediatR;
 
-namespace YourBrand.YourService.API.Infrastructure.Services;
+using Microsoft.Extensions.Logging;
+
+namespace YourBrand.Domain.Infrastructure;
 
 sealed class DomainEventDispatcher : IDomainEventDispatcher
 {

@@ -1,21 +1,19 @@
 using Microsoft.EntityFrameworkCore;
 
-using YourBrand.YourService.API.Persistence;
-using YourBrand.YourService.API.Persistence.Outbox;
+using YourBrand.Domain.Outbox;
+using YourBrand.Domain.Persistence;
 
-using YourBrand.YourService.API.Common;
-
-namespace YourBrand.YourService.API.Infrastructure.Idempotence;
+namespace YourBrand.Domain.Infrastructure.Idempotence;
 
 public sealed class IdempotentDomainEventHandler<TDomainEvent> : IDomainEventHandler<TDomainEvent>
     where TDomainEvent : DomainEvent
 {
     private readonly IDomainEventHandler<TDomainEvent> decorated;
-    private readonly ApplicationDbContext dbContext;
+    private readonly DomainDbContext dbContext;
 
     public IdempotentDomainEventHandler(
         IDomainEventHandler<TDomainEvent> decorated,
-        ApplicationDbContext dbContext)
+        DomainDbContext dbContext)
     {
         this.decorated = decorated;
         this.dbContext = dbContext;
@@ -24,8 +22,6 @@ public sealed class IdempotentDomainEventHandler<TDomainEvent> : IDomainEventHan
     public async Task Handle(TDomainEvent notification, CancellationToken cancellationToken)
     {
         string consumer = decorated.GetType().Name;
-
-        Console.WriteLine("Consumer: " + consumer);
 
         if (await dbContext.Set<OutboxMessageConsumer>()
             .AnyAsync(

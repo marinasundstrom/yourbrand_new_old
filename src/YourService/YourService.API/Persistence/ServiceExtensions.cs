@@ -6,6 +6,8 @@ using YourBrand.YourService.API.Repositories;
 using YourBrand.YourService.API.Persistence.Interceptors;
 using YourBrand.YourService.API.Persistence.Repositories;
 using YourBrand.YourService.API.Persistence.Repositories.Mocks;
+using YourBrand.Domain.Persistence;
+using YourBrand.Domain.Persistence.Interceptors;
 
 namespace YourBrand.YourService.API.Persistence;
 
@@ -16,9 +18,9 @@ public static class ServiceExtensions
         const string ConnectionStringKey = "mssql";
 
         var connectionString = Infrastructure.ConfigurationExtensions.GetConnectionString(configuration, ConnectionStringKey, "Orders")
-            ?? configuration.GetValue<string>("yourbrand:sales-svc:db:connectionstring");
+            ?? configuration.GetValue<string>("yourbrand:yourservice-svc:db:connectionstring");
 
-
+        services.AddDomainPersistence<ApplicationDbContext>(configuration);
 
         services.AddDbContext<ApplicationDbContext>((sp, options) =>
         {
@@ -38,7 +40,6 @@ public static class ServiceExtensions
         services.AddScoped<IApplicationDbContext>(sp => sp.GetRequiredService<ApplicationDbContext>());
 
         services.AddScoped<AuditableEntitySaveChangesInterceptor>();
-        services.AddScoped<OutboxSaveChangesInterceptor>();
 
         RegisterRepositories(services);
 

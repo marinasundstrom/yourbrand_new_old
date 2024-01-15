@@ -1,6 +1,4 @@
-﻿using YourBrand.YourService.API.Domain;
-
-namespace YourBrand.YourService.API.Services;
+namespace YourBrand.Domain.Infrastructure;
 
 public interface IDomainEventDispatcher
 {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 using Newtonsoft.Json;
 
@@ -7,19 +8,19 @@ using Polly.Retry;
 
 using Quartz;
 
-using YourBrand.YourService.API.Persistence;
-using YourBrand.YourService.API.Persistence.Outbox;
+using YourBrand.Domain.Outbox;
+using YourBrand.Domain.Persistence;
 
-namespace YourBrand.YourService.API.Infrastructure.BackgroundJobs;
+namespace YourBrand.Domain.Infrastructure.BackgroundJobs;
 
 [DisallowConcurrentExecution]
 public sealed class ProcessOutboxMessagesJob : IJob
 {
-    private readonly ApplicationDbContext dbContext;
+    private readonly DomainDbContext dbContext;
     private readonly IDomainEventDispatcher domainEventDispatcher;
     private readonly ILogger<ProcessOutboxMessagesJob> logger;
 
-    public ProcessOutboxMessagesJob(ApplicationDbContext dbContext, IDomainEventDispatcher domainEventDispatcher,
+    public ProcessOutboxMessagesJob(DomainDbContext dbContext, IDomainEventDispatcher domainEventDispatcher,
         ILogger<ProcessOutboxMessagesJob> logger)
     {
         this.dbContext = dbContext;

@@ -1,6 +1,6 @@
-﻿using MediatR;
+using MediatR;
 
-namespace YourBrand.YourService.API.Domain;
+namespace YourBrand.Domain;
 
 public abstract record DomainEvent : INotification
 {

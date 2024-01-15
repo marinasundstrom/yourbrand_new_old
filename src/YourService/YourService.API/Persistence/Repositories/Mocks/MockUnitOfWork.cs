@@ -1,4 +1,6 @@
-﻿using YourBrand.YourService.API.Domain;
+﻿using YourBrand.Domain;
+using YourBrand.Domain.Infrastructure;
+using YourBrand.YourService.API.Domain;
 using YourBrand.YourService.API.Domain.Entities;
 using YourBrand.YourService.API.Infrastructure.Services;
 

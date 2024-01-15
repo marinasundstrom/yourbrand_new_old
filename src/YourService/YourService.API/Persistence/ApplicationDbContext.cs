@@ -2,17 +2,20 @@ using System.Linq.Expressions;
 
 using Microsoft.EntityFrameworkCore;
 
+using YourBrand.Domain.Persistence;
+using YourBrand.Domain.Persistence.Interceptors;
 using YourBrand.YourService.API.Common;
 using YourBrand.YourService.API.Domain.Entities;
 
 namespace YourBrand.YourService.API.Persistence;
 
-public sealed class ApplicationDbContext : DbContext, IUnitOfWork, IApplicationDbContext
+public sealed class ApplicationDbContext : DomainDbContext, IApplicationDbContext, IUnitOfWork
 {
     private readonly string? _tenantId;
 
-    public ApplicationDbContext(
-        DbContextOptions<ApplicationDbContext> options, ITenantService tenantService) : base(options)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,
+        ITenantService tenantService, OutboxSaveChangesInterceptor outboxSaveChangesInterceptor)
+        : base(options, outboxSaveChangesInterceptor)
     {
         _tenantId = tenantService.TenantId;
     }

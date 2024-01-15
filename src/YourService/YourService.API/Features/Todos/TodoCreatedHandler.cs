@@ -8,6 +8,7 @@ using YourBrand.YourService.API.Common;
 using YourBrand.YourService.API.Domain.Events;
 using MassTransit;
 using YourBrand.YourService.API.Domain.Entities;
+using YourBrand.Domain;
 
 namespace YourBrand.YourService.API.Features.Todos;
 

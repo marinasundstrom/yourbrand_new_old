@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace YourBrand.YourService.API.Common;
+namespace YourBrand.Domain;
 
 public interface IDomainEventHandler<TDomainEvent>
     : INotificationHandler<TDomainEvent>

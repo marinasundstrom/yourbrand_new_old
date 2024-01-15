@@ -1,4 +1,4 @@
-namespace YourBrand.YourService.API.Domain.Entities;
+namespace YourBrand.Domain;
 
 public interface IHasDomainEvents
 {

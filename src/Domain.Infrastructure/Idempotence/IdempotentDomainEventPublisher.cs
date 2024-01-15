@@ -2,17 +2,17 @@ using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-using YourBrand.YourService.API.Persistence;
-using YourBrand.YourService.API.Persistence.Outbox;
+using YourBrand.Domain.Outbox;
+using YourBrand.Domain.Persistence;
 
-namespace YourBrand.YourService.API.Infrastructure.Idempotence;
+namespace YourBrand.Domain.Infrastructure.Idempotence;
 
 public class IdempotentDomainEventPublisher : INotificationPublisher
 {
-    private readonly ApplicationDbContext dbContext;
+    private readonly DomainDbContext dbContext;
 
     public IdempotentDomainEventPublisher(
-        ApplicationDbContext dbContext)
+        DomainDbContext dbContext)
     {
         this.dbContext = dbContext;
     }
