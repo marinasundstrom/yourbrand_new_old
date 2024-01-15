@@ -7,7 +7,6 @@ using Quartz;
 
 using YourBrand.Domain.Infrastructure.BackgroundJobs;
 using YourBrand.Domain.Infrastructure.Idempotence;
-using YourBrand.Domain.Persistence;
 
 namespace YourBrand.Domain.Infrastructure;
 
