@@ -17,11 +17,13 @@ public class EmailService : IEmailService
 
     public async Task SendEmail(string recipient, string subject, string body)
     {
-        var message = new MailMessage(new MailAddress("noreply@orderapp-test.com", "Order app"), new MailAddress(recipient));
-        message.Subject = subject;
-        message.Body = body;
-        message.IsBodyHtml = true;
-        message.BodyEncoding = System.Text.Encoding.UTF8;
+        var message = new MailMessage(new MailAddress("noreply@orderapp-test.com", "Order app"), new MailAddress(recipient))
+        {
+            Subject = subject,
+            Body = body,
+            IsBodyHtml = true,
+            BodyEncoding = System.Text.Encoding.UTF8
+        };
 
         await _smtpClient.SendMailAsync(message);
 

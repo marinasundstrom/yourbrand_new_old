@@ -25,14 +25,14 @@ public static class Endpoints
 
         group.MapGet("/", GetTodos)
             .WithName($"Todos_{nameof(GetTodos)}")
-            .Produces<PagedResult<TodoDto>>(StatusCodes.Status200OK);
-        //.RequireAuthorization();
+            .Produces<PagedResult<TodoDto>>(StatusCodes.Status200OK)
+            .RequireAuthorization();
 
         group.MapPost("/", CreateTodo)
             .WithName($"Todos_{nameof(CreateTodo)}")
             .Produces<TodoDto>(StatusCodes.Status200OK)
-            .AddEndpointFilter<ValidationFilter<CreateTodoRequest>>();
-        //.RequireAuthorization();
+            .AddEndpointFilter<ValidationFilter<CreateTodoRequest>>()
+            .RequireAuthorization();
 
         app.MapHub<TodosHub>("/hubs/todos");
 
