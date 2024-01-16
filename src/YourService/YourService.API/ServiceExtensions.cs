@@ -15,8 +15,6 @@ public static class ServiceExtensions
         services.AddMediatR(x =>
         {
             x.RegisterServicesFromAssemblyContaining(typeof(ServiceExtensions));
-
-            //x.NotificationPublisherType = typeof(IdempotentDomainEventPublisher);
         });
 
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));

@@ -2,6 +2,7 @@
 
 using NSubstitute;
 
+using YourBrand.Domain.Infrastructure;
 using YourBrand.YourService.API.Domain.Events;
 using YourBrand.YourService.API.Features.Todos;
 using YourBrand.YourService.API.Persistence.Repositories.Mocks;

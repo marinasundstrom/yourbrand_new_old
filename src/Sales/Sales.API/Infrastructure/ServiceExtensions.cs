@@ -21,8 +21,6 @@ public static class ServiceExtensions
         services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
         services.AddScoped<IEmailService, EmailService>();
 
-        //services.AddScoped<IdempotentDomainEventPublisher>();
-
         foreach (var reg in services.Where(reg => reg.ServiceType.Name.Contains("INotificationHandler")).ToList())
         {
             var notificationHandlerType = reg.ServiceType!;
