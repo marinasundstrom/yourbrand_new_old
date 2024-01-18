@@ -1,4 +1,6 @@
-﻿using YourBrand.Sales.API.Features.OrderManagement.Domain;
+﻿using YourBrand.Domain;
+using YourBrand.Domain.Infrastructure;
+using YourBrand.Sales.API.Features.OrderManagement.Domain;
 using YourBrand.Sales.API.Features.OrderManagement.Domain.Entities;
 using YourBrand.Sales.API.Infrastructure.Services;
 

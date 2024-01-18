@@ -16,7 +16,7 @@ public static class ServiceBusExtensions
         {
             x.SetKebabCaseEndpointNameFormatter();
 
-            x.AddConsumers(Assembly.GetExecutingAssembly());
+            //x.AddConsumers(Assembly.GetExecutingAssembly());
 
             conf?.Invoke(x);
         });

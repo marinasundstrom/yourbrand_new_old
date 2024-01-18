@@ -7,6 +7,7 @@ using YourBrand.Sales.API.Features.OrderManagement.Repositories;
 
 using YourBrand.Orders.Application.Common;
 using YourBrand.Orders.Application.Services;
+using YourBrand.Domain;
 
 namespace YourBrand.Sales.API.Features.OrderManagement.Orders.EventHandlers;
 

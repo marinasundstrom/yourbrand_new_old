@@ -18,15 +18,27 @@ using Steeltoe.Discovery.Client;
 using YourBrand;
 using YourBrand.Extensions;
 using YourBrand.Sales.API;
-
-string ServiceName = "Sales.API";
+using Serilog;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-if (builder.Environment.IsDevelopment())
-{
-    builder.Services.AddDiscoveryClient();
-}
+string ServiceName = builder.Configuration["ServiceName"]!;
+string ServiceVersion = "1.0";
+
+// Add services to container
+
+builder.Host.UseSerilog((ctx, cfg) => cfg.ReadFrom.Configuration(builder.Configuration)
+                        .Enrich.WithProperty("Application", ServiceName)
+                        .Enrich.WithProperty("Environment", ctx.HostingEnvironment.EnvironmentName));
+
+builder.Services
+    .AddOpenApi(ServiceName, ApiVersions.All)
+    .AddApiVersioningServices();
+
+builder.Services.AddObservability(ServiceName, ServiceVersion, builder.Configuration);
+
+builder.Services.AddProblemDetails();
 
 string GetCartsExpire20 = nameof(GetCartsExpire20);
 
@@ -39,60 +51,29 @@ builder.Services.AddOutputCache(options =>
     });
 });
 
-if (builder.Environment.IsProduction())
+if (builder.Environment.IsDevelopment())
 {
-    builder.Configuration.AddAzureAppConfiguration(options =>
-        options.Connect(
-            new Uri($"https://{builder.Configuration["Azure:AppConfig:Name"]}.azconfig.io"),
-            new DefaultAzureCredential()));
-
-    builder.Configuration.AddAzureKeyVault(
-        new Uri($"https://{builder.Configuration["Azure:KeyVault:Name"]}.vault.azure.net/"),
-        new DefaultAzureCredential());
+    builder.Services.AddDiscoveryClient();
 }
 
-// Add services to the container.
-
-builder.Services
-    .AddOpenApi(ServiceName, ApiVersions.All)
-    .AddApiVersioningServices();
-
-builder.Services.AddObservability("Sales.API", "1.0", builder.Configuration);
-
-/*
-builder.Services.AddSqlServer<SalesContext>(
-    builder.Configuration.GetValue<string>("yourbrand:carts-svc:db:connectionstring"),
-    c => c.EnableRetryOnFailure());*/
-
-builder.Services.AddMassTransit(x =>
+if (builder.Environment.IsProduction())
 {
-    x.SetKebabCaseEndpointNameFormatter();
+    builder.Configuration.AddAzureAppConfiguration(builder.Configuration);
 
-    x.AddConsumers(typeof(Program).Assembly);
+    builder.Configuration.AddAzureKeyVault(builder.Configuration);
+}
 
-    if (builder.Environment.IsProduction())
+builder.Services.AddServiceBus(bus =>
+{
+    bus.AddConsumers(Assembly.GetExecutingAssembly());
+
+    if (builder.Environment.IsDevelopment())
     {
-        x.UsingAzureServiceBus((context, cfg) =>
-        {
-            cfg.Host($"sb://{builder.Configuration["Azure:ServiceBus:Namespace"]}.servicebus.windows.net");
-
-            cfg.ConfigureEndpoints(context);
-        });
+        bus.UsingRabbitMQ(builder.Configuration);
     }
-    else
+    else if (builder.Environment.IsProduction())
     {
-        x.UsingRabbitMq((context, cfg) =>
-        {
-            var rabbitmqHost = builder.Configuration["RABBITMQ_HOST"] ?? "localhost";
-
-            cfg.Host(rabbitmqHost, "/", h =>
-            {
-                h.Username("guest");
-                h.Password("guest");
-            });
-
-            cfg.ConfigureEndpoints(context);
-        });
+        bus.UsingAzureServiceBus(builder.Configuration);
     }
 });
 
@@ -106,7 +87,17 @@ builder.Services
 
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
-builder.Services.AddAuthenticationServices(builder.Configuration);
+//builder.Services.AddTenantService();
+//builder.Services.AddCurrentUserService();
+
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddAuthentication_IdentityServer(builder.Configuration);
+}
+else if (builder.Environment.IsProduction())
+{
+    builder.Services.AddAuthentication_Entra(builder.Configuration);
+}
 
 builder.Services.AddAuthorization();
 
@@ -116,7 +107,14 @@ builder.Services
 
 var app = builder.Build();
 
+// Configure the HTTP request pipeline.
+
+app.UseSerilogRequestLogging();
+
 app.MapObservability();
+
+app.UseExceptionHandler();
+app.UseStatusCodePages();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -136,11 +134,7 @@ app.MapFeaturesEndpoints();
 
 app.MapHubsForApp();
 
-app.MapHealthChecks("/healthz", new HealthCheckOptions()
-{
-    Predicate = _ => true,
-    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-});
+app.MapHealthChecks();
 
 try
 {

@@ -7,6 +7,9 @@ using YourBrand.Sales.API.Persistence.Interceptors;
 using YourBrand.Sales.API.Persistence.Repositories;
 using YourBrand.Sales.API.Persistence.Repositories.Mocks;
 
+using YourBrand.Domain.Persistence;
+using YourBrand.Domain.Persistence.Interceptors;
+
 namespace YourBrand.Sales.API.Persistence;
 
 public static class ServiceExtensions
@@ -18,7 +21,7 @@ public static class ServiceExtensions
         var connectionString = Infrastructure.ConfigurationExtensions.GetConnectionString(configuration, ConnectionStringKey, "Orders")
             ?? configuration.GetValue<string>("yourbrand:sales-svc:db:connectionstring");
 
-
+        services.AddDomainPersistence<SalesContext>(configuration);
 
         services.AddDbContext<SalesContext>((sp, options) =>
         {
@@ -38,7 +41,6 @@ public static class ServiceExtensions
         services.AddScoped<ISalesContext>(sp => sp.GetRequiredService<SalesContext>());
 
         services.AddScoped<AuditableEntitySaveChangesInterceptor>();
-        services.AddScoped<OutboxSaveChangesInterceptor>();
 
         RegisterRepositories(services);
 

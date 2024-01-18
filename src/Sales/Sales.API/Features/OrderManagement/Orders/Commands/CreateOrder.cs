@@ -6,6 +6,7 @@ using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
+using YourBrand.Domain.Infrastructure;
 using YourBrand.Sales.API.Features.OrderManagement.Domain.Entities;
 using YourBrand.Sales.API.Features.OrderManagement.Domain.Events;
 using YourBrand.Sales.API.Features.OrderManagement.Domain.ValueObjects;

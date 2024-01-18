@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
+using YourBrand.Domain;
+
 namespace YourBrand.Sales.API.Features.OrderManagement.Domain.Entities;
 
 public abstract class Entity<TId> : IEquatable<Entity<TId>>, IHasDomainEvents

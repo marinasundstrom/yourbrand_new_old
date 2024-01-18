@@ -34,6 +34,8 @@
     <PackageReference Include="Quartz.Extensions.DependencyInjection" Version="3.5.0" />
     <PackageReference Include="Quartz.Extensions.Hosting" Version="3.5.0" />
     <PackageReference Include="Scrutor" Version="4.2.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
+    <PackageReference Include="Serilog.Sinks.Grafana.Loki" Version="8.2.0-beta.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,6 +43,8 @@
     <ProjectReference Include="..\..\Diagnostics\Diagnostics.csproj" />
     <ProjectReference Include="..\..\Extensions\Extensions.csproj" />
     <ProjectReference Include="..\..\Core\Core.csproj" />
+    <ProjectReference Include="..\..\Domain.Infrastructure\Domain.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Domain.Persistence\Domain.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

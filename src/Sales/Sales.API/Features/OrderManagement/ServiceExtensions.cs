@@ -2,13 +2,9 @@
 
 using MediatR;
 
-using Microsoft.Extensions.DependencyInjection;
-
 using YourBrand.Sales.API.Features.OrderManagement.Orders;
-using YourBrand.Sales.API.Infrastructure.Idempotence;
 
 using YourBrand.Orders.Application.Behaviors;
-using YourBrand.Orders.Application.Common;
 
 namespace YourBrand.Sales.API.Features.OrderManagement;
 

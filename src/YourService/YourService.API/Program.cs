@@ -14,6 +14,7 @@ using YourBrand.Extensions;
 
 using Serilog;
 using MassTransit;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,7 +54,7 @@ if (builder.Environment.IsProduction())
 
 builder.Services.AddServiceBus(bus =>
 {
-    // bus.AddConsumersFromNamespaceContaining<>();
+    bus.AddConsumers(Assembly.GetExecutingAssembly());
 
     if (builder.Environment.IsDevelopment())
     {
@@ -68,7 +69,6 @@ builder.Services.AddServiceBus(bus =>
 builder.Services.AddSignalR();
 
 builder.Services
-    //.AddPresentation()
     .AddApplication()
     .AddInfrastructure(builder.Configuration)
     .AddPersistence(builder.Configuration);

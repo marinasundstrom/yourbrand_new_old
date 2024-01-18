@@ -8,7 +8,6 @@ public static class ServiceExtensions
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddScoped<IDateTime, DateTimeService>();
-        //services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
         services.AddScoped<IEmailService, EmailService>();
 
         services.AddDomainInfrastructure(configuration);

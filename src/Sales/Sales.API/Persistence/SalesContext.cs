@@ -2,11 +2,12 @@ using System.Linq.Expressions;
 
 using Microsoft.EntityFrameworkCore;
 
+using YourBrand.Domain.Persistence;
 using YourBrand.Sales.API.Features.OrderManagement.Domain.Entities;
 
 namespace YourBrand.Sales.API.Persistence;
 
-public sealed class SalesContext : DbContext, IUnitOfWork, ISalesContext
+public sealed class SalesContext : DomainDbContext, IUnitOfWork, ISalesContext
 {
     public SalesContext(
         DbContextOptions<SalesContext> options) : base(options) { }
