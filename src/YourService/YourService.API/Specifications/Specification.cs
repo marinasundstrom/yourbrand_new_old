@@ -14,21 +14,124 @@ public abstract class Specification<T>
         Func<T, bool> predicate = ToExpression().Compile();
         return predicate(entity);
     }
+
+    public Specification<T> And(Specification<T> specification)
+    {
+        return new AndSpecification<T>(this, specification);
+    }
+
+    public Specification<T> Or(Specification<T> specification)
+    {
+        return new OrSpecification<T>(this, specification);
+    }
+
+    public Specification<T> AndNot(Specification<T> specification)
+    {
+        return new AndNotSpecification<T>(this, specification);
+    }
+
+    public Specification<T> OrNot(Specification<T> specification)
+    {
+        return new OrNotSpecification<T>(this, specification);
+    }
 }
 
-public class AndSpecification<T>(Specification<T> left, Specification<T> right) : Specification<T>
+public class AndSpecification<T> : Specification<T>
 {
-    public override Expression<Func<T, bool>> ToExpression() => left.ToExpression().And(right.ToExpression()).Expand();
+    private readonly Specification<T> _left;
+    private readonly Specification<T> _right;
+
+    public AndSpecification(Specification<T> left, Specification<T> right)
+    {
+        _right = right;
+        _left = left;
+    }
+
+    public override Expression<Func<T, bool>> ToExpression()
+    {
+        Expression<Func<T, bool>> leftExpression = _left.ToExpression();
+        Expression<Func<T, bool>> rightExpression = _right.ToExpression();
+
+        BinaryExpression andExpression = Expression.AndAlso(
+            leftExpression.Body, rightExpression.Body);
+
+        return Expression.Lambda<Func<T, bool>>(
+            andExpression, leftExpression.Parameters.Single());
+    }
 }
 
-public class OrSpecification<T>(Specification<T> left, Specification<T> right) : Specification<T>
+public class OrSpecification<T> : Specification<T>
 {
-    public override Expression<Func<T, bool>> ToExpression() => left.ToExpression().Or(right.ToExpression()).Expand();
+    private readonly Specification<T> _left;
+    private readonly Specification<T> _right;
+
+    public OrSpecification(Specification<T> left, Specification<T> right)
+    {
+        _right = right;
+        _left = left;
+    }
+
+    public override Expression<Func<T, bool>> ToExpression()
+    {
+        Expression<Func<T, bool>> leftExpression = _left.ToExpression();
+        Expression<Func<T, bool>> rightExpression = _right.ToExpression();
+
+        BinaryExpression orExpression = Expression.OrElse(
+            leftExpression.Body, rightExpression.Body);
+
+        return Expression.Lambda<Func<T, bool>>(
+            orExpression, leftExpression.Parameters.Single());
+    }
 }
 
-public static class SpecificationExtensions
+public class AndNotSpecification<T> : Specification<T>
 {
-    public static Specification<T> And<T>(this Specification<T> left, Specification<T> right) => new AndSpecification<T>(left, right);
+    private readonly Specification<T> _left;
+    private readonly Specification<T> _right;
 
-    public static Specification<T> Or<T>(this Specification<T> left, Specification<T> right) => new OrSpecification<T>(left, right);
+    public AndNotSpecification(Specification<T> left, Specification<T> right)
+    {
+        _right = right;
+        _left = left;
+    }
+
+    public override Expression<Func<T, bool>> ToExpression()
+    {
+        Expression<Func<T, bool>> leftExpression = _left.ToExpression();
+        Expression<Func<T, bool>> rightExpression = _right.ToExpression();
+
+        UnaryExpression negateExpression = Expression.Negate(rightExpression.Body);
+
+        BinaryExpression andExpression = Expression.AndAlso(
+            leftExpression.Body, negateExpression);
+
+        return Expression.Lambda<Func<T, bool>>(
+            andExpression, leftExpression.Parameters.Single());
+    }
+}
+
+public class OrNotSpecification<T> : Specification<T>
+{
+    private readonly Specification<T> _left;
+    private readonly Specification<T> _right;
+
+    public OrNotSpecification(Specification<T> left, Specification<T> right)
+    {
+        _right = right;
+        _left = left;
+    }
+
+    public override Expression<Func<T, bool>> ToExpression()
+    {
+        Expression<Func<T, bool>> leftExpression = _left.ToExpression();
+        Expression<Func<T, bool>> rightExpression = _right.ToExpression();
+
+        UnaryExpression negateExpression = Expression.Negate(rightExpression.Body);
+
+        BinaryExpression andExpression = Expression.OrElse(
+            leftExpression.Body, negateExpression);
+
+        return Expression.Lambda<Func<T, bool>>(
+            andExpression, leftExpression.Parameters.Single());
+    }
 }

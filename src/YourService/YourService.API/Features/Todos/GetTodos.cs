@@ -18,7 +18,7 @@ public sealed record GetTodos(int Page = 1, int PageSize = 10, string? SearchTer
 
         public async Task<PagedResult<TodoDto>> Handle(GetTodos request, CancellationToken cancellationToken)
         {
-            var specification = new IsCompleted(false).And(new HasExpired(TimeSpan.FromDays(30)));
+            var specification = new IsCompleted(false).And(new HasExpired(expirationTime: TimeSpan.FromDays(30)));
 
             var query = todoRepository.Find(specification);
 
@@ -40,8 +40,6 @@ public sealed record GetTodos(int Page = 1, int PageSize = 10, string? SearchTer
 
             var todos = await query
                 .OrderBy(i => i.Id)
-                .Include(i => i.CreatedBy)
-                .Include(i => i.LastModifiedBy)
                 .AsSplitQuery()
                 .Skip((request.Page - 1) * request.PageSize)
                 .Take(request.PageSize).AsQueryable()
