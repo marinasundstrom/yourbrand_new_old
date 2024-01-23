@@ -29,9 +29,9 @@ public sealed class UserRepository : IUserRepository
         return await dbSet.FirstOrDefaultAsync(x => x.Id.Equals(id), cancellationToken);
     }
 
-    public IQueryable<User> GetAll(ISpecification<User> specification)
+    public IQueryable<User> Find(Specification<User> specification)
     {
-        return dbSet.Where(specification.Criteria);
+        return dbSet.Where(specification.ToExpression());
     }
 
     public void Add(User user)

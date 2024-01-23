@@ -1,10 +1,5 @@
 using MediatR;
-
-using Microsoft.EntityFrameworkCore;
-
-using YourBrand.YourService.API;
 using YourBrand.YourService.API.Repositories;
-using YourBrand.YourService.API.Common;
 using FluentValidation;
 using YourBrand.YourService.API.Domain.Entities;
 

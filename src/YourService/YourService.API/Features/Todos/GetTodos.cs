@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using YourBrand.YourService.API;
 using YourBrand.YourService.API.Repositories;
 using YourBrand.YourService.API.Common;
+using YourBrand.YourService.API.Domain.Specifications;
+using YourBrand.YourService.API.Domain.Entities;
 
 namespace YourBrand.YourService.API.Features.Todos;
 
@@ -16,7 +18,9 @@ public sealed record GetTodos(int Page = 1, int PageSize = 10, string? SearchTer
 
         public async Task<PagedResult<TodoDto>> Handle(GetTodos request, CancellationToken cancellationToken)
         {
-            var query = todoRepository.GetAll();
+            var specification = new IsCompleted(false).And(new HasExpired(TimeSpan.FromDays(30)));
+
+            var query = todoRepository.Find(specification);
 
             var totalCount = await query.CountAsync(cancellationToken);
 

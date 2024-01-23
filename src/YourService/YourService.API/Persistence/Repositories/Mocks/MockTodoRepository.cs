@@ -43,12 +43,12 @@ public sealed class MockTodoRepository : ITodoRepository
             .AsQueryable();
     }
 
-    public IQueryable<Todo> GetAll(ISpecification<Todo> specification)
+    public IQueryable<Todo> Find(Specification<Todo> specification)
     {
         return mockUnitOfWork.Items
             .OfType<Todo>()
             .AsQueryable()
-            .Where(specification.Criteria);
+            .Where(specification.ToExpression());
     }
 
     public void Remove(Todo item)

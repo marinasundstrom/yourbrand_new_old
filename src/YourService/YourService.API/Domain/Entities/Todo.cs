@@ -17,6 +17,8 @@ public class Todo : AggregateRoot<string>, IAuditable
 
     public string Text { get; set; }
 
+    public bool IsCompleted { get; set; }
+
     public User? CreatedBy { get; set; }
 
     public string? CreatedById { get; set; }

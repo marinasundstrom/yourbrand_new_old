@@ -18,25 +18,23 @@ public sealed class TodoRepository : ITodoRepository
 
     public IQueryable<Todo> GetAll()
     {
-        //return dbSet.Where(new OrdersWithStatus(OrderStatus.Completed).Or(new OrdersWithStatus(OrderStatus.OnHold))).AsQueryable();
+        return dbSet
+            .IncludeAll()
+            .AsQueryable();
+    }
 
-        return dbSet.AsQueryable();
+    public IQueryable<Todo> Find(Specification<Todo> specification)
+    {
+        return dbSet
+            .IncludeAll()
+            .Where(specification.ToExpression());
     }
 
     public async Task<Todo?> FindByIdAsync(string id, CancellationToken cancellationToken = default)
     {
         return await dbSet
-            .Include(i => i.CreatedBy)
-            .Include(i => i.LastModifiedBy)
+            .IncludeAll()
             .FirstOrDefaultAsync(x => x.Id.Equals(id), cancellationToken);
-    }
-
-    public IQueryable<Todo> GetAll(ISpecification<Todo> specification)
-    {
-        return dbSet
-            .Include(i => i.CreatedBy)
-            .Include(i => i.LastModifiedBy)
-            .Where(specification.Criteria);
     }
 
     public void Add(Todo item)
