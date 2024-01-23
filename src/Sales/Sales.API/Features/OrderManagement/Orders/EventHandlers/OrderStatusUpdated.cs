@@ -10,20 +10,12 @@ using YourBrand.Domain;
 
 namespace YourBrand.Sales.API.Features.OrderManagement.Orders.EventHandlers;
 
-public sealed class OrderStatusUpdatedEventHandler : IDomainEventHandler<OrderStatusUpdated>
+public sealed class OrderStatusUpdatedEventHandler(IOrderRepository orderRepository, ICurrentUserService currentUserService, IEmailService emailService, IOrderNotificationService orderNotificationService) : IDomainEventHandler<OrderStatusUpdated>
 {
-    private readonly IOrderRepository orderRepository;
-    private readonly ICurrentUserService currentUserService;
-    private readonly IEmailService emailService;
-    private readonly IOrderNotificationService orderNotificationService;
-
-    public OrderStatusUpdatedEventHandler(IOrderRepository orderRepository, ICurrentUserService currentUserService, IEmailService emailService, IOrderNotificationService orderNotificationService)
-    {
-        this.orderRepository = orderRepository;
-        this.currentUserService = currentUserService;
-        this.emailService = emailService;
-        this.orderNotificationService = orderNotificationService;
-    }
+    private readonly IOrderRepository orderRepository = orderRepository;
+    private readonly ICurrentUserService currentUserService = currentUserService;
+    private readonly IEmailService emailService = emailService;
+    private readonly IOrderNotificationService orderNotificationService = orderNotificationService;
 
     public async Task Handle(OrderStatusUpdated notification, CancellationToken cancellationToken)
     {

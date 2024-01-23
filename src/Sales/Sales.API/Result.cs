@@ -1,10 +1,15 @@
 namespace YourBrand.Sales.API;
 
+public static class Results
+{
+    public readonly static Result Success = new();
+}
+
 public class Result
 {
     private readonly Error? error;
 
-    private Result()
+    internal Result()
     {
     }
 
@@ -36,6 +41,10 @@ public class Result
     public static implicit operator Error(Result result) =>
         !result.IsFailure
         ? throw new InvalidOperationException() : result.error!;
+
+
+    public static implicit operator Result(Error error) =>
+        Result.Failure(error);
 }
 
 public class Result<T> : Result
@@ -56,4 +65,10 @@ public class Result<T> : Result
     public static implicit operator T(Result<T> result) =>
         result.IsFailure
         ? throw new InvalidOperationException() : result.data!;
+
+    public static implicit operator Result<T>(T result) =>
+        Result.Success(result);
+
+    public static implicit operator Result<T>(Error error) =>
+        Result.Failure<T>(error);
 }

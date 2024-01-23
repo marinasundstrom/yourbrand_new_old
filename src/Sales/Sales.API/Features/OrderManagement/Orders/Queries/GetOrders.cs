@@ -12,14 +12,9 @@ namespace YourBrand.Sales.API.Features.OrderManagement.Orders.Queries;
 
 public record GetOrders(int[]? Status, string? CustomerId, string? SSN, string? AssigneeId, int Page = 1, int PageSize = 10, string? SortBy = null, SortDirection? SortDirection = null) : IRequest<Result<PagedResult<OrderDto>>>
 {
-    public class Handler : IRequestHandler<GetOrders, Result<PagedResult<OrderDto>>>
+    public class Handler(IOrderRepository orderRepository) : IRequestHandler<GetOrders, Result<PagedResult<OrderDto>>>
     {
-        private readonly IOrderRepository orderRepository;
-
-        public Handler(IOrderRepository orderRepository)
-        {
-            this.orderRepository = orderRepository;
-        }
+        private readonly IOrderRepository orderRepository = orderRepository;
 
         public async Task<Result<PagedResult<OrderDto>>> Handle(GetOrders request, CancellationToken cancellationToken)
         {
@@ -68,7 +63,7 @@ public record GetOrders(int[]? Status, string? CustomerId, string? SSN, string? 
                 .Take(request.PageSize).AsQueryable()
                 .ToArrayAsync(cancellationToken);
 
-            return Result.Success<PagedResult<OrderDto>>(new PagedResult<OrderDto>(orders.Select(x => x.ToDto()), totalCount));
+            return new PagedResult<OrderDto>(orders.Select(x => x.ToDto()), totalCount);
         }
     }
 }

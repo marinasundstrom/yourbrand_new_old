@@ -8,16 +8,11 @@ using YourBrand.YourService.API.Common;
 
 namespace YourBrand.YourService.API.Features.Todos;
 
-public record GetTodos(int Page = 1, int PageSize = 10, string? SearchTerm = null, string? SortBy = null, SortDirection? SortDirection = null) : IRequest<PagedResult<TodoDto>>
+public sealed record GetTodos(int Page = 1, int PageSize = 10, string? SearchTerm = null, string? SortBy = null, SortDirection? SortDirection = null) : IRequest<PagedResult<TodoDto>>
 {
-    public class Handler : IRequestHandler<GetTodos, PagedResult<TodoDto>>
+    public sealed class Handler(ITodoRepository todoRepository) : IRequestHandler<GetTodos, PagedResult<TodoDto>>
     {
-        private readonly ITodoRepository todoRepository;
-
-        public Handler(ITodoRepository todoRepository)
-        {
-            this.todoRepository = todoRepository;
-        }
+        private readonly ITodoRepository todoRepository = todoRepository;
 
         public async Task<PagedResult<TodoDto>> Handle(GetTodos request, CancellationToken cancellationToken)
         {

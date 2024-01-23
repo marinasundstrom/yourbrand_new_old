@@ -17,16 +17,10 @@ public sealed record UpdateStatus(string Id, int StatusId) : IRequest<Result>
         }
     }
 
-    public sealed class Handler : IRequestHandler<UpdateStatus, Result>
+    public sealed class Handler(IOrderRepository orderRepository, IUnitOfWork unitOfWork) : IRequestHandler<UpdateStatus, Result>
     {
-        private readonly IOrderRepository orderRepository;
-        private readonly IUnitOfWork unitOfWork;
-
-        public Handler(IOrderRepository orderRepository, IUnitOfWork unitOfWork)
-        {
-            this.orderRepository = orderRepository;
-            this.unitOfWork = unitOfWork;
-        }
+        private readonly IOrderRepository orderRepository = orderRepository;
+        private readonly IUnitOfWork unitOfWork = unitOfWork;
 
         public async Task<Result> Handle(UpdateStatus request, CancellationToken cancellationToken)
         {
@@ -34,13 +28,13 @@ public sealed record UpdateStatus(string Id, int StatusId) : IRequest<Result>
 
             if (order is null)
             {
-                return Result.Failure(Errors.Orders.OrderNotFound);
+                return Errors.Orders.OrderNotFound;
             }
 
             order.UpdateStatus(request.StatusId);
             await unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return Result.Success();
+            return Results.Success;
         }
     }
 }

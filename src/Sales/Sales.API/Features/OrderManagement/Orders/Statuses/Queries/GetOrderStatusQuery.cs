@@ -14,18 +14,12 @@ namespace YourBrand.Sales.API.Features.OrderManagement.Orders.Statuses.Queries;
 
 public record GetOrderStatusQuery(int Id) : IRequest<OrderStatusDto?>
 {
-    class GetOrderStatusQueryHandler : IRequestHandler<GetOrderStatusQuery, OrderStatusDto?>
+    class GetOrderStatusQueryHandler(
+        ISalesContext context,
+        ICurrentUserService currentUserService) : IRequestHandler<GetOrderStatusQuery, OrderStatusDto?>
     {
-        private readonly ISalesContext _context;
-        private readonly ICurrentUserService currentUserService;
-
-        public GetOrderStatusQueryHandler(
-            ISalesContext context,
-            ICurrentUserService currentUserService)
-        {
-            _context = context;
-            this.currentUserService = currentUserService;
-        }
+        private readonly ISalesContext _context = context;
+        private readonly ICurrentUserService currentUserService = currentUserService;
 
         public async Task<OrderStatusDto?> Handle(GetOrderStatusQuery request, CancellationToken cancellationToken)
         {

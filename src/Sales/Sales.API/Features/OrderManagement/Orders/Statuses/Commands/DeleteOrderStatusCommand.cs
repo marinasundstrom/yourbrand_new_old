@@ -10,14 +10,9 @@ namespace YourBrand.Sales.API.Features.OrderManagement.Orders.Statuses.Commands;
 
 public record DeleteOrderStatusCommand(int Id) : IRequest
 {
-    public class DeleteOrderStatusCommandHandler : IRequestHandler<DeleteOrderStatusCommand>
+    public class DeleteOrderStatusCommandHandler(ISalesContext context) : IRequestHandler<DeleteOrderStatusCommand>
     {
-        private readonly ISalesContext context;
-
-        public DeleteOrderStatusCommandHandler(ISalesContext context)
-        {
-            this.context = context;
-        }
+        private readonly ISalesContext context = context;
 
         public async Task Handle(DeleteOrderStatusCommand request, CancellationToken cancellationToken)
         {

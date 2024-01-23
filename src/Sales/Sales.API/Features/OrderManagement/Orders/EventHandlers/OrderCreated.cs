@@ -11,16 +11,10 @@ using YourBrand.Domain;
 
 namespace YourBrand.Sales.API.Features.OrderManagement.Orders.EventHandlers;
 
-public sealed class OrderCreatedEventHandler : IDomainEventHandler<OrderCreated>
+public sealed class OrderCreatedEventHandler(IOrderRepository orderRepository, IOrderNotificationService orderNotificationService) : IDomainEventHandler<OrderCreated>
 {
-    private readonly IOrderRepository orderRepository;
-    private readonly IOrderNotificationService orderNotificationService;
-
-    public OrderCreatedEventHandler(IOrderRepository orderRepository, IOrderNotificationService orderNotificationService)
-    {
-        this.orderRepository = orderRepository;
-        this.orderNotificationService = orderNotificationService;
-    }
+    private readonly IOrderRepository orderRepository = orderRepository;
+    private readonly IOrderNotificationService orderNotificationService = orderNotificationService;
 
     public async Task Handle(OrderCreated notification, CancellationToken cancellationToken)
     {

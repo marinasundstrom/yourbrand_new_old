@@ -8,14 +8,9 @@ namespace YourBrand.Sales.API.Features.OrderManagement.Orders.Statuses.Commands;
 
 public record CreateOrderStatusCommand(string Name, string Handle, string? Description) : IRequest<OrderStatusDto>
 {
-    public class CreateOrderStatusCommandHandler : IRequestHandler<CreateOrderStatusCommand, OrderStatusDto>
+    public class CreateOrderStatusCommandHandler(ISalesContext context) : IRequestHandler<CreateOrderStatusCommand, OrderStatusDto>
     {
-        private readonly ISalesContext context;
-
-        public CreateOrderStatusCommandHandler(ISalesContext context)
-        {
-            this.context = context;
-        }
+        private readonly ISalesContext context = context;
 
         public async Task<OrderStatusDto> Handle(CreateOrderStatusCommand request, CancellationToken cancellationToken)
         {

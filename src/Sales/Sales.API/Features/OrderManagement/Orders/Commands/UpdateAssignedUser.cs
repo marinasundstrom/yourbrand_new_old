@@ -17,18 +17,11 @@ public sealed record UpdateAssignedUser(string Id, string? UserId) : IRequest<Re
         }
     }
 
-    public sealed class Handler : IRequestHandler<UpdateAssignedUser, Result>
+    public sealed class Handler(IOrderRepository orderRepository, IUserRepository userRepository, IUnitOfWork unitOfWork) : IRequestHandler<UpdateAssignedUser, Result>
     {
-        private readonly IOrderRepository orderRepository;
-        private readonly IUserRepository userRepository;
-        private readonly IUnitOfWork unitOfWork;
-
-        public Handler(IOrderRepository orderRepository, IUserRepository userRepository, IUnitOfWork unitOfWork)
-        {
-            this.orderRepository = orderRepository;
-            this.userRepository = userRepository;
-            this.unitOfWork = unitOfWork;
-        }
+        private readonly IOrderRepository orderRepository = orderRepository;
+        private readonly IUserRepository userRepository = userRepository;
+        private readonly IUnitOfWork unitOfWork = unitOfWork;
 
         public async Task<Result> Handle(UpdateAssignedUser request, CancellationToken cancellationToken)
         {
@@ -36,7 +29,7 @@ public sealed record UpdateAssignedUser(string Id, string? UserId) : IRequest<Re
 
             if (order is null)
             {
-                return Result.Failure(Errors.Orders.OrderNotFound);
+                return Errors.Orders.OrderNotFound;
             }
 
             if (request.UserId is not null)
@@ -45,14 +38,14 @@ public sealed record UpdateAssignedUser(string Id, string? UserId) : IRequest<Re
 
                 if (user is null)
                 {
-                    return Result.Failure(Errors.Users.UserNotFound);
+                    return Errors.Users.UserNotFound;
                 }
             }
 
             order.UpdateAssigneeId(request.UserId);
             await unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return Result.Success();
+            return Results.Success;
         }
     }
 }

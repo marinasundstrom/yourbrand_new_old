@@ -17,14 +17,9 @@ public record GetOrderById(string Id) : IRequest<Result<OrderDto>>
         }
     }
 
-    public class Handler : IRequestHandler<GetOrderById, Result<OrderDto>>
+    public class Handler(IOrderRepository orderRepository) : IRequestHandler<GetOrderById, Result<OrderDto>>
     {
-        private readonly IOrderRepository orderRepository;
-
-        public Handler(IOrderRepository orderRepository)
-        {
-            this.orderRepository = orderRepository;
-        }
+        private readonly IOrderRepository orderRepository = orderRepository;
 
         public async Task<Result<OrderDto>> Handle(GetOrderById request, CancellationToken cancellationToken)
         {
@@ -32,10 +27,10 @@ public record GetOrderById(string Id) : IRequest<Result<OrderDto>>
 
             if (order is null)
             {
-                return Result.Failure<OrderDto>(Errors.Orders.OrderNotFound);
+                return Errors.Orders.OrderNotFound;
             }
 
-            return Result.Success(order.ToDto());
+            return order.ToDto();
         }
     }
 }

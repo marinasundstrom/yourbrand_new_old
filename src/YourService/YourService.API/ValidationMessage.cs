@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
 
+using Results2 = Microsoft.AspNetCore.Http.Results;
+
 namespace YourBrand.YourService.API;
 
 public class ValidationFilter<T> : IEndpointFilter
@@ -19,11 +21,11 @@ public class ValidationFilter<T> : IEndpointFilter
                 {
                     return await next(ctx);
                 }
-                return Results.ValidationProblem(validation.ToDictionary());
+                return Results2.ValidationProblem(validation.ToDictionary());
             }
             else
             {
-                return Results.Problem("Could not find type to validate");
+                return Results2.Problem("Could not find type to validate");
             }
         }
         return await next(ctx);

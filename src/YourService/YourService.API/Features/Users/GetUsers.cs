@@ -8,9 +8,9 @@ using YourBrand.YourService.API.Common;
 
 namespace YourBrand.YourService.API.Features.Users;
 
-public record GetUsers(int Page = 1, int PageSize = 10, string? SearchTerm = null, string? SortBy = null, SortDirection? SortDirection = null) : IRequest<PagedResult<UserDto>>
+public sealed record GetUsers(int Page = 1, int PageSize = 10, string? SearchTerm = null, string? SortBy = null, SortDirection? SortDirection = null) : IRequest<PagedResult<UserDto>>
 {
-    public class Handler : IRequestHandler<GetUsers, PagedResult<UserDto>>
+    public sealed class Handler : IRequestHandler<GetUsers, PagedResult<UserDto>>
     {
         private readonly IUserRepository userRepository;
 

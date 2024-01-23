@@ -10,14 +10,9 @@ namespace YourBrand.Sales.API.Features.OrderManagement.Orders.Statuses.Commands;
 
 public record UpdateOrderStatusCommand(int Id, string Name, string Handle, string? Description) : IRequest
 {
-    public class UpdateOrderStatusCommandHandler : IRequestHandler<UpdateOrderStatusCommand>
+    public class UpdateOrderStatusCommandHandler(ISalesContext context) : IRequestHandler<UpdateOrderStatusCommand>
     {
-        private readonly ISalesContext context;
-
-        public UpdateOrderStatusCommandHandler(ISalesContext context)
-        {
-            this.context = context;
-        }
+        private readonly ISalesContext context = context;
 
         public async Task Handle(UpdateOrderStatusCommand request, CancellationToken cancellationToken)
         {

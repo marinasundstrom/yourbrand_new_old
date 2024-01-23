@@ -27,18 +27,11 @@ public sealed record CreateOrder(int? Status, string? CustomerId, BillingDetails
         }
     }
 
-    public sealed class Handler : IRequestHandler<CreateOrder, Result<OrderDto>>
+    public sealed class Handler(IOrderRepository orderRepository, IUnitOfWork unitOfWork, IDomainEventDispatcher domainEventDispatcher) : IRequestHandler<CreateOrder, Result<OrderDto>>
     {
-        private readonly IOrderRepository orderRepository;
-        private readonly IUnitOfWork unitOfWork;
-        private readonly IDomainEventDispatcher domainEventDispatcher;
-
-        public Handler(IOrderRepository orderRepository, IUnitOfWork unitOfWork, IDomainEventDispatcher domainEventDispatcher)
-        {
-            this.orderRepository = orderRepository;
-            this.unitOfWork = unitOfWork;
-            this.domainEventDispatcher = domainEventDispatcher;
-        }
+        private readonly IOrderRepository orderRepository = orderRepository;
+        private readonly IUnitOfWork unitOfWork = unitOfWork;
+        private readonly IDomainEventDispatcher domainEventDispatcher = domainEventDispatcher;
 
         public async Task<Result<OrderDto>> Handle(CreateOrder request, CancellationToken cancellationToken)
         {
@@ -111,7 +104,7 @@ public sealed record CreateOrder(int? Status, string? CustomerId, BillingDetails
                 .Include(i => i.LastModifiedBy)
                 .FirstAsync(x => x.OrderNo == order.OrderNo, cancellationToken);
 
-            return Result.Success(order!.ToDto());
+            return order!.ToDto();
         }
 
         private Domain.ValueObjects.Address Map(AddressDto address)

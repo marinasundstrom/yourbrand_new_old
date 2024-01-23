@@ -4,9 +4,12 @@ using MediatR;
 
 using YourBrand.Sales.API.Features.OrderManagement.Repositories;
 
+using static YourBrand.Sales.API.Results;
+using static YourBrand.Sales.API.Features.OrderManagement.Domain.Errors.Orders;
+
 namespace YourBrand.Sales.API.Features.OrderManagement.Orders.Items.Commands;
 
-public sealed record RemoveOrderItem(string OrderId, string OrdeItemId) : IRequest<Result>
+public sealed record RemoveOrderItem(string OrderId, string OrderItemId) : IRequest<Result>
 {
     public sealed class Validator : AbstractValidator<RemoveOrderItem>
     {
@@ -14,20 +17,14 @@ public sealed record RemoveOrderItem(string OrderId, string OrdeItemId) : IReque
         {
             RuleFor(x => x.OrderId).NotEmpty();
 
-            RuleFor(x => x.OrdeItemId).NotEmpty();
+            RuleFor(x => x.OrderItemId).NotEmpty();
         }
     }
 
-    public sealed class Handler : IRequestHandler<RemoveOrderItem, Result>
+    public sealed class Handler(IOrderRepository orderRepository, IUnitOfWork unitOfWork) : IRequestHandler<RemoveOrderItem, Result>
     {
-        private readonly IOrderRepository orderRepository;
-        private readonly IUnitOfWork unitOfWork;
-
-        public Handler(IOrderRepository orderRepository, IUnitOfWork unitOfWork)
-        {
-            this.orderRepository = orderRepository;
-            this.unitOfWork = unitOfWork;
-        }
+        private readonly IOrderRepository orderRepository = orderRepository;
+        private readonly IUnitOfWork unitOfWork = unitOfWork;
 
         public async Task<Result> Handle(RemoveOrderItem request, CancellationToken cancellationToken)
         {
@@ -35,14 +32,14 @@ public sealed record RemoveOrderItem(string OrderId, string OrdeItemId) : IReque
 
             if (order is null)
             {
-                return Result.Failure(Errors.Orders.OrderNotFound);
+                return OrderNotFound;
             }
 
-            var orderItem = order.Items.FirstOrDefault(x => x.Id == request.OrdeItemId);
+            var orderItem = order.Items.FirstOrDefault(x => x.Id == request.OrderItemId);
 
             if (orderItem is null)
             {
-                throw new System.Exception();
+                return OrderItemNotFound;
             }
 
             order.RemoveOrderItem(orderItem);
@@ -51,7 +48,7 @@ public sealed record RemoveOrderItem(string OrderId, string OrdeItemId) : IReque
 
             await unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return Result.Success();
+            return Success;
         }
     }
 }

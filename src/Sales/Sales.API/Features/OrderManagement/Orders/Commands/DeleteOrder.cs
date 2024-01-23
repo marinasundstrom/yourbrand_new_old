@@ -17,16 +17,10 @@ public sealed record DeleteOrder(string Id) : IRequest<Result>
         }
     }
 
-    public sealed class Handler : IRequestHandler<DeleteOrder, Result>
+    public sealed class Handler(IOrderRepository orderRepository, IUnitOfWork unitOfWork) : IRequestHandler<DeleteOrder, Result>
     {
-        private readonly IOrderRepository orderRepository;
-        private readonly IUnitOfWork unitOfWork;
-
-        public Handler(IOrderRepository orderRepository, IUnitOfWork unitOfWork)
-        {
-            this.orderRepository = orderRepository;
-            this.unitOfWork = unitOfWork;
-        }
+        private readonly IOrderRepository orderRepository = orderRepository;
+        private readonly IUnitOfWork unitOfWork = unitOfWork;
 
         public async Task<Result> Handle(DeleteOrder request, CancellationToken cancellationToken)
         {
@@ -34,7 +28,7 @@ public sealed record DeleteOrder(string Id) : IRequest<Result>
 
             if (order is null)
             {
-                return Result.Failure(Errors.Orders.OrderNotFound);
+                return Errors.Orders.OrderNotFound;
             }
 
             orderRepository.Remove(order);
@@ -43,7 +37,7 @@ public sealed record DeleteOrder(string Id) : IRequest<Result>
 
             await unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return Result.Success();
+            return Results.Success;
         }
     }
 }

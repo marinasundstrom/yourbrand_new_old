@@ -7,7 +7,7 @@ using YourBrand.YourService.API.Repositories;
 
 namespace YourBrand.YourService.API.Features.Users;
 
-public record CreateUser(string Name, string Email) : IRequest<Result<UserInfoDto>>
+public sealed record CreateUser(string Name, string Email) : IRequest<Result<UserInfoDto>>
 {
     public class Validator : AbstractValidator<CreateUser>
     {
@@ -19,7 +19,7 @@ public record CreateUser(string Name, string Email) : IRequest<Result<UserInfoDt
         }
     }
 
-    public class Handler : IRequestHandler<CreateUser, Result<UserInfoDto>>
+    public sealed class Handler : IRequestHandler<CreateUser, Result<UserInfoDto>>
     {
         private readonly IUserRepository userRepository;
         private readonly IUnitOfWork unitOfWork;

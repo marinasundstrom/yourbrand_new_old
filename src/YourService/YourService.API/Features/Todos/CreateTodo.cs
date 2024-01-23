@@ -10,9 +10,9 @@ using YourBrand.YourService.API.Domain.Entities;
 
 namespace YourBrand.YourService.API.Features.Todos;
 
-public record CreateTodo(string Text) : IRequest<Result<TodoDto>>
+public sealed record CreateTodo(string Text) : IRequest<Result<TodoDto>>
 {
-    public class CreateTodoValidator : AbstractValidator<CreateTodo>
+    public sealed class CreateTodoValidator : AbstractValidator<CreateTodo>
     {
         public CreateTodoValidator()
         {
@@ -20,7 +20,7 @@ public record CreateTodo(string Text) : IRequest<Result<TodoDto>>
         }
     }
 
-    public class Handler(ITodoRepository todoRepository, IUnitOfWork unitOfWork) : IRequestHandler<CreateTodo, Result<TodoDto>>
+    public sealed class Handler(ITodoRepository todoRepository, IUnitOfWork unitOfWork) : IRequestHandler<CreateTodo, Result<TodoDto>>
     {
         public async Task<Result<TodoDto>> Handle(CreateTodo request, CancellationToken cancellationToken)
         {
@@ -30,7 +30,7 @@ public record CreateTodo(string Text) : IRequest<Result<TodoDto>>
 
             await unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return Result.Success(todo.ToDto());
+            return todo.ToDto();
         }
     }
 }

@@ -8,6 +8,9 @@ using YourBrand.Domain.Infrastructure;
 using YourBrand.Sales.API.Features.OrderManagement.Orders.Dtos;
 using YourBrand.Sales.API.Features.OrderManagement.Repositories;
 
+using static YourBrand.Sales.API.Results;
+using static YourBrand.Sales.API.Features.OrderManagement.Domain.Errors.Orders;
+
 namespace YourBrand.Sales.API.Features.OrderManagement.Orders.Items.Commands;
 
 public sealed record CreateOrderItem(string OrderId, string Description, string? ItemId, string? Unit, decimal UnitPrice, double VatRate, double Quantity, string? Notes) : IRequest<Result<OrderItemDto>>
@@ -22,18 +25,11 @@ public sealed record CreateOrderItem(string OrderId, string Description, string?
         }
     }
 
-    public sealed class Handler : IRequestHandler<CreateOrderItem, Result<OrderItemDto>>
+    public sealed class Handler(IOrderRepository orderRepository, IUnitOfWork unitOfWork)
+        : IRequestHandler<CreateOrderItem, Result<OrderItemDto>>
     {
-        private readonly IOrderRepository orderRepository;
-        private readonly IUnitOfWork unitOfWork;
-        private readonly IDomainEventDispatcher domainEventDispatcher;
-
-        public Handler(IOrderRepository orderRepository, IUnitOfWork unitOfWork, IDomainEventDispatcher domainEventDispatcher)
-        {
-            this.orderRepository = orderRepository;
-            this.unitOfWork = unitOfWork;
-            this.domainEventDispatcher = domainEventDispatcher;
-        }
+        private readonly IOrderRepository orderRepository = orderRepository;
+        private readonly IUnitOfWork unitOfWork = unitOfWork;
 
         public async Task<Result<OrderItemDto>> Handle(CreateOrderItem request, CancellationToken cancellationToken)
         {
@@ -41,7 +37,7 @@ public sealed record CreateOrderItem(string OrderId, string Description, string?
 
             if (order is null)
             {
-                return Result.Failure<OrderItemDto>(Errors.Orders.OrderNotFound);
+                return OrderNotFound;
             }
 
             var orderItem = order.AddOrderItem(request.Description, request.ItemId, request.Unit, request.UnitPrice, request.VatRate, request.Quantity, request.Notes);
@@ -50,7 +46,7 @@ public sealed record CreateOrderItem(string OrderId, string Description, string?
 
             await unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return Result.Success(orderItem!.ToDto());
+            return orderItem!.ToDto();
         }
     }
 }

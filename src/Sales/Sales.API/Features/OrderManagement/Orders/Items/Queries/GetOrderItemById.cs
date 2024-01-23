@@ -3,7 +3,7 @@ using MediatR;
 using YourBrand.Sales.API.Features.OrderManagement.Orders.Dtos;
 using YourBrand.Sales.API.Features.OrderManagement.Repositories;
 
-namespace YourBrand.Sales.API.Features.OrderManagement.Orders.Items.Commands;
+namespace YourBrand.Sales.API.Features.OrderManagement.Orders.Items;
 
 public sealed record GetOrderItemById(string OrderId, string OrderItemId) : IRequest<Result<OrderItemDto>>
 {
@@ -15,19 +15,19 @@ public sealed record GetOrderItemById(string OrderId, string OrderItemId) : IReq
 
             if (order is null)
             {
-                return Result.Failure<OrderItemDto>(Errors.Orders.OrderNotFound);
+                return Errors.Orders.OrderNotFound;
             }
 
             var orderItem = order.Items.FirstOrDefault(x => x.Id == request.OrderItemId);
 
             if (orderItem is null)
             {
-                return Result.Failure<OrderItemDto>(Errors.Orders.OrderItemNotFound);
+                return Errors.Orders.OrderItemNotFound;
             }
 
             await unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return Result.Success(orderItem.ToDto());
+            return orderItem.ToDto();
         }
     }
 }

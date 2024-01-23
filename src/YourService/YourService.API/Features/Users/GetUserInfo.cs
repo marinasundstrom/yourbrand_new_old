@@ -6,16 +6,16 @@ using YourBrand.YourService.API.Repositories;
 
 namespace YourBrand.YourService.API.Features.Users;
 
-public record GetUserInfo() : IRequest<Result<UserInfoDto>>
+public sealed record GetUserInfo() : IRequest<Result<UserInfoDto>>
 {
-    public class Validator : AbstractValidator<GetUserInfo>
+    public sealed class Validator : AbstractValidator<GetUserInfo>
     {
         public Validator()
         {
         }
     }
 
-    public class Handler : IRequestHandler<GetUserInfo, Result<UserInfoDto>>
+    public sealed class Handler : IRequestHandler<GetUserInfo, Result<UserInfoDto>>
     {
         private readonly IUserRepository userRepository;
         private readonly ICurrentUserService currentUserService;

@@ -48,4 +48,9 @@ public sealed class TodoRepository : ITodoRepository
     {
         dbSet.Remove(item);
     }
+
+    public async Task<int> RemoveById(string id)
+    {
+        return await dbSet.Where(x => x.Id == id).ExecuteDeleteAsync();
+    }
 }

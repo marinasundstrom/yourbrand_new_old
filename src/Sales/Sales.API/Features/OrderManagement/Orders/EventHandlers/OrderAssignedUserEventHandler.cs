@@ -7,18 +7,11 @@ using YourBrand.Domain;
 
 namespace YourBrand.Sales.API.Features.OrderManagement.Orders.EventHandlers;
 
-public sealed class OrderAssignedUserEventHandler : IDomainEventHandler<OrderAssignedUserUpdated>
+public sealed class OrderAssignedUserEventHandler(IOrderRepository orderRepository, IEmailService emailService, IOrderNotificationService orderNotificationService) : IDomainEventHandler<OrderAssignedUserUpdated>
 {
-    private readonly IOrderRepository orderRepository;
-    private readonly IEmailService emailService;
-    private readonly IOrderNotificationService orderNotificationService;
-
-    public OrderAssignedUserEventHandler(IOrderRepository orderRepository, IEmailService emailService, IOrderNotificationService orderNotificationService)
-    {
-        this.orderRepository = orderRepository;
-        this.emailService = emailService;
-        this.orderNotificationService = orderNotificationService;
-    }
+    private readonly IOrderRepository orderRepository = orderRepository;
+    private readonly IEmailService emailService = emailService;
+    private readonly IOrderNotificationService orderNotificationService = orderNotificationService;
 
     public async Task Handle(OrderAssignedUserUpdated notification, CancellationToken cancellationToken)
     {
