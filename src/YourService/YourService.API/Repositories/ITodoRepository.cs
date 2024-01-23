@@ -8,5 +8,5 @@ public interface ITodoRepository : IRepository<Todo, string>
 {
     //Task<Todo?> FindByNoAsync(int orderNo, CancellationToken cancellationToken = default);
 
-    Task<int> RemoveById(string id);
+    Task<int> RemoveByIdAsync(string id);
 }

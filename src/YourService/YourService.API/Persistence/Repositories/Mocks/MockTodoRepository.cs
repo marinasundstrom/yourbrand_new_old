@@ -56,7 +56,7 @@ public sealed class MockTodoRepository : ITodoRepository
         mockUnitOfWork.Items.Remove(item);
     }
 
-    public Task<int> RemoveById(string id)
+    public Task<int> RemoveByIdAsync(string id)
     {
         return Task.FromResult(0);
     }

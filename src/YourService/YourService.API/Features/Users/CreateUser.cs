@@ -44,10 +44,10 @@ public sealed record CreateUser(string Name, string Email) : IRequest<Result<Use
 
             if (user is null)
             {
-                return Result.Failure<UserInfoDto>(Errors.Users.UserNotFound);
+                return Errors.Users.UserNotFound;
             }
 
-            return Result.Success(user.ToDto2());
+            return user.ToDto2();
         }
     }
 }

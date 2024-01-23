@@ -14,11 +14,11 @@ public sealed record DeleteTodo(string Id) : IRequest<Result>
         }
     }
 
-    public sealed class Handler(ITodoRepository todoRepository, IUnitOfWork unitOfWork) : IRequestHandler<DeleteTodo, Result>
+    public sealed class Handler(ITodoRepository todoRepository) : IRequestHandler<DeleteTodo, Result>
     {
         public async Task<Result> Handle(DeleteTodo request, CancellationToken cancellationToken)
         {
-            var todosRemoved = await todoRepository.RemoveById(request.Id);
+            var todosRemoved = await todoRepository.RemoveByIdAsync(request.Id);
 
             if (todosRemoved == 0)
             {
