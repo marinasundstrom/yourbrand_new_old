@@ -25,8 +25,8 @@ public static class Endpoints
 
         group.MapGet("/", GetTodos)
             .WithName($"Todos_{nameof(GetTodos)}")
-            .Produces<PagedResult<TodoDto>>(StatusCodes.Status200OK)
-            .RequireAuthorization();
+            .Produces<PagedResult<TodoDto>>(StatusCodes.Status200OK);
+        //.RequireAuthorization();
 
         group.MapPost("/", CreateTodo)
             .WithName($"Todos_{nameof(CreateTodo)}")
@@ -39,9 +39,9 @@ public static class Endpoints
         return app;
     }
 
-    public static async Task<PagedResult<TodoDto>> GetTodos(int page = 1, int pageSize = 10, string? searchTerm = null, string? sortBy = null, SortDirection? sortDirection = null,
+    public static async Task<PagedResult<TodoDto>> GetTodos(bool? isCompleted, bool? hasExpired, int page = 1, int pageSize = 10, string? searchTerm = null, string? sortBy = null, SortDirection? sortDirection = null,
         IMediator mediator = default!, CancellationToken cancellationToken = default)
-        => await mediator.Send(new GetTodos(page, pageSize, searchTerm, sortBy, sortDirection), cancellationToken);
+        => await mediator.Send(new GetTodos(isCompleted, hasExpired, page, pageSize, searchTerm, sortBy, sortDirection), cancellationToken);
 
     public static async Task<TodoDto> CreateTodo(CreateTodoRequest request, IMediator mediator = default!, CancellationToken cancellationToken = default)
         => (await mediator.Send(new CreateTodo(request.Text), cancellationToken)).GetValue();

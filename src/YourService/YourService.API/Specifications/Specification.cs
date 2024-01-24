@@ -7,6 +7,8 @@ namespace YourBrand.YourService.API.Domain.Specifications;
 
 public abstract class Specification<T>
 {
+    public readonly static Specification<T> All = new AllSpecification<T>();
+
     public abstract Expression<Func<T, bool>> ToExpression();
 
     public bool IsSatisfiedBy(T entity)
@@ -36,6 +38,21 @@ public abstract class Specification<T>
     }
 }
 
+class AllSpecification<T> : Specification<T>
+{
+    public AllSpecification()
+    {
+
+    }
+
+    public override Expression<Func<T, bool>> ToExpression()
+    {
+        Expression<Func<T, bool>> expr = (todo) => true;
+
+        return expr;
+    }
+}
+
 public class AndSpecification<T> : Specification<T>
 {
     private readonly Specification<T> _left;
@@ -43,12 +60,17 @@ public class AndSpecification<T> : Specification<T>
 
     public AndSpecification(Specification<T> left, Specification<T> right)
     {
-        _right = right;
         _left = left;
+        _right = right;
     }
 
     public override Expression<Func<T, bool>> ToExpression()
     {
+        if (_left is AllSpecification<T>)
+        {
+            return _right.ToExpression();
+        }
+
         Expression<Func<T, bool>> leftExpression = _left.ToExpression();
         Expression<Func<T, bool>> rightExpression = _right.ToExpression();
 
@@ -67,12 +89,17 @@ public class OrSpecification<T> : Specification<T>
 
     public OrSpecification(Specification<T> left, Specification<T> right)
     {
-        _right = right;
         _left = left;
+        _right = right;
     }
 
     public override Expression<Func<T, bool>> ToExpression()
     {
+        if (_left is AllSpecification<T>)
+        {
+            return _right.ToExpression();
+        }
+
         Expression<Func<T, bool>> leftExpression = _left.ToExpression();
         Expression<Func<T, bool>> rightExpression = _right.ToExpression();
 
@@ -91,12 +118,17 @@ public class AndNotSpecification<T> : Specification<T>
 
     public AndNotSpecification(Specification<T> left, Specification<T> right)
     {
-        _right = right;
         _left = left;
+        _right = right;
     }
 
     public override Expression<Func<T, bool>> ToExpression()
     {
+        if (_left is AllSpecification<T>)
+        {
+            return _right.ToExpression();
+        }
+
         Expression<Func<T, bool>> leftExpression = _left.ToExpression();
         Expression<Func<T, bool>> rightExpression = _right.ToExpression();
 
@@ -117,12 +149,17 @@ public class OrNotSpecification<T> : Specification<T>
 
     public OrNotSpecification(Specification<T> left, Specification<T> right)
     {
-        _right = right;
         _left = left;
+        _right = right;
     }
 
     public override Expression<Func<T, bool>> ToExpression()
     {
+        if (_left is AllSpecification<T>)
+        {
+            return _right.ToExpression();
+        }
+
         Expression<Func<T, bool>> leftExpression = _left.ToExpression();
         Expression<Func<T, bool>> rightExpression = _right.ToExpression();
 

@@ -1,12 +1,12 @@
-﻿using System.Linq.Expressions;
+using System.Linq.Expressions;
 
 using YourBrand.YourService.API.Domain.Entities;
 using YourBrand.YourService.API.Domain.Specifications;
 
 namespace YourBrand.YourService.API.Features.Todos;
 
-public class IsCompleted(bool isCompleted = true) : Specification<Todo>
+public class MatchesSearchTerm(string searchTerm) : Specification<Todo>
 {
     public override Expression<Func<Todo, bool>> ToExpression()
-        => todo => todo.IsCompleted == isCompleted;
+        => todo => todo.Text.ToLower().Contains(searchTerm.ToLower());
 }
