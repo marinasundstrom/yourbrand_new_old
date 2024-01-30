@@ -137,6 +137,11 @@ try
         //await context.Database.EnsureDeletedAsync();
         await context.Database.EnsureCreatedAsync();
 
+        if (context.Database.HasPendingModelChanges())
+        {
+            logger.LogWarning("The entity model has changed since the last migration.");
+        }
+
         if (args.Contains("--seed"))
         {
             await SeedData(context, configuration, logger);
