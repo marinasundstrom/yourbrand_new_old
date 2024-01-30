@@ -23,7 +23,7 @@ public sealed record GetTodos(bool? IsCompleted, bool? HasExpired, int Page = 1,
 
             Console.WriteLine(specificationResult.GetValue().ToExpression().ToCSharpString());
 
-            return await specificationResult.MatchAsync<PagedResult<TodoDto>>(async (specification) =>
+            return await specificationResult.MatchAsync(async (specification) =>
             {
                 var query = todoRepository.Find(specification);
 
@@ -42,7 +42,7 @@ public sealed record GetTodos(bool? IsCompleted, bool? HasExpired, int Page = 1,
                     .OrderBy(todo => todo.Id)
                     .AsSplitQuery()
                     .Skip((request.Page - 1) * request.PageSize)
-                    .Take(request.PageSize).AsQueryable()
+                    .Take(request.PageSize)
                     .ToArrayAsync(cancellationToken);
 
                 return new PagedResult<TodoDto>(todos.Select(todo => todo.ToDto()), totalCount);
