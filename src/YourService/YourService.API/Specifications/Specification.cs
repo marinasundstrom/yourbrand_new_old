@@ -90,13 +90,14 @@ public class OrSpecification<T> : Specification<T>
 
     public override Expression<Func<T, bool>> ToExpression()
     {
-        if (_left is AllSpecification<T>)
-        {
-            return _right.ToExpression();
-        }
-
         Expression<Func<T, bool>> leftExpression = _left.ToExpression();
         Expression<Func<T, bool>> rightExpression = _right.ToExpression();
+
+        if (_left is AllSpecification<T>)
+        {
+            return Expression.Lambda<Func<T, bool>>(
+                Expression.Not(rightExpression.Body), rightExpression.Parameters.Single());
+        }
 
         BinaryExpression orExpression = Expression.OrElse(
             leftExpression.Body, rightExpression.Body);
@@ -119,18 +120,19 @@ public class AndNotSpecification<T> : Specification<T>
 
     public override Expression<Func<T, bool>> ToExpression()
     {
-        if (_left is AllSpecification<T>)
-        {
-            return _right.ToExpression();
-        }
-
         Expression<Func<T, bool>> leftExpression = _left.ToExpression();
         Expression<Func<T, bool>> rightExpression = _right.ToExpression();
 
-        UnaryExpression negateExpression = Expression.Negate(rightExpression.Body);
+        if (_left is AllSpecification<T>)
+        {
+            return Expression.Lambda<Func<T, bool>>(
+                Expression.Not(rightExpression.Body), rightExpression.Parameters.Single());
+        }
+
+        UnaryExpression notExpression = Expression.Not(rightExpression.Body);
 
         BinaryExpression andNotExpression = Expression.AndAlso(
-            leftExpression.Body, negateExpression);
+            leftExpression.Body, notExpression);
 
         return Expression.Lambda<Func<T, bool>>(
             andNotExpression, leftExpression.Parameters.Single());
@@ -158,10 +160,10 @@ public class OrNotSpecification<T> : Specification<T>
         Expression<Func<T, bool>> leftExpression = _left.ToExpression();
         Expression<Func<T, bool>> rightExpression = _right.ToExpression();
 
-        UnaryExpression negateExpression = Expression.Negate(rightExpression.Body);
+        UnaryExpression notExpression = Expression.Not(rightExpression.Body);
 
         BinaryExpression orNotExpression = Expression.OrElse(
-            leftExpression.Body, negateExpression);
+            leftExpression.Body, notExpression);
 
         return Expression.Lambda<Func<T, bool>>(
             orNotExpression, leftExpression.Parameters.Single());

@@ -40,10 +40,10 @@ public static class Endpoints
         return app;
     }
 
-    public static async Task<Results<Ok<PagedResult<TodoDto>>, ProblemHttpResult>> GetTodos(bool? isCompleted, bool? hasExpired, int page = 1, int pageSize = 10, string? searchTerm = null, string? sortBy = null, SortDirection? sortDirection = null,
+    public static async Task<Results<Ok<PagedResult<TodoDto>>, ProblemHttpResult>> GetTodos(bool? isCompleted, int page = 1, int pageSize = 10, string? searchTerm = null, string? sortBy = null, SortDirection? sortDirection = null,
         IMediator mediator = default!, CancellationToken cancellationToken = default)
     {
-        var result = await mediator.Send(new GetTodos(isCompleted, hasExpired, page, pageSize, searchTerm, sortBy, sortDirection), cancellationToken);
+        var result = await mediator.Send(new GetTodos(isCompleted, page, pageSize, searchTerm, sortBy, sortDirection), cancellationToken);
 
         return result.Match<Results<Ok<PagedResult<TodoDto>>, ProblemHttpResult>>(
             pagedResult => TypedResults.Ok(pagedResult),
