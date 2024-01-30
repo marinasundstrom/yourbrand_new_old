@@ -69,11 +69,9 @@ public class AndSpecification<T> : Specification<T>
         Expression<Func<T, bool>> leftExpression = _left.ToExpression();
         Expression<Func<T, bool>> rightExpression = _right.ToExpression();
 
-        BinaryExpression andExpression = Expression.AndAlso(
-            leftExpression.Body, rightExpression.Body);
+        Expression<Func<T, bool>> expr = p => leftExpression.Invoke(p) && rightExpression.Invoke(p);
 
-        return Expression.Lambda<Func<T, bool>>(
-            andExpression, leftExpression.Parameters.Single());
+        return expr.Expand();
     }
 }
 
@@ -90,20 +88,18 @@ public class OrSpecification<T> : Specification<T>
 
     public override Expression<Func<T, bool>> ToExpression()
     {
-        Expression<Func<T, bool>> leftExpression = _left.ToExpression();
-        Expression<Func<T, bool>> rightExpression = _right.ToExpression();
 
         if (_left is AllSpecification<T>)
         {
-            return Expression.Lambda<Func<T, bool>>(
-                Expression.Not(rightExpression.Body), rightExpression.Parameters.Single());
+            return _right.ToExpression();
         }
 
-        BinaryExpression orExpression = Expression.OrElse(
-            leftExpression.Body, rightExpression.Body);
+        Expression<Func<T, bool>> leftExpression = _left.ToExpression();
+        Expression<Func<T, bool>> rightExpression = _right.ToExpression();
 
-        return Expression.Lambda<Func<T, bool>>(
-            orExpression, leftExpression.Parameters.Single());
+        Expression<Func<T, bool>> expr = p => leftExpression.Invoke(p) || rightExpression.Invoke(p);
+
+        return expr.Expand();
     }
 }
 
@@ -129,13 +125,9 @@ public class AndNotSpecification<T> : Specification<T>
                 Expression.Not(rightExpression.Body), rightExpression.Parameters.Single());
         }
 
-        UnaryExpression notExpression = Expression.Not(rightExpression.Body);
+        Expression<Func<T, bool>> expr = p => leftExpression.Invoke(p) && !rightExpression.Invoke(p);
 
-        BinaryExpression andNotExpression = Expression.AndAlso(
-            leftExpression.Body, notExpression);
-
-        return Expression.Lambda<Func<T, bool>>(
-            andNotExpression, leftExpression.Parameters.Single());
+        return expr.Expand();
     }
 }
 
@@ -152,20 +144,17 @@ public class OrNotSpecification<T> : Specification<T>
 
     public override Expression<Func<T, bool>> ToExpression()
     {
-        if (_left is AllSpecification<T>)
-        {
-            return _right.ToExpression();
-        }
-
         Expression<Func<T, bool>> leftExpression = _left.ToExpression();
         Expression<Func<T, bool>> rightExpression = _right.ToExpression();
 
-        UnaryExpression notExpression = Expression.Not(rightExpression.Body);
+        if (_left is AllSpecification<T>)
+        {
+            return Expression.Lambda<Func<T, bool>>(
+                Expression.Not(rightExpression.Body), rightExpression.Parameters.Single());
+        }
 
-        BinaryExpression orNotExpression = Expression.OrElse(
-            leftExpression.Body, notExpression);
+        Expression<Func<T, bool>> expr = p => leftExpression.Invoke(p) || !rightExpression.Invoke(p);
 
-        return Expression.Lambda<Func<T, bool>>(
-            orNotExpression, leftExpression.Parameters.Single());
+        return expr.Expand();
     }
 }
