@@ -12,6 +12,6 @@ public class HasExpired(TimeSpan expirationThreshold) : Specification<Todo>
     public override Expression<Func<Todo, bool>> ToExpression()
     {
         int days = expirationThreshold.Days;
-        return todo => todo.Created.AddDays(days) <= DateTimeOffset.UtcNow;
+        return todo => todo.Created.AddDays(days) < DateTimeOffset.UtcNow;
     }
 }

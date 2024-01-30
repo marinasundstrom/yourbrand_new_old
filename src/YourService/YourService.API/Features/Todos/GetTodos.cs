@@ -11,58 +11,80 @@ using MassTransit.Internals;
 
 namespace YourBrand.YourService.API.Features.Todos;
 
-public sealed record GetTodos(bool? IsCompleted, bool? HasExpired, int Page = 1, int PageSize = 10, string? SearchTerm = null, string? SortBy = null, SortDirection? SortDirection = null) : IRequest<PagedResult<TodoDto>>
+public sealed record GetTodos(bool? IsCompleted, bool? HasExpired, int Page = 1, int PageSize = 10, string? SearchTerm = null, string? SortBy = null, SortDirection? SortDirection = null) : IRequest<Result<PagedResult<TodoDto>>>
 {
-    public sealed class Handler(ITodoRepository todoRepository, IConfiguration configuration) : IRequestHandler<GetTodos, PagedResult<TodoDto>>
+    public sealed class Handler(ITodoRepository todoRepository, IConfiguration configuration) : IRequestHandler<GetTodos, Result<PagedResult<TodoDto>>>
     {
         private readonly ITodoRepository todoRepository = todoRepository;
 
-        public async Task<PagedResult<TodoDto>> Handle(GetTodos request, CancellationToken cancellationToken)
+        public async Task<Result<PagedResult<TodoDto>>> Handle(GetTodos request, CancellationToken cancellationToken)
+        {
+            Result<Specification<Todo>> specificationResult = CreateSpecification(configuration, request);
+
+            Console.WriteLine(specificationResult.GetValue().ToExpression().ToCSharpString());
+
+            return await specificationResult.MatchAsync<PagedResult<TodoDto>>(async (specification) =>
+            {
+                var query = todoRepository.Find(specification);
+
+                var totalCount = await query.CountAsync(cancellationToken);
+
+                if (request.SortBy is not null)
+                {
+                    query = query.OrderBy(request.SortBy, request.SortDirection);
+                }
+                else
+                {
+                    query = query.OrderByDescending(todo => todo.Created);
+                }
+
+                var todos = await query
+                    .OrderBy(todo => todo.Id)
+                    .AsSplitQuery()
+                    .Skip((request.Page - 1) * request.PageSize)
+                    .Take(request.PageSize).AsQueryable()
+                    .ToArrayAsync(cancellationToken);
+
+                return new PagedResult<TodoDto>(todos.Select(todo => todo.ToDto()), totalCount);
+            }, async (error) => error);
+        }
+
+        private static Result<Specification<Todo>> CreateSpecification(IConfiguration configuration, GetTodos request)
         {
             var specification = Specification<Todo>.All;
 
-            if (request.IsCompleted ?? false)
+            if (request.IsCompleted is not null)
             {
-                specification = specification.And(new IsCompleted());
+                specification = specification.And(new IsCompleted(request.IsCompleted.GetValueOrDefault()));
             }
 
-            if (request.HasExpired ?? false)
+            if (request.HasExpired is not null)
             {
-                var expirationThreshold2 = configuration.GetValue<int?>("TodoExpirationThreshold") ?? 5;
+                var expirationThreshold = configuration.GetValue<int?>("TodoExpirationThreshold") ?? 5;
 
-                specification = specification.And(new HasExpired(expirationThreshold: TimeSpan.FromDays(expirationThreshold2)));
+                var expiredSpecification = new HasExpired(expirationThreshold: TimeSpan.FromDays(expirationThreshold));
+
+                if (request.HasExpired.GetValueOrDefault())
+                {
+                    specification = specification.And(expiredSpecification);
+                }
+                else
+                {
+                    specification = specification.AndNot(expiredSpecification);
+                }
             }
 
             if (request.SearchTerm is not null)
             {
+                if (string.IsNullOrEmpty(request.SearchTerm))
+                {
+                    return Errors.SearchTermIsEmpty;
+                }
+
                 specification = specification.And(new MatchesSearchTerm(request.SearchTerm));
             }
 
-            Console.WriteLine(specification.ToExpression().ToCSharpString());
-
-            var query = todoRepository.Find(specification);
-
-            Console.WriteLine(query.ToQueryString());
-
-            var totalCount = await query.CountAsync(cancellationToken);
-
-            if (request.SortBy is not null)
-            {
-                query = query.OrderBy(request.SortBy, request.SortDirection);
-            }
-            else
-            {
-                query = query.OrderByDescending(x => x.Created);
-            }
-
-            var todos = await query
-                .OrderBy(i => i.Id)
-                .AsSplitQuery()
-                .Skip((request.Page - 1) * request.PageSize)
-                .Take(request.PageSize).AsQueryable()
-                .ToArrayAsync(cancellationToken);
-
-            return new PagedResult<TodoDto>(todos.Select(todo => todo.ToDto()), totalCount);
+            return specification;
         }
     }
 }

@@ -4,6 +4,7 @@ using MassTransit;
 
 using MediatR;
 
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 using YourBrand.YourService.API.Common;
@@ -39,9 +40,15 @@ public static class Endpoints
         return app;
     }
 
-    public static async Task<PagedResult<TodoDto>> GetTodos(bool? isCompleted, bool? hasExpired, int page = 1, int pageSize = 10, string? searchTerm = null, string? sortBy = null, SortDirection? sortDirection = null,
+    public static async Task<Results<Ok<PagedResult<TodoDto>>, ProblemHttpResult>> GetTodos(bool? isCompleted, bool? hasExpired, int page = 1, int pageSize = 10, string? searchTerm = null, string? sortBy = null, SortDirection? sortDirection = null,
         IMediator mediator = default!, CancellationToken cancellationToken = default)
-        => await mediator.Send(new GetTodos(isCompleted, hasExpired, page, pageSize, searchTerm, sortBy, sortDirection), cancellationToken);
+    {
+        var result = await mediator.Send(new GetTodos(isCompleted, hasExpired, page, pageSize, searchTerm, sortBy, sortDirection), cancellationToken);
+
+        return result.Match<Results<Ok<PagedResult<TodoDto>>, ProblemHttpResult>>(
+            pagedResult => TypedResults.Ok(pagedResult),
+            error => TypedResults.Problem(error.Detail, title: error.Title));
+    }
 
     public static async Task<TodoDto> CreateTodo(CreateTodoRequest request, IMediator mediator = default!, CancellationToken cancellationToken = default)
         => (await mediator.Send(new CreateTodo(request.Text), cancellationToken)).GetValue();

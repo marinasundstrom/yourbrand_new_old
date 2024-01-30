@@ -2,6 +2,8 @@
 
 public static class Errors
 {
+    public static readonly Error SearchTermIsEmpty = new Error(nameof(SearchTermIsEmpty), "Search term is empty", string.Empty);
+
     public static class Todos
     {
         public static readonly Error TodoNotFound = new Error(nameof(TodoNotFound), "Todo not found", string.Empty);

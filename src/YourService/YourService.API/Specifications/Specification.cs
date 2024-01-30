@@ -45,12 +45,7 @@ class AllSpecification<T> : Specification<T>
 
     }
 
-    public override Expression<Func<T, bool>> ToExpression()
-    {
-        Expression<Func<T, bool>> expr = (todo) => true;
-
-        return expr;
-    }
+    public override Expression<Func<T, bool>> ToExpression() => (todo) => true;
 }
 
 public class AndSpecification<T> : Specification<T>
@@ -134,11 +129,11 @@ public class AndNotSpecification<T> : Specification<T>
 
         UnaryExpression negateExpression = Expression.Negate(rightExpression.Body);
 
-        BinaryExpression andExpression = Expression.AndAlso(
+        BinaryExpression andNotExpression = Expression.AndAlso(
             leftExpression.Body, negateExpression);
 
         return Expression.Lambda<Func<T, bool>>(
-            andExpression, leftExpression.Parameters.Single());
+            andNotExpression, leftExpression.Parameters.Single());
     }
 }
 
@@ -165,10 +160,10 @@ public class OrNotSpecification<T> : Specification<T>
 
         UnaryExpression negateExpression = Expression.Negate(rightExpression.Body);
 
-        BinaryExpression andExpression = Expression.OrElse(
+        BinaryExpression orNotExpression = Expression.OrElse(
             leftExpression.Body, negateExpression);
 
         return Expression.Lambda<Func<T, bool>>(
-            andExpression, leftExpression.Parameters.Single());
+            orNotExpression, leftExpression.Parameters.Single());
     }
 }
