@@ -1,8 +1,14 @@
+using YourBrand.YourService.API.Domain.ValueObjects;
+
 namespace YourBrand.YourService.API.Domain.Entities;
 
-public class User : AggregateRoot<string>, IAuditable
+public class User : AggregateRoot<UserId>, IAuditable
 {
-    public User(string id, string name, string email)
+    private User() : base(new UserId())
+    {
+    }
+
+    public User(UserId id, string name, string email)
         : base(id)
     {
         Id = id;

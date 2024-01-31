@@ -1,16 +1,17 @@
 using MediatR;
 using YourBrand.YourService.API.Repositories;
 using FluentValidation;
+using YourBrand.YourService.API.Domain.ValueObjects;
 
 namespace YourBrand.YourService.API.Features.Todos;
 
-public sealed record DeleteTodo(string Id) : IRequest<Result>
+public sealed record DeleteTodo(Guid Id) : IRequest<Result>
 {
     public sealed class DeleteTodoValidator : AbstractValidator<DeleteTodo>
     {
         public DeleteTodoValidator()
         {
-            RuleFor(p => p.Id).MaximumLength(120).NotEmpty();
+            //RuleFor(p => p.Id).MaximumLength(120).NotEmpty();
         }
     }
 

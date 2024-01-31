@@ -8,9 +8,13 @@ using Core;
 
 namespace YourBrand.YourService.API.Domain.Entities;
 
-public class Todo : AggregateRoot<string>, IAuditable
+public class Todo : AggregateRoot<TodoId>, IAuditable, IHasTenant, ISoftDelete
 {
-    private Todo(string text) : base(Guid.NewGuid().ToString())
+    internal Todo() : base()
+    {
+    }
+
+    private Todo(string text) : base(new TodoId())
     {
         Text = text;
     }
@@ -30,6 +34,9 @@ public class Todo : AggregateRoot<string>, IAuditable
     public string? LastModifiedById { get; set; }
 
     public DateTimeOffset? LastModified { get; set; }
+    public string TenantId { get; set; }
+    public string? DeletedById { get; set; }
+    public DateTimeOffset? Deleted { get; set; }
 
     public static Todo Create(string text)
     {

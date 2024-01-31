@@ -4,6 +4,7 @@ using YourBrand.YourService.API.Domain.Entities;
 using YourBrand.YourService.API.Domain.Specifications;
 using YourBrand.YourService.API.Repositories;
 using YourBrand.YourService.API.Persistence;
+using YourBrand.YourService.API.Domain.ValueObjects;
 
 namespace YourBrand.YourService.API.Persistence.Repositories.Mocks;
 
@@ -30,7 +31,7 @@ public sealed class TodoRepository : ITodoRepository
             .Where(specification.ToExpression());
     }
 
-    public async Task<Todo?> FindByIdAsync(string id, CancellationToken cancellationToken = default)
+    public async Task<Todo?> FindByIdAsync(TodoId id, CancellationToken cancellationToken = default)
     {
         return await dbSet
             .IncludeAll()
@@ -47,7 +48,7 @@ public sealed class TodoRepository : ITodoRepository
         dbSet.Remove(item);
     }
 
-    public async Task<int> RemoveByIdAsync(string id)
+    public async Task<int> RemoveByIdAsync(TodoId id)
     {
         return await dbSet.Where(x => x.Id == id).ExecuteDeleteAsync();
     }

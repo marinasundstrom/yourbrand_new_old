@@ -19,7 +19,7 @@ public sealed class TodoCreatedHandler(
 
         await publishEndpoint.Publish(new Contracts.TodoCreated
         {
-            TodoId = todo.Id
+            TodoId = todo.Id.ToString()
         });
 
         await todosClient.TodoCreated(todo.ToDto());

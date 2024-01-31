@@ -1,5 +1,6 @@
 using YourBrand.YourService.API.Domain.Entities;
 using YourBrand.YourService.API.Domain.Specifications;
+using YourBrand.YourService.API.Domain.ValueObjects;
 using YourBrand.YourService.API.Repositories;
 
 namespace YourBrand.YourService.API.Persistence.Repositories.Mocks;
@@ -27,7 +28,7 @@ public sealed class MockTodoRepository : ITodoRepository
         }
     }
 
-    public Task<Todo?> FindByIdAsync(string id, CancellationToken cancellationToken = default)
+    public Task<Todo?> FindByIdAsync(TodoId id, CancellationToken cancellationToken = default)
     {
         var item = mockUnitOfWork.Items
             .OfType<Todo>()
@@ -56,7 +57,7 @@ public sealed class MockTodoRepository : ITodoRepository
         mockUnitOfWork.Items.Remove(item);
     }
 
-    public Task<int> RemoveByIdAsync(string id)
+    public Task<int> RemoveByIdAsync(TodoId id)
     {
         return Task.FromResult(0);
     }

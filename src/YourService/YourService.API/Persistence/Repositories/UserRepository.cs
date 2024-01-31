@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 
 using YourBrand.YourService.API.Domain.Entities;
 using YourBrand.YourService.API.Domain.Specifications;
+using YourBrand.YourService.API.Domain.ValueObjects;
 using YourBrand.YourService.API.Repositories;
 
 namespace YourBrand.YourService.API.Persistence.Repositories.Mocks;
@@ -24,7 +25,7 @@ public sealed class UserRepository : IUserRepository
         return dbSet.AsQueryable();
     }
 
-    public async Task<User?> FindByIdAsync(string id, CancellationToken cancellationToken = default)
+    public async Task<User?> FindByIdAsync(UserId id, CancellationToken cancellationToken = default)
     {
         return await dbSet.FirstOrDefaultAsync(x => x.Id.Equals(id), cancellationToken);
     }
