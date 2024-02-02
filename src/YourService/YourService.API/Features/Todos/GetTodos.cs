@@ -77,4 +77,4 @@ public sealed record GetTodos(bool? IsCompleted, int Page = 1, int PageSize = 10
     }
 }
 
-public record TodoDto(string Id, string Text);
+public record TodoDto(string Id, string Text, bool IsCompleted);

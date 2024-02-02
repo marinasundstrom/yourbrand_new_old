@@ -35,6 +35,12 @@ public static class Endpoints
             .AddEndpointFilter<ValidationFilter<CreateTodoRequest>>();
         //.RequireAuthorization();
 
+        group.MapPost("/{id}", MarkTodoAsCompleted)
+            .WithName($"Todos_{nameof(MarkTodoAsCompleted)}")
+            .Produces(StatusCodes.Status200OK)
+            .AddEndpointFilter<ValidationFilter<MarkTodoAsCompletedRequest>>();
+        //.RequireAuthorization();
+
         app.MapHub<TodosHub>("/hubs/todos");
 
         return app;
@@ -52,6 +58,9 @@ public static class Endpoints
 
     public static async Task<TodoDto> CreateTodo(CreateTodoRequest request, IMediator mediator = default!, CancellationToken cancellationToken = default)
         => (await mediator.Send(new CreateTodo(request.Text), cancellationToken)).GetValue();
+
+    public static async Task MarkTodoAsCompleted(Guid id, MarkTodoAsCompletedRequest request, IMediator mediator = default!, CancellationToken cancellationToken = default)
+        => await mediator.Send(new MarkTodoAsCompleted(id), cancellationToken);
 }
 
 public record CreateTodoRequest(string Text)
@@ -61,6 +70,17 @@ public record CreateTodoRequest(string Text)
         public CreateTodoRequestValidator()
         {
             RuleFor(p => p.Text).MaximumLength(120).NotEmpty();
+        }
+    }
+}
+
+public record MarkTodoAsCompletedRequest()
+{
+    public class MarkTodoAsCompletedRequestValidator : AbstractValidator<MarkTodoAsCompletedRequest>
+    {
+        public MarkTodoAsCompletedRequestValidator()
+        {
+
         }
     }
 }

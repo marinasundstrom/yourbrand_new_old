@@ -4,5 +4,5 @@ namespace YourBrand.YourService.API.Features.Todos;
 
 public static class Mappings
 {
-    public static TodoDto ToDto(this Todo todo) => new(todo.Id.ToString(), todo.Text);
+    public static TodoDto ToDto(this Todo todo) => new(todo.Id.ToString(), todo.Text, todo.IsCompleted);
 }
