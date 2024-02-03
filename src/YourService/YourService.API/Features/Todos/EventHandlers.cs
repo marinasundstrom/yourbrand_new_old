@@ -1,7 +1,7 @@
 using YourBrand.YourService.API.Repositories;
 using YourBrand.YourService.API.Domain.Events;
-using MassTransit;
 using YourBrand.Domain;
+using MassTransit;
 
 namespace YourBrand.YourService.API.Features.Todos;
 
@@ -23,5 +23,13 @@ public sealed class TodoCreatedHandler(
         });
 
         await todosClient.TodoCreated(todo.ToDto());
+    }
+}
+
+public sealed class TodoCompletedHandler(ITodosClient todosClient) : IDomainEventHandler<TodoCompleted>
+{
+    public async Task Handle(TodoCompleted notification, CancellationToken cancellationToken)
+    {
+        await todosClient.TodoCompleted(notification.TodoId.ToString());
     }
 }
