@@ -22,13 +22,13 @@ public class User : AggregateRoot<UserId>, IAuditable
 
     public User? CreatedBy { get; set; }
 
-    public string? CreatedById { get; set; }
+    public UserId? CreatedById { get; set; }
 
     public DateTimeOffset Created { get; set; }
 
     public User? LastModifiedBy { get; set; }
 
-    public string? LastModifiedById { get; set; }
+    public UserId? LastModifiedById { get; set; }
 
     public DateTimeOffset? LastModified { get; set; }
 }
