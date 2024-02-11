@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 using LinqKit;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 using YourBrand.Domain.Outbox;
 using YourBrand.Domain.Persistence;
@@ -31,7 +32,7 @@ public sealed class ApplicationDbContext : DomainDbContext, IApplicationDbContex
 
         ConfigQueryFilterForEntity(modelBuilder);
 
-        //Console.WriteLine(modelBuilder.Model.ToDebugString(MetadataDebugStringOptions.LongDefault));
+        Console.WriteLine(modelBuilder.Model.ToDebugString(MetadataDebugStringOptions.LongDefault));
     }
 
     private void ConfigQueryFilterForEntity(ModelBuilder modelBuilder)
@@ -70,7 +71,7 @@ public sealed class ApplicationDbContext : DomainDbContext, IApplicationDbContex
 
             if (queryFilter is null)
             {
-                return;
+                continue;
             }
 
             var queryFilterLambda = Expression.Lambda(queryFilter, parameter);
@@ -115,10 +116,6 @@ public sealed class ApplicationDbContext : DomainDbContext, IApplicationDbContex
     public DbSet<Todo> Todos { get; set; }
 
     public DbSet<User> Users { get; set; }
-
-    public DbSet<OutboxMessage> OutboxMessages { get; set; }
-
-    public DbSet<OutboxMessageConsumer> OutboxMessageConsumers { get; set; }
 
 #nullable restore
 }

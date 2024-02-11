@@ -1,9 +1,7 @@
-﻿using YourBrand.YourService.API.Domain.ValueObjects;
-
-namespace YourBrand.YourService.API.Domain.Entities;
+﻿namespace YourBrand.YourService.API.Domain.Entities;
 
 public interface ISoftDelete
 {
-    UserId? DeletedById { get; set; }
+    string? DeletedById { get; set; }
     DateTimeOffset? Deleted { get; set; }
 }
