@@ -4,6 +4,9 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
+using Newtonsoft.Json.Schema;
+
+using NJsonSchema;
 using NJsonSchema.Generation;
 
 using NSwag;
@@ -49,6 +52,7 @@ public static class OpenApiExtensions
                 });
 
                 config.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
+                config.OperationProcessors.Add(new TenantIdHeaderOperationProcessor(isRequired: false));
             });
         }
 

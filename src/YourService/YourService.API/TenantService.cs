@@ -11,5 +11,5 @@ public sealed class TenantService : ITenantService
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public string? TenantId => _httpContextAccessor?.HttpContext?.User?.FindFirst("TenantId")?.Value;
+    public string? TenantId => _httpContextAccessor?.HttpContext?.Request.Headers["TenantId"].SingleOrDefault();
 }
