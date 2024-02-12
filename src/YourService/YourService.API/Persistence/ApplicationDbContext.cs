@@ -41,8 +41,6 @@ public sealed class ApplicationDbContext : DomainDbContext, IApplicationDbContex
             .GetEntityTypes()
             .Select(entityType => entityType.ClrType))
         {
-            Console.WriteLine(clrType);
-
             var entityTypeBuilder = modelBuilder.Entity(clrType);
 
             var parameter = Expression.Parameter(clrType, "entity");
