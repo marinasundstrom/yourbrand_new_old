@@ -23,20 +23,23 @@ public class Todo : AggregateRoot<TodoId>, IAuditable, IHasTenant, ISoftDelete
 
     public bool IsCompleted { get; set; }
 
+    public string TenantId { get; set; }
+
+    public DateTimeOffset Created { get; set; }
+
     public User? CreatedBy { get; set; }
 
     public UserId? CreatedById { get; set; }
 
-    public DateTimeOffset Created { get; set; }
+    public DateTimeOffset? LastModified { get; set; }
 
     public User? LastModifiedBy { get; set; }
 
     public UserId? LastModifiedById { get; set; }
 
-    public DateTimeOffset? LastModified { get; set; }
-    public string TenantId { get; set; }
-    public string? DeletedById { get; set; }
     public DateTimeOffset? Deleted { get; set; }
+
+    public UserId? DeletedById { get; set; }
 
     public static Todo Create(string text)
     {

@@ -4,11 +4,9 @@ namespace YourBrand.YourService.API.Domain.Entities;
 
 public interface IAuditable
 {
-    User? CreatedBy { get; set; }
-    UserId? CreatedById { get; set; }
     DateTimeOffset Created { get; set; }
+    UserId? CreatedById { get; set; }
 
-    User? LastModifiedBy { get; set; }
-    UserId? LastModifiedById { get; set; }
     DateTimeOffset? LastModified { get; set; }
+    UserId? LastModifiedById { get; set; }
 }

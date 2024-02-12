@@ -21,7 +21,7 @@ public sealed record GetTodos(bool? IsCompleted, int Page = 1, int PageSize = 10
         {
             Result<Specification<Todo>> specificationResult = CreateSpecification(configuration, request);
 
-            Console.WriteLine(specificationResult.GetValue().ToExpression().ToCSharpString());
+            //Console.WriteLine(specificationResult.GetValue().ToExpression().ToCSharpString());
 
             if (specificationResult.HasError(out Error error))
             {

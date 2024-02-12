@@ -20,15 +20,15 @@ public class User : AggregateRoot<UserId>, IAuditable
 
     public string Email { get; private set; }
 
+    public DateTimeOffset Created { get; set; }
+
     public User? CreatedBy { get; set; }
 
     public UserId? CreatedById { get; set; }
 
-    public DateTimeOffset Created { get; set; }
+    public DateTimeOffset? LastModified { get; set; }
 
     public User? LastModifiedBy { get; set; }
 
     public UserId? LastModifiedById { get; set; }
-
-    public DateTimeOffset? LastModified { get; set; }
 }

@@ -32,7 +32,7 @@ public sealed class ApplicationDbContext : DomainDbContext, IApplicationDbContex
 
         ConfigQueryFilterForEntity(modelBuilder);
 
-        Console.WriteLine(modelBuilder.Model.ToDebugString(MetadataDebugStringOptions.LongDefault));
+        //Console.WriteLine(modelBuilder.Model.ToDebugString(MetadataDebugStringOptions.LongDefault));
     }
 
     private void ConfigQueryFilterForEntity(ModelBuilder modelBuilder)
