@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 using YourBrand.YourService.API.Domain.Entities;
 
-namespace YourBrand.YourService.API.Persistence.Configurations;
+namespace YourBrand.YourService.API.Infrastructure.Persistence.EntityConfigurations;
 
 public sealed class TodoConfiguration : IEntityTypeConfiguration<Todo>
 {

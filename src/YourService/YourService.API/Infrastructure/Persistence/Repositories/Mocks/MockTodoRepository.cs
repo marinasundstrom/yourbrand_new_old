@@ -3,7 +3,7 @@ using YourBrand.YourService.API.Domain.Specifications;
 using YourBrand.YourService.API.Domain.ValueObjects;
 using YourBrand.YourService.API.Repositories;
 
-namespace YourBrand.YourService.API.Persistence.Repositories.Mocks;
+namespace YourBrand.YourService.API.Infrastructure.Persistence.Repositories.Mocks;
 
 public sealed class MockTodoRepository : ITodoRepository
 {

@@ -4,7 +4,7 @@ namespace YourBrand.YourService.API.Domain.Entities;
 
 public class User : AggregateRoot<UserId>, IAuditable
 {
-    private User() : base(new UserId())
+    protected User() : base(new UserId())
     {
     }
 

@@ -4,7 +4,7 @@ using YourBrand.YourService.API.Domain;
 using YourBrand.YourService.API.Domain.Entities;
 using YourBrand.YourService.API.Infrastructure.Services;
 
-namespace YourBrand.YourService.API.Persistence.Repositories.Mocks;
+namespace YourBrand.YourService.API.Infrastructure.Persistence.Repositories.Mocks;
 
 public sealed class MockUnitOfWork : IUnitOfWork
 {

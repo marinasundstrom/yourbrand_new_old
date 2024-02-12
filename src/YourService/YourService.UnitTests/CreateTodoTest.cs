@@ -5,7 +5,7 @@ using NSubstitute;
 using YourBrand.Domain.Infrastructure;
 using YourBrand.YourService.API.Domain.Events;
 using YourBrand.YourService.API.Features.Todos;
-using YourBrand.YourService.API.Persistence.Repositories.Mocks;
+using YourBrand.YourService.API.Infrastructure.Persistence.Repositories.Mocks;
 using YourBrand.YourService.API.Services;
 
 namespace YourBrand.YourService.UnitTests;

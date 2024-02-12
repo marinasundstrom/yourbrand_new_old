@@ -3,10 +3,10 @@
 using YourBrand.YourService.API.Domain.Entities;
 using YourBrand.YourService.API.Domain.Specifications;
 using YourBrand.YourService.API.Repositories;
-using YourBrand.YourService.API.Persistence;
+using YourBrand.YourService.API.Infrastructure.Persistence;
 using YourBrand.YourService.API.Domain.ValueObjects;
 
-namespace YourBrand.YourService.API.Persistence.Repositories.Mocks;
+namespace YourBrand.YourService.API.Infrastructure.Persistence.Repositories.Mocks;
 
 public sealed class TodoRepository : ITodoRepository
 {

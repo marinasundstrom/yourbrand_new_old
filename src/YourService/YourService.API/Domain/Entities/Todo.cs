@@ -10,7 +10,7 @@ namespace YourBrand.YourService.API.Domain.Entities;
 
 public class Todo : AggregateRoot<TodoId>, IAuditable, IHasTenant, ISoftDelete
 {
-    internal Todo() : base()
+    protected Todo() : base()
     {
     }
 

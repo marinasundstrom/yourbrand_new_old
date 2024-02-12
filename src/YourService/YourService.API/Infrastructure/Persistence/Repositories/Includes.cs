@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 
 using YourBrand.YourService.API.Domain.Entities;
 
-namespace YourBrand.YourService.API.Persistence.Repositories.Mocks;
+namespace YourBrand.YourService.API.Infrastructure.Persistence.Repositories.Mocks;
 
 public static class Includes
 {

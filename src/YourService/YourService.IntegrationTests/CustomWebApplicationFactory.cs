@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 using Respawn;
 
-using YourBrand.YourService.API.Persistence;
+using YourBrand.YourService.API.Infrastructure.Persistence;
 
 using Testcontainers.SqlEdge;
 using Microsoft.AspNetCore.Authentication;

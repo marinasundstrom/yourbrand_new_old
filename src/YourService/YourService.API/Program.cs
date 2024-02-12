@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using YourBrand.YourService.API;
 using YourBrand.YourService.API.Features;
 using YourBrand.YourService.API.Infrastructure;
-using YourBrand.YourService.API.Persistence;
+using YourBrand.YourService.API.Infrastructure.Persistence;
 
 using Steeltoe.Discovery.Client;
 

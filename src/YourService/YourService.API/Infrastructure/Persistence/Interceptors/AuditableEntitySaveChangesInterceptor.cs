@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using YourBrand.YourService.API.Common;
 using YourBrand.YourService.API.Domain.Entities;
 
-namespace YourBrand.YourService.API.Persistence.Interceptors;
+namespace YourBrand.YourService.API.Infrastructure.Persistence.Interceptors;
 
 public sealed class AuditableEntitySaveChangesInterceptor : SaveChangesInterceptor
 {

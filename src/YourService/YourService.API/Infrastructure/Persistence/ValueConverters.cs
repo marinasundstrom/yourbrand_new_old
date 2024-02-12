@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 using YourBrand.YourService.API.Domain.ValueObjects;
 
-namespace YourBrand.YourService.API.Persistence;
+namespace YourBrand.YourService.API.Infrastructure.Persistence;
 
 internal sealed class TodoIdConverter : ValueConverter<TodoId, Guid>
 {

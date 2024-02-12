@@ -1,4 +1,4 @@
-﻿namespace YourBrand.YourService.API.Persistence;
+﻿namespace YourBrand.YourService.API.Infrastructure.Persistence;
 
 public static class Seed
 {

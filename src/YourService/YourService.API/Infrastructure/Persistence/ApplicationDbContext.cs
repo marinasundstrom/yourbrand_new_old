@@ -11,7 +11,7 @@ using YourBrand.YourService.API.Common;
 using YourBrand.YourService.API.Domain.Entities;
 using YourBrand.YourService.API.Domain.ValueObjects;
 
-namespace YourBrand.YourService.API.Persistence;
+namespace YourBrand.YourService.API.Infrastructure.Persistence;
 
 public sealed class ApplicationDbContext : DomainDbContext, IApplicationDbContext, IUnitOfWork
 {
