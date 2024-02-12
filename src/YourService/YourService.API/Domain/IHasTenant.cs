@@ -1,6 +1,8 @@
+using YourBrand.YourService.API.Domain.ValueObjects;
+
 namespace YourBrand.YourService.API.Domain;
 
 public interface IHasTenant
 {
-    public string TenantId { get; set; }
+    public TenantId TenantId { get; set; }
 }

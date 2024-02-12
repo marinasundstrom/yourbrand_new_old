@@ -107,6 +107,7 @@ public sealed class ApplicationDbContext : DomainDbContext, IApplicationDbContex
     {
         configurationBuilder.Properties<TodoId>().HaveConversion<TodoIdConverter>();
         configurationBuilder.Properties<UserId>().HaveConversion<UserIdConverter>();
+        configurationBuilder.Properties<TenantId>().HaveConversion<TenantIdConverter>();
     }
 
 #nullable disable

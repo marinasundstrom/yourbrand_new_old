@@ -19,3 +19,11 @@ internal sealed class UserIdConverter : ValueConverter<UserId, string>
     {
     }
 }
+
+internal sealed class TenantIdConverter : ValueConverter<TenantId, string>
+{
+    public TenantIdConverter()
+        : base(v => v.Value, v => new(v))
+    {
+    }
+}

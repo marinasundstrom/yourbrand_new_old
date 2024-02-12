@@ -23,7 +23,7 @@ public class Todo : AggregateRoot<TodoId>, IAuditable, IHasTenant, ISoftDelete
 
     public bool IsCompleted { get; set; }
 
-    public string TenantId { get; set; }
+    public TenantId TenantId { get; set; }
 
     public DateTimeOffset Created { get; set; }
 
