@@ -1,7 +1,9 @@
-using MediatR;
-using YourBrand.YourService.API.Repositories;
 using FluentValidation;
+
+using MediatR;
+
 using YourBrand.YourService.API.Domain.ValueObjects;
+using YourBrand.YourService.API.Repositories;
 
 namespace YourBrand.YourService.API.Features.Todos;
 

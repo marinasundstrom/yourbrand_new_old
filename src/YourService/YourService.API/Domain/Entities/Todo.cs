@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 
+using Core;
+
 using YourBrand.YourService.API;
 using YourBrand.YourService.API.Domain.Events;
 using YourBrand.YourService.API.Domain.ValueObjects;
-
-using Core;
 
 namespace YourBrand.YourService.API.Domain.Entities;
 

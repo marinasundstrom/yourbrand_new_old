@@ -1,20 +1,21 @@
-﻿using HealthChecks.UI.Client;
+﻿using System.Reflection;
+
+using HealthChecks.UI.Client;
+
+using MassTransit;
 
 using Microsoft.EntityFrameworkCore;
 
-using YourBrand.YourService.API;
-using YourBrand.YourService.API.Features;
-using YourBrand.YourService.API.Infrastructure;
-using YourBrand.YourService.API.Infrastructure.Persistence;
+using Serilog;
 
 using Steeltoe.Discovery.Client;
 
 using YourBrand;
 using YourBrand.Extensions;
-
-using Serilog;
-using MassTransit;
-using System.Reflection;
+using YourBrand.YourService.API;
+using YourBrand.YourService.API.Features;
+using YourBrand.YourService.API.Infrastructure;
+using YourBrand.YourService.API.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 

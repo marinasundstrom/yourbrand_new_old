@@ -3,9 +3,7 @@ using System.Linq.Expressions;
 using LinqKit;
 
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 
-using YourBrand.Domain.Outbox;
 using YourBrand.Domain.Persistence;
 using YourBrand.YourService.API.Common;
 using YourBrand.YourService.API.Domain.Entities;

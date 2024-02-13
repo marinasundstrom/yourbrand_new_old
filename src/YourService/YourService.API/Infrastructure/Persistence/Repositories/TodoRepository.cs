@@ -2,9 +2,9 @@
 
 using YourBrand.YourService.API.Domain.Entities;
 using YourBrand.YourService.API.Domain.Specifications;
-using YourBrand.YourService.API.Repositories;
-using YourBrand.YourService.API.Infrastructure.Persistence;
 using YourBrand.YourService.API.Domain.ValueObjects;
+using YourBrand.YourService.API.Infrastructure.Persistence;
+using YourBrand.YourService.API.Repositories;
 
 namespace YourBrand.YourService.API.Infrastructure.Persistence.Repositories.Mocks;
 

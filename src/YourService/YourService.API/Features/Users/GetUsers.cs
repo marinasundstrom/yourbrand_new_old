@@ -3,8 +3,8 @@
 using Microsoft.EntityFrameworkCore;
 
 using YourBrand.YourService.API;
-using YourBrand.YourService.API.Repositories;
 using YourBrand.YourService.API.Common;
+using YourBrand.YourService.API.Repositories;
 
 namespace YourBrand.YourService.API.Features.Users;
 

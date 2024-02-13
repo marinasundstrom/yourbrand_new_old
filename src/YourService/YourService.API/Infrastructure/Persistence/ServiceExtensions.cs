@@ -1,13 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
-using YourBrand.YourService.API.Repositories;
-using YourBrand.YourService.API.Infrastructure.Persistence.Interceptors;
-using YourBrand.YourService.API.Infrastructure.Persistence.Repositories;
-using YourBrand.YourService.API.Infrastructure.Persistence.Repositories.Mocks;
 using YourBrand.Domain.Persistence;
 using YourBrand.Domain.Persistence.Interceptors;
+using YourBrand.YourService.API.Infrastructure.Persistence.Interceptors;
+using YourBrand.YourService.API.Infrastructure.Persistence.Repositories.Mocks;
+using YourBrand.YourService.API.Repositories;
 
 namespace YourBrand.YourService.API.Infrastructure.Persistence;
 

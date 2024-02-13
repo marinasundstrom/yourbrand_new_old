@@ -1,7 +1,8 @@
-using YourBrand.YourService.API.Repositories;
-using YourBrand.YourService.API.Domain.Events;
-using YourBrand.Domain;
 using MassTransit;
+
+using YourBrand.Domain;
+using YourBrand.YourService.API.Domain.Events;
+using YourBrand.YourService.API.Repositories;
 
 namespace YourBrand.YourService.API.Features.Todos;
 
