@@ -147,7 +147,7 @@ try
         //await context.Database.MigrateAsync();
 
         //await context.Database.EnsureDeletedAsync();
-        //await context.Database.EnsureCreatedAsync();
+        await context.Database.EnsureCreatedAsync();
 
         if (args.Contains("--seed"))
         {

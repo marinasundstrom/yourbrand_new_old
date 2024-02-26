@@ -43,7 +43,15 @@ public static class Seed2
 
         if (store is null)
         {
-            context.Stores.Add(store ??= new Store("My store", "my-store", await context.Currencies.FirstAsync(x => x.Code == "SEK")));
+            var currency2 = await context.Currencies.FirstAsync(x => x.Code == "SEK");
+
+            var myStore = new Store("My store", "my-store", currency2);
+            myStore.CurrencyDisplayOptions = new CurrencyDisplayOptions
+            {
+                IncludeVatInSalesPrice = true
+            };
+
+            context.Stores.Add(store ??= myStore);
         }
 
         var brand = await context.Brands.FirstOrDefaultAsync(x => x.Handle == "my-brand");
