@@ -196,6 +196,8 @@ public static class Seed2
             Value = null
         });
 
+        await context.SaveChangesAsync();
+
         var variantBlueSmall = new Product("Blue S", "tshirt-blue-small")
         {
             Description = "",

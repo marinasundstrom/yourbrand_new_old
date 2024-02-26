@@ -209,27 +209,56 @@ namespace Client.Products
             productViewModel!.LoadData(options!);
         }
 
+        bool isAddingItem;
+        bool isUpdatingItem;
+
         async Task AddItemToCart()
         {
-            var product = productViewModel.Product;
+            try
+            {
+                isAddingItem = true;
 
-            var productId = (productViewModel?.Variant?.Id ?? productViewModel?.Product?.Id);
+                var product = productViewModel.Product;
 
-            await CartService.AddCartItem(product.Name, product.Image.Url, productId, product.Handle, product.Description,
-                productViewModel.Total, product.RegularPrice, quantity, Serialize());
+                var productId = (productViewModel?.Variant?.Id ?? productViewModel?.Product?.Id);
 
-            ToastService.ShowInfo($"{productViewModel.Name} was added to your basket");
+                await CartService.AddCartItem(product.Name, product.Image.Url, productId, product.Handle, product.Description,
+                    productViewModel.Total, product.RegularPrice, quantity, Serialize());
+
+                ToastService.ShowInfo($"{productViewModel.Name} was added to your basket");
+            }
+            catch (Exception exc)
+            {
+                ToastService.ShowInfo("Failed to add item");
+            }
+            finally
+            {
+                isAddingItem = false;
+            }
         }
 
         async Task UpdateCartItem()
         {
-            var product = productViewModel.Product;
+            try
+            {
+                isUpdatingItem = true;
 
-            await CartService.UpdateCartItem(CartItemId, quantity, Serialize());
+                var product = productViewModel.Product;
 
-            //hasAddedToCart = true;
+                await CartService.UpdateCartItem(CartItemId, quantity, Serialize());
 
-            ToastService.ShowInfo($"{productViewModel.Name} was updated in your basket");
+                //hasAddedToCart = true;
+
+                ToastService.ShowInfo($"{productViewModel.Name} was updated in your basket");
+            }
+            catch (Exception exc)
+            {
+                ToastService.ShowInfo("Failed to update item");
+            }
+            finally
+            {
+                isUpdatingItem = false;
+            }
         }
     }
 }

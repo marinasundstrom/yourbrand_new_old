@@ -41,7 +41,18 @@
                     }
                 </div>
                 <div>
-                    <button class="btn btn-lg btn-primary" @onclick="AddItemToCart"><i class="bi bi-basket" /></button>
+                    <button class="btn btn-lg btn-primary" disabled="@(isAddingItem)" @onclick="AddItemToCart">
+                        @if (isAddingItem)
+                        {
+                            <div class="spinner-border spinner-border-sm" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        }
+                        else
+                        {
+                            <i class="bi bi-basket" />
+                        }
+                    </button>
                 </div>
             </div>
         </div>
@@ -59,12 +70,27 @@
     [EditorRequired]
     public BlazorApp.Products.Product Product { get; set; } = default!;
 
+    bool isAddingItem = false;
+
     async Task AddItemToCart()
     {
-        await CartService.AddCartItem(Product.Name, Product.Image.Url, Product.Id, Product.Handle, Product.Description,
-        Product.Price, Product.RegularPrice, 1, null);
+        try
+        {
+            isAddingItem = true;
+
+            await CartService.AddCartItem(Product.Name, Product.Image.Url, Product.Id, Product.Handle, Product.Description,
+            Product.Price, Product.RegularPrice, 1, null);
 
 
-        ToastService.ShowInfo($"{Product.Name} was added to your basket");
+            ToastService.ShowInfo($"{Product.Name} was added to your basket");
+        }
+        catch (Exception exc)
+        {
+            ToastService.ShowInfo("Failed to update item");
+        }
+        finally
+        {
+            isAddingItem = false;
+        }
     }
 }

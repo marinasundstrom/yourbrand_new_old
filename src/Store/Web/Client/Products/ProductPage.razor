@@ -136,12 +136,33 @@ else
 
                 @if (CartItemId is null)
                 {
-                    <button class="btn btn-lg btn-primary" @onclick="AddItemToCart"><i class="bi bi-basket" /></button>
+                    <button class="btn btn-lg btn-primary" disabled="@(isAddingItem)" @onclick="AddItemToCart">
+                        @if (isAddingItem)
+                        {
+                            <div class="spinner-border spinner-border-sm" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        }
+                        else
+                        {
+                            <i class="bi bi-basket" />
+                        }
+                    </button>
                 }
                 else
                 {
-                    <button class="btn btn-lg btn-primary" @onclick="UpdateCartItem"><i class="bi bi-basket" /> Update
-                        item</button>
+                    <button class="btn btn-lg btn-primary" disabled="@(isUpdatingItem)" @onclick="UpdateCartItem">
+                        @if (isUpdatingItem)
+                        {
+                            <div class="spinner-border spinner-border-sm" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        }
+                        else
+                        {
+                            <span><i class="bi bi-basket me-2" /> Update item</span>
+                        }
+                    </button>
                 }
 
             </div>
