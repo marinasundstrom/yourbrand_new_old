@@ -8,9 +8,9 @@ using YourBrand.YourService.API.Domain.ValueObjects;
 
 namespace YourBrand.YourService.API.Domain.Entities;
 
-public class Todo : AggregateRoot<TodoId>, IAuditable, IHasTenant, ISoftDelete
+public sealed class Todo : AggregateRoot<TodoId>, IAuditable, IHasTenant, ISoftDelete
 {
-    protected Todo() : base()
+    private Todo() : base()
     {
     }
 

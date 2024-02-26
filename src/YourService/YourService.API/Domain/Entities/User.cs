@@ -2,9 +2,9 @@ using YourBrand.YourService.API.Domain.ValueObjects;
 
 namespace YourBrand.YourService.API.Domain.Entities;
 
-public class User : AggregateRoot<UserId>, IAuditable
+public sealed class User : AggregateRoot<UserId>, IAuditable
 {
-    protected User() : base(new UserId())
+    private User() : base(new UserId())
     {
     }
 
