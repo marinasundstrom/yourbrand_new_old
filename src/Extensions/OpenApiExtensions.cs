@@ -52,7 +52,7 @@ public static class OpenApiExtensions
                 });
 
                 config.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
-                config.OperationProcessors.Add(new TenantIdHeaderOperationProcessor(isRequired: false));
+                //config.OperationProcessors.Add(new TenantIdHeaderOperationProcessor(isRequired: false));
             });
         }
 
