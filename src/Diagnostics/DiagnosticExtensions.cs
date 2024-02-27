@@ -52,10 +52,14 @@ public static class DiagnosticExtensions
                 {
                     tracing.SetResourceBuilder(resource)
                             .AddAspNetCoreInstrumentation()
-                            .AddHttpClientInstrumentation()
+                            .AddHttpClientInstrumentation(o =>
+                            {
+                                o.RecordException = true;
+                            })
                             .AddSqlClientInstrumentation()
                             .AddMassTransitInstrumentation()
                             .AddSource("MassTransit")
+                            .AddSource("Yarp.ReverseProxy")
                             .AddRedisInstrumentation()
                             //.AddGrpcClientInstrumentation()
                             .AddZipkinExporter(zipkin =>
