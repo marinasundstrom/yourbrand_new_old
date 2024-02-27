@@ -47,7 +47,7 @@ public sealed record UpdateOrderItem(string OrderId, string OrderItemId, string 
             orderItem.Description = request.Description;
             orderItem.ItemId = request.ItemId;
             orderItem.Unit = request.Unit;
-            orderItem.UnitPrice = request.UnitPrice;
+            orderItem.Price = request.UnitPrice;
             orderItem.VatRate = request.VatRate;
             orderItem.Quantity = request.Quantity;
             orderItem.Notes = request.Notes;

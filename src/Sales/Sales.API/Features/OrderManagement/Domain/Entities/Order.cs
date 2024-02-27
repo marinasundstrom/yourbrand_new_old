@@ -83,9 +83,19 @@ public class Order : AggregateRoot<string>, IAuditable
 
     public IReadOnlyCollection<OrderItem> Items => _items;
 
-    public OrderItem AddOrderItem(string description, string? itemId, string? unit, decimal unitPrice, double vatRate, double quantity, string? notes)
+    public OrderItem AddOrderItem(string? itemId,
+                       string description,
+                       string? unit,
+                       decimal price,
+                       double? vatRate,
+                       decimal? vat,
+                       decimal? regularPrice,
+                       double? discountRate,
+                       decimal? discount,
+                       double quantity,
+                       string? notes)
     {
-        var orderItem = new OrderItem(itemId, description, quantity, unit, unitPrice, unitPrice * (decimal)quantity, vatRate, notes);
+        var orderItem = new OrderItem(itemId, description, unit, price, vatRate, vat, regularPrice, discountRate, discount, quantity, price * (decimal)quantity, notes);
         _items.Add(orderItem);
         return orderItem;
     }
@@ -96,11 +106,11 @@ public class Order : AggregateRoot<string>, IAuditable
     {
         foreach (var item in Items)
         {
-            item.Total = item.UnitPrice * (decimal)item.Quantity;
+            item.Total = item.Price * (decimal)item.Quantity;
         }
 
         VatRate = 0.25;
-        Vat = VatIncluded ? Items.Select(x => x.Total.GetVatFromTotal(x.VatRate)).Sum() : Items.Sum(x => (decimal)x.VatRate * x.Total);
+        Vat = VatIncluded ? Items.Select(x => x.Total.GetVatFromTotal(x.VatRate.GetValueOrDefault())).Sum() : Items.Sum(x => (decimal)x.VatRate.GetValueOrDefault() * x.Total);
         Total = Items.Sum(x => x.Total);
         SubTotal = (VatIncluded ? (Total - Vat.GetValueOrDefault()) : Total);
     }

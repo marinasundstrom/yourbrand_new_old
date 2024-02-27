@@ -8,6 +8,7 @@
 @inject ICartService CartService
 @inject RenderingContext RenderingContext
 @inject IJSRuntime JSRuntime
+@inject IToastService ToastService
 
 <div class="offcanvas offcanvas-end" style="z-index: 99999;" tabindex="-1" id="offcanvasRight"
     aria-labelledby="offcanvasRightLabel">
@@ -62,7 +63,8 @@
                                                 <div>
                                                     <button class="btn ms-2" @onclick="async () => await UpdateItem(cartItem)"><i
                                                             class="bi bi-pencil-square" /></button>
-                                                    <button class="btn" @onclick="async () => await DeleteItem(cartItem)"><i
+                                                    <button class="btn" disabled="@(isDeletingItem)"
+                                                        @onclick="async () => await DeleteItem(cartItem)"><i
                                                             class="bi bi-trash" /></button>
                                                 </div>
                                             </div>

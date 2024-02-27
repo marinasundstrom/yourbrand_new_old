@@ -40,7 +40,7 @@ public sealed record CreateOrderItem(string OrderId, string Description, string?
                 return OrderNotFound;
             }
 
-            var orderItem = order.AddOrderItem(request.Description, request.ItemId, request.Unit, request.UnitPrice, request.VatRate, request.Quantity, request.Notes);
+            var orderItem = order.AddOrderItem(request.ItemId, request.Description, request.Unit, request.UnitPrice, request.VatRate, null, null, null, null, request.Quantity, request.Notes);
 
             order.Calculate();
 

@@ -9,6 +9,7 @@
 @inject NavigationManager NavigationManager
 @using Core
 @implements IDisposable
+@inject IToastService ToastService
 
 <AppPageTitle>Basket</AppPageTitle>
 
@@ -60,7 +61,7 @@ else
 
                                             <div>
                                                 <button class="btn ms-2" @onclick="async () => await UpdateItem(cartItem)"><i class="bi bi-pencil-square" /></button>
-                                                <button class="btn" @onclick="async () => await DeleteItem(cartItem)"><i class="bi bi-trash" /></button>                                           
+                                                <button class="btn" disabled="@(isDeletingItem)" @onclick="async () => await DeleteItem(cartItem)"><i class="bi bi-trash" /></button>                                           
                                             </div>
                                         </div>
                                     </div>
@@ -100,6 +101,8 @@ else
 @code 
 {
     static IComponentRenderMode renderMode = new InteractiveWebAssemblyRenderMode(prerender: false);
+
+    bool isDeletingItem = false;
 
     string Currency = "SEK";
     IEnumerable<BlazorApp.Cart.CartItem>? cartItems;
@@ -153,7 +156,20 @@ else
 
     async Task DeleteItem(CartItem cartItem)
     {
-        await CartService.RemoveCartItem(cartItem.Id);
+        try 
+        {                   
+            isDeletingItem = true;
+
+            await CartService.RemoveCartItem(cartItem.Id);
+        }
+        catch (Exception exc)
+        {
+            ToastService.ShowError("Could not delete item.");
+        }
+        finally
+        {
+            isDeletingItem = false;
+        }
     }
 
     async Task ClearItems()

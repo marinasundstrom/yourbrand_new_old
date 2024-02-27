@@ -3,6 +3,8 @@ using System.Runtime.Versioning;
 
 using BlazorApp.Cart;
 
+using Blazored.Toast.Services;
+
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
@@ -11,6 +13,7 @@ namespace Client.Cart
     [SupportedOSPlatform("browser")]
     public partial class CartOffCanvas
     {
+        bool isDeletingItem = false;
         readonly string currency = "SEK";
         IEnumerable<BlazorApp.Cart.CartItem>? cartItems;
 
@@ -63,22 +66,35 @@ namespace Client.Cart
 
         async Task DeleteItem(CartItem cartItem)
         {
-            var isProductPage = NavigationManager.Uri.Contains("/products/");
-
-            await CartService.RemoveCartItem(cartItem.Id);
-
-            if (isProductPage
-                && NavigationManager.Uri.Contains($"/{cartItem.ProductHandle}")
-                && NavigationManager.Uri.Contains($"cartItemId={cartItem.Id}"))
+            try
             {
-                NavigationManager.NavigateTo("/");
+                isDeletingItem = true;
 
-                HideCartOffCanvas();
+                var isProductPage = NavigationManager.Uri.Contains("/products/");
+
+                await CartService.RemoveCartItem(cartItem.Id);
+
+                if (isProductPage
+                    && NavigationManager.Uri.Contains($"/{cartItem.ProductHandle}")
+                    && NavigationManager.Uri.Contains($"cartItemId={cartItem.Id}"))
+                {
+                    NavigationManager.NavigateTo("/");
+
+                    HideCartOffCanvas();
+                }
+
+                if (!CartService.Items.Any())
+                {
+                    HideCartOffCanvas();
+                }
             }
-
-            if (!CartService.Items.Any())
+            catch (Exception exc)
             {
-                HideCartOffCanvas();
+                ToastService.ShowError("Could not delete item.");
+            }
+            finally
+            {
+                isDeletingItem = false;
             }
         }
 
