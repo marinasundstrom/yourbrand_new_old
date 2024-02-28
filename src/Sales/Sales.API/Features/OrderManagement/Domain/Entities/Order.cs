@@ -71,6 +71,10 @@ public class Order : AggregateRoot<string>, IAuditable
 
     public double VatRate { get; set; }
 
+    public List<OrderDiscount> Discounts { get; set; } = new List<OrderDiscount>();
+
+    public List<OrderVatAmount> VatAmounts { get; set; } = new List<OrderVatAmount>();
+
     public decimal? Vat { get; set; }
 
     public decimal Discount { get; set; }
@@ -83,8 +87,10 @@ public class Order : AggregateRoot<string>, IAuditable
 
     public IReadOnlyCollection<OrderItem> Items => _items;
 
-    public OrderItem AddOrderItem(string? itemId,
+    public OrderItem AddOrderItem(
+                        string? itemId,
                        string description,
+                       double quantity,
                        string? unit,
                        decimal price,
                        double? vatRate,
@@ -92,7 +98,6 @@ public class Order : AggregateRoot<string>, IAuditable
                        decimal? regularPrice,
                        double? discountRate,
                        decimal? discount,
-                       double quantity,
                        string? notes)
     {
         var orderItem = new OrderItem(itemId, description, unit, price, vatRate, vat, regularPrice, discountRate, discount, quantity, price * (decimal)quantity, notes);
@@ -104,15 +109,48 @@ public class Order : AggregateRoot<string>, IAuditable
 
     public void Calculate()
     {
+        VatAmounts.ForEach(x => x.Amount = 0);
+
         foreach (var item in Items)
         {
             item.Total = item.Price * (decimal)item.Quantity;
+            item.Vat = Math.Round(PriceCalculations.GetVatFromTotal(item.Total, item.VatRate.GetValueOrDefault()), 2, MidpointRounding.ToEven);
+
+            if (item.VatRate is null)
+            {
+                continue;
+            }
+
+            var vatAmount = VatAmounts.FirstOrDefault(x => x.Rate == item.VatRate);
+            if (vatAmount is null)
+            {
+                vatAmount = new OrderVatAmount()
+                {
+                    Rate = item.VatRate.GetValueOrDefault(),
+                    Name = $"{(item.VatRate * 100)}%"
+                };
+
+                VatAmounts.Add(vatAmount);
+            }
+
+            vatAmount.Amount += item.Vat.GetValueOrDefault();
         }
 
+        VatAmounts.ToList().ForEach(x =>
+        {
+            if (x.Amount == 0)
+            {
+                VatAmounts.Remove(x);
+            }
+        });
+
+        Console.WriteLine(VatAmounts.Count);
+
         VatRate = 0.25;
-        Vat = VatIncluded ? Items.Select(x => x.Total.GetVatFromTotal(x.VatRate.GetValueOrDefault())).Sum() : Items.Sum(x => (decimal)x.VatRate.GetValueOrDefault() * x.Total);
+        Vat = VatIncluded ? Items.Sum(x => x.Vat) : Items.Sum(x => (decimal)x.VatRate.GetValueOrDefault() * x.Total);
         Total = Items.Sum(x => x.Total);
-        SubTotal = (VatIncluded ? (Total - Vat.GetValueOrDefault()) : Total);
+        SubTotal = VatIncluded ? (Total - Vat.GetValueOrDefault()) : Total;
+        Discount = Items.Sum(x => x.Discount.GetValueOrDefault());
     }
 
     public User? CreatedBy { get; set; }
@@ -126,4 +164,20 @@ public class Order : AggregateRoot<string>, IAuditable
     public string? LastModifiedById { get; set; }
 
     public DateTimeOffset? LastModified { get; set; }
+}
+
+public sealed class OrderDiscount
+{
+    public decimal Amount { get; set; }
+
+    public string Description { get; set; } = default!;
+}
+
+public sealed class OrderVatAmount
+{
+    public string Name { get; set; } = default!;
+
+    public double Rate { get; set; }
+
+    public decimal Amount { get; set; }
 }

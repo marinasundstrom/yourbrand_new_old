@@ -10,9 +10,13 @@ public static class Mappings
     public static OrderDto ToDto(this Order order) => new OrderDto(order.Id, order.OrderNo, order.Date, order.Status.ToDto(), order.Assignee?.ToDto(), order.CustomerId, order.Currency,
         order.BillingDetails?.ToDto(),
         order.ShippingDetails?.ToDto(),
-        order.Items.Select(x => x.ToDto()), order.SubTotal, order.Vat.GetValueOrDefault(), order.Total, order.Created, order.CreatedBy?.ToDto(), order.LastModified, order.LastModifiedBy?.ToDto());
+        order.Items.Select(x => x.ToDto()), order.SubTotal,
+        order.VatAmounts.Select(x => new OrderVatAmountDto(x.Name, x.Rate, x.Amount)),
+        order.Vat.GetValueOrDefault(),
+        order.Discounts.Select(x => new OrderDiscountDto(x.Amount, x.Description)),
+        order.Discount, order.Total, order.Created, order.CreatedBy?.ToDto(), order.LastModified, order.LastModifiedBy?.ToDto());
 
-    public static OrderItemDto ToDto(this OrderItem orderItem) => new(orderItem.Id, orderItem.Description, orderItem.ItemId, orderItem.Unit, orderItem.Price, orderItem.Quantity, orderItem.VatRate, orderItem.Total, orderItem.Notes, orderItem.Created, orderItem.CreatedBy?.ToDto(), orderItem.LastModified, orderItem.LastModifiedBy?.ToDto());
+    public static OrderItemDto ToDto(this OrderItem orderItem) => new(orderItem.Id, orderItem.Description, orderItem.ItemId, orderItem.Quantity, orderItem.Unit, orderItem.Price, orderItem.VatRate, orderItem.Discount, orderItem.Total, orderItem.Notes, orderItem.Created, orderItem.CreatedBy?.ToDto(), orderItem.LastModified, orderItem.LastModifiedBy?.ToDto());
 
     public static OrderStatusDto ToDto(this OrderStatus orderStatus) => new(orderStatus.Id, orderStatus.Name, orderStatus.Handle, orderStatus.Description);
 

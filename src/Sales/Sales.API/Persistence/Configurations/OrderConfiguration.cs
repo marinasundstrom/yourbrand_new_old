@@ -21,5 +21,9 @@ public sealed class OrderConfiguration : IEntityTypeConfiguration<Order>
         builder.OwnsOne(x => x.BillingDetails, x => x.OwnsOne(z => z.Address));
 
         builder.OwnsOne(x => x.ShippingDetails, x => x.OwnsOne(z => z.Address));
+
+        builder.OwnsMany(x => x.VatAmounts, x => x.ToJson());
+
+        builder.OwnsMany(x => x.Discounts, x => x.ToJson());
     }
 }

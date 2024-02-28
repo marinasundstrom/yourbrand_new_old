@@ -34,9 +34,10 @@ public static class Mapper
             ItemId = dto.ItemId,
             Notes = dto.Notes,
             UnitPrice = dto.UnitPrice,
-            Unit = dto.Unit,
+            Unit = dto.Unit ?? string.Empty,
             Quantity = dto.Quantity,
-            VatRate = dto.VatRate
+            VatRate = dto.VatRate.GetValueOrDefault(),
+            Discount = dto.Discount
         };
     }
 
@@ -50,7 +51,8 @@ public static class Mapper
             UnitPrice = vm.UnitPrice,
             Unit = vm.Unit,
             Quantity = vm.Quantity,
-            VatRate = vm.VatRate
+            VatRate = vm.VatRate,
+            Discount = vm.Discount
         };
     }
 

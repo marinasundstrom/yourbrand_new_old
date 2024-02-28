@@ -135,6 +135,19 @@
                 </MudItem>
             }
 
+            <MudItem xs="12" sm="6" md="3" lg="3">
+                <MudText Typo="Typo.h5" Class="mb-1">VAT</MudText>
+                <MudTable T="OrderVatAmount" Elevation="0" Items="order.VatAmounts">
+                    <HeaderContent>
+                        <MudTh>Rate</MudTh>
+                        <MudTh>Amount</MudTh>
+                    </HeaderContent>
+                    <RowTemplate Context="vatAmount">
+                        <MudTd DataLabel="Rate">@vatAmount.Name</MudTd>
+                        <MudTd DataLabel="Amount">@vatAmount.Amount.FormatCurrency(order.Currency)</MudTd>
+                    </RowTemplate>
+                </MudTable>
+            </MudItem>
         </MudGrid>
     </MudPaper>
 
@@ -155,6 +168,7 @@
             <MudTh>Unit Price</MudTh>
             <MudTh>VAT Rate</MudTh>
             <MudTh>VAT</MudTh>
+            <MudTh>Discount</MudTh>
             <MudTh>Total</MudTh>
             @if (Model.Status.Id == 1)
             {
@@ -169,6 +183,7 @@
             <MudTd DataLabel="Unit Price">@orderItem.UnitPrice.FormatCurrency(order.Currency)</MudTd>
             <MudTd DataLabel="VAT Rate">@(orderItem.VatRate * 100)%</MudTd>
             <MudTd DataLabel="VAT">@orderItem.Vat.FormatCurrency(order.Currency)</MudTd>
+            <MudTd DataLabel="Discount">@orderItem.Discount?.FormatCurrency(order.Currency)</MudTd>
             <MudTd DataLabel="Total">@orderItem.LineTotal.FormatCurrency(order.Currency)</MudTd>
             @if (Model.Status.Id == 1)
             {

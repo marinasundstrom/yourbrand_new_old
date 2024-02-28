@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using YourBrand.Sales.API.Persistence;
 
@@ -11,9 +12,11 @@ using YourBrand.Sales.API.Persistence;
 namespace YourBrand.Sales.API.Migrations
 {
     [DbContext(typeof(SalesContext))]
-    partial class SalesContextModelSnapshot : ModelSnapshot
+    [Migration("20240227202436_AddVatAmountsAndDiscounts")]
+    partial class AddVatAmountsAndDiscounts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -299,23 +302,15 @@ namespace YourBrand.Sales.API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsMany("YourBrand.Sales.API.Features.OrderManagement.Domain.Entities.OrderDiscount", "Discounts", b1 =>
+                    b.OwnsOne("System.Collections.Generic.List<YourBrand.Sales.API.Features.OrderManagement.Domain.Entities.OrderDiscount>", "Discounts", b1 =>
                         {
                             b1.Property<string>("OrderId")
                                 .HasColumnType("nvarchar(450)");
 
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
+                            b1.Property<int>("Capacity")
                                 .HasColumnType("int");
 
-                            b1.Property<decimal>("Amount")
-                                .HasColumnType("decimal(18,2)");
-
-                            b1.Property<string>("Description")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.HasKey("OrderId", "Id");
+                            b1.HasKey("OrderId");
 
                             b1.ToTable("Orders");
 
@@ -325,26 +320,15 @@ namespace YourBrand.Sales.API.Migrations
                                 .HasForeignKey("OrderId");
                         });
 
-                    b.OwnsMany("YourBrand.Sales.API.Features.OrderManagement.Domain.Entities.OrderVatAmount", "VatAmounts", b1 =>
+                    b.OwnsOne("System.Collections.Generic.List<YourBrand.Sales.API.Features.OrderManagement.Domain.Entities.OrderVatAmount>", "VatAmounts", b1 =>
                         {
                             b1.Property<string>("OrderId")
                                 .HasColumnType("nvarchar(450)");
 
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
+                            b1.Property<int>("Capacity")
                                 .HasColumnType("int");
 
-                            b1.Property<decimal>("Amount")
-                                .HasColumnType("decimal(18,2)");
-
-                            b1.Property<string>("Name")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<double>("Rate")
-                                .HasColumnType("float");
-
-                            b1.HasKey("OrderId", "Id");
+                            b1.HasKey("OrderId");
 
                             b1.ToTable("Orders");
 
@@ -510,7 +494,8 @@ namespace YourBrand.Sales.API.Migrations
 
                     b.Navigation("CreatedBy");
 
-                    b.Navigation("Discounts");
+                    b.Navigation("Discounts")
+                        .IsRequired();
 
                     b.Navigation("LastModifiedBy");
 
@@ -518,7 +503,8 @@ namespace YourBrand.Sales.API.Migrations
 
                     b.Navigation("Status");
 
-                    b.Navigation("VatAmounts");
+                    b.Navigation("VatAmounts")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("YourBrand.Sales.API.Features.OrderManagement.Domain.Entities.OrderItem", b =>

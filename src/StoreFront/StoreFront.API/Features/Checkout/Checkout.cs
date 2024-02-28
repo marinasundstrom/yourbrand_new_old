@@ -131,8 +131,9 @@ public sealed record Checkout(
                     ItemId = cartItem.ProductId?.ToString(),
                     Notes = string.Join(", ", optionTexts),
                     UnitPrice = price,
-                    VatRate = 0.25,
-                    Quantity = cartItem.Quantity
+                    VatRate = cartItem.VatRate,
+                    Quantity = cartItem.Quantity,
+                    Discount = cartItem.RegularPrice is null ? null : cartItem.Price - cartItem.RegularPrice.GetValueOrDefault()
                 });
             }
 
