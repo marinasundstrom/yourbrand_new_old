@@ -277,6 +277,29 @@ paths:
                 $ref: "#/components/schemas/OrderItem"
         404:
           description: ""
+    delete:
+      tags:
+        - Orders
+        - Orders
+      operationId: Orders_RemoveOrderItem
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          x-position: 1
+        - name: itemId
+          in: path
+          required: true
+          schema:
+            type: string
+          x-position: 2
+      responses:
+        200:
+          description: ""
+        404:
+          description: ""
   /v1/orders/{id}/status:
     put:
       tags:
@@ -320,30 +343,6 @@ paths:
           schema:
             type: string
             nullable: true
-          x-position: 2
-      responses:
-        200:
-          description: ""
-        404:
-          description: ""
-  /v1/orders/items/{id}:
-    delete:
-      tags:
-        - Orders
-        - Orders
-      operationId: Orders_RemoveOrderItem
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-          x-position: 1
-        - name: itemId
-          in: query
-          required: true
-          schema:
-            type: string
           x-position: 2
       responses:
         200:

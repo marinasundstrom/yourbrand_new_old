@@ -71,7 +71,7 @@ public static class Endpoints
 
         */
 
-        group.MapDelete("{orderId}/items/{id}", RemoveOrderItem)
+        group.MapDelete("{id}/items/{itemId}", RemoveOrderItem)
             .WithName($"Orders_{nameof(RemoveOrderItem)}");
 
         return app;

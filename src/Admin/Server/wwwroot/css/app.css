@@ -1,4 +1,3 @@
-
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;
@@ -68,4 +67,8 @@
 
 .loading-progress-text:after {
     content: var(--blazor-load-percentage-text, "Loading");
+}
+
+.vat-table .mud-table-cell {
+    padding: 6px 0;
 }

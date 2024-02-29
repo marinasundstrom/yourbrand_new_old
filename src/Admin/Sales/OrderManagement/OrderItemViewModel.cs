@@ -21,17 +21,17 @@ public class OrderItemViewModel
     public decimal UnitPrice { get; set; }
 
     [Required]
-    public string Unit { get; set; } = null!;
+    public string Unit { get; set; } = string.Empty;
 
     [Required]
     [Range(0.0001, double.MaxValue)]
     public double Quantity { get; set; } = 1;
 
-    public double VatRate { get; set; } = 0.25;
+    public double? VatRate { get; set; } = 0.25;
 
     public decimal? Discount { get; set; }
 
-    public decimal Vat => LineTotal.GetVatFromTotal(VatRate);
+    public decimal Vat => LineTotal.GetVatFromTotal(VatRate.GetValueOrDefault());
 
     public decimal LineTotal => UnitPrice * (decimal)Quantity;
 }

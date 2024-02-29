@@ -19,7 +19,7 @@ public static class Mapper
 
         foreach (var item in dto.Items)
         {
-            model.Items.Add(item.ToModel());
+            model.AddItem(item.ToModel());
         }
 
         return model;
@@ -51,7 +51,7 @@ public static class Mapper
             UnitPrice = vm.UnitPrice,
             Unit = vm.Unit,
             Quantity = vm.Quantity,
-            VatRate = vm.VatRate,
+            VatRate = vm.VatRate.GetValueOrDefault(),
             Discount = vm.Discount
         };
     }
@@ -66,7 +66,7 @@ public static class Mapper
             UnitPrice = dto.UnitPrice,
             Unit = dto.Unit,
             Quantity = dto.Quantity,
-            VatRate = dto.VatRate,
+            VatRate = dto.VatRate.GetValueOrDefault(),
         };
     }
 }
