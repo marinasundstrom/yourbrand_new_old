@@ -7,24 +7,24 @@ namespace YourBrand.Sales.API.Features.OrderManagement.Domain.ValueObjects;
 public record Address
 {
     // Street
-    public required string Thoroughfare { get; init; }
+    public string Thoroughfare { get; set; }
 
     // Street number
-    public required string Premises { get; init; }
+    public string Premises { get; set; }
 
     // Suite
-    public string? SubPremises { get; init; }
+    public string? SubPremises { get; set; }
 
-    public required string PostalCode { get; init; }
+    public string PostalCode { get; set; }
 
     // Town or City
-    public required string Locality { get; init; }
+    public string Locality { get; set; }
 
     // County or Municipality
-    public required string SubAdministrativeArea { get; init; }
+    public string SubAdministrativeArea { get; set; }
 
     // State or Province
-    public required string AdministrativeArea { get; init; }
+    public string AdministrativeArea { get; set; }
 
-    public required string Country { get; init; }
+    public string Country { get; set; }
 }

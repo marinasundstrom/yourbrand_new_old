@@ -2,8 +2,8 @@
 
 public record ShippingDetails
 {
-    public required string FirstName { get; init; }
-    public required string LastName { get; init; }
-    public string? CareOf { get; init; }
-    public required Address Address { get; init; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string? CareOf { get; set; }
+    public Address Address { get; set; }
 }

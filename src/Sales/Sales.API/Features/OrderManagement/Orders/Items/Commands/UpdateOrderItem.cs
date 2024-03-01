@@ -52,7 +52,7 @@ public sealed record UpdateOrderItem(string OrderId, string OrderItemId, string 
             orderItem.Quantity = request.Quantity;
             orderItem.Notes = request.Notes;
 
-            order.Calculate();
+            order.Update();
 
             await unitOfWork.SaveChangesAsync(cancellationToken);
 

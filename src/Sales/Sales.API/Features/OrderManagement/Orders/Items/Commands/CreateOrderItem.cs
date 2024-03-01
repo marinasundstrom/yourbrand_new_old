@@ -40,9 +40,9 @@ public sealed record CreateOrderItem(string OrderId, string Description, string?
                 return OrderNotFound;
             }
 
-            var orderItem = order.AddOrderItem(request.ItemId, request.Description, request.Quantity, request.Unit, request.UnitPrice, request.VatRate, null, null, null, null, request.Notes);
+            var orderItem = order.AddItem(request.ItemId, request.Description, request.Quantity, request.Unit, request.UnitPrice, request.VatRate, null, null, null, request.Notes);
 
-            order.Calculate();
+            order.Update();
 
             await unitOfWork.SaveChangesAsync(cancellationToken);
 

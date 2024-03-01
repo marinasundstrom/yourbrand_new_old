@@ -120,39 +120,47 @@
             <MudItem xs="12" sm="12" md="6" lg="6">
 
                 <MudGrid Class="mb-4">
+                    <MudItem xs="12" sm="6" md="6" lg="6">
 
-                    @if (order.BillingDetails is not null)
-                    {
-                        <MudItem xs="12" sm="6" md="6" lg="6">
-                            <MudText Typo="Typo.h5" Class="mb-1">Billing details</MudText>
+                        <div class="d-flex flex-grow-1 gap-1">
+                            <MudText Typo="Typo.h5" Class="mb-1">Billing details</MudText> 
+                            <MudIconButton Icon="@Icons.Material.Filled.Edit" OnClick="UpdateBillingDetails" Size="Size.Small" />
+                        </div>
+
+                        @if (order?.BillingDetails is not null)
+                        {
+                            var address = order.BillingDetails.Address;
+
                             <MudText>@order.BillingDetails.FirstName @order.BillingDetails.LastName</MudText>
                             <MudText>@order.BillingDetails.Ssn</MudText>
 
-                            @{
-                                var address = order.BillingDetails.Address;
-                            }
                             <MudText Class="mt-2">@address.Thoroughfare @address.Premises @address.SubPremises</MudText>
                             <MudText>@address.PostalCode @address.Locality</MudText>
                             <MudText>@address.Country</MudText>
 
                             <MudText Class="mt-2">@order.BillingDetails.PhoneNumber</MudText>
                             <MudText>@order.BillingDetails.Email</MudText>
-                        </MudItem>
-                    }
+                       }
+                    </MudItem>
 
-                    @if (order.ShippingDetails is not null)
-                    {
-                        <MudItem xs="12" sm="6" md="6" lg="6">
+                    <MudItem xs="12" sm="6" md="6" lg="6">
+                        
+                        <div class="d-flex flex-grow-1 gap-1">
                             <MudText Typo="Typo.h5" Class="mb-1">Shipping details</MudText>
-                            <MudText>@order.ShippingDetails.FirstName @order.ShippingDetails.LastName</MudText>
-                            @{
-                                var address = order.ShippingDetails.Address;
-                            }
-                            <MudText class="mt-2">@address.Thoroughfare @address.Premises @address.SubPremises</MudText>
-                            <MudText>@address.PostalCode @address.Locality</MudText>
-                            <MudText>@address.Country</MudText>
-                        </MudItem>
-                    }
+                            <MudIconButton Icon="@Icons.Material.Filled.Edit" OnClick="UpdateShippingDetails" Size="Size.Small" />
+                        </div>
+
+                        @if (order.ShippingDetails is not null)
+                        { 
+                            var address = order.ShippingDetails.Address;
+
+                                <MudText>@order.ShippingDetails.FirstName @order.ShippingDetails.LastName</MudText>
+                                <MudText class="mt-2">@address.Thoroughfare @address.Premises @address.SubPremises</MudText>
+                                <MudText>@address.PostalCode @address.Locality</MudText>
+                                <MudText>@address.Country</MudText>
+                        }
+
+                    </MudItem>
 
                     <MudItem xs="12" sm="12" md="12" lg="12">
                         <MudField Label="Notes">@Model.Notes</MudField>
@@ -342,5 +350,35 @@
         await OrdersClient.RemoveOrderItemAsync(order.Id, orderItem.Id);
 
         Model.RemoveItem(orderItem);
+    }
+
+    async Task UpdateBillingDetails() 
+    {
+        var dialogParameters = new DialogParameters();
+        dialogParameters.Add(nameof(UpdateBillingDetailsDialog.OrderId), order.Id);
+        dialogParameters.Add(nameof(UpdateBillingDetailsDialog.Model), order.BillingDetails);
+
+        var dialogRef = DialogService.Show<UpdateBillingDetailsDialog>("Update billing details", dialogParameters);
+
+        var result = await dialogRef.Result;
+
+        if (result.Cancelled) return;
+
+        order.BillingDetails = (BillingDetails)result.Data;
+    }
+
+    async Task UpdateShippingDetails() 
+    {
+        var dialogParameters = new DialogParameters();
+        dialogParameters.Add(nameof(UpdateShippingDetailsDialog.OrderId), order.Id);
+        dialogParameters.Add(nameof(UpdateShippingDetailsDialog.Model), order.ShippingDetails);
+
+        var dialogRef = DialogService.Show<UpdateShippingDetailsDialog>("Update shipping details", dialogParameters);
+
+        var result = await dialogRef.Result;
+
+        if (result.Cancelled) return;
+
+        order.ShippingDetails = (ShippingDetails)result.Data;
     }
 }

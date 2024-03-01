@@ -18,9 +18,9 @@ public sealed class OrderConfiguration : IEntityTypeConfiguration<Order>
             .IsRequired()
             .OnDelete(DeleteBehavior.ClientCascade);
 
-        builder.OwnsOne(x => x.BillingDetails, x => x.OwnsOne(z => z.Address));
+        builder.ComplexProperty(x => x.BillingDetails, x => x.IsRequired().ComplexProperty(z => z.Address));
 
-        builder.OwnsOne(x => x.ShippingDetails, x => x.OwnsOne(z => z.Address));
+        builder.ComplexProperty(x => x.ShippingDetails, x => x.IsRequired().ComplexProperty(z => z.Address));
 
         builder.OwnsMany(x => x.VatAmounts, x => x.ToJson());
 

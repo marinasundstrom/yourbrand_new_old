@@ -30,20 +30,20 @@ public class OrderViewModel
 
     public bool VatIncluded { get; set; } = true;
 
-    public IEnumerable<OrderItemViewModel> Items => _items ??= new List<OrderItemViewModel>();
+    public IEnumerable<OrderItemViewModel> Items => _items;
 
     public void AddItem(OrderItemViewModel item)
     {
         _items.Add(item);
 
-        Calculate();
+        Update();
     }
 
     public void RemoveItem(OrderItemViewModel item)
     {
         _items.Remove(item);
 
-        Calculate();
+        Update();
     }
 
     public List<OrderVatAmountViewModel> VatAmounts => _vatAmounts;
@@ -63,15 +63,17 @@ public class OrderViewModel
 
     public decimal? Paid { get; set; }
 
-    public void Calculate()
+    public void Update()
+    {
+        UpdateVatAmounts();
+    }
+
+    private void UpdateVatAmounts()
     {
         VatAmounts.ForEach(x => x.Amount = 0);
 
         foreach (var item in Items)
         {
-            //item.Total = item.Price * (decimal)item.Quantity;
-            //item.Vat = Math.Round(PriceCalculations.GetVatFromTotal(item.Total, item.VatRate.GetValueOrDefault()), 2, MidpointRounding.ToEven);
-
             if (item.VatRate is null)
             {
                 continue;
@@ -83,7 +85,7 @@ public class OrderViewModel
                 vatAmount = new OrderVatAmountViewModel()
                 {
                     VatRate = item.VatRate.GetValueOrDefault(),
-                    Name = $"{(item.VatRate * 100)}%"
+                    Name = $"{item.VatRate * 100}%"
                 };
 
                 VatAmounts.Add(vatAmount);

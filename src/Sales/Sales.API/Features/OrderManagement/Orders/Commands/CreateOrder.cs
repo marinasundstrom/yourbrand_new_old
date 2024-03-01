@@ -77,10 +77,10 @@ public sealed record CreateOrder(int? Status, string? CustomerId, BillingDetails
 
             foreach (var orderItem in request.Items)
             {
-                order.AddOrderItem(orderItem.ItemId, orderItem.Description, orderItem.Quantity, orderItem.Unit, orderItem.UnitPrice, orderItem.VatRate, null, null, null, orderItem.Discount, orderItem.Notes);
+                order.AddItem(orderItem.ItemId, orderItem.Description, orderItem.Quantity, orderItem.Unit, orderItem.UnitPrice, orderItem.VatRate, null, null, orderItem.Discount, orderItem.Notes);
             }
 
-            order.Calculate();
+            order.Update();
 
             orderRepository.Add(order);
 

@@ -43,14 +43,14 @@ public static class Mappings
         SSN = billingDetails.SSN,
         Email = billingDetails.Email,
         PhoneNumber = billingDetails.PhoneNumber,
-        Address = billingDetails.Address.ToDto()
+        Address = billingDetails.Address?.ToDto()
     };
 
     public static ShippingDetailsDto ToDto(this ShippingDetails billingDetails) => new()
     {
         FirstName = billingDetails.FirstName,
         LastName = billingDetails.LastName,
-        Address = billingDetails.Address.ToDto()
+        Address = billingDetails.Address?.ToDto()
     };
 
     public static CurrencyAmountDto ToDto(this CurrencyAmount currencyAmount) => new(currencyAmount.Currency, currencyAmount.Amount);

@@ -1,3 +1,5 @@
+using Core;
+
 namespace YourBrand.Sales.API.Features.OrderManagement.Domain.Entities;
 
 public class OrderItem : Entity<string>, IAuditable
@@ -7,12 +9,10 @@ public class OrderItem : Entity<string>, IAuditable
                        string? unit,
                        decimal price,
                        double? vatRate,
-                       decimal? vat,
                        decimal? regularPrice,
                        double? discountRate,
                        decimal? discount,
                        double quantity,
-                       decimal total,
                        string? notes)
         : base(Guid.NewGuid().ToString())
     {
@@ -21,13 +21,13 @@ public class OrderItem : Entity<string>, IAuditable
         Unit = unit;
         Price = price;
         VatRate = vatRate;
-        Vat = vat;
         RegularPrice = regularPrice;
         DiscountRate = discountRate;
         Discount = discount;
         Quantity = quantity;
-        Total = total;
         Notes = notes;
+
+        Update();
     }
 
     public Order? Order { get; private set; }
@@ -42,7 +42,7 @@ public class OrderItem : Entity<string>, IAuditable
 
     public double? VatRate { get; set; }
 
-    public decimal? Vat { get; set; }
+    public decimal? Vat { get; private set; }
 
     public decimal? RegularPrice { get; set; }
 
@@ -52,7 +52,7 @@ public class OrderItem : Entity<string>, IAuditable
 
     public double Quantity { get; set; }
 
-    public decimal Total { get; set; }
+    public decimal Total { get; private set; }
 
     public string? Notes { get; set; }
 
@@ -67,4 +67,10 @@ public class OrderItem : Entity<string>, IAuditable
     public string? LastModifiedById { get; set; }
 
     public DateTimeOffset? LastModified { get; set; }
+
+    public void Update()
+    {
+        Total = Price * (decimal)Quantity;
+        Vat = Math.Round(PriceCalculations.GetVatFromTotal(Total, VatRate.GetValueOrDefault()), 2, MidpointRounding.ToEven);
+    }
 }

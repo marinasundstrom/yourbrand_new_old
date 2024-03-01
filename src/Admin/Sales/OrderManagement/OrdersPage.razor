@@ -46,8 +46,12 @@
         </MudTh>
         <MudTh>Sub Total</MudTh>
         <MudTh>VAT</MudTh>
+        <MudTh>Discount</MudTh>
         <MudTh>
             <MudTableSortLabel T="Order" SortLabel="Total">Total</MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel T="Order" SortLabel="Created">Created</MudTableSortLabel>
         </MudTh>
         <MudTh></MudTh>
     </HeaderContent>
@@ -60,6 +64,7 @@
         <MudTd DataLabel="VAT">@order.Vat.FormatCurrency(order.Currency)</MudTd>
         <MudTd DataLabel="Discount">@order.Discount?.FormatCurrency(order.Currency)</MudTd>
         <MudTd DataLabel="Total">@order.Total.FormatCurrency(order.Currency)</MudTd>
+        <MudTd DataLabel="Created">@order.Created.ToString("yyyy-MM-dd")</MudTd>
         <MudTd>
             @*
             <MudIconButton Icon="@Icons.Filled.FileDownload" Size="Size.Small"

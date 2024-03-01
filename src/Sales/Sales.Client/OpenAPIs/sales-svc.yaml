@@ -349,6 +349,58 @@ paths:
           description: ""
         404:
           description: ""
+  /v1/orders/{id}/billingDetails:
+    put:
+      tags:
+        - Orders
+        - Orders
+      operationId: Orders_UpdateBillingDetails
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          x-position: 1
+      requestBody:
+        x-name: billingDetails
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BillingDetails"
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ""
+        404:
+          description: ""
+  /v1/orders/{id}/shippingDetails:
+    put:
+      tags:
+        - Orders
+        - Orders
+      operationId: Orders_UpdateShippingDetails
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          x-position: 1
+      requestBody:
+        x-name: shippingDetails
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ShippingDetails"
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ""
+        404:
+          description: ""
   /v1/orders/statuses:
     get:
       tags:
