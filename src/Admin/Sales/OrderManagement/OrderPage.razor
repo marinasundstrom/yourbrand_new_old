@@ -309,6 +309,8 @@
 
         if (result.Cancelled)
             return;
+
+        Model.Update();
     }
 
     public async Task UpdateOrderStatus()
