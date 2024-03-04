@@ -137,9 +137,13 @@ public class OrderViewModel
             return;
         }
 
-        totalVatAmount.SubTotal = VatAmounts.Sum(x => x.SubTotal);
-        totalVatAmount.Vat = VatAmounts.Sum(x => x.Vat);
-        totalVatAmount.Total = VatAmounts.Sum(x => x.Total);
+        totalVatAmount.SubTotal = Items.Sum(x => x.SubTotal);
+        totalVatAmount.Vat = Items.Sum(x => x.Vat);
+        totalVatAmount.Total = Items.Sum(x => x.LineTotal);
+
+        //totalVatAmount.SubTotal = VatAmounts.Sum(x => x.SubTotal);
+        //totalVatAmount.Vat = VatAmounts.Sum(x => x.Vat);
+        //totalVatAmount.Total = VatAmounts.Sum(x => x.Total);
     }
 }
 public sealed record OrderVatAmountViewModel

@@ -29,6 +29,8 @@ public class OrderItemViewModel
 
     public decimal? Discount { get; set; }
 
+    public decimal SubTotal => LineTotal - Vat;
+
     public decimal Vat => LineTotal.GetVatFromTotal(VatRate.GetValueOrDefault());
 
     public decimal LineTotal => UnitPrice * (decimal)Quantity;
