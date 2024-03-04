@@ -754,7 +754,14 @@ components:
         vatRate:
           type: number
           format: double
-        amount:
+        subTotal:
+          type: number
+          format: decimal
+        vat:
+          type: number
+          format: decimal
+          nullable: true
+        total:
           type: number
           format: decimal
     OrderDiscount:

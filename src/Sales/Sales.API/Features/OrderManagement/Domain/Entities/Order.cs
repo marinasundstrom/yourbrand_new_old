@@ -122,7 +122,12 @@ public class Order : AggregateRoot<string>, IAuditable
 
     private void UpdateVatAmounts()
     {
-        VatAmounts.ForEach(x => x.Amount = 0);
+        VatAmounts.ForEach(x =>
+        {
+            x.Vat = 0;
+            x.SubTotal = 0;
+            x.Total = 0;
+        });
 
         foreach (var item in Items)
         {
@@ -145,12 +150,14 @@ public class Order : AggregateRoot<string>, IAuditable
                 VatAmounts.Add(vatAmount);
             }
 
-            vatAmount.Amount += item.Vat.GetValueOrDefault();
+            vatAmount.Vat += item.Vat.GetValueOrDefault();
+            vatAmount.SubTotal += item.Total - item.Vat.GetValueOrDefault();
+            vatAmount.Total += item.Total;
         }
 
         VatAmounts.ToList().ForEach(x =>
         {
-            if (x.Amount == 0)
+            if (x.Vat == 0)
             {
                 VatAmounts.Remove(x);
             }
@@ -183,5 +190,9 @@ public sealed class OrderVatAmount
 
     public double Rate { get; set; }
 
-    public decimal Amount { get; set; }
+    public decimal SubTotal { get; set; }
+
+    public decimal Vat { get; set; }
+
+    public decimal Total { get; set; }
 }

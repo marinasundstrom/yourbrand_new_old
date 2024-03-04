@@ -11,7 +11,7 @@ public static class Mappings
         order.BillingDetails?.ToDto(),
         order.ShippingDetails?.ToDto(),
         order.Items.Select(x => x.ToDto()), order.SubTotal,
-        order.VatAmounts.Select(x => new OrderVatAmountDto(x.Name, x.Rate, x.Amount)),
+        order.VatAmounts.Select(x => new OrderVatAmountDto(x.Name, x.Rate, x.SubTotal, x.Vat, x.Total)),
         order.Vat.GetValueOrDefault(),
         order.Discounts.Select(x => new OrderDiscountDto(x.Amount, x.Description)),
         order.Discount, order.Total, order.Created, order.CreatedBy?.ToDto(), order.LastModified, order.LastModifiedBy?.ToDto());

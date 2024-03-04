@@ -15,24 +15,23 @@
 
     <MudText Typo="Typo.h3" Align="Align.Center" GutterBottom="true" Class="mt-4 mb-8">Order #@OrderNo</MudText>
 
-    <MudPaper Elevation="25" Class="pa-4">
+    <div class="mb-4">
+        <MudButton StartIcon="@Icons.Filled.FileDownload" Link="@($"/api/invoicing/orders/{Id}/file")">
+            Download
+        </MudButton>
 
-        <div class="mb-4">
-            @* <MudButton StartIcon="@Icons.Filled.FileDownload" Link="@($"/api/invoicing/orders/{Id}/file")">
-        Download
-        </MudButton> *@
+        @if (order.Status.Id == 1)
+        {
+            <MudButton StartIcon="@Icons.Filled.Delete" OnClick="async (e) => await DeleteOrder(order)">
+                Delete
+            </MudButton>
+        }
+    </div>
 
-            @if (order.Status.Id == 1)
-            {
-                <MudButton StartIcon="@Icons.Filled.Delete" OnClick="async (e) => await DeleteOrder(order)">
-                    Delete
-                </MudButton>
-            }
-        </div>
 
-        <MudGrid Class="mb-4">
-            <MudItem xs="12" sm="12" md="6" lg="6">
-
+    <MudGrid Class="mb-4">
+        <MudItem xs="12" sm="12" md="6" lg="6">
+            <MudPaper Elevation="25" Class="pa-4">
                 <MudGrid Class="mb-4">
 
                     <MudItem xs="12" sm="12" md="6" lg="6">
@@ -93,21 +92,12 @@
                     </MudItem>
 
                     <MudItem xs="6" sm="6" md="6" lg="6">
-                        <MudField Label="Sub Total">@Model.SubTotal.FormatCurrency(order.Currency)</MudField>
+                        <MudField Label="VAT">@Model.Vat.FormatCurrency(order.Currency)</MudField>
                     </MudItem>
 
-                    <MudItem xs="12" sm="6" md="6" lg="6">
-                        <MudText Typo="Typo.caption" Class="mb-1">VAT</MudText>
-                        <MudTable T="OrderVatAmountViewModel" Class="vat-table" Elevation="0" Items="Model.VatAmounts">
-                            @* <HeaderContent>
-                        <MudTh>Rate</MudTh>
-                        <MudTh>Amount</MudTh>
-                        </HeaderContent> *@
-                            <RowTemplate Context="vatAmount">
-                                <MudTd DataLabel="Rate">@vatAmount.Name</MudTd>
-                                <MudTd DataLabel="Amount">@vatAmount.Amount.FormatCurrency(order.Currency)</MudTd>
-                            </RowTemplate>
-                        </MudTable>
+
+                    <MudItem xs="6" sm="6" md="6" lg="6">
+                        <MudField Label="Sub Total">@Model.SubTotal.FormatCurrency(order.Currency)</MudField>
                     </MudItem>
 
                     <MudItem xs="6" sm="6" md="6" lg="6">
@@ -115,63 +105,123 @@
                     </MudItem>
 
                 </MudGrid>
-            </MudItem>
+            </MudPaper>
+        </MudItem>
 
-            <MudItem xs="12" sm="12" md="6" lg="6">
+        <MudItem xs="12" sm="12" md="6" lg="6">
+            <MudPaper Elevation="25" Class="pa-4">
+                <MudTable T="OrderVatAmountViewModel" Elevation="0" Items="Model.VatAmounts">
+                    <HeaderContent>
+                        <MudTh>VAT%</MudTh>
+                        <MudTh>Sub Total</MudTh>
+                        <MudTh>VAT</MudTh>
+                        <MudTh>Total</MudTh>
+                    </HeaderContent>
+                    <RowTemplate Context="vatAmount">
+                        <MudTd DataLabel="Rate">@vatAmount.Name</MudTd>
+                        <MudTd DataLabel="SubTotal">@vatAmount.SubTotal.FormatCurrency(order.Currency)</MudTd>
+                        <MudTd DataLabel="Vat">@vatAmount.Vat?.FormatCurrency(order.Currency)</MudTd>
+                        <MudTd DataLabel="Total">@vatAmount.Total.FormatCurrency(order.Currency)</MudTd>
+                    </RowTemplate>
+                </MudTable>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
 
-                <MudGrid Class="mb-4">
-                    <MudItem xs="12" sm="6" md="6" lg="6">
+    <MudExpansionPanels MultiExpansion="true">
+        <MudExpansionPanel Text="Billing detail">
+            <TitleContent>
+                  <div class="d-flex flex-grow-1 gap-1">
+                    <MudText Typo="Typo.h5" Class="mb-1">Billing details</MudText>
+                    <MudIconButton Icon="@Icons.Material.Filled.Edit" OnClick="UpdateBillingDetails" Size="Size.Small" Class="ms-4" />
+                </div>
+            </TitleContent>
 
-                        <div class="d-flex flex-grow-1 gap-1">
-                            <MudText Typo="Typo.h5" Class="mb-1">Billing details</MudText> 
-                            <MudIconButton Icon="@Icons.Material.Filled.Edit" OnClick="UpdateBillingDetails" Size="Size.Small" />
-                        </div>
+            <ChildContent>
+                @if (order?.BillingDetails is not null)
+                {
+                    var address = order.BillingDetails.Address;
 
-                        @if (order?.BillingDetails is not null)
-                        {
-                            var address = order.BillingDetails.Address;
+                    <MudText>@order.BillingDetails.FirstName @order.BillingDetails.LastName</MudText>
+                    <MudText>@order.BillingDetails.Ssn</MudText>
 
-                            <MudText>@order.BillingDetails.FirstName @order.BillingDetails.LastName</MudText>
-                            <MudText>@order.BillingDetails.Ssn</MudText>
+                    <MudText Class="mt-2">@address.Thoroughfare @address.Premises @address.SubPremises</MudText>
+                    <MudText>@address.PostalCode @address.Locality</MudText>
+                    <MudText>@address.Country</MudText>
 
-                            <MudText Class="mt-2">@address.Thoroughfare @address.Premises @address.SubPremises</MudText>
-                            <MudText>@address.PostalCode @address.Locality</MudText>
-                            <MudText>@address.Country</MudText>
+                    <MudText Class="mt-2">@order.BillingDetails.PhoneNumber</MudText>
+                    <MudText>@order.BillingDetails.Email</MudText>
+                }
+            </ChildContent>
+        </MudExpansionPanel>
+        <MudExpansionPanel Text="Shipping details">
+            <TitleContent>
+                  <div class="d-flex flex-grow-1 gap-1">
+                    <MudText Typo="Typo.h5" Class="mb-1">Shipping details</MudText>
+                    <MudIconButton Icon="@Icons.Material.Filled.Edit" OnClick="UpdateShippingDetails" Size="Size.Small" Class="ms-4" />
+                </div>
+            </TitleContent>
 
-                            <MudText Class="mt-2">@order.BillingDetails.PhoneNumber</MudText>
-                            <MudText>@order.BillingDetails.Email</MudText>
-                       }
-                    </MudItem>
+            <ChildContent>
+                @if (order.ShippingDetails is not null)
+                {
+                    var address = order.ShippingDetails.Address;
 
-                    <MudItem xs="12" sm="6" md="6" lg="6">
-                        
-                        <div class="d-flex flex-grow-1 gap-1">
-                            <MudText Typo="Typo.h5" Class="mb-1">Shipping details</MudText>
-                            <MudIconButton Icon="@Icons.Material.Filled.Edit" OnClick="UpdateShippingDetails" Size="Size.Small" />
-                        </div>
+                    <MudText>@order.ShippingDetails.FirstName @order.ShippingDetails.LastName</MudText>
+                    <MudText class="mt-2">@address.Thoroughfare @address.Premises @address.SubPremises</MudText>
+                    <MudText>@address.PostalCode @address.Locality</MudText>
+                    <MudText>@address.Country</MudText>
+                }
+            </ChildContent>
+        </MudExpansionPanel>
+    </MudExpansionPanels>
 
-                        @if (order.ShippingDetails is not null)
-                        { 
-                            var address = order.ShippingDetails.Address;
+    @*
 
-                                <MudText>@order.ShippingDetails.FirstName @order.ShippingDetails.LastName</MudText>
-                                <MudText class="mt-2">@address.Thoroughfare @address.Premises @address.SubPremises</MudText>
-                                <MudText>@address.PostalCode @address.Locality</MudText>
-                                <MudText>@address.Country</MudText>
-                        }
+<MudPaper Elevation="25" Class="pa-4">
 
-                    </MudItem>
+<div class="mb-4">
+@* <MudButton StartIcon="@Icons.Filled.FileDownload" Link="@($"/api/invoicing/orders/{Id}/file")">
+Download
+</MudButton>
 
-                    <MudItem xs="12" sm="12" md="12" lg="12">
-                        <MudField Label="Notes">@Model.Notes</MudField>
-                    </MudItem>
+@if (order.Status.Id == 1)
+{
+<MudButton StartIcon="@Icons.Filled.Delete" OnClick="async (e) => await DeleteOrder(order)">
+Delete
+</MudButton>
+}
+</div>
 
-                </MudGrid>
+<MudGrid Class="mb-4">
+<MudItem xs="12" sm="12" md="6" lg="6">
 
-            </MudItem>
-        </MudGrid>
 
-    </MudPaper>
+</MudItem>
+
+<MudItem xs="12" sm="12" md="6" lg="6">
+
+<MudGrid Class="mb-4">
+<MudItem xs="12" sm="6" md="6" lg="6">
+
+</MudItem>
+
+<MudItem xs="12" sm="6" md="6" lg="6">
+
+</MudItem>
+
+<MudItem xs="12" sm="12" md="12" lg="12">
+<MudField Label="Notes">@Model.Notes</MudField>
+</MudItem>
+
+</MudGrid>
+
+</MudItem>
+</MudGrid>
+
+</MudPaper>
+
+*@
 
     <MudText Typo="Typo.h4" Align="Align.Center" GutterBottom="true" Class="mt-8 mb-4">Items</MudText>
 
@@ -187,11 +237,22 @@
             <MudTh>Description</MudTh>
             <MudTh>Quantity</MudTh>
             <MudTh>Unit</MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<OrderItemViewModel, object>(x=>x.UnitPrice)">Unit Price</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<OrderItemViewModel, object>(x=>x.VatRate)">VAT Rate</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<OrderItemViewModel, object>(x=>x.Vat)">VAT</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<OrderItemViewModel, object>(x=>x.Discount)">Discount</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<OrderItemViewModel, object>(x=>x.LineTotal)">Total</MudTableSortLabel></MudTh>
+            <MudTh>
+                <MudTableSortLabel SortBy="new Func<OrderItemViewModel, object>(x=>x.UnitPrice)">Unit Price
+                </MudTableSortLabel>
+            </MudTh>
+            <MudTh>
+                <MudTableSortLabel SortBy="new Func<OrderItemViewModel, object>(x=>x.VatRate)">VAT Rate</MudTableSortLabel>
+            </MudTh>
+            <MudTh>
+                <MudTableSortLabel SortBy="new Func<OrderItemViewModel, object>(x=>x.Vat)">VAT</MudTableSortLabel>
+            </MudTh>
+            <MudTh>
+                <MudTableSortLabel SortBy="new Func<OrderItemViewModel, object>(x=>x.Discount)">Discount</MudTableSortLabel>
+            </MudTh>
+            <MudTh>
+                <MudTableSortLabel SortBy="new Func<OrderItemViewModel, object>(x=>x.LineTotal)">Total</MudTableSortLabel>
+            </MudTh>
             @if (Model.Status.Id == 1)
             {
                 <MudTh></MudTh>
@@ -354,7 +415,7 @@
         Model.RemoveItem(orderItem);
     }
 
-    async Task UpdateBillingDetails() 
+    async Task UpdateBillingDetails()
     {
         var dialogParameters = new DialogParameters();
         dialogParameters.Add(nameof(UpdateBillingDetailsDialog.OrderId), order.Id);
@@ -369,7 +430,7 @@
         order.BillingDetails = (BillingDetails)result.Data;
     }
 
-    async Task UpdateShippingDetails() 
+    async Task UpdateShippingDetails()
     {
         var dialogParameters = new DialogParameters();
         dialogParameters.Add(nameof(UpdateShippingDetailsDialog.OrderId), order.Id);
