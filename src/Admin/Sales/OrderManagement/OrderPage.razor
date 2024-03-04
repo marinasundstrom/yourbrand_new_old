@@ -34,11 +34,11 @@
             <MudPaper Elevation="25" Class="pa-4">
                 <MudGrid Class="mb-4">
 
-                    <MudItem xs="12" sm="12" md="6" lg="6">
+                    <MudItem xs="12" sm="12" md="6" lg="4">
                         <MudField Label="Date">@Model.Date?.ToString("yyyy-MM-dd")</MudField>
                     </MudItem>
 
-                    <MudItem xs="12" sm="12" md="6" lg="63">
+                    <MudItem xs="12" sm="12" md="6" lg="6">
                         <div class="d-flex">
                             <MudField Label="Status">@Model.Status.Name</MudField>
                             <MudIconButton Icon="@Icons.Filled.Edit" Class="justify-end"
@@ -88,19 +88,6 @@
                 *@
 
                     <MudItem xs="6" sm="6" md="6" lg="6">
-                        <MudField Label="Total">@Model.Total.FormatCurrency(order.Currency)</MudField>
-                    </MudItem>
-
-                    <MudItem xs="6" sm="6" md="6" lg="6">
-                        <MudField Label="VAT">@Model.Vat.FormatCurrency(order.Currency)</MudField>
-                    </MudItem>
-
-
-                    <MudItem xs="6" sm="6" md="6" lg="6">
-                        <MudField Label="Sub Total">@Model.SubTotal.FormatCurrency(order.Currency)</MudField>
-                    </MudItem>
-
-                    <MudItem xs="6" sm="6" md="6" lg="6">
                         <MudField Label="Customer No">@order.CustomerId</MudField>
                     </MudItem>
 
@@ -108,22 +95,45 @@
             </MudPaper>
         </MudItem>
 
-        <MudItem xs="12" sm="12" md="6" lg="6">
+        <MudItem xs="12" sm="12" md="6" lg="6" Elevation="25">
             <MudPaper Elevation="25" Class="pa-4">
-                <MudTable T="OrderVatAmountViewModel" Elevation="0" Items="Model.VatAmounts">
-                    <HeaderContent>
-                        <MudTh>VAT%</MudTh>
-                        <MudTh>Sub Total</MudTh>
-                        <MudTh>VAT</MudTh>
-                        <MudTh>Total</MudTh>
-                    </HeaderContent>
-                    <RowTemplate Context="vatAmount">
-                        <MudTd DataLabel="Rate">@vatAmount.Name</MudTd>
-                        <MudTd DataLabel="SubTotal">@vatAmount.SubTotal.FormatCurrency(order.Currency)</MudTd>
-                        <MudTd DataLabel="Vat">@vatAmount.Vat?.FormatCurrency(order.Currency)</MudTd>
-                        <MudTd DataLabel="Total">@vatAmount.Total.FormatCurrency(order.Currency)</MudTd>
-                    </RowTemplate>
-                </MudTable>
+                @if(Model.VatAmounts.Count() == 1)
+                {
+                    var vatAmount = Model.VatAmounts.First();
+
+                    <MudGrid>
+
+                        <MudItem xs="6" sm="6" md="6" lg="4">
+                            <MudField Label="Sub Total">@vatAmount.SubTotal.FormatCurrency(order.Currency)</MudField>
+                        </MudItem>
+
+                        <MudItem xs="6" sm="6" md="6" lg="4">
+                            <MudField Label="VAT">@vatAmount.Vat?.FormatCurrency(order.Currency)</MudField>
+                        </MudItem>
+
+                        <MudItem xs="6" sm="6" md="6" lg="4">
+                            <MudField Label="Total">@vatAmount.Total.FormatCurrency(order.Currency)</MudField>
+                        </MudItem>
+
+                    </MudGrid>
+                } 
+                else 
+                {
+                    <MudTable T="OrderVatAmountViewModel" Elevation="0" Items="Model.VatAmounts">
+                        <HeaderContent>
+                            <MudTh>VAT%</MudTh>
+                            <MudTh>Sub Total</MudTh>
+                            <MudTh>VAT</MudTh>
+                            <MudTh>Total</MudTh>
+                        </HeaderContent>
+                        <RowTemplate Context="vatAmount">
+                            <MudTd DataLabel="Rate">@vatAmount.Name</MudTd>
+                            <MudTd DataLabel="SubTotal">@vatAmount.SubTotal.FormatCurrency(order.Currency)</MudTd>
+                            <MudTd DataLabel="Vat">@vatAmount.Vat?.FormatCurrency(order.Currency)</MudTd>
+                            <MudTd DataLabel="Total">@vatAmount.Total.FormatCurrency(order.Currency)</MudTd>
+                        </RowTemplate>
+                    </MudTable>
+                }
             </MudPaper>
         </MudItem>
     </MudGrid>
@@ -223,75 +233,88 @@ Delete
 
 *@
 
-    <MudText Typo="Typo.h4" Align="Align.Center" GutterBottom="true" Class="mt-8 mb-4">Items</MudText>
+    <MudExpansionPanels MultiExpansion="true" Class="mt-4" Elevation="25">
+        <MudExpansionPanel @bind-IsExpanded="isExpanded">
+            <TitleContent>
+                  <div class="d-flex flex-grow-1 gap-1">
+                    <MudText Typo="Typo.h5" Class="mb-1">Items</MudText>
+                </div>
+            </TitleContent>
 
-    @if (Model.Status.Id == 1)
-    {
-        <MudButton Variant="Variant.Filled" OnClick="AddItem" Class="mb-2">Add item</MudButton>
-    }
+            <ChildContent>
 
-    <MudTable T="OrderItemViewModel" @ref="table" Items="Model.Items" Hover="true" Elevation="25" Breakpoint="Breakpoint.Sm"
-        Loading="@loading" LoadingProgressColor="Color.Info" OnRowClick="async (e) => await UpdateOrderItem(e.Item)">
-        <HeaderContent>
-            <MudTh>Item Id</MudTh>
-            <MudTh>Description</MudTh>
-            <MudTh>Quantity</MudTh>
-            <MudTh>Unit</MudTh>
-            <MudTh>
-                <MudTableSortLabel SortBy="new Func<OrderItemViewModel, object>(x=>x.UnitPrice)">Unit Price
-                </MudTableSortLabel>
-            </MudTh>
-            <MudTh>
-                <MudTableSortLabel SortBy="new Func<OrderItemViewModel, object>(x=>x.VatRate)">VAT Rate</MudTableSortLabel>
-            </MudTh>
-            <MudTh>
-                <MudTableSortLabel SortBy="new Func<OrderItemViewModel, object>(x=>x.Vat)">VAT</MudTableSortLabel>
-            </MudTh>
-            <MudTh>
-                <MudTableSortLabel SortBy="new Func<OrderItemViewModel, object>(x=>x.Discount)">Discount</MudTableSortLabel>
-            </MudTh>
-            <MudTh>
-                <MudTableSortLabel SortBy="new Func<OrderItemViewModel, object>(x=>x.LineTotal)">Total</MudTableSortLabel>
-            </MudTh>
-            @if (Model.Status.Id == 1)
-            {
-                <MudTh></MudTh>
-            }
-        </HeaderContent>
-        <RowTemplate Context="orderItem">
-            <MudTd DataLabel="Item Id">@orderItem.ItemId</MudTd>
-            <MudTd DataLabel="Description">@orderItem.Description</MudTd>
-            <MudTd DataLabel="Quantity">@orderItem.Quantity</MudTd>
-            <MudTd DataLabel="Unit">@orderItem.Unit</MudTd>
-            <MudTd DataLabel="Unit Price">@orderItem.UnitPrice.FormatCurrency(order.Currency)</MudTd>
-            <MudTd DataLabel="VAT Rate">@(orderItem.VatRate * 100)%</MudTd>
-            <MudTd DataLabel="VAT">@orderItem.Vat.FormatCurrency(order.Currency)</MudTd>
-            <MudTd DataLabel="Discount">@orderItem.Discount?.FormatCurrency(order.Currency)</MudTd>
-            <MudTd DataLabel="Total">@orderItem.LineTotal.FormatCurrency(order.Currency)</MudTd>
-            @if (Model.Status.Id == 1)
-            {
-                <MudTd>
-                    <MudIconButton Icon="@Icons.Filled.Delete" Size="Size.Small"
-                        OnClick="async () => await DeleteItem(orderItem)" />
-                </MudTd>
-            }
-        </RowTemplate>
+                @if (Model.Status.Id == 1)
+                {
+                    <MudButton Variant="Variant.Filled" OnClick="AddItem" Class="mb-2">Add item</MudButton>
+                }
 
-        <ChildRowContent>
-            @if (!string.IsNullOrEmpty(context.Notes))
-            {
-                <tr>
-                    <MudTd colspan="9" class="mud-table-cell">
-                        <MudText Typo="Typo.body2">@context.Notes</MudText>
-                    </MudTd>
-                </tr>
-            }
-        </ChildRowContent>
+                <MudTable T="OrderItemViewModel" @ref="table" Items="Model.Items" Hover="true" Elevation="0" Breakpoint="Breakpoint.Sm"
+                    Loading="@loading" LoadingProgressColor="Color.Info" OnRowClick="async (e) => await UpdateOrderItem(e.Item)">
+                    <HeaderContent>
+                        <MudTh>Item Id</MudTh>
+                        <MudTh>Description</MudTh>
+                        <MudTh>Quantity</MudTh>
+                        <MudTh>Unit</MudTh>
+                        <MudTh>
+                            <MudTableSortLabel SortBy="new Func<OrderItemViewModel, object>(x=>x.UnitPrice)">Unit Price
+                            </MudTableSortLabel>
+                        </MudTh>
+                        <MudTh>
+                            <MudTableSortLabel SortBy="new Func<OrderItemViewModel, object>(x=>x.VatRate)">VAT Rate</MudTableSortLabel>
+                        </MudTh>
+                        <MudTh>
+                            <MudTableSortLabel SortBy="new Func<OrderItemViewModel, object>(x=>x.Vat)">VAT</MudTableSortLabel>
+                        </MudTh>
+                        <MudTh>
+                            <MudTableSortLabel SortBy="new Func<OrderItemViewModel, object>(x=>x.Discount)">Discount</MudTableSortLabel>
+                        </MudTh>
+                        <MudTh>
+                            <MudTableSortLabel SortBy="new Func<OrderItemViewModel, object>(x=>x.LineTotal)">Total</MudTableSortLabel>
+                        </MudTh>
+                        @if (Model.Status.Id == 1)
+                        {
+                            <MudTh></MudTh>
+                        }
+                    </HeaderContent>
+                    <RowTemplate Context="orderItem">
+                        <MudTd DataLabel="Item Id">@orderItem.ItemId</MudTd>
+                        <MudTd DataLabel="Description">@orderItem.Description</MudTd>
+                        <MudTd DataLabel="Quantity">@orderItem.Quantity</MudTd>
+                        <MudTd DataLabel="Unit">@orderItem.Unit</MudTd>
+                        <MudTd DataLabel="Unit Price">@orderItem.UnitPrice.FormatCurrency(order.Currency)</MudTd>
+                        <MudTd DataLabel="VAT Rate">@(orderItem.VatRate * 100)%</MudTd>
+                        <MudTd DataLabel="VAT">@orderItem.Vat.FormatCurrency(order.Currency)</MudTd>
+                        <MudTd DataLabel="Discount">@orderItem.Discount?.FormatCurrency(order.Currency)</MudTd>
+                        <MudTd DataLabel="Total">@orderItem.LineTotal.FormatCurrency(order.Currency)</MudTd>
+                        @if (Model.Status.Id == 1)
+                        {
+                            <MudTd>
+                                <MudIconButton Icon="@Icons.Filled.Delete" Size="Size.Small"
+                                    OnClick="async () => await DeleteItem(orderItem)" />
+                            </MudTd>
+                        }
+                    </RowTemplate>
 
-        <LoadingContent>
-            <MudText>Loading...</MudText>
-        </LoadingContent>
-    </MudTable>
+                    <ChildRowContent>
+                        @if (!string.IsNullOrEmpty(context.Notes))
+                        {
+                            <tr>
+                                <MudTd colspan="9" class="mud-table-cell">
+                                    <MudText Typo="Typo.body2">@context.Notes</MudText>
+                                </MudTd>
+                            </tr>
+                        }
+                    </ChildRowContent>
+
+                    <LoadingContent>
+                        <MudText>Loading...</MudText>
+                    </LoadingContent>
+                </MudTable>
+            </ChildContent>
+        </MudExpansionPanel>
+
+    </MudExpansionPanels>
+
 }
 
 @code
@@ -299,6 +322,7 @@ Delete
     YourBrand.Sales.Order? order;
     MudTable<OrderItemViewModel> table;
     bool loading = false;
+    bool isExpanded = true;
 
     [Parameter]
     public int? OrderNo { get; set; }
