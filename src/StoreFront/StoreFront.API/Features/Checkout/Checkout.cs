@@ -131,6 +131,7 @@ public sealed record Checkout(
                     ItemId = cartItem.ProductId?.ToString(),
                     Notes = string.Join(", ", optionTexts),
                     UnitPrice = price,
+                    RegularPrice = cartItem.RegularPrice,
                     VatRate = cartItem.VatRate,
                     Quantity = cartItem.Quantity,
                     Discount = cartItem.RegularPrice is null ? null : cartItem.Price - cartItem.RegularPrice.GetValueOrDefault()

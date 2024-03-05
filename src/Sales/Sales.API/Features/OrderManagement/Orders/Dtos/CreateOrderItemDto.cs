@@ -12,6 +12,8 @@ public sealed class CreateOrderItemDto
 
     public decimal UnitPrice { get; set; }
 
+    public decimal? RegularPrice { get; set; }
+
     public double? VatRate { get; set; }
 
     public decimal? Discount { get; set; }
