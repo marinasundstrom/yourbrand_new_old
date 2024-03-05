@@ -30,14 +30,15 @@ public static class Mapper
         return new OrderItemViewModel
         {
             Id = dto.Id,
-            Description = dto.Description,
             ItemId = dto.ItemId,
-            Notes = dto.Notes,
-            UnitPrice = dto.UnitPrice,
+            Description = dto.Description,
             Unit = dto.Unit ?? string.Empty,
             Quantity = dto.Quantity,
+            Price = dto.UnitPrice,
+            RegularPrice = dto.RegularPrice,
+            //SubTotal = dto.SubTotal,
             VatRate = dto.VatRate.GetValueOrDefault(),
-            Discount = dto.Discount
+            Notes = dto.Notes
         };
     }
 
@@ -45,14 +46,15 @@ public static class Mapper
     {
         return new AddOrderItemRequest
         {
-            Description = vm.Description,
             ItemId = vm.ItemId,
-            Notes = vm.Notes,
-            UnitPrice = vm.UnitPrice,
+            Description = vm.Description,
             Unit = vm.Unit,
             Quantity = vm.Quantity,
+            UnitPrice = vm.Price,
+            RegularPrice = vm.RegularPrice,
+            Discount = vm.Discount,
             VatRate = vm.VatRate.GetValueOrDefault(),
-            Discount = vm.Discount
+            Notes = vm.Notes,
         };
     }
 
@@ -63,7 +65,8 @@ public static class Mapper
             Description = dto.Description,
             ItemId = dto.ItemId,
             Notes = dto.Notes,
-            UnitPrice = dto.UnitPrice,
+            UnitPrice = dto.Price,
+            RegularPrice = dto.RegularPrice,
             Unit = dto.Unit,
             Quantity = dto.Quantity,
             VatRate = dto.VatRate.GetValueOrDefault(),

@@ -30,7 +30,11 @@
 
             </MudGrid>
 
-            <MudNumericField Label="Unit Price" @bind-Value="Model.UnitPrice" For="() => Model.UnitPrice" Class="mt-4">
+            <MudNumericField Label="Price" @bind-Value="Model.Price" For="() => Model.Price" Class="mt-4">
+            </MudNumericField>
+
+            <MudNumericField Label="Regular Price" @bind-Value="Model.RegularPrice" For="() => Model.RegularPrice"
+                Class="mt-4">
             </MudNumericField>
 
             <MudGrid>
@@ -59,7 +63,7 @@
             <MudGrid>
 
                 <MudItem xs="12" md="6">
-                    <MudField Label="Line Total" Class="mt-4">@Model.LineTotal.ToString("c")</MudField>
+                    <MudField Label="Line Total" Class="mt-4">@Model.Total.ToString("c")</MudField>
                 </MudItem>
 
             </MudGrid>

@@ -48,18 +48,20 @@ public class OrderViewModel
 
     public List<OrderVatAmountViewModel> VatAmounts => _vatAmounts;
 
-    public decimal SubTotal => Items.Select(i => !VatIncluded ? i.LineTotal : i.LineTotal.GetSubTotal(i.VatRate.GetValueOrDefault())).Sum();
+    public decimal SubTotal => Items.Select(i => !VatIncluded ? i.Total : i.Total.GetSubTotal(i.VatRate.GetValueOrDefault())).Sum();
 
-    public decimal Vat => Items.Select(i => VatIncluded ? i.LineTotal.GetVatFromTotal(i.VatRate.GetValueOrDefault()) : i.LineTotal.AddVat(i.VatRate.GetValueOrDefault())).Sum();
+    public decimal Vat => Items.Select(i => VatIncluded ? i.Total.GetVatFromTotal(i.VatRate.GetValueOrDefault()) : i.Total.AddVat(i.VatRate.GetValueOrDefault())).Sum();
 
     public decimal Total
     {
         get
         {
-            var total = Items.Select(i => VatIncluded ? i.LineTotal : i.LineTotal.AddVat(i.VatRate.GetValueOrDefault())).Sum();
+            var total = Items.Select(i => VatIncluded ? i.Total : i.Total.AddVat(i.VatRate.GetValueOrDefault())).Sum();
             return total;
         }
     }
+
+    public decimal Discount => Items.Sum(x => x.Discount.GetValueOrDefault());
 
     public decimal? Paid { get; set; }
 
@@ -79,11 +81,6 @@ public class OrderViewModel
 
         foreach (var item in Items)
         {
-            if (item.VatRate is null)
-            {
-                continue;
-            }
-
             var vatAmount = VatAmounts.FirstOrDefault(x => x.VatRate == item.VatRate);
             if (vatAmount is null)
             {
@@ -96,24 +93,26 @@ public class OrderViewModel
                 VatAmounts.Add(vatAmount);
             }
 
-            vatAmount.SubTotal += item.LineTotal - item.Vat;
+            vatAmount.SubTotal += item.Total - item.Vat;
             if (vatAmount.Vat is null && item.Vat > 0)
             {
                 vatAmount.Vat = 0;
             }
             vatAmount.Vat += item.Vat;
-            vatAmount.Total += item.LineTotal;
+            vatAmount.Total += item.Total;
         }
+
+        VatAmounts.Sort((x, y) => x.VatRate.GetValueOrDefault().CompareTo(y.VatRate.GetValueOrDefault()));
 
         VatAmounts.ToList().ForEach(x =>
         {
-            if (x.Vat == 0)
+            if (x.Vat == 0 && x.VatRate != 0)
             {
                 VatAmounts.Remove(x);
             }
         });
 
-        var totalVatAmount = VatAmounts.FirstOrDefault(x => x.VatRate == 0);
+        var totalVatAmount = VatAmounts.FirstOrDefault(x => x.VatRate == null);
 
         if (totalVatAmount is null)
         {
@@ -124,7 +123,7 @@ public class OrderViewModel
 
             totalVatAmount = new OrderVatAmountViewModel()
             {
-                VatRate = 0,
+                VatRate = null,
                 Name = $"Total"
             };
 
@@ -139,17 +138,13 @@ public class OrderViewModel
 
         totalVatAmount.SubTotal = Items.Sum(x => x.SubTotal);
         totalVatAmount.Vat = Items.Sum(x => x.Vat);
-        totalVatAmount.Total = Items.Sum(x => x.LineTotal);
-
-        //totalVatAmount.SubTotal = VatAmounts.Sum(x => x.SubTotal);
-        //totalVatAmount.Vat = VatAmounts.Sum(x => x.Vat);
-        //totalVatAmount.Total = VatAmounts.Sum(x => x.Total);
+        totalVatAmount.Total = Items.Sum(x => x.Total);
     }
 }
 public sealed record OrderVatAmountViewModel
 {
     public string Name { get; set; }
-    public double VatRate { get; set; }
+    public double? VatRate { get; set; }
     public decimal SubTotal { get; set; }
     public decimal? Vat { get; set; }
     public decimal Total { get; set; }

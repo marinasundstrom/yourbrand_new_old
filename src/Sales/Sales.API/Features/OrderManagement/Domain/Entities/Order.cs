@@ -81,25 +81,25 @@ public class Order : AggregateRoot<string>, IAuditable
 
     public decimal Total { get; set; }
 
-    public BillingDetails BillingDetails { get; set; }
+    public BillingDetails? BillingDetails { get; set; }
 
-    public ShippingDetails ShippingDetails { get; set; }
+    public ShippingDetails? ShippingDetails { get; set; }
 
     public IReadOnlyCollection<OrderItem> Items => _items;
 
     public OrderItem AddItem(
-                        string? itemId,
                        string description,
-                       double quantity,
-                       string? unit,
+                       string? itemId,
                        decimal price,
-                       double? vatRate,
                        decimal? regularPrice,
                        double? discountRate,
                        decimal? discount,
+                       double quantity,
+                       string? unit,
+                       double? vatRate,
                        string? notes)
     {
-        var orderItem = new OrderItem(itemId, description, unit, price, vatRate, regularPrice, discountRate, discount, quantity, notes);
+        var orderItem = new OrderItem(description, itemId!, price, regularPrice, discountRate, discount, quantity, unit, vatRate, notes);
         _items.Add(orderItem);
 
         Update();
@@ -133,11 +133,6 @@ public class Order : AggregateRoot<string>, IAuditable
         {
             item.Update();
 
-            if (item.VatRate is null)
-            {
-                continue;
-            }
-
             var vatAmount = VatAmounts.FirstOrDefault(x => x.Rate == item.VatRate);
             if (vatAmount is null)
             {
@@ -157,7 +152,7 @@ public class Order : AggregateRoot<string>, IAuditable
 
         VatAmounts.ToList().ForEach(x =>
         {
-            if (x.Vat == 0)
+            if (x.Vat == 0 && x.Rate != 0)
             {
                 VatAmounts.Remove(x);
             }

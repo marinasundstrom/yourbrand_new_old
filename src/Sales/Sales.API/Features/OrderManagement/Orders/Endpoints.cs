@@ -159,7 +159,7 @@ public static class Endpoints
 
     private static async Task<Results<Created<OrderItemDto>, NotFound>> AddOrderItem(string id, AddOrderItemRequest request, IMediator mediator = default!, LinkGenerator linkGenerator = default!, CancellationToken cancellationToken = default!)
     {
-        var result = await mediator.Send(new CreateOrderItem(id, request.Description, request.ItemId, request.Quantity, request.Unit, request.UnitPrice, request.VatRate, request.Discount, request.Notes), cancellationToken);
+        var result = await mediator.Send(new CreateOrderItem(id, request.Description, request.ItemId, request.Quantity, request.Unit, request.UnitPrice, request.RegularPrice, request.VatRate, request.Discount, request.Notes), cancellationToken);
 
         if (result.HasError(Errors.Orders.OrderNotFound))
         {
@@ -175,7 +175,7 @@ public static class Endpoints
 
     private static async Task<Results<Created<OrderItemDto>, NotFound>> UpdateOrderItem(string id, string itemId, UpdateOrderItemRequest request, IMediator mediator = default!, LinkGenerator linkGenerator = default!, CancellationToken cancellationToken = default!)
     {
-        var result = await mediator.Send(new UpdateOrderItem(id, itemId, request.Description, request.ItemId, request.Quantity, request.Unit, request.UnitPrice, request.VatRate, request.Discount, request.Notes), cancellationToken);
+        var result = await mediator.Send(new UpdateOrderItem(id, itemId, request.Description, request.ItemId, request.Quantity, request.Unit, request.UnitPrice, request.RegularPrice, request.VatRate, request.Discount, request.Notes), cancellationToken);
 
         if (result.HasError(Errors.Orders.OrderNotFound))
         {

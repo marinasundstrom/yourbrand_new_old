@@ -77,7 +77,7 @@ public sealed record CreateOrder(int? Status, string? CustomerId, BillingDetails
 
             foreach (var orderItem in request.Items)
             {
-                order.AddItem(orderItem.ItemId, orderItem.Description, orderItem.Quantity, orderItem.Unit, orderItem.UnitPrice, orderItem.VatRate, null, null, orderItem.Discount, orderItem.Notes);
+                order.AddItem(orderItem.Description, orderItem.ItemId, orderItem.UnitPrice, null, null, null, orderItem.Quantity, orderItem.Unit, orderItem.VatRate, orderItem.Notes);
             }
 
             order.Update();

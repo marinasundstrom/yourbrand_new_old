@@ -144,10 +144,11 @@ try
         var context = scope.ServiceProvider.GetRequiredService<SalesContext>();
         var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
 
-        //await context.Database.MigrateAsync();
-
         //await context.Database.EnsureDeletedAsync();
-        await context.Database.EnsureCreatedAsync();
+
+        await context.Database.MigrateAsync();
+
+        //await context.Database.EnsureCreatedAsync();
 
         if (args.Contains("--seed"))
         {

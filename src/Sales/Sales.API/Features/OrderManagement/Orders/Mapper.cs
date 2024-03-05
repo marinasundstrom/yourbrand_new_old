@@ -16,7 +16,22 @@ public static class Mappings
         order.Discounts.Select(x => new OrderDiscountDto(x.Amount, x.Description)),
         order.Discount, order.Total, order.Created, order.CreatedBy?.ToDto(), order.LastModified, order.LastModifiedBy?.ToDto());
 
-    public static OrderItemDto ToDto(this OrderItem orderItem) => new(orderItem.Id, orderItem.Description, orderItem.ItemId, orderItem.Quantity, orderItem.Unit, orderItem.Price, orderItem.VatRate, orderItem.Discount, orderItem.Total, orderItem.Notes, orderItem.Created, orderItem.CreatedBy?.ToDto(), orderItem.LastModified, orderItem.LastModifiedBy?.ToDto());
+    public static OrderItemDto ToDto(this OrderItem orderItem) => new(
+        orderItem.Id,
+        orderItem.Description,
+        orderItem.ItemId,
+        orderItem.Quantity,
+        orderItem.Unit,
+        orderItem.Price,
+        orderItem.RegularPrice,
+        orderItem.VatRate,
+        orderItem.Discount,
+        orderItem.Total,
+        orderItem.Notes,
+        orderItem.Created,
+        orderItem.CreatedBy?.ToDto(),
+        orderItem.LastModified,
+        orderItem.LastModifiedBy?.ToDto());
 
     public static OrderStatusDto ToDto(this OrderStatus orderStatus) => new(orderStatus.Id, orderStatus.Name, orderStatus.Handle, orderStatus.Description);
 

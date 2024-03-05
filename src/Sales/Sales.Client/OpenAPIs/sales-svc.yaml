@@ -716,6 +716,10 @@ components:
         unitPrice:
           type: number
           format: decimal
+        regularPrice:
+          type: number
+          format: decimal
+          nullable: true
         vatRate:
           type: number
           format: double
@@ -853,6 +857,10 @@ components:
         unitPrice:
           type: number
           format: decimal
+        regularPrice:
+          type: number
+          format: decimal
+          nullable: true
         vatRate:
           type: number
           format: double
@@ -881,6 +889,10 @@ components:
         unitPrice:
           type: number
           format: decimal
+        regularPrice:
+          type: number
+          format: decimal
+          nullable: true
         vatRate:
           type: number
           format: double

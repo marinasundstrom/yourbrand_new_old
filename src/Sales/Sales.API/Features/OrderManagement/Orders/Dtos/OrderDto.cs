@@ -8,4 +8,4 @@ public sealed record OrderVatAmountDto(string Name, double VatRate, decimal SubT
 
 public sealed record OrderDiscountDto(decimal Amount, string Description);
 
-public sealed record OrderItemDto(string Id, string Description, string? ItemId, double Quantity, string? Unit, decimal UnitPrice, double? VatRate, decimal? Discount, decimal Total, string? Notes, DateTimeOffset Created, UserDto? CreatedBy, DateTimeOffset? LastModified, UserDto? LastModifiedBy);
+public sealed record OrderItemDto(string Id, string Description, string? ItemId, double Quantity, string? Unit, decimal UnitPrice, decimal? RegularPrice, double? VatRate, decimal? Discount, decimal Total, string? Notes, DateTimeOffset Created, UserDto? CreatedBy, DateTimeOffset? LastModified, UserDto? LastModifiedBy);

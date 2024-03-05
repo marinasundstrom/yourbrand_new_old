@@ -4,15 +4,15 @@ namespace YourBrand.Sales.API.Features.OrderManagement.Domain.Entities;
 
 public class OrderItem : Entity<string>, IAuditable
 {
-    internal OrderItem(string? itemId,
-                       string description,
-                       string? unit,
+    internal OrderItem(string description,
+                       string? itemId,
                        decimal price,
-                       double? vatRate,
                        decimal? regularPrice,
                        double? discountRate,
                        decimal? discount,
                        double quantity,
+                       string? unit,
+                       double? vatRate,
                        string? notes)
         : base(Guid.NewGuid().ToString())
     {
@@ -32,17 +32,13 @@ public class OrderItem : Entity<string>, IAuditable
 
     public Order? Order { get; private set; }
 
-    public string? ItemId { get; set; } = null!;
-
     public string Description { get; set; } = null!;
+
+    public string? ItemId { get; set; } = null!;
 
     public string? Unit { get; set; }
 
     public decimal Price { get; set; }
-
-    public double? VatRate { get; set; }
-
-    public decimal? Vat { get; private set; }
 
     public decimal? RegularPrice { get; set; }
 
@@ -51,6 +47,12 @@ public class OrderItem : Entity<string>, IAuditable
     public decimal? Discount { get; set; }
 
     public double Quantity { get; set; }
+
+    public decimal SubTotal { get; private set; }
+
+    public double? VatRate { get; set; }
+
+    public decimal? Vat { get; private set; }
 
     public decimal Total { get; private set; }
 
