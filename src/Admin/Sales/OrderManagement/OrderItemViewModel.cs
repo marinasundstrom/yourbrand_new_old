@@ -31,7 +31,7 @@ public class OrderItemViewModel
 
     public decimal SubTotal => Total - Vat;
 
-    public decimal Vat => Total.GetVatFromTotal(VatRate.GetValueOrDefault());
+    public decimal Vat => Math.Round(Total.GetVatFromTotal(VatRate.GetValueOrDefault()), 2, MidpointRounding.AwayFromZero);
 
     public decimal Total => Price * (decimal)Quantity;
 
