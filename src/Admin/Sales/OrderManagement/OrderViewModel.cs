@@ -48,16 +48,16 @@ public class OrderViewModel
 
     public List<OrderVatAmountViewModel> VatAmounts => _vatAmounts;
 
-    public decimal SubTotal => Items.Select(i => !VatIncluded ? i.Total : i.Total.GetSubTotal(i.VatRate.GetValueOrDefault())).Sum();
+    public decimal SubTotal => Math.Round(Items.Select(i => !VatIncluded ? i.Total : i.Total.GetSubTotal(i.VatRate.GetValueOrDefault())).Sum(), 2, MidpointRounding.AwayFromZero);
 
-    public decimal Vat => Items.Select(i => VatIncluded ? i.Total.GetVatFromTotal(i.VatRate.GetValueOrDefault()) : i.Total.AddVat(i.VatRate.GetValueOrDefault())).Sum();
+    public decimal Vat => Math.Round(Items.Select(i => VatIncluded ? i.Total.GetVatFromTotal(i.VatRate.GetValueOrDefault()) : i.Total.AddVat(i.VatRate.GetValueOrDefault())).Sum(), 2, MidpointRounding.AwayFromZero);
 
     public decimal Total
     {
         get
         {
             var total = Items.Select(i => VatIncluded ? i.Total : i.Total.AddVat(i.VatRate.GetValueOrDefault())).Sum();
-            return total;
+            return Math.Round(total, 2, MidpointRounding.AwayFromZero);
         }
     }
 

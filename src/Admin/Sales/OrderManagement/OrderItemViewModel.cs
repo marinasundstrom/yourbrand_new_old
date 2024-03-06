@@ -18,7 +18,7 @@ public class OrderItemViewModel
 
     public decimal? RegularPrice { get; set; }
 
-    public decimal? Discount => (RegularPrice is null ? null : RegularPrice.GetValueOrDefault() - Price);
+    public decimal? Discount => RegularPrice is null ? null : RegularPrice.GetValueOrDefault() - Price;
 
     [Required]
     [Range(0.0001, double.MaxValue)]
@@ -33,7 +33,7 @@ public class OrderItemViewModel
 
     public decimal Vat => Math.Round(Total.GetVatFromTotal(VatRate.GetValueOrDefault()), 2, MidpointRounding.AwayFromZero);
 
-    public decimal Total => Price * (decimal)Quantity;
+    public decimal Total => Math.Round(Price * (decimal)Quantity, 2, MidpointRounding.AwayFromZero);
 
     public string? Notes { get; set; }
 }
