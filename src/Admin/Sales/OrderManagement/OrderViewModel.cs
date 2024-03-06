@@ -110,11 +110,17 @@ public class OrderViewModel
             }
         });
 
+        var harMoreThanOneVatRate = VatAmounts
+            .Where(x => !x.IsTotal)
+            .Count(x => x.GetVat() >= 0) > 1;
+
+        Console.WriteLine("Has more than one: {0}", harMoreThanOneVatRate);
+
         var totalVatAmount = VatAmounts.FirstOrDefault(x => x.VatRate == null);
 
         if (totalVatAmount is null)
         {
-            if (VatAmounts.Count == 1)
+            if (!harMoreThanOneVatRate)
             {
                 return;
             }
@@ -128,9 +134,9 @@ public class OrderViewModel
             _vatAmounts.Add(totalVatAmount);
         }
 
-        VatAmounts.Sort((x, y) => x.Name.CompareTo(y.Name));
+        VatAmounts.Sort((x, y) => x.Order.CompareTo(y.Order));
 
-        if (VatAmounts.Count == 1 && totalVatAmount is not null)
+        if (!harMoreThanOneVatRate && totalVatAmount is not null)
         {
             _vatAmounts.Remove(totalVatAmount);
             return;
@@ -148,6 +154,20 @@ public sealed record OrderVatAmountViewModel
     public decimal SubTotal { get; set; }
     public decimal? Vat { get; set; }
     public decimal Total { get; set; }
+
+    public bool IsTotal => VatRate is null;
+
+    public decimal GetVat() => Vat.GetValueOrDefault();
+
+    public int Order
+    {
+        get
+        {
+            if (VatRate is null) return 999;
+
+            return (int)(VatRate.GetValueOrDefault() * 100);
+        }
+    }
 }
 
 public sealed record OrderDiscountViewModel
