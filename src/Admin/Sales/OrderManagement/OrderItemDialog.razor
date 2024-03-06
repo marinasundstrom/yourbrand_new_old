@@ -41,7 +41,7 @@
 
                 <MudItem xs="12" md="6">
                     <MudSelect Label="VAT Rate" @bind-Value="Model.VatRate" For="() => Model.VatRate" Class="mt-4">
-                        <MudSelectItem Value="@((double?)null)">Ingen</MudSelectItem>
+                        <MudSelectItem Value="@((double?)0)">Ingen</MudSelectItem>
                         <MudSelectItem Value="@((double?)0.06)">6%</MudSelectItem>
                         <MudSelectItem Value="@((double?)0.12)">12%</MudSelectItem>
                         <MudSelectItem Value="@((double?)0.25)">25%</MudSelectItem>

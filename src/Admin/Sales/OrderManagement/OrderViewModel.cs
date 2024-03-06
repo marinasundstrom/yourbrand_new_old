@@ -94,7 +94,7 @@ public class OrderViewModel
             }
 
             vatAmount.SubTotal += item.Total - item.Vat;
-            if (vatAmount.Vat is null && item.Vat > 0)
+            if (vatAmount.Vat is null && item.VatRate is not null)
             {
                 vatAmount.Vat = 0;
             }
@@ -102,11 +102,9 @@ public class OrderViewModel
             vatAmount.Total += item.Total;
         }
 
-        VatAmounts.Sort((x, y) => x.VatRate.GetValueOrDefault().CompareTo(y.VatRate.GetValueOrDefault()));
-
         VatAmounts.ToList().ForEach(x =>
         {
-            if (x.Vat == 0 && x.VatRate != 0)
+            if (x.Vat == 0 && x.Total == 0)
             {
                 VatAmounts.Remove(x);
             }
@@ -129,6 +127,8 @@ public class OrderViewModel
 
             _vatAmounts.Add(totalVatAmount);
         }
+
+        VatAmounts.Sort((x, y) => x.Name.CompareTo(y.Name));
 
         if (VatAmounts.Count == 1 && totalVatAmount is not null)
         {

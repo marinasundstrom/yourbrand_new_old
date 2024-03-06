@@ -99,7 +99,7 @@
             <MudPaper Elevation="25" Class="pa-4">
                 @if(Model.VatAmounts.Count() == 1)
                 {
-                    var vatAmount = Model.VatAmounts.First();
+                    var vatAmount = Model.VatAmounts.Last();
 
                     <MudGrid>
 
