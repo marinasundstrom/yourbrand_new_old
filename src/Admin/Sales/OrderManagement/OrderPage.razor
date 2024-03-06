@@ -97,22 +97,20 @@
 
         <MudItem xs="12" sm="12" md="6" lg="6" Elevation="25">
             <MudPaper Elevation="25" Class="pa-4">
-                @if(Model.VatAmounts.Count() == 1)
+                @if(Model.VatAmounts.Count() <= 1)
                 {
-                    var vatAmount = Model.VatAmounts.Last();
-
                     <MudGrid>
 
                         <MudItem xs="6" sm="6" md="6" lg="4">
-                            <MudField Label="Sub Total">@vatAmount.SubTotal.FormatCurrency(order.Currency)</MudField>
+                            <MudField Label="Sub Total">@Model.SubTotal.FormatCurrency(order.Currency)</MudField>
                         </MudItem>
 
                         <MudItem xs="6" sm="6" md="6" lg="4">
-                            <MudField Label="VAT">@vatAmount.Vat?.FormatCurrency(order.Currency)</MudField>
+                            <MudField Label="VAT">@Model.Vat.FormatCurrency(order.Currency)</MudField>
                         </MudItem>
 
                         <MudItem xs="6" sm="6" md="6" lg="4">
-                            <MudField Label="Total">@vatAmount.Total.FormatCurrency(order.Currency)</MudField>
+                            <MudField Label="Total">@Model.Total.FormatCurrency(order.Currency)</MudField>
                         </MudItem>
 
                         <MudItem xs="6" sm="6" md="6" lg="4">
